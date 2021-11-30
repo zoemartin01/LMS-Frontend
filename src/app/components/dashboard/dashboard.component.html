@@ -1,0 +1,116 @@
+<div class="row">
+  <h1 class="display-3 text-center">Dashboard</h1>
+</div>
+
+<div class="row card-container">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Appointments</h5>
+      <p class="card-text">You can book appointments to use rooms of TECO.</p>
+      <div class="col text-center">
+        <a href="/appointments" class="btn btn-primary" role="button">My Appointments</a>
+        <a href="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
+        <a href="#" class="btn btn-secondary position-relative" role="button" *ngIf="isAdmin">
+          All Appointments
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            2
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="isAdmin">
+    <div class="card-body">
+      <h5 class="card-title">Rooms</h5>
+      <p class="card-text">You can manage the rooms of TECO available for appointments.</p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-secondary" role="button">Manage Rooms</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Inventory</h5>
+      <p class="card-text">You can see what TECO lab has in stock.</p>
+      <div class="col text-center">
+        <a href="/inventory" class="btn btn-primary" role="button">Show Inventory</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Order Requests</h5>
+      <p class="card-text">If you need something you can request an order.<br>
+        <span *ngIf="isAdmin"> As admin you can manage order requests.</span></p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-primary" role="button">My Orders</a>
+        <a href="/orders/new" class="btn btn-primary" role="button">New Order</a>
+        <a href="#" class="btn btn-secondary" role="button">All Orders</a>
+        <a href="/orders/requests" class="btn btn-secondary position-relative" role="button" *ngIf="isAdmin">
+          Order Requests
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            3
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">LiveCam</h5>
+      <p class="card-text">You can supervise usage of the lab via a camera.</p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-secondary" role="button">Show LiveCam</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="isAdmin">
+    <div class="card-body">
+      <h5 class="card-title">Users</h5>
+      <p class="card-text">You can manage users of this application.</p>
+      <div class="col text-center">
+          <a href="#" class="btn btn-secondary position-relative" role="button">Manage Users
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              1
+              <span class="visually-hidden">unread messages</span>
+            </span></a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Message Box</h5>
+      <p class="card-text">You get messages from this application in your message box.</p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-primary position-relative" role="button">Show messages
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            7
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Settings</h5>
+      <p class="card-text">You can change your personal settings for this application.<br>
+        <span *ngIf="isAdmin"> As admin additionally you can change the application's settings.</span></p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-primary" role="button">Account Settings</a>
+        <span *ngIf="isAdmin"> <a href="#" class="btn btn-secondary" role="button">Application Settings</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Help</h5>
+      <p class="card-text">You can get help to use this application.</p>
+      <div class="col text-center">
+        <a href="#" class="btn btn-primary" role="button">Show help & FAQs</a>
+      </div>
+    </div>
+  </div>
+</div>
