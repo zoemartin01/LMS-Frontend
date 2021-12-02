@@ -8,12 +8,14 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { AppComponent } from './app.component';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { LoginComponent } from './components/login/login.component';
+import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    HelpFaqComponent
   ],
   imports: [
     BrowserModule,
