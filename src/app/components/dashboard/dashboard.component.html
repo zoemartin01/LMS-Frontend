@@ -10,7 +10,7 @@
       <div class="col text-center">
         <a href="/appointments" class="btn btn-primary" role="button">My Appointments</a>
         <a href="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
-        <a href="#" class="btn btn-secondary position-relative" role="button" *ngIf="isAdmin">
+        <a href="#" class="btn btn-secondary position-relative" role="button" *ngIf="authService.isAdmin()">
           All Appointments
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             2
@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <div class="card" *ngIf="isAdmin">
+  <div class="card" *ngIf="authService.isAdmin()">
     <div class="card-body">
       <h5 class="card-title">Rooms</h5>
       <p class="card-text">You can manage the rooms of TECO available for appointments.</p>
@@ -42,12 +42,13 @@
     <div class="card-body">
       <h5 class="card-title">Order Requests</h5>
       <p class="card-text">If you need something you can request an order.<br>
-        <span *ngIf="isAdmin"> As admin you can manage order requests.</span></p>
+        <span *ngIf="authService.isAdmin()"> As admin you can manage order requests.</span></p>
       <div class="col text-center">
         <a href="#" class="btn btn-primary" role="button">My Orders</a>
         <a href="/orders/new" class="btn btn-primary" role="button">New Order</a>
         <a href="#" class="btn btn-secondary" role="button">All Orders</a>
-        <a href="/orders/requests" class="btn btn-secondary position-relative" role="button" *ngIf="isAdmin">
+        <a href="/orders/requests" class="btn btn-secondary position-relative" role="button"
+           *ngIf="authService.isAdmin()">
           Order Requests
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             3
@@ -66,7 +67,7 @@
       </div>
     </div>
   </div>
-  <div class="card" *ngIf="isAdmin">
+  <div class="card" *ngIf="authService.isAdmin()">
     <div class="card-body">
       <h5 class="card-title">Users</h5>
       <p class="card-text">You can manage users of this application.</p>
@@ -97,10 +98,13 @@
     <div class="card-body">
       <h5 class="card-title">Settings</h5>
       <p class="card-text">You can change your personal settings for this application.<br>
-        <span *ngIf="isAdmin"> As admin additionally you can change the application's settings.</span></p>
+        <span *ngIf="authService.isAdmin()">As admin additionally you can change the application's settings.</span>
+      </p>
       <div class="col text-center">
         <a href="#" class="btn btn-primary" role="button">Account Settings</a>
-        <span *ngIf="isAdmin"> <a href="#" class="btn btn-secondary" role="button">Application Settings</a></span>
+        <span *ngIf="authService.isAdmin()">
+          <a href="#" class="btn btn-secondary" role="button">Application Settings</a>
+        </span>
       </div>
     </div>
   </div>
