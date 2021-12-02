@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 import { FormsModule } from "@angular/forms";
 import { JwtInterceptorService } from "./services/jwt-interceptor.service";
 
@@ -11,6 +12,7 @@ import { JwtInterceptorService } from "./services/jwt-interceptor.service";
   declarations: [
     AppComponent,
     LoginComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
