@@ -18,7 +18,7 @@ export class MessagingService {
   public getUnreadMessagesAmounts(): Observable<any> {
   }
 
-  public addMessage(message: Message): Observable<any> {
+  public sendMessage(recipient: UserId, message: Message): Observable<any> {
   }
 
   public deleteMessage(messageId: number): Observable<any> {
