@@ -1,43 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserService } from "../../services/user.service";
+
+import { User } from "../../types/user";
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  public users: User[] = [];
 
-  constructor() { }
+  constructor(public userService: UserService) {
+  }
 
   ngOnInit(): void {
   }
 
-
   /**
-   * gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets user data (including: mail adress, name, role, e-mail verification status)
     */
-  public async getUsers(){
-
+  public async getUsers(): Promise<void> {
   }
 
   /**
-   * accepts pending user
+   * Accepts pending user
    */
-  public async acceptPendingUser(){
-
+  public async acceptPendingUser(): Promise<void> {
   }
 
   /**
-   * denies pending user
+   * Denies pending user
    */
-  public async denyPendingUser(){
-
+  public async denyPendingUser(): Promise<void> {
   }
 
   /**
-   * deletes user
+   * Deletes user
    */
-  public async deleteUser(){
-
+  public async deleteUser(): Promise<void> {
   }
 }
