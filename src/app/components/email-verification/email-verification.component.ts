@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-email-verification',
@@ -12,4 +13,13 @@ export class EmailVerificationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Verify user's email with provided data
+   *
+   * @param verifyForm submitted register form
+   */
+  public async verifyEmail(verifyForm: NgForm): Promise<void> {
+    if (verifyForm.valid) {
+    }
+  }
 }
