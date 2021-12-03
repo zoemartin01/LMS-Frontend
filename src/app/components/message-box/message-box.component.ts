@@ -23,4 +23,9 @@ export class MessageBoxComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public deleteMessage(messageId: number): void {
+  }
+
+  public markMessageAsRead(messageId: number): void {
+  }
 }
