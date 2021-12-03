@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.loginRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.loginRoute}`;
     const requestBody = {
       email,
       password,
@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   public logout(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.logoutRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.logoutRoute}`;
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.getAccessToken()}`
     });
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   public tokenRefresh(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.tokenRefreshRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefreshRoute}`;
     const requestBody = {
       token: this.getRefreshToken(),
     };
@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.tokenTestRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenTestRoute}`;
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.getAccessToken()}`
     });
