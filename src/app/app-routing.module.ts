@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoleGuard } from "./guards/role-guard.guard";
 import { AuthGuard } from "./guards/auth.guard";
+import { RoleGuard } from "./guards/role-guard.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { HelpFaqComponent } from "./components/help-faq/help-faq.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
+import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
 import { LoginComponent } from "./components/login/login.component";
+import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 
 const routes: Routes = [
   //General
@@ -24,6 +26,22 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Help & FAQ'
+    }
+  },
+  {
+    path: 'hwlab-rules',
+    component: HwlabRulesComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Hardware-Lab Rules'
+    }
+  },
+  {
+    path: 'safety-instructions',
+    component: SafetyInstructionsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Safety Instructions'
     }
   },
   {
