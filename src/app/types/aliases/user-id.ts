@@ -1,1 +1,1 @@
-type UserId = number;
+export type UserId = number;
