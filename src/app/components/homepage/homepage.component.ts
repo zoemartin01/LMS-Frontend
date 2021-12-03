@@ -9,6 +9,9 @@ export class HomepageComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
