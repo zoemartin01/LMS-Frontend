@@ -4,11 +4,13 @@ import { AuthGuard } from "./guards/auth.guard";
 import { RoleGuard } from "./guards/role-guard.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { EmailVerificationComponent } from "./components/email-verification/email-verification.component";
 import { HelpFaqComponent } from "./components/help-faq/help-faq.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
 import { LoginComponent } from "./components/login/login.component";
 import { MessageBoxComponent } from "./components/message-box/message-box.component";
+import { RegisterComponent } from "./components/register/register.component";
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 
 const routes: Routes = [
@@ -71,6 +73,22 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Login'
+    }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Register'
+    }
+  },
+  {
+    path: 'verify-email',
+    component: EmailVerificationComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Verify Email'
     }
   },
 
