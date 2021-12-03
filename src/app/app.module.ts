@@ -25,7 +25,7 @@ import { SafetyInstructionsComponent } from './components/safety-instructions/sa
     HomepageComponent,
     HwlabRulesComponent,
     LoginComponent,
-    RoomCreateComponent
+    RoomCreateComponent,
     RoomEditComponent,
     RoomListComponent,
     RoomViewComponent,
