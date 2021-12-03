@@ -16,11 +16,14 @@ export class RoomEditComponent implements OnInit {
   }
 
   /**
-   * Name, Description, Maximum concurrent bookings, Available times for booking, Unavailable times for booking
-   **/
+   * Changes data of room
+   * @param name
+   * @param description
+   * @param maxConBookings
+   */
   public setData(name: string, description: string, maxConBookings: number) {
 
   }
-  //TODO (un-)available times
-  //TODO table
+  //TODO (un-)available times set data
+  //TODO table of room
 }

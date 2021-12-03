@@ -15,5 +15,15 @@ export class RoomCreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //TODO use room-edit
+  /**
+   * Changes data of room
+   * @param name
+   * @param description
+   * @param maxConBookings
+   */
+  public setData(name: string, description: string, maxConBookings: number) {
+
+  }
+  //TODO (un-)available times set data
+  //TODO also used in room-edit
 }

@@ -17,31 +17,32 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
-   * lists all rooms
+   * Lists all rooms with Name
    */
   // @ts-ignore
-  public getNames(): Observable<any> {
+  public getData(): Promise<void> {
   }
 
   /**
-   * get to view room page
+   * Go to view room page
    */
   // @ts-ignore
-  public goToRoomView(): Observable<any> {
+  public goToRoomView(): Promise<void> {
   }
 
   /**
-   * get to edit room page
+   * Go to edit room page
    */
   // @ts-ignore
-  public goToRoomEdit(): Observable<any> {
+  public goToRoomEdit(): Promise<void> {
   }
 
   /**
-   * get to create room page
+   * Go to create room page
    */
   // @ts-ignore
-  public goToRoomCreate(): Observable<any> {
+  public goToRoomCreate(): Promise<void> {
+
   }
-  //TODO method is unused
+  //TODO why unused
 }

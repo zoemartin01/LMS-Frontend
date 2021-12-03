@@ -17,21 +17,31 @@ export class RoomViewComponent implements OnInit {
   }
 
   /**
-   * lists Name, Description, Maximum concurrent bookings, Available times for booking, Unavailable times for booking
+   * Lists Name, Description, Maximum concurrent bookings, Available times for booking, Unavailable times for booking
    */
-
   // @ts-ignore
-  public getRoomData() : Observable<any> {
+  public getRoomData() : Promise<void> {
 
   }
 
-  //TODO table room available
+  //TODO show table "room availability times"
 
   /**
-   * gets to edit room page
+   * Deletes room
+   * @param roomId
    */
   // @ts-ignore
-  public getToRoomEdit() : Observable<any> {
+  public deleteRoom(roomId: number) : Promise<void> {
+
+  }
+  //TODO deleteRoom used in room-list as well
+  //TODO why unused
+
+  /**
+   * Gets to edit room page
+   */
+  // @ts-ignore
+  public getToRoomEdit() : Promise<void> {
 
   }
 }
