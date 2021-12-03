@@ -4,6 +4,7 @@ import { RoleGuard } from "./guards/role-guard.guard";
 import { AuthGuard } from "./guards/auth.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { HelpFaqComponent } from "./components/help-faq/help-faq.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
 
@@ -14,6 +15,14 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Homepage'
+    }
+  },
+  {
+    path: 'help',
+    component: HelpFaqComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Help & FAQ'
     }
   },
   {

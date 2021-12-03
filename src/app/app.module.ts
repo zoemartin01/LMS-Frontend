@@ -7,6 +7,7 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -14,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
   declarations: [
     AppComponent,
     DashboardComponent,
+    HelpFaqComponent,
     HomepageComponent,
     LoginComponent,
   ],
