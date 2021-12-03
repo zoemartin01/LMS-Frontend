@@ -9,6 +9,7 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
 import { LoginComponent } from "./components/login/login.component";
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
+import { UserListComponent } from "./components/user-list/user-list.component";
 
 const routes: Routes = [
   //General
@@ -67,6 +68,14 @@ const routes: Routes = [
   //Settings
 
   //User Management
+  {
+    path: 'users',
+    component: UserListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'User List'
+    }
+  },
 
   //Room Management
 
