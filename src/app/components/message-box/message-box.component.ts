@@ -20,12 +20,25 @@ export class MessageBoxComponent implements OnInit {
   constructor() {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Delete message
+   *
+   * @param messageId id of message to be deleted
+   */
   public deleteMessage(messageId: number): void {
   }
 
+  /**
+   * Mark specified message as read
+   *
+   * @param messageId id of message to be marked as read
+   */
   public markMessageAsRead(messageId: number): void {
   }
 }
