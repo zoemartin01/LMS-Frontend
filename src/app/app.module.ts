@@ -11,10 +11,10 @@ import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
 import { LoginComponent } from './components/login/login.component';
-import { RoomCreateComponent } from './components/room_managment/room-create/room-create.component';
-import { RoomEditComponent } from './components/room_managment/room-edit/room-edit.component';
-import { RoomListComponent } from './components/room_managment/room-list/room-list.component';
-import { RoomViewComponent } from './components/room_managment/room-view/room-view.component';
+import { RoomCreateComponent } from './components/room-managment/room-create/room-create.component';
+import { RoomEditComponent } from './components/room-managment/room-edit/room-edit.component';
+import { RoomListComponent } from './components/room-managment/room-list/room-list.component';
+import { RoomViewComponent } from './components/room-managment/room-view/room-view.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
 
 @NgModule({
