@@ -9,6 +9,7 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { LoginComponent } from "./components/login/login.component";
 
 const routes: Routes = [
+  //General
   {
     path: '',
     component: HomepageComponent,
@@ -26,14 +27,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'login',
-    component: LoginComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Login'
-    }
-  },
-  {
     path: 'dashboard',
     canActivate: [AuthGuard],
     component: DashboardComponent,
@@ -42,6 +35,28 @@ const routes: Routes = [
       title: 'Dashboard'
     }
   },
+
+  //Authentication
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Login'
+    }
+  },
+
+  //Settings
+
+  //User Management
+
+  //Room Management
+
+  //Appointment Management
+
+  //Inventory & Order Management
+
+  //Livecam
 ];
 
 @NgModule({
