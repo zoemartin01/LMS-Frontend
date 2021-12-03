@@ -9,7 +9,7 @@ import { LoginComponent } from "./components/login/login.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'help',
     component: HelpFaqComponent,
     pathMatch: 'full',
     data: {
