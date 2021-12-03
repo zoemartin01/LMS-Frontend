@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user.service";
 
 import { User } from "../../types/user";
+import { UserId } from "../../types/aliases/user-id";
 
 @Component({
   selector: 'app-user-list',
@@ -27,18 +28,18 @@ export class UserListComponent implements OnInit {
   /**
    * Accepts pending user
    */
-  public async acceptPendingUser(): Promise<void> {
+  public async acceptPendingUser(userId: UserId): Promise<void> {
   }
 
   /**
    * Denies pending user
    */
-  public async denyPendingUser(): Promise<void> {
+  public async denyPendingUser(userId: UserId): Promise<void> {
   }
 
   /**
    * Deletes user
    */
-  public async deleteUser(): Promise<void> {
+  public async deleteUser(userId: UserId): Promise<void> {
   }
 }
