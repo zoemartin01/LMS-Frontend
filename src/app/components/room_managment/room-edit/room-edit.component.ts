@@ -16,7 +16,7 @@ export class RoomEditComponent implements OnInit {
   }
 
   /**
-  Name, Description, Maximum concurrent bookings, Available times for booking, Unavailable times for booki
+   * Name, Description, Maximum concurrent bookings, Available times for booking, Unavailable times for booking
    **/
   public setData(name: string, description: string, maxConBookings: number) {
 
