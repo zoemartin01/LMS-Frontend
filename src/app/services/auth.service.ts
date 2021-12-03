@@ -74,4 +74,8 @@ export class AuthService {
   public isUserLoggedIn(): boolean {
     return this.getAccessToken() !== null;
   }
+
+  public isAdmin(): boolean {
+    return this.getUserRole() === "admin";
+  }
 }
