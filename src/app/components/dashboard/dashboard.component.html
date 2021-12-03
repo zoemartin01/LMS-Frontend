@@ -13,7 +13,7 @@
         <a href="#" class="btn btn-secondary position-relative" role="button" *ngIf="authService.isAdmin()">
           All Appointments
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            2
+            {{ unreadMessages.appointments }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
@@ -51,7 +51,7 @@
            *ngIf="authService.isAdmin()">
           Order Requests
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            3
+            {{ unreadMessages.orders }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
@@ -74,7 +74,7 @@
       <div class="col text-center">
           <a href="#" class="btn btn-secondary position-relative" role="button">Manage Users
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              1
+              {{ unreadMessages.users }}
               <span class="visually-hidden">unread messages</span>
             </span></a>
       </div>
@@ -87,7 +87,7 @@
       <div class="col text-center">
         <a href="#" class="btn btn-primary position-relative" role="button">Show messages
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            7
+            {{ unreadMessages.sum }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
