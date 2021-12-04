@@ -16,14 +16,14 @@ export class RoomCreateComponent implements OnInit {
   }
 
   /**
-   * Changes data of room
-   * @param name
-   * @param description
-   * @param maxConBookings
+   * Creates room with data
+   * @param roomName name of room
+   * @param description description
+   * @param maxConBookings maximum of concurrent bookings possible
    */
-  public setData(name: string, description: string, maxConBookings: number) {
+  // @ts-ignore
+  public createRoom(roomName: string, description: string, maxConBookings: number): Promise<void> {
 
   }
-  //TODO (un-)available times set data
-  //TODO also used in room-edit
+  //TODO (un-)available times setRoomData
 }

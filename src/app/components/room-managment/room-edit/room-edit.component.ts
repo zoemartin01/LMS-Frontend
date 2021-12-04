@@ -17,13 +17,23 @@ export class RoomEditComponent implements OnInit {
 
   /**
    * Changes data of room
-   * @param name
-   * @param description
-   * @param maxConBookings
+   * @param roomId id of associated room
+   * @param roomName name of room
+   * @param description description
+   * @param maxConBookings maximum of concurrent bookings possible
    */
-  public setData(name: string, description: string, maxConBookings: number) {
+  // @ts-ignore
+  public editRoomData(roomId: number, roomName: string, description: string, maxConBookings: number): Promise<void> {
 
   }
-  //TODO (un-)available times set data
-  //TODO table of room
+  //TODO (un-)available times setRoomData
+
+  /**
+   * Get all data of room
+   * @param roomId id of room
+   */
+  // @ts-ignore
+  public getRoomData(roomId: number) : Promise<void> {
+
+  }
 }
