@@ -1,4 +1,5 @@
 export enum UserRole {
-  visitor,
-  admin
+  unkown = 0,
+  visitor = 3,
+  admin = 4
 }
