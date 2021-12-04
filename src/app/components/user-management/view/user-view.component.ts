@@ -33,13 +33,13 @@ export class UserViewComponent implements OnInit {
    * Gets user data (including: mail adress, name, role, e-mail verification status)
    */
   public async getUserData(): Promise<void> {
-    //use this.userId here
+    //use this.user.id here and set this.user
   }
 
   /**
    * Deletes user
    */
   public async deleteUser(): Promise<void> {
-    //use this.userId here
+    //use this.user.id here
   }
 }
