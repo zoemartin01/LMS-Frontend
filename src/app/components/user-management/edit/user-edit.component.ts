@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../../../services/user.service";
-import { UserId } from "../../../types/aliases/user-id";
+
+import { UserService } from "../../services/user.service";
+
+import {User} from "../../../types/user";
+import {UserRole} from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-edit',
@@ -8,73 +11,83 @@ import { UserId } from "../../../types/aliases/user-id";
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
+  public user: User = {
+    id: null,
+    firstname: '',
+    lastname: '',
+    email: '',
+    userRole: UserRole.unkown,
+  };
 
-  constructor(public userService : UserService) { }
+  constructor(public userService : UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.user.id = +params['id'];
+      this.getUserData();
+    });
   }
+
   /**
    * Gets user data (including: mail adress, name, role, e-mail verification status)
    */
   public async getUserData(): Promise<void> {
+    //use this.user.id here and set this.user
   }
 
   /**
    * Accepts pending user
-   * @param userId
    */
-  public async acceptPendingUser(userId: UserId): Promise<void> {
+  public async acceptPendingUser(): Promise<void> {
+    //use this.user.id here
   }
 
   /**
    * Denies pending user
-   * @param userId
    */
-  public async denyPendingUser(userId: UserId): Promise<void> {
+  public async denyPendingUser(): Promise<void> {
+    //use this.user.id here
   }
 
   /**
    * Deletes user
-   * @param userId
    */
-  public async deleteUser(userId: UserId): Promise<void> {
+  public async deleteUser(): Promise<void> {
+    //use this.user.id here
   }
 
   /**
    * Changes name of user
-   * @param userId
    */
-  public async changeName(userId: UserId): Promise<void>{
-
+  public async changeName(): Promise<void>{
+    //use this.user.id here
   }
+
   /**
    * Changes e-mail of user
-   * @param userId
    */
-  public async changeMail(userId: UserId): Promise<void>{
-
+  public async changeMail(): Promise<void>{
+    //use this.user.id here
   }
+
   /**
    * Changes password of user
-   * @param userId
    */
-  public async changePassword(userId: UserId): Promise<void>{
-
+  public async changePassword(): Promise<void>{
+    //use this.user.id here
   }
+
   /**
    * Changes role of user
-   * @param userId
    */
-  public async changeRole(userId: UserId): Promise<void>{
-
+  public async changeRole(): Promise<void>{
+    //use this.user.id here
   }
+
   /**
    * Changes e-mail verification Status of user
-   * @param userId
    */
-  public async changeMailStatus(userId: UserId): Promise<void>{
-
+  public async changeMailStatus(): Promise<void>{
+    //use this.user.id here
   }
-
-
 }
