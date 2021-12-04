@@ -13,6 +13,7 @@ import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.compon
 import { LoginComponent } from './components/login/login.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
 import { UserListComponent } from "./components/user-list/user-list.component";
+import { UserViewComponent } from './components/user-view/user-view.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UserListComponent } from "./components/user-list/user-list.component";
     LoginComponent,
     SafetyInstructionsComponent,
     UserListComponent,
+    UserViewComponent,
   ],
   imports: [
     AppRoutingModule,
