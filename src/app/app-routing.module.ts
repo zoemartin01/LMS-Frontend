@@ -77,13 +77,12 @@ const routes: Routes = [
       title: 'User List'
     }
   },
-
   {
     path: 'user/:id',
     component: UserViewComponent,
     pathMatch: 'full',
     data: {
-      title: 'User View'
+      title: 'View User'
     }
   },
 
