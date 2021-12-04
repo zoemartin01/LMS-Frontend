@@ -10,6 +10,7 @@ import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.compon
 import { LoginComponent } from "./components/login/login.component";
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 import { UserListComponent } from "./components/user-list/user-list.component";
+import { UserEditComponent } from "./components/user-edit/user-edit.component";
 
 const routes: Routes = [
   //General
@@ -71,6 +72,15 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'User List'
+    }
+  },
+
+  {
+    path: 'users',
+    component: UserEditComponent,
     pathMatch: 'full',
     data: {
       title: 'User List'
