@@ -11,6 +11,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
+import { UserViewComponent } from "./components/user-management/view/user-view.component";
 
 const routes: Routes = [
   //General
@@ -75,6 +76,14 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'User List'
+    }
+  },
+  {
+    path: 'user/:id',
+    component: UserViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'View User'
     }
   },
   {
