@@ -79,7 +79,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'users',
+    path: 'user/:id',
     component: UserViewComponent,
     pathMatch: 'full',
     data: {

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {UserId} from "../../../types/aliases/user-id";
+import {ActivatedRoute} from "@angular/router";
+
 import {UserService} from "../../../services/user.service";
+
+import {User} from "../../../types/user";
+import {UserRole} from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-view',
@@ -8,20 +12,34 @@ import {UserService} from "../../../services/user.service";
   styleUrls: ['./user-view.component.scss']
 })
 export class UserViewComponent implements OnInit {
+  public user: User = {
+    id: null,
+    firstname: '',
+    lastname: '',
+    email: '',
+    userRole: UserRole.unkown,
+  };
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.user.id = +params['id'];
+      this.getUserData();
+    });
   }
+
   /**
    * Gets user data (including: mail adress, name, role, e-mail verification status)
    */
   public async getUserData(): Promise<void> {
+    //use this.userId here
   }
 
   /**
    * Deletes user
    */
-  public async deleteUser(userId: UserId): Promise<void> {
+  public async deleteUser(): Promise<void> {
+    //use this.userId here
   }
 }
