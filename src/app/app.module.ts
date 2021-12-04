@@ -12,8 +12,8 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
 import { LoginComponent } from './components/login/login.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
-import { UserListComponent } from "./components/user-list/user-list.component";
-import { UserViewComponent } from './components/user-view/user-view.component';
+import { UserListComponent } from "./components/user-management/user-list/user-list.component";
+import { UserViewComponent } from './components/user-management/user-view/user-view.component';
 
 @NgModule({
   declarations: [

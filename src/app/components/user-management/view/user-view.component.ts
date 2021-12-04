@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UserId} from "../../types/aliases/user-id";
-import {UserService} from "../../services/user.service";
+import {UserId} from "../../../types/aliases/user-id";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-user-view',
