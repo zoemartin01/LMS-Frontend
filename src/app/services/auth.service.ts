@@ -1,13 +1,23 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from "rxjs";
+
+import { User } from "../types/user";
+import { UserId } from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(private httpClient: HttpClient) {
+  }
+
+  public getUserDetails(): Observable<any> {
+  }
+
+  public getFullName(user: User): string {
+    return `${user.firstname} ${user.lastname}`;
   }
 
   public login(email: string, password: string): Observable<any> {
@@ -45,6 +55,12 @@ export class AuthService {
     });
 
     return this.httpClient.post(apiURL, {headers: httpHeaders});
+  }
+
+  public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
+  }
+
+  public verifyEmail(userId: UserId, token: string): Observable<any> {
   }
 
   public setAccessToken(accessToken: string): void {
