@@ -7,29 +7,39 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { RoomCreateComponent } from './components/room-managment/room-create/room-create.component';
 import { RoomEditComponent } from './components/room-managment/room-edit/room-edit.component';
 import { RoomListComponent } from './components/room-managment/room-list/room-list.component';
 import { RoomViewComponent } from './components/room-managment/room-view/room-view.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
+import { UserEditComponent } from './components/user-management/edit/user-edit.component';
+import { UserListComponent } from "./components/user-management/list/user-list.component";
+import { UserViewComponent } from './components/user-management/view/user-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
+    EmailVerificationComponent,
     HelpFaqComponent,
     HomepageComponent,
     HwlabRulesComponent,
     LoginComponent,
+    RegisterComponent,
     RoomCreateComponent,
     RoomEditComponent,
     RoomListComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    UserEditComponent,
+    UserListComponent,
+    UserViewComponent,
   ],
   imports: [
     AppRoutingModule,
