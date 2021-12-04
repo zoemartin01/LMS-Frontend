@@ -9,8 +9,8 @@ import { HomepageComponent } from "./components/homepage/homepage.component";
 import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
 import { LoginComponent } from "./components/login/login.component";
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
-import { UserListComponent } from "./components/user-list/user-list.component";
 import { UserEditComponent } from "./components/user-edit/user-edit.component";
+import { UserListComponent } from "./components/user-list/user-list.component";
 
 const routes: Routes = [
   //General
@@ -77,13 +77,12 @@ const routes: Routes = [
       title: 'User List'
     }
   },
-
   {
-    path: 'users',
+    path: 'user/:id/edit',
     component: UserEditComponent,
     pathMatch: 'full',
     data: {
-      title: 'User List'
+      title: 'Edit User'
     }
   },
 
