@@ -14,6 +14,7 @@ import { SafetyInstructionsComponent } from "./components/safety-instructions/sa
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 
 const routes: Routes = [
   //General
@@ -86,6 +87,14 @@ const routes: Routes = [
   },
 
   //Settings
+  {
+    path: 'user/:id/settings',
+    component: UserSettingsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'User Settings'
+    }
+  },
 
   //User Management
   {
@@ -112,6 +121,7 @@ const routes: Routes = [
       title: 'Edit User'
     }
   },
+
 
   //Room Management
 
