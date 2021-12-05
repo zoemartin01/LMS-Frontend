@@ -15,8 +15,12 @@ export class GlobalSettingsComponent implements OnInit {
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
-  constructor(public globalSettingsService: GlobalSettingsService) { }
-
+  constructor(public globalSettingsService: GlobalSettingsService) {
+  }
+  
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
