@@ -10,6 +10,7 @@ import { UserId } from "../types/aliases/user-id";
   providedIn: 'root'
 })
 export class AuthService {
+
   constructor(private httpClient: HttpClient) {
   }
 
