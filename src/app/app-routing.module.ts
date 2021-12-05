@@ -5,6 +5,7 @@ import { AdminGuard } from "./guards/admin.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmailVerificationComponent } from "./components/email-verification/email-verification.component";
+import { GlobalSettingsComponent} from "./components/global-settings/global-settings.component";
 import { HelpFaqComponent } from "./components/help-faq/help-faq.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
@@ -20,7 +21,6 @@ import { UserEditComponent } from "./components/user-management/edit/user-edit.c
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
-import { GlobalSettingsComponent} from "./components/global-settings/global-settings.component";
 
 const routes: Routes = [
   //General
