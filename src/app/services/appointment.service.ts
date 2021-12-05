@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
+import {Appointment} from "../types/appointment";
+import {AppointmentId} from "../types/aliases/appointment-id";
 
 @Injectable({
   providedIn: 'root'
@@ -9,35 +11,27 @@ export class AppointmentService {
   constructor() { }
 
   /**
-   * Creates an appointment request
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
+   * Creates a new appointment request
+   * @param appointment all data about the requested appointment
    */
-  public createRequest(roomId: number, userId: number, startTime: string, endTime: string): Observable<any> {
+  public createRequest(appointment: Appointment): Observable<any> {
 
   }
 
   /**
    * Edits an appointment
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
-   * @param appointmentId appointment id
-   * @param seriesId associated series of appointment
+   * @param appointmentId id of the appointment to be edited
+   * @param appointment edited version
    */
-  public editAppointment(roomId: number, userId: number, startTime: string, endTime: string, appointmentId: number, seriesId: number): Observable<any> {
+  public editAppointment(appointmentId : AppointmentId, appointment: Appointment): Observable<any> {
 
   }
 
   /**
    * Cancel appointment
    * @param appointmentId Id of an appointment
-   * @param seriesId Id of the associated series
    */
-  public cancelAppointment(appointmentId: number, seriesId: number): Observable<any> {
+  public cancelAppointment(appointmentId: number): Observable<any> {
 
   }
 }
