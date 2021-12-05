@@ -17,6 +17,7 @@ import { SafetyInstructionsComponent } from './components/safety-instructions/sa
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from './components/user-management/view/user-view.component';
+import { ViewComponent } from './components/whitelist-retailer/view/view.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
     UserEditComponent,
     UserListComponent,
     UserViewComponent,
+    ViewComponent,
   ],
   imports: [
     AppRoutingModule,

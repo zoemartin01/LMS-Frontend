@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.scss']
+})
+export class ViewComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  /**
+   * Gets retailer data (including: domain, name)
+   */
+  public async getRetailerData(): Promise<void>{
+
+  }
+
+  /**
+   * Deletes whitelist retailer
+   */
+  public async deleteRetailer(): Promise<void>{
+
+  }
+}
