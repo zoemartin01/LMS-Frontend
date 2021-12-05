@@ -14,6 +14,7 @@ import { SafetyInstructionsComponent } from "./components/safety-instructions/sa
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import { RetailerViewComponent } "./components/whitelist-retailer/view/retailer-view.component";
 
 const routes: Routes = [
   //General
@@ -87,6 +88,14 @@ const routes: Routes = [
 
   //Settings
 
+  {
+    path: 'retailer/:id',
+    component: RetailerViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Retailer View'
+    }
+  },
   //User Management
   {
     path: 'users',
