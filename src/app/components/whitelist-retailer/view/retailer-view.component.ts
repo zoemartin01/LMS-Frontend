@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+
+import { GlobalSettingsService } from "../../../services/global-settings.service";
+
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
@@ -6,23 +11,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./retailer-view.component.scss']
 })
 export class RetailerViewComponent implements OnInit {
+  public whitelistRetailer: WhitelistRetailer = {
+    id: null,
+  }
 
-  constructor() { }
+  constructor(public globalSettingsService: GlobalSettingsService, private route: ActivatedRoute) {
+  }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.whitelistRetailer.id = +params['id'];
+      this.getRetailerData();
+    });
   }
 
   /**
    * Gets retailer data (including: domain, name)
    */
   public async getRetailerData(): Promise<void>{
-
   }
 
   /**
-   * Deletes whitelist retailer
+   * Opens room edit form
    */
-  public async deleteRetailer(): Promise<void>{
+  public openWhitelistRetailerEditForm(): void {
+  }
 
+  /**
+   * Opens room delete confirmation popup
+   */
+  public openWhitelistRetailerDeletePopup(): void {
   }
 }

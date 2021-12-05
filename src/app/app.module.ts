@@ -15,6 +15,9 @@ import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.compon
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RetailerCreateComponent } from "./components/whitelist-retailer/create/retailer-create.component";
+import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
+import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';
 import { RoomCreateComponent } from './components/room-managment/create/room-create.component';
 import { RoomEditComponent } from './components/room-managment/edit/room-edit.component';
 import { RoomListComponent } from './components/room-managment/list/room-list.component';
@@ -24,9 +27,6 @@ import { UserEditComponent } from './components/user-management/edit/user-edit.c
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
-import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';
-import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
-import { RetailerCreationComponent } from './components/whitelist-retailer/creation/retailer-creation.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,9 @@ import { RetailerCreationComponent } from './components/whitelist-retailer/creat
     LoginComponent,
     MessageBoxComponent,
     RegisterComponent,
+    RetailerCreateComponent,
+    RetailerViewComponent,
+    RetailerEditComponent,
     RoomCreateComponent,
     RoomEditComponent,
     RoomListComponent,
@@ -49,9 +52,6 @@ import { RetailerCreationComponent } from './components/whitelist-retailer/creat
     UserListComponent,
     UserSettingsComponent,
     UserViewComponent,
-    RetailerViewComponent,
-    RetailerEditComponent,
-    RetailerCreationComponent,
   ],
   imports: [
     AppRoutingModule,
