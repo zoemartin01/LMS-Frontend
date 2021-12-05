@@ -27,18 +27,21 @@ export class UserListComponent implements OnInit {
 
   /**
    * Accepts pending user
+   * @param userId Id of user
    */
   public async acceptPendingUser(userId: UserId): Promise<void> {
   }
 
   /**
    * Denies pending user
+   * @param userId Id of user
    */
   public async denyPendingUser(userId: UserId): Promise<void> {
   }
 
   /**
    * Deletes user
+   * @param userId Id of user
    */
   public async deleteUser(userId: UserId): Promise<void> {
   }
