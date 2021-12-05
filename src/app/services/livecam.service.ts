@@ -29,4 +29,12 @@ export class LivecamService {
   public deleteRecording(recordingId: RecordingId): Observable<any> {
   }
 
+  /**
+   * Downloads the recording with the submitted id
+   * 
+   * @param {RecordingId} recordingId id of the recording to download
+   */
+  public downloadRecording(recordingId: RecordingId): Observable<any> {
+  }
+
 }
