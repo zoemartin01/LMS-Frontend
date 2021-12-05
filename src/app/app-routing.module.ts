@@ -14,6 +14,7 @@ import { SafetyInstructionsComponent } from "./components/safety-instructions/sa
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import { GlobalSettingsComponent} from "./components/global-settings/global-settings.component";
 
 const routes: Routes = [
   //General
@@ -86,7 +87,14 @@ const routes: Routes = [
   },
 
   //Settings
-
+  {
+    path: 'global-settings',
+    component: GlobalSettingsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Global Settings'
+    }
+  },
   //User Management
   {
     path: 'users',
