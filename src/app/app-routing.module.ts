@@ -21,6 +21,7 @@ import { UserEditComponent } from "./components/user-management/edit/user-edit.c
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import { LivecamOverviewComponent } from './livecam/overview/livecam-overview.component';
 
 const routes: Routes = [
   //General
@@ -193,6 +194,15 @@ const routes: Routes = [
   //Inventory & Order Management
 
   //Livecam
+  {
+    path: 'livecam',
+    canActivate: [AdminGuard],
+    component: LivecamOverviewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'LiveCam Dashboard'
+    },
+  },
 ];
 
 @NgModule({
