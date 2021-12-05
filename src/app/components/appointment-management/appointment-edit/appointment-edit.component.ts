@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 
 import { Appointment } from "../../../types/appointment";
 import {AppointmentService} from "../../../services/appointment.service";
-//TODO create type appointment
+//TODO type appointment not working
 
 @Component({
   selector: 'app-appointment-edit',

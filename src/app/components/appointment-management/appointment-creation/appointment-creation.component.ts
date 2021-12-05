@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {AppointmentService} from "../../../services/appointment.service";
+import {AppointmentId} from "../../../types/aliases/appointment-id";
 
 @Component({
   selector: 'app-appointment-creation',
@@ -8,7 +10,7 @@ import {NgForm} from "@angular/forms";
 })
 export class AppointmentCreationComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService) { }
 
   /**
    * Init page
