@@ -3,9 +3,9 @@ import { RecordingId } from 'src/app/types/aliases/recording-id';
 import { Recording } from 'src/app/types/recording';
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  selector: 'app-livecam-overview',
+  templateUrl: './livecam-overview.component.html',
+  styleUrls: ['./livecam-overview.component.scss']
 })
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];
