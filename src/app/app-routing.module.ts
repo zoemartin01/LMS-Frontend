@@ -14,7 +14,8 @@ import { SafetyInstructionsComponent } from "./components/safety-instructions/sa
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
-import { RetailerViewComponent } "./components/whitelist-retailer/view/retailer-view.component";
+import { RetailerViewComponent } from "./components/whitelist-retailer/view/retailer-view.component";
+import { RetailerEditComponent} from "./components/whitelist-retailer/edit/retailer-edit.component";
 
 const routes: Routes = [
   //General
@@ -96,6 +97,16 @@ const routes: Routes = [
       title: 'Retailer View'
     }
   },
+
+  {
+    path: 'retailer/:id/edit',
+    component: RetailerEditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Retailer Edit'
+    }
+  },
+
   //User Management
   {
     path: 'users',
