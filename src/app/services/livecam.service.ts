@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
 
 @Injectable({
@@ -20,5 +21,12 @@ export class LivecamService {
   public scheduleRecording(startTime: Date, endTime: Date, resolution: VideoResolution, bitrate: number): Observable<any> { 
   }
 
-  
+  /**
+   * Deletes the recording with the submitted id
+   * 
+   * @param {RecordingId} recordingId id of the recording to delete
+   */
+  public deleteRecording(recordingId: RecordingId): Observable<any> {
+  }
+
 }
