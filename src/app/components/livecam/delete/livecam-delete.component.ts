@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Recording } from 'src/app/types/recording';
+import { LivecamService } from 'src/app/services/livecam.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-livecam-delete',
   templateUrl: './livecam-delete.component.html',
   styleUrls: ['./livecam-delete.component.scss']
 })
 export class LivecamDeleteComponent implements OnInit {
+  public recording: Recording = {
+    id: null,
+  }
 
-  constructor() { }
+  constructor(public livecamService: LivecamService, private route: ActivatedRoute) { }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.recording.id = +params['id'];
+    });
+  }
+
+  /**
+   * Delete recording
+   */
+  public async deleteRecording(): Promise<void> {
+    await this.livecamService.deleteRecording(this.recording.id);
   }
 
 }
