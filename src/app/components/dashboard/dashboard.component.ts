@@ -18,6 +18,9 @@ export class DashboardComponent implements OnInit {
   constructor(public authService: AuthService) {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
     this.unreadMessages = {
       sum: 7,
