@@ -18,6 +18,7 @@ import { RoomListComponent } from "./components/room-managment/list/room-list.co
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
+import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
 
 const routes: Routes = [
@@ -100,6 +101,14 @@ const routes: Routes = [
   },
 
   //Settings
+  {
+    path: '/settings',
+    component: UserSettingsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Account Settings'
+    }
+  },
 
   //User Management
   {
