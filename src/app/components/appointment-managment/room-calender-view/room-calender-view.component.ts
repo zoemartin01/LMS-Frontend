@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppointmentId} from "../../../types/aliases/appointment-id";
 
 @Component({
   selector: 'app-room-calender-view',
@@ -9,27 +10,31 @@ export class RoomCalenderViewComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
-  /**
-   * Creates an appointment request
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
-   */
-  // @ts-ignore
-  public createRequest(roomId: number, userId: number, startTime: string, endTime: stirng): Promise<void> {
 
+  /**
+   * Opens appointment creation form
+   */
+  public openCreationForm(): void {
   }
-  //TODO also in appointment creation
+
+  /**
+   * Opens appointment edit form
+   *
+   * @param appointmentId id of appointment
+   */
+  public editAppointment(appointmentId: AppointmentId): Promise<void> {
+  }
 
   /**
    * Gets appointment data of all appointments of one room
    * @param roomId associated room
    */
-  // @ts-ignore
   public getAppointmentData(roomId: number): Promise<void> {
 
   }

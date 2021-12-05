@@ -18,6 +18,7 @@ export class RoomService {
    */
   public createRoom(roomName: string, description: string, maxConBookings: number): Observable<any> {
   }
+  //@todo (un-)available times setRoomData
 
   /**
    * Changes data of room
@@ -36,5 +37,5 @@ export class RoomService {
   public deleteRoom(roomId: number): Observable<any> {
   }
 
-  //@todo (un-)available times setRoomData
+
 }
