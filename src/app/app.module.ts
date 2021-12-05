@@ -24,6 +24,7 @@ import { UserEditComponent } from './components/user-management/edit/user-edit.c
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
+import { OverviewComponent } from './livecam/overview/overview.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
     UserListComponent,
     UserSettingsComponent,
     UserViewComponent,
+    OverviewComponent,
   ],
   imports: [
     AppRoutingModule,
