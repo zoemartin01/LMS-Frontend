@@ -26,6 +26,7 @@ import { UserSettingsComponent } from './components/settings/user-settings/user-
 import { UserViewComponent } from './components/user-management/view/user-view.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
+import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-
     UserViewComponent,
     LivecamOverviewComponent,
     LivecamScheduleComponent,
+    LivecamDeleteComponent,
   ],
   imports: [
     AppRoutingModule,
