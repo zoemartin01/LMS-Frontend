@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AppointmentService {
    * @param startTime beginning of appointment
    * @param endTime end of appointment
    */
-  public createRequest(roomId: number, userId: number, startTime: string, endTime: string): Promise<void> {
+  public createRequest(roomId: number, userId: number, startTime: string, endTime: string): Observable<any> {
 
   }
 
@@ -27,8 +28,16 @@ export class AppointmentService {
    * @param appointmentId appointment id
    * @param seriesId associated series of appointment
    */
-  public editAppointment(roomId: number, userId: number, startTime: string, endTime: string, appointmentId: number, seriesId: number): Promise<void> {
+  public editAppointment(roomId: number, userId: number, startTime: string, endTime: string, appointmentId: number, seriesId: number): Observable<any> {
 
   }
 
+  /**
+   * Cancel appointment
+   * @param appointmentId Id of an appointment
+   * @param seriesId Id of the associated series
+   */
+  public cancelAppointment(appointmentId: number, seriesId: number): Observable<any> {
+
+  }
 }

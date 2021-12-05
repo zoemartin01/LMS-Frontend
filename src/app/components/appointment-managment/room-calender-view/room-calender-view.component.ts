@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppointmentId} from "../../../types/aliases/appointment-id";
+import {AppointmentService} from "../../../services/appointment.service";
 
 @Component({
   selector: 'app-room-calender-view',
@@ -8,7 +9,7 @@ import {AppointmentId} from "../../../types/aliases/appointment-id";
 })
 export class RoomCalenderViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService) { }
 
   /**
    * Init page
@@ -37,5 +38,13 @@ export class RoomCalenderViewComponent implements OnInit {
    */
   public getAppointmentData(roomId: number): Promise<void> {
 
+  }
+
+  /**
+   * Opens appointment cancel popup
+   *
+   * @param appointmentId id of appointment
+   */
+  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
   }
 }

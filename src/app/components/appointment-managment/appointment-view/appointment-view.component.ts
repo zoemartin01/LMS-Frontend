@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AppointmentId} from "../../../types/aliases/appointment-id";
+import {AppointmentService} from "../../../services/appointment.service";
 
 @Component({
   selector: 'app-appointment-view',
@@ -9,7 +10,7 @@ import {AppointmentId} from "../../../types/aliases/appointment-id";
 })
 export class AppointmentViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService) { }
 
   /**
    * Init page
@@ -32,4 +33,11 @@ export class AppointmentViewComponent implements OnInit {
   public editAppointment(appointmentId: AppointmentId): Promise<void> {
   }
 
+  /**
+   * Opens appointment cancel popup
+   *
+   * @param appointmentId id of appointment
+   */
+  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
+  }
 }

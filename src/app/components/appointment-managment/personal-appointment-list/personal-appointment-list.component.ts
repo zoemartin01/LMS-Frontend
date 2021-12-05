@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppointmentId} from "../../../types/aliases/appointment-id";
+import {AppointmentService} from "../../../services/appointment.service";
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -8,7 +9,7 @@ import {AppointmentId} from "../../../types/aliases/appointment-id";
 })
 export class PersonalAppointmentListComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService) { }
 
   /**
    * Init page
@@ -24,28 +25,10 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Cancel the whole series of appointments
-   * @param appointmentId Id of an appointment
-   * @param seriesId Id of the associated series
+   * Opens appointment cancel popup
+   *
+   * @param appointmentId id of appointment
    */
-  public cancelSeriesAppointment(appointmentId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Cancel a single appointment of the whole series of appointments
-   * @param appointmentId Id of an appointment
-   * @param seriesId Id of the associated series
-   */
-  public cancelSingleSeriesAppointment(appointmentId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Cancel a single appointment
-   * @param appointmentId Id of an appointment
-   */
-  public cancelSingleAppointment(appointmentId: number): Promise<void> {
-
+  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
   }
 }

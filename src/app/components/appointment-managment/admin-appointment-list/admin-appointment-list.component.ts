@@ -68,11 +68,10 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Cancel appointment
-   * @param appointmentId Id of an appointment
-   * @param seriesId Id of the associated series
+   * Opens appointment cancel popup
+   *
+   * @param appointmentId id of appointment
    */
-  public cancelAppointment(appointmentId: number, seriesId: number): Promise<void> {
-
+  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
   }
 }
