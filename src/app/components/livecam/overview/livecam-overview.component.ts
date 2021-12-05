@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RecordingId } from 'src/app/types/aliases/recording-id';
+import { Recording } from 'src/app/types/recording';
 
 @Component({
   selector: 'app-overview',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overview.component.scss']
 })
 export class LivecamOverviewComponent implements OnInit {
-  public recordings: any[] = [];
+  public recordings: Recording[] = [];
 
   constructor() { }
 
@@ -33,7 +35,7 @@ export class LivecamOverviewComponent implements OnInit {
    * 
    * @param recordingId id of recording
    */
-  public async downloadRecording(recordingId: any): Promise<void> {
+  public async downloadRecording(recordingId: RecordingId): Promise<void> {
   }
 
   /**
@@ -41,7 +43,7 @@ export class LivecamOverviewComponent implements OnInit {
    * 
    * @param recordingId id of recording
    */
-  public deleteRecording(recordingId: any): void {
+  public deleteRecording(recordingId: RecordingId): void {
   }
 
   /**
