@@ -22,8 +22,7 @@ export class LivecamScheduleComponent implements OnInit {
    * 
    * @param {NgForm} scheduleForm submitted scheduling form
    */
-  public async schedule(scheduleForm: NgForm): Promise<void> {
-    await LivecamService.schedule(scheduleForm.value);    
+  public async schedule(scheduleForm: NgForm): Promise<void> { 
   }
 
 }
