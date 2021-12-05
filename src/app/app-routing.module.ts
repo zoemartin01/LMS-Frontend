@@ -21,6 +21,9 @@ import { UserEditComponent } from "./components/user-management/edit/user-edit.c
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import { RetailerViewComponent } from "./components/whitelist-retailer/view/retailer-view.component";
+import { RetailerEditComponent} from "./components/whitelist-retailer/edit/retailer-edit.component";
+import { RetailerCreationComponent} from "./components/whitelist-retailer/creation/retailer-creation.component";
 
 const routes: Routes = [
   //General
@@ -118,6 +121,33 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Global Settings'
+    }
+  },
+  {
+    path: 'retailer/:id',
+    component: RetailerViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Retailer View'
+    }
+  },
+
+  {
+    path: 'retailer/:id/edit',
+    component: RetailerEditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Retailer Edit'
+    }
+  },
+
+
+  {
+    path: 'retailer-creation',
+    component: RetailerCreationComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Retailer Creation'
     }
   },
 

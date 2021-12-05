@@ -15,6 +15,9 @@ import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.compon
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RetailerCreateComponent } from "./components/whitelist-retailer/create/retailer-create.component";
+import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
+import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';
 import { RoomCreateComponent } from './components/room-managment/create/room-create.component';
 import { RoomEditComponent } from './components/room-managment/edit/room-edit.component';
 import { RoomListComponent } from './components/room-managment/list/room-list.component';
@@ -37,6 +40,9 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
     LoginComponent,
     MessageBoxComponent,
     RegisterComponent,
+    RetailerCreateComponent,
+    RetailerViewComponent,
+    RetailerEditComponent,
     RoomCreateComponent,
     RoomEditComponent,
     RoomListComponent,

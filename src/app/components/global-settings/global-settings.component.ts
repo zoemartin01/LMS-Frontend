@@ -17,29 +17,18 @@ export class GlobalSettingsComponent implements OnInit {
 
   constructor(public globalSettingsService: GlobalSettingsService) {
   }
-  
+
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.getGlobalSettings();
   }
 
   /**
    * Gets global settings (including: max recordings, timespan before autodeletion, whitelist retailers)
    */
   public async getGlobalSettings(): Promise<void> {
-  }
-
-  /**
-   * changes maximum recordings per user
-   */
-  public async setMaxRecordings(): Promise<void> {
-  }
-
-  /**
-   * changes timespan before autodeletion of recordings
-   */
-  public async setAutodeleteTimespan(): Promise<void> {
   }
 
   /**
@@ -53,14 +42,14 @@ export class GlobalSettingsComponent implements OnInit {
    *
    * @param whitelistRetailerId id of whitelist retailer
    */
-  public editWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): void {
+  public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
   }
 
   /**
-   * Deletes whitelist retailer
+   * Opens whitelist retailer deletion form
    *
    * @param whitelistRetailerId id of whitelist retailer
    */
-  public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId) : Promise<void> {
+  public openWhitelistRetailerDeletePopup(whitelistRetailerId: WhitelistRetailerId): void {
   }
 }
