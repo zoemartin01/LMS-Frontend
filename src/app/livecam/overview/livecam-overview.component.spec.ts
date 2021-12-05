@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OverviewComponent } from './overview.component';
+import { LivecamOverviewComponent } from './livecam-overview.component';
 
 describe('OverviewComponent', () => {
-  let component: OverviewComponent;
-  let fixture: ComponentFixture<OverviewComponent>;
+  let component: LivecamOverviewComponent;
+  let fixture: ComponentFixture<LivecamOverviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OverviewComponent ]
+      declarations: [ LivecamOverviewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OverviewComponent);
+    fixture = TestBed.createComponent(LivecamOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
