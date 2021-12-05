@@ -23,6 +23,7 @@ import { UserSettingsComponent } from "./components/settings/user-settings/user-
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
+import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 
 const routes: Routes = [
   //General
@@ -209,7 +210,16 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     component: LivecamDeleteComponent,
     pathMatch: 'full',
-  }
+  },
+  {
+    path: 'livecam/schedule',
+    canActivate: [AdminGuard],
+    component: LivecamScheduleComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'LiveCam Schedule'
+    },
+  },
 ];
 
 @NgModule({
