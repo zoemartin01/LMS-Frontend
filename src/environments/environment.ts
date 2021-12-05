@@ -10,8 +10,14 @@ export const environment = {
   },
 
   //routes
-  loginRoute: '/token',
-  tokenRefreshRoute: '/token/refresh',
-  logoutRoute: '/token',
-  tokenTestRoute: '/token/test',
+  apiRoutes: {
+    //auth
+    userDetails: '',
+    login: '/token',
+    tokenRefresh: '/token/refresh',
+    logout: '/token',
+    tokenTest: '/token/test',
+    signin: '',
+    verifyEmail: '',
+  }
 };

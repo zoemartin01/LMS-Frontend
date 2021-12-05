@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UnreadMessages } from "../../types/unread-messages";
+
 import { AuthService } from "../../services/auth.service";
 
 @Component({
@@ -8,7 +10,7 @@ import { AuthService } from "../../services/auth.service";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  public unreadMessages = {
+  public unreadMessages: UnreadMessages = {
     sum: 0,
     appointments: 0,
     orders: 0,
@@ -18,6 +20,9 @@ export class DashboardComponent implements OnInit {
   constructor(public authService: AuthService) {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
     this.unreadMessages = {
       sum: 7,
