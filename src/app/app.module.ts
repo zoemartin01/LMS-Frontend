@@ -8,6 +8,7 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { AppComponent } from './app.component';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { GlobalSettingsComponent } from './components/global-settings/global-settings.component';
 import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
@@ -29,6 +30,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
     AppComponent,
     DashboardComponent,
     EmailVerificationComponent,
+    GlobalSettingsComponent,
     HelpFaqComponent,
     HomepageComponent,
     HwlabRulesComponent,
