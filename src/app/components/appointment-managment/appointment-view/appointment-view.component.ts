@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from "@angular/forms";
+import {AppointmentId} from "../../../types/aliases/appointment-id";
 
 @Component({
   selector: 'app-appointment-view',
@@ -9,29 +11,25 @@ export class AppointmentViewComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
   /**
    * Lists all appointments with associated data
    */
-  // @ts-ignore
   public getAppointmentData(): Promise<void> {
 
   }
 
   /**
-   * Edits an appointment
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
-   * @param appId appointment id
-   * @param seriesId associated series of appointment
+   * Opens appointment edit form
+   *
+   * @param appointmentId id of appointment
    */
-  // @ts-ignore
-  public editAppointmentData(roomId: number, userId: number, startTime: string, endTime: string, appId: number, seriesId: number): Promise<void> {
-
+  public editAppointment(appointmentId: AppointmentId): Promise<void> {
   }
-  //TODO also in edit
+
 }

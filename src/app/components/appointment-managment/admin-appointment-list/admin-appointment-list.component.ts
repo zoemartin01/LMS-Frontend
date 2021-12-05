@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {AppointmentService} from "../../../services/appointment.service";
+import {AppointmentId} from "../../../types/aliases/appointment-id";
+import { Appointment } from "../../../types/appointment";
+import {NgForm} from "@angular/forms";
+import {RoomId} from "../../../types/aliases/room-id";
+//TODO add type
+//TODO add alias
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -6,101 +13,66 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-appointment-list.component.scss']
 })
 export class AdminAppointmentListComponent implements OnInit {
+  public appointments: Appointment[] = [];
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService) {
+  }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
   /**
-   * Accept appointment request, appointment gets an id, appointment request id is released
+   * Lists all appointments with data
+   */
+  public getAppointmentsData(): Promise<void> {
+  }
+
+  /**
+   * Opens appointment creation form
+   */
+  public openCreationForm(): void {
+  }
+
+  /**
+   * Opens appointment edit form
+   *
+   * @param appointmentId id of appointment
+   */
+  public editAppointment(appointmentId: AppointmentId): Promise<void> {
+  }
+
+  /**
+   * Accept appointment request
    * @param appReqId Id of an appointment request
    */
-  // @ts-ignore
   public acceptAppointmentRequest(appReqId: number): Promise<void> {
-
+    //set id
+    //release request id
   }
 
   /**
-   * Denies appointment request, appointment request id is released
+   * Denies appointment request
    * @param appReqId  Id of an appointment request
    */
-  // @ts-ignore
   public denyAppointmentRequest(appReqId: number): Promise<void> {
-
+    //release request id
   }
 
   /**
-   * Lists all appointment requests with associated data
+   * Lists all appointment requests with data
    */
-  // @ts-ignore
-  public getRequestData(): Promise<void> {
-
+  public getAppointmentRequestsData(): Promise<void> {
   }
 
   /**
-   * Lists all appointments with associated data
-   */
-  // @ts-ignore
-  public getAppointmentsData(): Promise<void> {
-
-  }
-
-  /**
-   * Edit of the whole series of appointments
-   * @param appId Id of an appointment
+   * Cancel appointment
+   * @param appointmentId Id of an appointment
    * @param seriesId Id of the associated series
    */
-  // @ts-ignore
-  public editSeriesAppointment(appId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Edit a single appointment of the whole series of appointments
-   * @param appId Id of an appointment
-   * @param seriesId Id of the associated series
-   */
-  // @ts-ignore
-  public editSingleSeriesAppointment(appId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Edit a single appointment
-   * @param appId Id of an appointment
-   */
-  // @ts-ignore
-  public editSeriesAppointment(appId: number): Promise<void> {
-
-  }
-
-  /**
-   * Cancel the whole series of appointments
-   * @param appId Id of an appointment
-   * @param seriesId Id of the associated series
-   */
-  // @ts-ignore
-  public cancelSeriesAppointment(appId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Cancel a single appointment of the whole series of appointments
-   * @param appId Id of an appointment
-   * @param seriesId Id of the associated series
-   */
-  // @ts-ignore
-  public cancelSingleSeriesAppointment(appId: number, seriesId: number): Promise<void> {
-
-  }
-
-  /**
-   * Cancel a single appointment
-   * @param appId Id of an appointment
-   */
-  // @ts-ignore
-  public cancelSingleAppointment(appId: number): Promise<void> {
+  public cancelAppointment(appointmentId: number, seriesId: number): Promise<void> {
 
   }
 }

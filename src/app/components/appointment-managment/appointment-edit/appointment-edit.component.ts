@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
+
+import { Appointment } from "../../../types/appointment";
+import {AppointmentService} from "../../../services/appointment.service";
+//TODO create type appointment
 
 @Component({
   selector: 'app-appointment-edit',
@@ -7,32 +13,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppointmentEditComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.appointment.id = +params['id'];
+      this.getAppointmentData();
+    });
   }
 
   /**
-   * lists information about all the data of an appointment
+   * Get all data of appointment
    */
-  // @ts-ignore
-  public getAppointmentData(): Promise<void> {
-
+  public getAppointmentData() : Promise<void> {
+    //use this.appointment.id here and set this.appointment
   }
-
 
   /**
-   * Edits an appointment
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
-   * @param appId appointment id
-   * @param seriesId associated series of appointment
+   * Changes data of appointment
+   *
+   * @param appointmentEditForm submitted creation form
    */
-  // @ts-ignore
-  public editAppointmentData(roomId: number, userId: number, startTime: string, endTime: string, appId: number, seriesId: number): Promise<void> {
-
+  public editAppointment(appointmentEditForm: NgForm): Promise<void> {
   }
-
 }

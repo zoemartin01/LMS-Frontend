@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-appointment-creation',
@@ -9,18 +10,17 @@ export class AppointmentCreationComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 
   /**
-   * Creates an appointment request
-   * @param roomId associated room
-   * @param userId associated user
-   * @param startTime beginning of appointment
-   * @param endTime end of appointment
+   * Opens appointment creation form
+   *
+   * @param appointmentCreationForm submitted creation form
    */
-  // @ts-ignore
-  public createRequest(roomId: number, userId: number, startTime: string, endTime: stirng): Promise<void> {
-
+  public createAppointment(appointmentCreationForm: NgForm): Promise<void> {
   }
 }
