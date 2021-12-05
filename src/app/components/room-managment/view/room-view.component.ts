@@ -13,6 +13,9 @@ import { Room } from "../../../types/room";
 export class RoomViewComponent implements OnInit {
   public room: Room = {
     id: null,
+    name: '',
+    description: '',
+    maxConBookings: 1,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -31,8 +34,7 @@ export class RoomViewComponent implements OnInit {
   /**
    * Get all data of room
    */
-  public getRoomData() : Promise<void> {
-
+  private async getRoomData() : Promise<void> {
   }
 
   /**
@@ -42,8 +44,8 @@ export class RoomViewComponent implements OnInit {
   }
 
   /**
-   * Deletes room
+   * Opens room delete confirmation popup
    */
-  public deleteRoom() : Promise<void> {
+  public deleteRoom(): void {
   }
 }
