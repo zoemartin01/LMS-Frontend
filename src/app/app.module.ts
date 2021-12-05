@@ -12,10 +12,16 @@ import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
 import { LoginComponent } from './components/login/login.component';
+import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RoomCreateComponent } from './components/room-managment/create/room-create.component';
+import { RoomEditComponent } from './components/room-managment/edit/room-edit.component';
+import { RoomListComponent } from './components/room-managment/list/room-list.component';
+import { RoomViewComponent } from './components/room-managment/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from "./components/user-management/list/user-list.component";
+import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
 import { GlobalSettingsComponent } from './components/global-settings/global-settings.component';
 
@@ -28,10 +34,16 @@ import { GlobalSettingsComponent } from './components/global-settings/global-set
     HomepageComponent,
     HwlabRulesComponent,
     LoginComponent,
+    MessageBoxComponent,
     RegisterComponent,
+    RoomCreateComponent,
+    RoomEditComponent,
+    RoomListComponent,
+    RoomViewComponent,
     SafetyInstructionsComponent,
     UserEditComponent,
     UserListComponent,
+    UserSettingsComponent,
     UserViewComponent,
     GlobalSettingsComponent,
   ],

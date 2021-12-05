@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./services/auth.service";
+import { Component, OnInit } from '@angular/core';
+
+import { AuthService } from "./services/auth.service";
+import { UnreadMessages } from "./types/unread-messages";
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,21 @@ import {AuthService} from "./services/auth.service";
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
-  unreadMessages: number = 0;
+  public unreadMessages: UnreadMessages = {
+    sum: 0,
+    appointments: 0,
+    orders: 0,
+    users: 0,
+  };
 
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.unreadMessages = 7;
+    this.unreadMessages = {
+      sum: 7,
+      appointments: 2,
+      orders: 3,
+      users: 1,
+    };
   }
 }
