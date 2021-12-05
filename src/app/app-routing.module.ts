@@ -19,6 +19,16 @@ import { SafetyInstructionsComponent } from "./components/safety-instructions/sa
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
+import {InventoryOrderComponent} from "./components/inventory-management/inventory-order/inventory-order.component";
+import {ItemCreateComponent} from "./components/inventory-management/item-create/item-create.component";
+import {ItemEditComponent} from "./components/inventory-management/item-edit/item-edit.component";
+import {ItemViewComponent} from "./components/inventory-management/item-view/item-view.component";
+import {ListComponent} from "./components/inventory-management/list/list.component";
+import {AdminOrderListComponent} from "./components/order-management/admin-order-list/admin-order-list.component";
+import {EditComponent} from "./components/order-management/edit/edit.component";
+import {PersonalOrderListComponent} from "./components/order-management/personal-order-list/personal-order-list.component";
+import {RequestCreationComponent} from "./components/order-management/request-creation/request-creation.component";
+import {OrderViewComponent} from "./components/order-management/view/order-view.component";
 
 const routes: Routes = [
   //General
@@ -163,7 +173,97 @@ const routes: Routes = [
 
   //Appointment Management
 
-  //Inventory & Order Management
+  //Inventory Management
+  {
+    path: 'inventory/order',
+    component: InventoryOrderComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory Order'
+    }
+  },
+
+  {
+    path: 'inventory/item-create',
+    component: ItemCreateComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory Item Create'
+    }
+  },
+
+  {
+    path: 'inventory/item-edit',
+    component:ItemEditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory Item Create'
+    }
+  },
+
+  {
+    path: 'inventory/item-view',
+    component: ItemViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory Item View'
+    }
+  },
+
+  {
+    path: 'inventory/list',
+    component: ListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory'
+    }
+  },
+
+  //Order Management
+  {
+    path: 'order/admin-order-list',
+    component: AdminOrderListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Admin Order List'
+    }
+  },
+
+  {
+    path: 'order/edit',
+    component: EditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Order Edit'
+    }
+  },
+
+  {
+    path: 'order/personal-order-list',
+    component: PersonalOrderListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Personal Order List'
+    }
+  },
+
+  {
+    path: 'order/request-creation',
+    component: RequestCreationComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Order Request Creation'
+    }
+  },
+
+  {
+    path: 'order/view',
+    component: OrderViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Order View Component'
+    }
+  },
 
   //Livecam
 ];
