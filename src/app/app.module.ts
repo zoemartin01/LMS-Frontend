@@ -25,6 +25,7 @@ import { UserListComponent } from "./components/user-management/list/user-list.c
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
 import { OverviewComponent } from './livecam/overview/overview.component';
+import { ScheduleComponent } from './livecam/schedule/schedule.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { OverviewComponent } from './livecam/overview/overview.component';
     UserSettingsComponent,
     UserViewComponent,
     OverviewComponent,
+    ScheduleComponent,
   ],
   imports: [
     AppRoutingModule,
