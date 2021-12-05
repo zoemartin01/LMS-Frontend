@@ -12,6 +12,7 @@ import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
 import { LoginComponent } from './components/login/login.component';
+import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RoomCreateComponent } from './components/room-managment/create/room-create.component';
 import { RoomEditComponent } from './components/room-managment/edit/room-edit.component';
@@ -31,6 +32,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
     HomepageComponent,
     HwlabRulesComponent,
     LoginComponent,
+    MessageBoxComponent,
     RegisterComponent,
     RoomCreateComponent,
     RoomEditComponent,
