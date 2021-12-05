@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
+import { RoomId } from "../../../types/aliases/room-id";
 
 @Component({
   selector: 'app-room-list',
@@ -7,8 +11,10 @@ import {Observable} from "rxjs";
   styleUrls: ['./room-list.component.scss']
 })
 export class RoomListComponent implements OnInit {
+  public rooms: Room[] = [];
 
-  constructor() { }
+  constructor(public roomService: RoomService) {
+  }
 
   /**
    * Init page
@@ -19,41 +25,28 @@ export class RoomListComponent implements OnInit {
   /**
    * Lists all rooms with data
    */
-  // @ts-ignore
   public getRoomsData(): Promise<void> {
   }
 
   /**
-   * Creates room with data
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
+   * Opens room creation form
    */
-  // @ts-ignore
-  public createRoom(roomName: string, description: string, maxConBookings: number): Promise<void> {
-
+  public openCreationForm(): void {
   }
-  //TODO (un-)available times setRoomData
 
   /**
-   * Changes data of room
-   * @param roomId id of associated room
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
+   * Opens room edit form
+   *
+   * @param roomId id of room
    */
-  // @ts-ignore
-  public editRoomData(roomId: number, roomName: string, description: string, maxConBookings: number): Promise<void> {
-
+  public editRoom(roomId: RoomId): void {
   }
-  //TODO (un-)available times setRoomData
 
   /**
    * Deletes room
+   *
    * @param roomId id of room
    */
-  // @ts-ignore
   public deleteRoom(roomId: number) : Promise<void> {
-
   }
 }

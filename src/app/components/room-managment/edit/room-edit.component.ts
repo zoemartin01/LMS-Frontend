@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-edit',
@@ -6,34 +12,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room-edit.component.scss']
 })
 export class RoomEditComponent implements OnInit {
+  //@todo add fields to room type
+  public room: Room = {
+    id: null,
+  };
 
-  constructor() { }
+  constructor(public roomService: RoomService, private route: ActivatedRoute) {
+  }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.room.id = +params['id'];
+      this.getRoomData();
+    });
+  }
+
+  /**
+   * Get all data of room
+   */
+  public getRoomData() : Promise<void> {
+    //use this.room.id here and set this.room
   }
 
   /**
    * Changes data of room
-   * @param roomId id of associated room
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
+   *
+   * @param roomEditForm submitted creation form
    */
-  // @ts-ignore
-  public editRoomData(roomId: number, roomName: string, description: string, maxConBookings: number): Promise<void> {
-
+  public editRoomData(roomEditForm: NgForm): Promise<void> {
   }
-  //TODO (un-)available times setRoomData
 
-  /**
-   * Get all data of room
-   * @param roomId id of room
-   */
-  // @ts-ignore
-  public getRoomData(roomId: number) : Promise<void> {
-
-  }
+  //@todo (un-)available times setRoomData
 }

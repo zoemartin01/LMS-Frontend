@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-view',
@@ -7,43 +11,39 @@ import {Observable} from "rxjs";
   styleUrls: ['./room-view.component.scss']
 })
 export class RoomViewComponent implements OnInit {
+  public room: Room = {
+    id: null,
+  };
 
-  constructor() { }
+  constructor(public roomService: RoomService, private route: ActivatedRoute) {
+  }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.room.id = +params['id'];
+      this.getRoomData();
+    });
   }
 
   /**
    * Get all data of room
-   * @param roomId id of room
    */
-  // @ts-ignore
-  public getRoomData(roomId: number) : Promise<void> {
+  public getRoomData() : Promise<void> {
 
+  }
+
+  /**
+   * Opens room edit form
+   */
+  public editRoom(): void {
   }
 
   /**
    * Deletes room
-   * @param roomId id of room
    */
-  // @ts-ignore
-  public deleteRoom(roomId: number) : Promise<void> {
-
+  public deleteRoom() : Promise<void> {
   }
-
-  /**
-   * Changes data of room
-   * @param roomId id of associated room
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
-   */
-  // @ts-ignore
-  public editRoomData(roomId: number, roomName: string, description: string, maxConBookings: number): Promise<void> {
-
-  }
-  //TODO (un-)available times setRoomData
 }

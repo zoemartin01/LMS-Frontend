@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-room-create',
@@ -17,13 +18,9 @@ export class RoomCreateComponent implements OnInit {
 
   /**
    * Creates room with data
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
+   *
+   * @param roomCreationForm submitted creation form
    */
-  // @ts-ignore
-  public createRoom(roomName: string, description: string, maxConBookings: number): Promise<void> {
-
+  public createRoom(roomCreationForm: NgForm): Promise<void> {
   }
-  //TODO (un-)available times setRoomData
 }
