@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from "./guards/auth.guard";
-import { RoleGuard } from "./guards/role-guard.guard";
+import { AdminGuard } from "./guards/admin.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmailVerificationComponent } from "./components/email-verification/email-verification.component";
