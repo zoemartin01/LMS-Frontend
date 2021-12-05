@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "../../../services/auth.service";
 import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-settings',
@@ -18,13 +19,13 @@ export class UserSettingsComponent implements OnInit {
     email: '',
     userRole: UserRole.unkown,
   };
-  constructor(public userService : UserService, private route: ActivatedRoute) { }
+
+  constructor(public userService: UserService, public authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.user.id = +params['id'];
-      this.getUserData();
-    });
+    this.getUserData();
+    //@todo get
   }
 
   /**
@@ -38,14 +39,13 @@ export class UserSettingsComponent implements OnInit {
    * Changes password
    */
   public async changePassword(): Promise<void>{
-
   }
 
   /**
    * Deletes users account
    */
   public async deleteAccount(): Promise<void>{
-
   }
 
+  //@todo get and set notification channel
 }

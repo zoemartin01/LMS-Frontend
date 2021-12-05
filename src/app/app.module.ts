@@ -16,8 +16,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from "./components/user-management/list/user-list.component";
-import { UserViewComponent } from './components/user-management/view/user-view.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
+import { UserViewComponent } from './components/user-management/view/user-view.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { UserSettingsComponent } from './components/settings/user-settings/user-
     SafetyInstructionsComponent,
     UserEditComponent,
     UserListComponent,
-    UserViewComponent,
     UserSettingsComponent,
+    UserViewComponent,
   ],
   imports: [
     AppRoutingModule,
