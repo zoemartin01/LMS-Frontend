@@ -35,8 +35,7 @@ export class RetailerViewComponent implements OnInit {
   }
 
   /**
-<<<<<<< Updated upstream
-   * Opens room edit form
+   * Opens whitelist retailer edit form
    */
   public openWhitelistRetailerEditForm(): void {
   }
@@ -45,16 +44,5 @@ export class RetailerViewComponent implements OnInit {
    * Opens room delete confirmation popup
    */
   public openWhitelistRetailerDeletePopup(): void {
-=======
-   * Opens whitelist retailer edit form
-   */
-  public async editRetailer(): Promise<void>{
-  }
-
-  /**
-   * Deletes whitelist retailer
-   */
-  public async deleteRetailer(): Promise<void>{
->>>>>>> Stashed changes
   }
 }
