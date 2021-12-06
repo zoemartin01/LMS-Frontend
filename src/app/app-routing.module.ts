@@ -11,7 +11,7 @@ import { GlobalSettingsComponent } from './components/global-settings/global-set
 import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
-import { InventoryOrderComponent } from './components/inventory-management/inventory-order/inventory-order.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
 import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
