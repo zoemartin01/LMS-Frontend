@@ -28,14 +28,14 @@ export class InventoryItemEditComponent implements OnInit {
   /**
    * Get all data of item
    */
-  public async getItemData() : Promise<void> {
+  private async getItemData() : Promise<void> {
   }
 
   /**
-   * Changes data of item
+   * Opens form to change data of item
    *
    * @param itemEditForm submitted create form
    */
-  public async editItemData(itemEditForm: NgForm): Promise<void> {
+  public async openItemEditForm(itemEditForm: NgForm): Promise<void> {
   }
 }
