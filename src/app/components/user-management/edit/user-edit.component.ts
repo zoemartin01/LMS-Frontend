@@ -39,30 +39,8 @@ export class UserEditComponent implements OnInit {
   /**
    * Changes data of user
    *
-   * @param userEditForm submitted create form
+   * @param userEditForm form to edit user
    */
   public async editUserData(userEditForm: NgForm): Promise<void> {
   }
-
-  /**
-   * Accepts pending user
-   */
-  public async acceptPendingUser(): Promise<void> {
-    //use this.user.id here
-  }
-
-  /**
-   * Denies pending user
-   */
-  public async denyPendingUser(): Promise<void> {
-    //use this.user.id here
-  }
-
-  /**
-   * Deletes user
-   */
-  public async deleteUser(): Promise<void> {
-    //use this.user.id here
-  }
-
 }
