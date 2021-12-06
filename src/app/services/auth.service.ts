@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   /**
-   * Refreshs authentication token of current user
+   * Refreshes authentication token of current user
    */
   public tokenRefresh(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefresh}`;

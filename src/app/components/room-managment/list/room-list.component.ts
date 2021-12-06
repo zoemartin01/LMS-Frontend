@@ -30,7 +30,7 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
-   * Opens room creation form
+   * Opens room create form
    */
   public openRoomCreationForm(): void {
   }
