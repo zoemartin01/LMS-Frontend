@@ -4,11 +4,11 @@ import {NgForm} from "@angular/forms";
 import {AppointmentService} from "../../../services/appointment.service";
 
 @Component({
-  selector: 'app-appointment-creation',
-  templateUrl: './appointment-creation.component.html',
-  styleUrls: ['./appointment-creation.component.scss']
+  selector: 'app-appointment-create',
+  templateUrl: './appointment-create.component.html',
+  styleUrls: ['./appointment-create.component.scss']
 })
-export class AppointmentCreationComponent implements OnInit {
+export class AppointmentCreateComponent implements OnInit {
 
   constructor(public appointmentService: AppointmentService) {
   }
