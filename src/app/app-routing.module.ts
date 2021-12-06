@@ -230,95 +230,95 @@ const routes: Routes = [
 
   //Appointment Management
 
-  //Inventory Management
+  //Inventory & Order Management
   {
-    path: 'inventory/order',
-    component: InventoryOrderComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Inventory Order'
-    }
-  },
-
-  {
-    path: 'inventory/item-create',
-    component: ItemCreateComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Inventory Item Create'
-    }
-  },
-
-  {
-    path: 'inventory/item-edit',
-    component:ItemEditComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Inventory Item Create'
-    }
-  },
-
-  {
-    path: 'inventory/item-view',
-    component: ItemViewComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Inventory Item View'
-    }
-  },
-
-  {
-    path: 'inventory/list',
+    path: 'inventory',
+    canActivate: [AuthGuard],
     component: ListComponent,
     pathMatch: 'full',
     data: {
       title: 'Inventory'
     }
   },
-
-  //Order Management
   {
-    path: 'order/admin-order-list',
-    component: AdminOrderListComponent,
+    path: 'inventory/item/:id',
+    canActivate: [AuthGuard],
+    component: ItemViewComponent,
     pathMatch: 'full',
     data: {
-      title: 'Admin Order List'
+      title: 'View Inventory Item'
     }
   },
-
   {
-    path: 'order/edit',
-    component: EditComponent,
+    path: 'inventory/item/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
+    component: ItemEditComponent,
     pathMatch: 'full',
     data: {
-      title: 'Order Edit'
+      title: 'Edit Inventory Item'
     }
   },
-
   {
-    path: 'order/personal-order-list',
+    path: 'inventory/item/create',
+    canActivate: [AuthGuard, AdminGuard],
+    component: ItemCreateComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Create Inventory Item'
+    }
+  },
+  {
+    path: 'orders',
+    canActivate: [AuthGuard],
     component: PersonalOrderListComponent,
     pathMatch: 'full',
     data: {
-      title: 'Personal Order List'
+      title: 'My Orders'
     }
   },
-
   {
-    path: 'order/request-creation',
-    component: RequestCreationComponent,
+    path: 'orders/all',
+    canActivate: [AuthGuard, AdminGuard],
+    component: AdminOrderListComponent,
     pathMatch: 'full',
     data: {
-      title: 'Order Request Creation'
+      title: 'All Orders'
     }
   },
-
   {
-    path: 'order/view',
+    path: 'order/:id',
+    canActivate: [AuthGuard],
     component: OrderViewComponent,
     pathMatch: 'full',
     data: {
-      title: 'Order View Component'
+      title: 'View Order'
+    }
+  },
+  {
+    path: 'order/:id/edit',
+    canActivate: [AuthGuard],
+    component: EditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Edit Order'
+    }
+  },
+  {
+    path: 'order/:id/inventory',
+    canActivate: [AuthGuard, AdminGuard],
+    component: InventoryOrderComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Inventory Order'
+    }
+  },
+  {
+    path: 'orders/create',
+    canActivate: [AuthGuard],
+    component: RequestCreationComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Request Order'
     }
   },
 
