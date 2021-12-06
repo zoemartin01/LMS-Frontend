@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestCreationComponent } from './request-creation.component';
+import { InventoryItemCreateComponent } from './inventory-item-create.component';
 
-describe('RequestCreationComponent', () => {
-  let component: RequestCreationComponent;
-  let fixture: ComponentFixture<RequestCreationComponent>;
+describe('ItemCreateComponent', () => {
+  let component: InventoryItemCreateComponent;
+  let fixture: ComponentFixture<InventoryItemCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RequestCreationComponent ]
+      declarations: [ InventoryItemCreateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestCreationComponent);
+    fixture = TestBed.createComponent(InventoryItemCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
