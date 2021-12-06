@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 
-import { GlobalSettingsService } from "../../../services/global-settings.service";
+import { GlobalSettingsService } from "../../../../../services/global-settings.service";
 
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {WhitelistRetailer} from "../../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
-  templateUrl: './retailer-view.component.html',
-  styleUrls: ['./retailer-view.component.scss']
+  templateUrl: './whitelist-retailer-view.component.html',
+  styleUrls: ['./whitelist-retailer-view.component.scss']
 })
-export class RetailerViewComponent implements OnInit {
+export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
   }
@@ -24,14 +24,14 @@ export class RetailerViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.whitelistRetailer.id = +params['id'];
-      this.getRetailerData();
+      this.getWhitelistRetailerData();
     });
   }
 
   /**
-   * Gets retailer data (including: domain, name)
+   * Gets whitelist retailer data (including: domain, name)
    */
-  public async getRetailerData(): Promise<void>{
+  public async getWhitelistRetailerData(): Promise<void>{
   }
 
   /**

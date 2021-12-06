@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RetailerEditComponent } from './retailer-edit.component';
+import { WhitelistRetailerEditComponent } from './whitelist-retailer-edit.component';
 
 describe('RetailerEditComponent', () => {
-  let component: RetailerEditComponent;
-  let fixture: ComponentFixture<RetailerEditComponent>;
+  let component: WhitelistRetailerEditComponent;
+  let fixture: ComponentFixture<WhitelistRetailerEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RetailerEditComponent ]
+      declarations: [ WhitelistRetailerEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RetailerEditComponent);
+    fixture = TestBed.createComponent(WhitelistRetailerEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

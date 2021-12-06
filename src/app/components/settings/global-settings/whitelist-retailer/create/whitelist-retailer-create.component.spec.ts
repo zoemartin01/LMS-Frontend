@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RetailerCreateComponent } from './retailer-create.component';
+import { WhitelistRetailerCreateComponent } from './whitelist-retailer-create.component';
 
 describe('RetailerCreateComponent', () => {
-  let component: RetailerCreateComponent;
-  let fixture: ComponentFixture<RetailerCreateComponent>;
+  let component: WhitelistRetailerCreateComponent;
+  let fixture: ComponentFixture<WhitelistRetailerCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RetailerCreateComponent ]
+      declarations: [ WhitelistRetailerCreateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RetailerCreateComponent);
+    fixture = TestBed.createComponent(WhitelistRetailerCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
