@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import { Room } from "../types/room";
@@ -8,7 +9,15 @@ import { Room } from "../types/room";
 })
 export class RoomService {
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
+  }
+
+  /**
+   * Gets room data
+   *
+   * @param roomId id of room
+   */
+  public getRoomData(roomId: number): Observable<any> {
   }
 
   /**
@@ -18,7 +27,6 @@ export class RoomService {
    */
   public createRoom(room: Room): Observable<any> {
   }
-  //@todo (un-)available times setRoomData
 
   /**
    * Changes data of room
@@ -37,5 +45,5 @@ export class RoomService {
   public deleteRoom(roomId: number): Observable<any> {
   }
 
-
+  //@todo (un-)available times setRoomData
 }
