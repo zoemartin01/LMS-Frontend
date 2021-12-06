@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 
 import { GlobalSettingsService } from "../../../services/global-settings.service";
 
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
@@ -35,6 +35,7 @@ export class RetailerViewComponent implements OnInit {
   }
 
   /**
+<<<<<<< Updated upstream
    * Opens room edit form
    */
   public openWhitelistRetailerEditForm(): void {
@@ -44,5 +45,16 @@ export class RetailerViewComponent implements OnInit {
    * Opens room delete confirmation popup
    */
   public openWhitelistRetailerDeletePopup(): void {
+=======
+   * Opens whitelist retailer edit form
+   */
+  public async editRetailer(): Promise<void>{
+  }
+
+  /**
+   * Deletes whitelist retailer
+   */
+  public async deleteRetailer(): Promise<void>{
+>>>>>>> Stashed changes
   }
 }

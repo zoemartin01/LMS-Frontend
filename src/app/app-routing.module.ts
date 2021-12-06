@@ -22,8 +22,8 @@ import { UserListComponent } from "./components/user-management/list/user-list.c
 import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
 import { RetailerViewComponent } from "./components/whitelist-retailer/view/retailer-view.component";
-import { RetailerEditComponent} from "./components/whitelist-retailer/edit/retailer-edit.component";
-import { RetailerCreationComponent} from "./components/whitelist-retailer/creation/retailer-creation.component";
+import { RetailerEditComponent } from "./components/whitelist-retailer/edit/retailer-edit.component";
+import { RetailerCreateComponent } from "./components/whitelist-retailer/create/retailer-create.component";
 
 const routes: Routes = [
   //General
@@ -106,7 +106,7 @@ const routes: Routes = [
 
   //Settings
   {
-    path: '/settings',
+    path: 'settings',
     canActivate: [AuthGuard],
     component: UserSettingsComponent,
     pathMatch: 'full',
@@ -125,26 +125,26 @@ const routes: Routes = [
   },
   {
     path: 'retailer/:id',
+    canActivate: [AuthGuard, AdminGuard],
     component: RetailerViewComponent,
     pathMatch: 'full',
     data: {
       title: 'Retailer View'
     }
   },
-
   {
     path: 'retailer/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
     component: RetailerEditComponent,
     pathMatch: 'full',
     data: {
       title: 'Retailer Edit'
     }
   },
-
-
   {
-    path: 'retailer-creation',
-    component: RetailerCreationComponent,
+    path: 'retailer-create',
+    canActivate: [AuthGuard, AdminGuard],
+    component: RetailerCreateComponent,
     pathMatch: 'full',
     data: {
       title: 'Retailer Creation'
