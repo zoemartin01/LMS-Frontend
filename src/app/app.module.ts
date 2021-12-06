@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
-import { AdminOrderListComponent } from './components/order-management/admin-order-list/admin-order-list.component';
+import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
@@ -22,9 +22,9 @@ import { InventoryListComponent } from './components/inventory-management/list/i
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
-import { PersonalOrderListComponent } from './components/order-management/personal-order-list/personal-order-list.component';
+import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
 import { RegisterComponent } from './components/register/register.component';
-import { OrderRequestComponent } from './components/order-management/request-creation/order-request.component';
+import { OrderRequestComponent } from './components/order-management/request/order-request.component';
 import { RetailerCreateComponent } from './components/whitelist-retailer/create/retailer-create.component';
 import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
 import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-request-creation',
+  selector: 'app-order-request',
   templateUrl: './order-request.component.html',
   styleUrls: ['./order-request.component.scss']
 })
