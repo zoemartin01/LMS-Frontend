@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit {
   }
 
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets data of all users
     */
   public async getUsers(): Promise<void> {
   }
@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
   /**
    * Accepts pending user
    *
-   * @param userId id of user
+   * @param userId id of pending user
    */
   public async acceptPendingUser(userId: UserId): Promise<void> {
   }
@@ -37,16 +37,24 @@ export class UserListComponent implements OnInit {
   /**
    * Denies pending user
    *
-   * @param userId id of user
+   * @param userId id of pending user
    */
   public async denyPendingUser(userId: UserId): Promise<void> {
   }
 
   /**
-   * Deletes user
+   * Opens user edit form
    *
-   * @param userId id of user
+   * @param userId id of user to edit
    */
-  public async deleteUser(userId: UserId): Promise<void> {
+  public openUserEditForm(userId: UserId): void {
+  }
+
+  /**
+   * Opens user delete confirmation popup
+   *
+   * @param userId id of user to delete
+   */
+  public deleteUser(userId: UserId): void {
   }
 }
