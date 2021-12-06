@@ -16,6 +16,9 @@ import { InventoryItemCreateComponent } from './components/inventory-management/
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
+import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
+import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
@@ -323,6 +326,30 @@ const routes: Routes = [
   },
 
   //Livecam
+  {
+    path: 'livecam',
+    canActivate: [AdminGuard],
+    component: LivecamOverviewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'LiveCam Dashboard'
+    },
+  },
+  {
+    path: 'livecam/:id/delete',
+    canActivate: [AdminGuard],
+    component: LivecamDeleteComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'livecam/schedule',
+    canActivate: [AdminGuard],
+    component: LivecamScheduleComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'LiveCam Schedule'
+    },
+  },
 ];
 
 @NgModule({
