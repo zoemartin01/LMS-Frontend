@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UnreadMessages } from "../../types/unread-messages";
+import { UnreadMessages } from "../../../types/unread-messages";
 
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-dashboard',

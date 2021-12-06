@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Message } from "../../types/message";
-import { UnreadMessages } from "../../types/unread-messages";
+import { Message } from "../../../types/message";
+import { UnreadMessages } from "../../../types/unread-messages";
 
 @Component({
   selector: 'app-message-box',
