@@ -39,12 +39,12 @@ export class UserViewComponent implements OnInit {
   /**
    * Opens user edit form
    */
-  public editUser(): void {
+  public openUserEditForm(): void {
   }
 
   /**
-   * Opens user delete confirmation popup
+   * Opens user delete confirmation dialog
    */
-  public deleteUser(): void {
+  public openUserDeletionDialog(): void {
   }
 }
