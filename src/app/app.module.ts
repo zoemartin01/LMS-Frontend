@@ -19,6 +19,9 @@ import { InventoryItemCreateComponent } from './components/inventory-management/
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
+import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
+import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
@@ -37,10 +40,6 @@ import { UserEditComponent } from './components/user-management/edit/user-edit.c
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
-import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
-import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
-import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
-
 @NgModule({
   declarations: [
     AdminOrderListComponent,

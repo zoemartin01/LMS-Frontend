@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Recording } from 'src/app/types/recording';
-import { LivecamService } from 'src/app/services/livecam.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { Recording } from 'src/app/types/recording';
+
+import { LivecamService } from 'src/app/services/livecam.service';
+
 @Component({
   selector: 'app-livecam-delete',
   templateUrl: './livecam-delete.component.html',
@@ -12,7 +15,8 @@ export class LivecamDeleteComponent implements OnInit {
     id: null,
   }
 
-  constructor(public livecamService: LivecamService, private route: ActivatedRoute) { }
+  constructor(public livecamService: LivecamService, private route: ActivatedRoute) {
+  }
 
   /**
    * Init page
@@ -29,5 +33,4 @@ export class LivecamDeleteComponent implements OnInit {
   public async deleteRecording(): Promise<void> {
     await this.livecamService.deleteRecording(this.recording.id);
   }
-
 }

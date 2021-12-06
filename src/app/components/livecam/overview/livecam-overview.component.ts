@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordingId } from 'src/app/types/aliases/recording-id';
+
+import {LivecamService} from "../../../services/livecam.service";
+
 import { Recording } from 'src/app/types/recording';
+import { RecordingId } from 'src/app/types/aliases/recording-id';
 
 @Component({
   selector: 'app-livecam-overview',
@@ -10,7 +13,8 @@ import { Recording } from 'src/app/types/recording';
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];
 
-  constructor() { }
+  constructor(public livecamService: LivecamService) {
+  }
 
   /**
    * Init page
@@ -32,7 +36,7 @@ export class LivecamOverviewComponent implements OnInit {
 
   /**
    * Download a recording
-   * 
+   *
    * @param recordingId id of recording
    */
   public async downloadRecording(recordingId: RecordingId): Promise<void> {
@@ -40,7 +44,7 @@ export class LivecamOverviewComponent implements OnInit {
 
   /**
    * Open recording deletion dialog
-   * 
+   *
    * @param recordingId id of recording
    */
   public deleteRecording(recordingId: RecordingId): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { LivecamService } from '../../../services/livecam.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { LivecamService } from '../../../services/livecam.service';
 })
 export class LivecamScheduleComponent implements OnInit {
 
-  constructor() { }
+  constructor(public livecamService: LivecamService) {
+  }
 
   /**
    * Init page
@@ -19,10 +21,9 @@ export class LivecamScheduleComponent implements OnInit {
 
   /**
    * Schedules a livecam recording with the passed parameters
-   * 
+   *
    * @param {NgForm} scheduleForm submitted scheduling form
    */
-  public async schedule(scheduleForm: NgForm): Promise<void> { 
+  public async schedule(scheduleForm: NgForm): Promise<void> {
   }
-
 }
