@@ -20,33 +20,34 @@ export class RoomListComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
+    this.getRooms()
   }
 
   /**
    * Lists all rooms with data
    */
-  public getRoomsData(): Promise<void> {
+  private async getRooms(): Promise<void> {
   }
 
   /**
-   * Opens room creation form
+   * Opens room create form
    */
-  public openCreationForm(): void {
+  public openRoomCreationForm(): void {
   }
 
   /**
    * Opens room edit form
    *
-   * @param roomId id of room
+   * @param roomId id of room to edit
    */
-  public editRoom(roomId: RoomId): void {
+  public openRoomEditForm(roomId: RoomId): void {
   }
 
   /**
-   * Deletes room
+   * Opens room delete confirmation popup
    *
-   * @param roomId id of room
+   * @param roomId id of room to delete
    */
-  public deleteRoom(roomId: number) : Promise<void> {
+  public deleteRoom(roomId: RoomId): void {
   }
 }
