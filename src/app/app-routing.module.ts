@@ -10,7 +10,7 @@ import { AppointmentEditComponent } from "./components/appointment-management/ed
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { GlobalSettingsComponent } from './components/global-settings/global-settings.component';
+import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
 import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
@@ -30,9 +30,6 @@ import { OrderViewComponent } from './components/order-management/view/order-vie
 import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
 import { PersonalOrderListComponent } from './components/order-management/personal-order-list/personal-order-list.component';
 import { RegisterComponent } from './components/register/register.component';
-import { RetailerCreateComponent } from './components/whitelist-retailer/create/retailer-create.component';
-import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
-import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';
 import { RoomCalenderViewComponent } from "./components/appointment-management/calender-view/room-calender-view.component";
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
@@ -43,6 +40,9 @@ import { UserEditComponent } from './components/user-management/edit/user-edit.c
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
+import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
+import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
+import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
 
 const routes: Routes = [
   //General
@@ -143,30 +143,30 @@ const routes: Routes = [
     }
   },
   {
-    path: 'global-settings/retailer/:id',
+    path: 'global-settings/whitelist-retailer/:id',
     canActivate: [AuthGuard, AdminGuard],
-    component: RetailerViewComponent,
+    component: WhitelistRetailerViewComponent,
     pathMatch: 'full',
     data: {
-      title: 'Retailer View'
+      title: 'Whitelist-Retailer View'
     }
   },
   {
-    path: 'global-settings/retailer/:id/edit',
+    path: 'global-settings/whitelist-retailer/:id/edit',
     canActivate: [AuthGuard, AdminGuard],
-    component: RetailerEditComponent,
+    component: WhitelistRetailerEditComponent,
     pathMatch: 'full',
     data: {
-      title: 'Retailer Edit'
+      title: 'Whitelist-Retailer Edit'
     }
   },
   {
-    path: 'global-settings/retailer/create',
+    path: 'global-settings/whitelist-retailer/create',
     canActivate: [AuthGuard, AdminGuard],
-    component: RetailerCreateComponent,
+    component: WhitelistRetailerCreateComponent,
     pathMatch: 'full',
     data: {
-      title: 'Retailer Creation'
+      title: 'Create Whitelist-Retailer'
     }
   },
 

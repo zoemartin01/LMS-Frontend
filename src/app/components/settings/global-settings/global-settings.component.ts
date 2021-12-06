@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { GlobalSettingsService } from "../../services/global-settings.service";
+import { GlobalSettingsService } from "../../../services/global-settings.service";
 
-import { WhitelistRetailer } from "../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 
 @Component({
   selector: 'app-global-settings',
