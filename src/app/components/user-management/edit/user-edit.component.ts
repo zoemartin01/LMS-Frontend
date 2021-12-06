@@ -5,7 +5,7 @@ import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
-import {NgForm} from "@angular/forms";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-user-edit',
@@ -32,7 +32,7 @@ export class UserEditComponent implements OnInit {
   /**
    * Get data of user
    */
-  public async getUserData() : Promise<void> {
+  public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
   }
 
