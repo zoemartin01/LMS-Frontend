@@ -11,6 +11,14 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { HelpFaqComponent } from './components/help-faq/help-faq.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
+import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
+import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
+import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
+import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
+import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
+import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { RegisterComponent } from './components/register/register.component';
