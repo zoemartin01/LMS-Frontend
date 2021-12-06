@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
+
+import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
-import {AppointmentService} from "../../../services/appointment.service";
-//TODO type appointment not working
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -12,6 +14,18 @@ import {AppointmentService} from "../../../services/appointment.service";
   styleUrls: ['./appointment-edit.component.scss']
 })
 export class AppointmentEditComponent implements OnInit {
+  public appointment: Appointment = {
+    id: null,
+    userId: null,
+    roomTimespan: {
+      roomId: null,
+      start: null,
+      end: null,
+      type: RoomTimespanType.appointment,
+    },
+    seriesId: null,
+    confirmationStatus: ConfirmationStatus.unknown,
+  };
 
   constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
   }
@@ -29,7 +43,7 @@ export class AppointmentEditComponent implements OnInit {
   /**
    * Get all data of appointment
    */
-  public getAppointmentData() : Promise<void> {
+  public async getAppointmentData() : Promise<void> {
     //use this.appointment.id here and set this.appointment
   }
 
@@ -38,6 +52,6 @@ export class AppointmentEditComponent implements OnInit {
    *
    * @param appointmentEditForm submitted creation form
    */
-  public editAppointment(appointmentEditForm: NgForm): Promise<void> {
+  public async editAppointment(appointmentEditForm: NgForm): Promise<void> {
   }
 }

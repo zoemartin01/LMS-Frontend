@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
+
 import {AppointmentService} from "../../../services/appointment.service";
-import {AppointmentId} from "../../../types/aliases/appointment-id";
 
 @Component({
   selector: 'app-appointment-creation',
@@ -10,7 +10,8 @@ import {AppointmentId} from "../../../types/aliases/appointment-id";
 })
 export class AppointmentCreationComponent implements OnInit {
 
-  constructor(public appointmentService: AppointmentService) { }
+  constructor(public appointmentService: AppointmentService) {
+  }
 
   /**
    * Init page
@@ -23,6 +24,6 @@ export class AppointmentCreationComponent implements OnInit {
    *
    * @param appointmentCreationForm submitted creation form
    */
-  public createAppointment(appointmentCreationForm: NgForm): Promise<void> {
+  public async createAppointment(appointmentCreationForm: NgForm): Promise<void> {
   }
 }

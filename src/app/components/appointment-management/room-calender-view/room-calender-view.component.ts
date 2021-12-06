@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AppointmentId} from "../../../types/aliases/appointment-id";
-import {AppointmentService} from "../../../services/appointment.service";
+import { ActivatedRoute } from "@angular/router";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { AppointmentId } from "../../../types/aliases/appointment-id";
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-calender-view',
@@ -8,15 +13,33 @@ import {AppointmentService} from "../../../services/appointment.service";
   styleUrls: ['./room-calender-view.component.scss']
 })
 export class RoomCalenderViewComponent implements OnInit {
+  public room: Room = {
+    id: null,
+    name: '',
+    description: '',
+    maxConBookings: 1,
+  };
+  public appointments: Appointment[] = [];
 
-  constructor(public appointmentService: AppointmentService) { }
+  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.room.id = +params['id'];
+      this.getRoomData();
+      this.getAppointments();
+    });
   }
 
+  /**
+   * Get all data of room
+   */
+  private async getRoomData() : Promise<void> {
+  }
 
   /**
    * Opens appointment creation form
@@ -29,22 +52,36 @@ export class RoomCalenderViewComponent implements OnInit {
    *
    * @param appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): Promise<void> {
+  public editAppointment(appointmentId: AppointmentId): void {
   }
 
   /**
    * Gets appointment data of all appointments of one room
-   * @param roomId associated room
    */
-  public getAppointmentData(roomId: number): Promise<void> {
-
+  public async getAppointments(): Promise<void> {
   }
 
   /**
-   * Opens appointment cancel popup
+   * Opens appointment deletion popup
    *
    * @param appointmentId id of appointment
    */
-  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
+  public deleteAppointment(appointmentId: AppointmentId): void {
+  }
+
+  /**
+   * Sets appointment request to accepted
+   *
+   * @param appointmentId id of appointment
+   */
+  public async acceptAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
+  }
+
+  /**
+   * Sets appointment request to accepted
+   *
+   * @param appointmentId id of appointment
+   */
+  public async declineAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
   }
 }

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {AppointmentService} from "../../../services/appointment.service";
-import {AppointmentId} from "../../../types/aliases/appointment-id";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
 import { Appointment } from "../../../types/appointment";
-import {NgForm} from "@angular/forms";
-import {RoomId} from "../../../types/aliases/room-id";
-//TODO add type
-//TODO add alias
+import { AppointmentId } from "../../../types/aliases/appointment-id";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -22,12 +20,7 @@ export class AdminAppointmentListComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
-  }
-
-  /**
-   * Lists all appointments with data
-   */
-  public getAppointmentsData(): Promise<void> {
+    this.getAppointments();
   }
 
   /**
@@ -41,37 +34,36 @@ export class AdminAppointmentListComponent implements OnInit {
    *
    * @param appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): Promise<void> {
+  public editAppointment(appointmentId: AppointmentId): void {
   }
 
   /**
-   * Accept appointment request
-   * @param appReqId Id of an appointment request
+   * Gets appointment data of all appointments
    */
-  public acceptAppointmentRequest(appReqId: number): Promise<void> {
-    //set id
-    //release request id
+  public async getAppointments(): Promise<void> {
   }
 
   /**
-   * Denies appointment request
-   * @param appReqId  Id of an appointment request
-   */
-  public denyAppointmentRequest(appReqId: number): Promise<void> {
-    //release request id
-  }
-
-  /**
-   * Lists all appointment requests with data
-   */
-  public getAppointmentRequestsData(): Promise<void> {
-  }
-
-  /**
-   * Opens appointment cancel popup
+   * Opens appointment deletion popup
    *
    * @param appointmentId id of appointment
    */
-  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
+  public deleteAppointment(appointmentId: AppointmentId): void {
+  }
+
+  /**
+   * Sets appointment request to accepted
+   *
+   * @param appointmentId id of appointment
+   */
+  public async acceptAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
+  }
+
+  /**
+   * Sets appointment request to accepted
+   *
+   * @param appointmentId id of appointment
+   */
+  public async declineAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
   }
 }

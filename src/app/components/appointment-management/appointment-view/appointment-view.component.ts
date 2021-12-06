@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {AppointmentId} from "../../../types/aliases/appointment-id";
-import {AppointmentService} from "../../../services/appointment.service";
+import { ActivatedRoute } from "@angular/router";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { AppointmentId } from "../../../types/aliases/appointment-id";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
 
 @Component({
   selector: 'app-appointment-view',
@@ -9,20 +14,36 @@ import {AppointmentService} from "../../../services/appointment.service";
   styleUrls: ['./appointment-view.component.scss']
 })
 export class AppointmentViewComponent implements OnInit {
+  public appointment: Appointment = {
+    id: null,
+    userId: null,
+    roomTimespan: {
+      roomId: null,
+      start: null,
+      end: null,
+      type: RoomTimespanType.appointment,
+    },
+    seriesId: null,
+    confirmationStatus: ConfirmationStatus.unknown,
+  };
 
-  constructor(public appointmentService: AppointmentService) { }
+  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.appointment.id = +params['id'];
+      this.getAppointmentData();
+    });
   }
 
   /**
-   * Lists all appointments with associated data
+   * Get all data of appointment
    */
-  public getAppointmentData(): Promise<void> {
-
+  public async getAppointmentData(): Promise<void> {
   }
 
   /**
@@ -30,14 +51,14 @@ export class AppointmentViewComponent implements OnInit {
    *
    * @param appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): Promise<void> {
+  public editAppointment(appointmentId: AppointmentId): void {
   }
 
   /**
-   * Opens appointment cancel popup
+   * Opens appointment deletion popup
    *
    * @param appointmentId id of appointment
    */
-  public cancelAppointment(appointmentId: AppointmentId): Promise<void> {
+  public deleteAppointment(appointmentId: AppointmentId): void {
   }
 }
