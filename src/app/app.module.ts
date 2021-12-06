@@ -37,10 +37,10 @@ import { RetailerCreateComponent } from './components/whitelist-retailer/create/
 import { RetailerEditComponent } from './components/whitelist-retailer/edit/retailer-edit.component';
 import { RetailerViewComponent } from './components/whitelist-retailer/view/retailer-view.component';
 import { RoomCalenderViewComponent } from "./components/appointment-management/room-calender-view/room-calender-view.component";
-import { RoomCreateComponent } from './components/room-managment/create/room-create.component';
-import { RoomEditComponent } from './components/room-managment/edit/room-edit.component';
-import { RoomListComponent } from './components/room-managment/list/room-list.component';
-import { RoomViewComponent } from './components/room-managment/view/room-view.component';
+import { RoomCreateComponent } from './components/room-management/create/room-create.component';
+import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
+import { RoomListComponent } from './components/room-management/list/room-list.component';
+import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
