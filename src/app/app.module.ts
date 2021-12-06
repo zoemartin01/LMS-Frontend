@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
-import { AdminOrderListComponent } from './components/order-management/admin-order-list/admin-order-list.component';
+import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
 import { AppComponent } from './app.component';
 import { AppointmentCreateComponent } from "./components/appointment-management/create/appointment-create.component";
 import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
@@ -28,10 +28,10 @@ import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-
 import { LoginComponent } from './components/login/login.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
-import { OrderRequestComponent } from './components/order-management/request-creation/order-request.component';
+import { OrderRequestComponent } from './components/order-management/request/order-request.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
 import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
-import { PersonalOrderListComponent } from './components/order-management/personal-order-list/personal-order-list.component';
+import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RoomCalenderViewComponent } from "./components/appointment-management/calender-view/room-calender-view.component";
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
