@@ -43,6 +43,14 @@ export class UserListComponent implements OnInit {
   }
 
   /**
+   * Opens user view
+   *
+   * @param userId id of user to view
+   */
+  public openUserView(userId: UserId): void {
+  }
+
+  /**
    * Opens user edit form
    *
    * @param userId id of user to edit
@@ -51,10 +59,10 @@ export class UserListComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation popup
+   * Opens user delete confirmation dialog
    *
    * @param userId id of user to delete
    */
-  public deleteUser(userId: UserId): void {
+  public openUserDeletionDialog(userId: UserId): void {
   }
 }
