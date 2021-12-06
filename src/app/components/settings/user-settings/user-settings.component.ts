@@ -42,9 +42,9 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Deletes users account
+   * Opens user delete confirmation dialog
    */
-  public async deleteAccount(): Promise<void>{
+  public openUserDeletionDialog(): void {
   }
 
   //@todo get and set notification channel
