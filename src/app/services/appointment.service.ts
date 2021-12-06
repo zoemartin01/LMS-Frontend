@@ -70,7 +70,7 @@ export class AppointmentService {
    *
    * @param appointmentId id of appointment
    */
-  public async acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
+  public acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
   }
 
   /**
@@ -78,6 +78,6 @@ export class AppointmentService {
    *
    * @param appointmentId id of appointment
    */
-  public async declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
+  public declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
   }
 }
