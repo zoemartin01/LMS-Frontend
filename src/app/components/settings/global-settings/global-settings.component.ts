@@ -26,7 +26,7 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Gets global settings (including: max recordings, timespan before autodeletion, whitelist retailers)
+   * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
   }
@@ -46,10 +46,10 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Opens whitelist retailer deletion form
+   * Opens whitelist retailer deletion dialog
    *
    * @param whitelistRetailerId id of whitelist retailer
    */
-  public openWhitelistRetailerDeletePopup(whitelistRetailerId: WhitelistRetailerId): void {
+  public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
   }
 }
