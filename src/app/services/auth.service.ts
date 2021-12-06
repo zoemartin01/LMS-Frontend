@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 
 import { User } from "../types/user";
@@ -10,6 +10,7 @@ import { UserId } from "../types/aliases/user-id";
   providedIn: 'root'
 })
 export class AuthService {
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -17,6 +18,9 @@ export class AuthService {
    * Retrieves user details
    */
   public getUserDetails(): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.userDetails}`;
+
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -35,7 +39,7 @@ export class AuthService {
    * @param password user's password
    */
   public login(email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.loginRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.login}`;
     const requestBody = {
       email,
       password,
@@ -48,19 +52,17 @@ export class AuthService {
    * Logs out current user
    */
   public logout(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.logoutRoute}`;
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.getAccessToken()}`
-    });
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.logout}`;
 
-    return this.httpClient.delete(apiURL, {headers: httpHeaders});
+    //@todo check HTTP method
+    return this.httpClient.delete(apiURL);
   }
 
   /**
-   * Refreshs authentication token of current user
+   * Refreshes authentication token of current user
    */
   public tokenRefresh(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefreshRoute}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefresh}`;
     const requestBody = {
       token: this.getRefreshToken(),
     };
@@ -72,12 +74,9 @@ export class AuthService {
    * Checks token of current user
    */
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenTestRoute}`;
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.getAccessToken()}`
-    });
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenTest}`;
 
-    return this.httpClient.post(apiURL, {headers: httpHeaders});
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -89,6 +88,15 @@ export class AuthService {
    * @param password  new user's password
    */
   public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.signin}`;
+    const requestBody = {
+      firstname,
+      lastname,
+      email,
+      password
+    };
+
+    return this.httpClient.post(apiURL, requestBody);
   }
 
   /**
@@ -98,6 +106,13 @@ export class AuthService {
    * @param token  token to verify email
    */
   public verifyEmail(userId: UserId, token: string): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.verifyEmail}`;
+    const requestBody = {
+      userId,
+      token
+    };
+
+    return this.httpClient.post(apiURL, requestBody);
   }
 
   /**

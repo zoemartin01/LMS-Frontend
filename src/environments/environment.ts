@@ -11,9 +11,13 @@ export const environment = {
 
   //routes
   apiRoutes: {
-    loginRoute: '/token',
-    tokenRefreshRoute: '/token/refresh',
-    logoutRoute: '/token',
-    tokenTestRoute: '/token/test',
+    //auth
+    userDetails: '',
+    login: '/token',
+    tokenRefresh: '/token/refresh',
+    logout: '/token',
+    tokenTest: '/token/test',
+    signin: '',
+    verifyEmail: '',
   }
 };
