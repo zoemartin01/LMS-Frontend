@@ -40,12 +40,12 @@ export class RoomViewComponent implements OnInit {
   /**
    * Opens room edit form
    */
-  public editRoom(): void {
+  public openRoomEditForm(): void {
   }
 
   /**
    * Opens room delete confirmation popup
    */
-  public deleteRoom(): void {
+  public openRoomDeletionDialog(): void {
   }
 }
