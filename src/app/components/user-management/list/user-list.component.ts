@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "../../../services/auth.service";
 
 import { User } from "../../../types/user";
 import { UserId } from "../../../types/aliases/user-id";
-import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-user-list',

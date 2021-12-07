@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor() { }
-
+  constructor(private httpClient: HttpClient) {
+  }
 
   /**
    * Gets global settings
@@ -20,8 +21,6 @@ export class AdminService {
    */
   public async getUserData(): Observable<any> {
   }
-
-
 
   /**
    * Changes data of user
@@ -37,7 +36,7 @@ export class AdminService {
    *
    * @param changedData changed fields of global settings
    */
-  public editGlobalSettings(changedData: object): Observable<any> {
+  public updateGlobalSettings(changedData: object): Observable<any> {
   }
 
   /**

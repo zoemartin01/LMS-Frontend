@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
+import { AdminService } from "../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
-import {AdminService} from "../../../services/admin.service";
-import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-global-settings',

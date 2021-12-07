@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
+import { AuthService } from "../../../services/auth.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NgForm } from "@angular/forms";
-import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-user-edit',
