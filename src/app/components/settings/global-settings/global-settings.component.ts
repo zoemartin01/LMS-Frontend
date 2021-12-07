@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import {AdminService} from "../../../services/admin.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-global-settings',
@@ -29,6 +30,14 @@ export class GlobalSettingsComponent implements OnInit {
    * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+  }
+
+  /**
+   * Changes data of user
+   *
+   * @param globalSettingsEditForm form to edit user
+   */
+  public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
   }
 
   /**
