@@ -238,6 +238,69 @@ const routes: Routes = [
   },
 
   //Appointment Management
+  {
+    path: 'room-overview',
+    canActivate: [AuthGuard],
+    component: RoomCalenderViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Room Overview'
+    }
+  },
+  {
+    path: 'room-overview/:id',
+    canActivate: [AuthGuard],
+    component: RoomCalenderViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Room Overview'
+    }
+  },
+  {
+    path: 'appointments',
+    canActivate: [AuthGuard],
+    component: PersonalAppointmentListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'My Appointment'
+    }
+  },
+  {
+    path: 'appointments/all',
+    canActivate: [AuthGuard, AdminGuard],
+    component: AdminAppointmentListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'All Appointments'
+    }
+  },
+  {
+    path: 'appointments/:id',
+    canActivate: [AuthGuard],
+    component: AppointmentViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'View Appointment'
+    }
+  },
+  {
+    path: 'room-overview/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
+    component: AppointmentEditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Edit Appointment'
+    }
+  },
+  {
+    path: 'room-overview/create',
+    canActivate: [AuthGuard],
+    component: AppointmentCreateComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Create Appointment'
+    }
+  },
 
   //Inventory & Order Management
   {
