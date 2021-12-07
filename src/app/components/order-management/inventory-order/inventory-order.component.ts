@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import {InventoryService} from "../../../services/inventory.service";
+
+import { InventoryService } from "../../../services/inventory.service";
 
 @Component({
   selector: 'app-inventory-order',

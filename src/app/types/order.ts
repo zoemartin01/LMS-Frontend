@@ -1,8 +1,6 @@
 import { OrderId } from "./aliases/order-id";
-import { User } from "./user";
+import { UserId } from "./aliases/user-id";
 import { OrderStatus } from "./enums/order-status";
-import {UserId} from "./aliases/user-id";
-
 
 export interface Order {
   id: OrderId,

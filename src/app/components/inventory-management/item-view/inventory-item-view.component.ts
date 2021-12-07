@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 
 import { InventoryService } from "../../../services/inventory.service";
-import {InventoryItem} from "../../../types/inventory-item";
+import { InventoryItem } from "../../../types/inventory-item";
 
 @Component({
   selector: 'app-inventory-item-view',
