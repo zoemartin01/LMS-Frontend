@@ -42,8 +42,8 @@ export class RoomViewComponent implements OnInit {
   }
 
   /**
-   * Deletes room
+   * Opens deletion confirmation popup
    */
-  public deleteRoom() : Promise<void> {
+  public openRoomDeletionDialog() : Promise<void> {
   }
 }

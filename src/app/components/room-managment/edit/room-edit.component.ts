@@ -42,8 +42,6 @@ export class RoomEditComponent implements OnInit {
    *
    * @param {NgForm} roomEditForm submitted creation form
    */
-  public editRoomData(roomEditForm: NgForm): Promise<void> {
+  public openRoomEditForm(roomEditForm: NgForm): Promise<void> {
   }
-
-  //@todo (un-)available times setRoomData
 }
