@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
 
 import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
@@ -9,7 +10,7 @@ import { VideoResolution } from '../types/enums/video-resolution';
 })
 export class LivecamService {
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
   }
 
   /**
