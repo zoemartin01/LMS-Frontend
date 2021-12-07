@@ -40,7 +40,7 @@ export class RoomEditComponent implements OnInit {
   /**
    * Changes data of room
    *
-   * @param roomEditForm submitted creation form
+   * @param {NgForm} roomEditForm submitted creation form
    */
   public editRoomData(roomEditForm: NgForm): Promise<void> {
   }

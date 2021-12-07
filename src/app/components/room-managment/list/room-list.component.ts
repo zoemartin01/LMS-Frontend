@@ -37,7 +37,7 @@ export class RoomListComponent implements OnInit {
   /**
    * Opens room edit form
    *
-   * @param roomId id of room
+   * @param {roomId} roomId id of room
    */
   public editRoom(roomId: RoomId): void {
   }
@@ -45,7 +45,7 @@ export class RoomListComponent implements OnInit {
   /**
    * Deletes room
    *
-   * @param roomId id of room
+   * @param {roomId} roomId id of room
    */
   public deleteRoom(roomId: number) : Promise<void> {
   }
