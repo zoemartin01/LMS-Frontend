@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 
 import {OrderService} from "../../../services/order.service";
 import {Order} from "../../../types/order";
+import {NONE_TYPE} from "@angular/compiler";
 
 @Component({
   selector: 'app-edit',
@@ -18,8 +19,8 @@ export class OrderEditComponent implements OnInit {
     item: '',
     quantity: null,
     purchaseUrl: '',
-    affiliatedUser: null,
-    orderStatus: null,
+    affiliatedUser: NONE_TYPE,
+    orderStatus: NONE_TYPE,
   }
 
   constructor(public orderService: OrderService,  private route: ActivatedRoute) {

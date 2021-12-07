@@ -3,6 +3,11 @@ import {NgForm} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 
 import {InventoryService} from "../../../services/inventory.service";
+import {Order} from "../../../types/order";
+import {OrderId} from "../../../types/aliases/order-id";
+import {User} from "../../../types/user";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {NONE_TYPE} from "@angular/compiler";
 
 @Component({
   selector: 'app-order-view',
@@ -10,6 +15,16 @@ import {InventoryService} from "../../../services/inventory.service";
   styleUrls: ['./order-view.component.scss']
 })
 export class OrderViewComponent implements OnInit {
+  // why can i not null quantity?
+  // what should be the correct "null" form for User/order status
+  public order: Order = {
+    id: null,
+    item: '',
+    quantity: null,
+    purchaseUrl: '',
+    affiliatedUser: NONE_TYPE,
+    orderStatus: NONE_TYPE,
+  }
 
   constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
   }
@@ -18,6 +33,10 @@ export class OrderViewComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.order.id = +params['id'];
+      this.getOrderData();
+    });
   }
 
   /**
@@ -28,10 +47,8 @@ export class OrderViewComponent implements OnInit {
 
   /**
    * Opens order edit form
-   *
-   * @param {NgForm} orderEditForm submitted edit form
    */
-  public openOrderEditForm(orderEditForm: NgForm): void {
+  public openOrderEditForm(): void {
   }
 
   /**
