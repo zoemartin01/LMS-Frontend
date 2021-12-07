@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {OrderId} from "../../../types/aliases/order-id";
-import {OrderService} from "../../../services/order.service";
-import {Order} from "../../../types/order";
+import { NgForm } from "@angular/forms";
+
+import { OrderService } from "../../../services/order.service";
+
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -29,26 +31,24 @@ export class PersonalOrderListComponent implements OnInit {
 
   /**
    * Opens form to create order
-   *
-   * @param {NgForm} orderCreationForm submitted create form
    */
-  public openOrderCreationForm(orderCreationForm: NgForm): void {
+  public openOrderCreationForm(): void {
   }
 
   /**
    * Opens order edit form
    *
    * @param orderId id of order to edit
-   * @param {NgForm} orderEditForm submitted edit form
    */
-  public openOrderEditForm(orderId: OrderId, orderEditForm: NgForm): void {
+  public openOrderEditForm(orderId: OrderId): void {
   }
 
   /**
    * Opens order delete confirmation popup
    *
+   * @param orderId id of the order
    */
-  public openOrderDeletionDialog(): void {
+  public openOrderDeletionDialog(orderId: OrderId): void {
   }
 
   /**
