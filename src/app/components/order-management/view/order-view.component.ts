@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import { NONE_TYPE } from "@angular/compiler";
 
-import {InventoryService} from "../../../services/inventory.service";
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {User} from "../../../types/user";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {NONE_TYPE} from "@angular/compiler";
+import { InventoryService } from "../../../services/inventory.service";
+
+import { Order } from "../../../types/order";
 
 @Component({
   selector: 'app-order-view',

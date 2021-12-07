@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
 
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderService} from "../../../services/order.service";
-import {OrderId} from "../../../types/aliases/order-id";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
 
 @Component({
   selector: 'app-admin-order-list',

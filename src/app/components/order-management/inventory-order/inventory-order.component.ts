@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { NONE_TYPE } from "@angular/compiler";
+import { ActivatedRoute } from "@angular/router";
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
 
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
 
 @Component({
   selector: 'app-inventory-order',
@@ -10,14 +13,28 @@ import {InventoryService} from "../../../services/inventory.service";
   styleUrls: ['./inventory-order.component.scss']
 })
 export class InventoryOrderComponent implements OnInit {
+  // why can i not null quantity?
+  // what should be the correct "null" form for User/order status
+  public order: Order = {
+    id: null,
+    item: '',
+    quantity: null,
+    purchaseUrl: '',
+    affiliatedUser: NONE_TYPE,
+    orderStatus: NONE_TYPE,
+  }
 
-  constructor(inventoryService: InventoryService) {
+  constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
   }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.order.id = +params['id'];
+      this.getOrderData();
+    });
   }
 
   /**
@@ -29,8 +46,8 @@ export class InventoryOrderComponent implements OnInit {
   /**
    * Opens form to put data of order in a new inventory item
    *
-   * @param {NgForm} itemCreationForm submitted edit form
+   * @param orderId id of the order to be inventoried
    */
-  public async openItemCreationForm(itemCreationForm: NgForm): Promise<void> {
+  public async openItemCreationForm(orderId: OrderId): Promise<void> {
   }
 }

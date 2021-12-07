@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
-import {OrderService} from "../../../services/order.service";
-import {Order} from "../../../types/order";
-import {NONE_TYPE} from "@angular/compiler";
+import { OrderService } from "../../../services/order.service";
+import { Order } from "../../../types/order";
+import { NONE_TYPE } from "@angular/compiler";
 
 @Component({
   selector: 'app-edit',
@@ -23,7 +22,7 @@ export class OrderEditComponent implements OnInit {
     orderStatus: NONE_TYPE,
   }
 
-  constructor(public orderService: OrderService,  private route: ActivatedRoute) {
+  constructor(public orderService: OrderService, private route: ActivatedRoute) {
   }
 
   /**
@@ -44,10 +43,8 @@ export class OrderEditComponent implements OnInit {
 
   /**
    * Changes data of order
-   *
-   * @param {NgForm} orderEditForm submitted edit form
    */
-  public async openOrderEditForm(orderEditForm: NgForm): Promise<void> {
+  public async openOrderEditForm(): Promise<void> {
   }
 
 }
