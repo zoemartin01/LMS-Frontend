@@ -15,6 +15,13 @@ export class AdminService {
   public async getGlobalSettings(): Observable<any> {
   }
 
+  /**
+   * Get user data
+   */
+  public async getUserData(): Observable<any> {
+  }
+
+
 
   /**
    * Changes data of user
