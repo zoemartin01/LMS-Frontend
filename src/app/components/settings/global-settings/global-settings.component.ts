@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { GlobalSettingsService } from "../../../services/global-settings.service";
 
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -15,7 +15,7 @@ export class GlobalSettingsComponent implements OnInit {
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
-  constructor(public globalSettingsService: GlobalSettingsService) {
+  constructor(public adminService: AdminService) {
   }
 
   /**
