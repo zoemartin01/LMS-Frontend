@@ -34,28 +34,36 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create item
    */
-  public openItemCreationForm(): void {
+  public openInventoryItemCreationForm(): void {
   }
 
   /**
    * Opens form to create order
    *
-   * @param itemId id of item to order
+   * @param inventoryItemId id of item to order
    */
-  public openOrderCreationForm(itemId: InventoryItemId): void {
+  public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
   }
 
   /**
-   * Opens item edit form
+   * Opens inventory item view
    *
-   * @param itemId id of item to edit
+   * @param inventoryItemId id of item to view
    */
-  public openItemEditForm(itemId: InventoryItemId): void {
+  public openInventoryItemView(inventoryItemId: InventoryItemId): void {
   }
 
   /**
-   * Opens item delete confirmation popup
+   * Opens inventory item edit form
+   *
+   * @param inventoryItemId id of item to edit
    */
-  public openItemDeletionDialog(itemId: InventoryItemId): void {
+  public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
+  }
+
+  /**
+   * Opens inventory item delete confirmation popup
+   */
+  public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
   }
 }
