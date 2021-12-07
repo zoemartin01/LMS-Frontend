@@ -29,7 +29,7 @@ export class AppointmentService {
   /**
    * Retrieves all appointments for specified room
    *
-   * @param roomId id of room to retrieve appointments
+   * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppoinmentsForRoom(roomId: RoomId): Observable<any> {
   }
@@ -43,7 +43,7 @@ export class AppointmentService {
   /**
    * Creates a new appointment request
    *
-   * @param appointment all data about the requested appointment
+   * @param {Appointment} appointment all data about the requested appointment
    */
   public createAppointment(appointment: Appointment): Observable<any> {
   }
@@ -51,8 +51,8 @@ export class AppointmentService {
   /**
    * Edits an appointment
    *
-   * @param appointmentId id of the appointment to be edited
-   * @param changedData   changed values as object
+   * @param {AppointmentId} appointmentId id of the appointment to be edited
+   * @param {object} changedData   changed values as object
    */
   public editAppointment(appointmentId : AppointmentId, changedData: object): Observable<any> {
   }
@@ -60,7 +60,7 @@ export class AppointmentService {
   /**
    * Deletes appointment
    *
-   * @param appointmentId Id of an appointment
+   * @param {AppointmentId} appointmentId Id of an appointment
    */
   public deleteAppointment(appointmentId: number): Observable<any> {
   }
@@ -68,7 +68,7 @@ export class AppointmentService {
   /**
    * Sets appointment request to accepted
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
   public acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
   }
@@ -76,7 +76,7 @@ export class AppointmentService {
   /**
    * Sets appointment request to accepted
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
   public declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
   }

@@ -50,7 +50,7 @@ export class AppointmentEditComponent implements OnInit {
   /**
    * Changes data of appointment
    *
-   * @param appointmentEditForm submitted edit form
+   * @param {NgForm} appointmentEditForm submitted edit form
    */
   public async editAppointment(appointmentEditForm: NgForm): Promise<void> {
   }
