@@ -23,7 +23,7 @@ import { InventoryItemCreateComponent } from './components/inventory-management/
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
-import { InventoryOrderComponent } from './components/inventory-management/inventory-order/inventory-order.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
 import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
