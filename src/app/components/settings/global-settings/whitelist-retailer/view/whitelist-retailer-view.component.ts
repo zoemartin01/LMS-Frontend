@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
-import { GlobalSettingsService } from "../../../../../services/global-settings.service";
+import { AdminService } from "../../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../../types/whitelist-retailer";
+import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
@@ -15,7 +15,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
     id: null,
   }
 
-  constructor(public globalSettingsService: GlobalSettingsService, private route: ActivatedRoute) {
+  constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**

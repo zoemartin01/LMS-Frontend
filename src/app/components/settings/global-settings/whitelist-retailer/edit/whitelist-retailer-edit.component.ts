@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { GlobalSettingsService } from "../../../../../services/global-settings.service";
+import { AdminService } from "../../../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
 
@@ -16,7 +16,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
     id: null,
   }
 
-  constructor(public globalSettingsService: GlobalSettingsService, private route: ActivatedRoute) {
+  constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**

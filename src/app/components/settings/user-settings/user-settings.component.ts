@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from "../../../services/auth.service";
-import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
@@ -20,7 +19,7 @@ export class UserSettingsComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public userService: UserService, public authService: AuthService) {
+  constructor(public authService: AuthService) {
   }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
-import { GlobalSettingsService } from "../../../services/global-settings.service";
+import { AdminService } from "../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
@@ -15,7 +16,7 @@ export class GlobalSettingsComponent implements OnInit {
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
-  constructor(public globalSettingsService: GlobalSettingsService) {
+  constructor(public adminService: AdminService) {
   }
 
   /**
@@ -29,6 +30,14 @@ export class GlobalSettingsComponent implements OnInit {
    * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+  }
+
+  /**
+   * Changes data of user
+   *
+   * @param globalSettingsEditForm form to edit user
+   */
+  public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
   }
 
   /**
