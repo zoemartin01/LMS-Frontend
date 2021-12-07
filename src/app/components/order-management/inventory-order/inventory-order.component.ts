@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-
+import {InventoryService} from "../../../services/inventory.service";
 
 @Component({
   selector: 'app-inventory-order',
@@ -9,9 +9,23 @@ import { NgForm } from "@angular/forms";
 })
 export class InventoryOrderComponent implements OnInit {
 
-  constructor() {
+  constructor(public inventoryService: InventoryService) {
   }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * Get all data of order
+   */
+  private async getOrderData() : Promise<void> {
+  }
+
+  /**
+   * Inventories order
+   *
+   * @param {NgForm} inventoryOrderForm submitted edit form
+   */
+  public async inventoryOrder(inventoryOrderForm: NgForm): Promise<void> {
   }
 }

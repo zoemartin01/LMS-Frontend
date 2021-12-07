@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InventoryItemCreateComponent } from './inventory-item-create.component';
 
-describe('ItemCreateComponent', () => {
+describe('InventoryItemCreateComponent', () => {
   let component: InventoryItemCreateComponent;
   let fixture: ComponentFixture<InventoryItemCreateComponent>;
 

@@ -4,18 +4,18 @@ import {NgForm} from "@angular/forms";
 import { OrderService } from "../../../services/order.service";
 import { InventoryService } from "../../../services/inventory.service";
 
-import { Item } from "../../../types/item";
-import { ItemId } from "../../../types/aliases/item-id";
+import { InventoryItem } from "../../../types/inventory-item";
+import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
 export class InventoryListComponent implements OnInit {
-  public inventory: Item[] = [];
+  public inventory: InventoryItem[] = [];
 
-  constructor(public inventoryService: InventoryService, public orderService: OrderService) {
+  constructor(public inventoryService: InventoryService) {
   }
 
   /**
@@ -33,33 +33,29 @@ export class InventoryListComponent implements OnInit {
 
   /**
    * Opens form to create item
-   *
-   * @param {ngForm} itemCreationForm submitted create form
    */
-  public openItemCreationForm(itemCreationForm: NgForm): void {
+  public openItemCreationForm(): void {
   }
 
   /**
    * Opens form to create order
    *
-   * @param {ngForm} orderCreationForm submitted create form
+   * @param itemId id of item to order
    */
-  public openOrderCreationForm(orderCreationForm: NgForm): void {
+  public openOrderCreationForm(itemId: InventoryItemId): void {
   }
 
   /**
    * Opens item edit form
    *
    * @param itemId id of item to edit
-   * @param {NgForm} itemEditForm submitted edit form
    */
-  public openItemEditForm(itemId: ItemId, itemEditForm: NgForm): void {
+  public openItemEditForm(itemId: InventoryItemId): void {
   }
 
   /**
    * Opens item delete confirmation popup
-   *
    */
-  public openItemDeletionDialog(): void {
+  public openItemDeletionDialog(itemId: InventoryItemId): void {
   }
 }

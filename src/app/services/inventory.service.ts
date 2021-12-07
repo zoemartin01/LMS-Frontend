@@ -1,37 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
-import{ Item } from "../types/item";
+import{ InventoryItem } from "../types/inventory-item";
+import { InventoryItemId } from "../types/aliases/inventory-item-id";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
 
-  constructor() { }
-
-  /**
-   * Creates item with data
-   *
-   * @param item data of new item
-   */
-  public createItem(item: Item): Observable<any> {
+  constructor(private httpClient: HttpClient) {
   }
 
   /**
-   * Changes data of item
+   * Creates inventory item with data
    *
-   * @param itemId      id of associated item
-   * @param changedData changed fields of item
+   * @param {InventoryItem} inventoryItem data of new inventory item
    */
-  public editItemData(itemId: number, changedData: object): Observable<any> {
+  public createInventoryItem(inventoryItem: InventoryItem): Observable<any> {
   }
 
   /**
-   * Deletes item
+   * Changes data of inventory item
    *
-   * @param itemId id of item
+   * @param {InventoryItemId} inventoryItemId id of associated inventory item
+   * @param {object} changedData changed fields of inventory item
    */
-  public deleteItem(itemId: number): Observable<any> {
+  public editInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
+  }
+
+  /**
+   * Deletes inventory item
+   *
+   * @param {InventoryItemId} inventoryItemId id of inventory item
+   */
+  public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<any> {
   }
 }

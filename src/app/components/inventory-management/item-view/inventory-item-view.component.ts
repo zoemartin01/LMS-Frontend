@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import {NgForm} from "@angular/forms";
+import { NgForm } from "@angular/forms";
 
 import { InventoryService } from "../../../services/inventory.service";
-import { Item } from "../../../types/item";
+import {InventoryItem} from "../../../types/inventory-item";
 
 @Component({
-  selector: 'app-item-view',
+  selector: 'app-inventory-item-view',
   templateUrl: './inventory-item-view.component.html',
   styleUrls: ['./inventory-item-view.component.scss']
 })
 export class InventoryItemViewComponent implements OnInit {
+  public inventoryItem: InventoryItem = {
+    id: null,
+    name: '',
+    description: '',
+    quantity: null,
+  };
 
   constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
   }
@@ -19,27 +25,28 @@ export class InventoryItemViewComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
-    // leave method stub like this?
+    this.route.params.subscribe(params => {
+      this.inventoryItem.id = +params['id'];
+      this.getInventoryItemData();
+    });
   }
 
   /**
-   * Get all data of item
+   * Get all data of inventory item
    */
-  private async getItemData() : Promise<void> {
+  private async getInventoryItemData() : Promise<void> {
   }
 
   /**
-   * opens item edit form
-   *
-   * @param {NgForm} itemEditForm submitted create form
+   * Opens inventory item edit form
    */
-  public openItemEditForm(itemEditForm: NgForm): void {
+  public openInventoryItemEditForm(): void {
   }
 
   /**
-   * Opens item delete confirmation popup
+   * Opens inventory item delete confirmation popup
    */
-  public openItemDeletionDialog(): void {
+  public openInventoryItemDeletionDialog(): void {
   }
 
 }

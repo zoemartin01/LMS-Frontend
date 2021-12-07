@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { InventoryService } from "../../../services/inventory.service";
-import {NgForm} from "@angular/forms";
+import { NgForm } from "@angular/forms";
 
 @Component({
-  selector: 'app-item-create',
+  selector: 'app-inventory-item-create',
   templateUrl: './inventory-item-create.component.html',
   styleUrls: ['./inventory-item-create.component.scss']
 })
@@ -20,10 +20,10 @@ export class InventoryItemCreateComponent implements OnInit {
   }
 
   /**
-   * Creates item with data
+   * Creates inventory item with data
    *
-   * @param {NgForm} itemCreationForm submitted create form
+   * @param {NgForm} inventoryItemCreationForm submitted create form
    */
-  public async openItemCreationForm(itemCreationForm: NgForm): Promise<void> {
+  public async openInventoryItemCreationForm(inventoryItemCreationForm: NgForm): Promise<void> {
   }
 }

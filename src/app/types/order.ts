@@ -1,6 +1,7 @@
 import { OrderId } from "./aliases/order-id";
 import { User } from "./user";
 import { OrderStatus } from "./enums/order-status";
+import {UserId} from "./aliases/user-id";
 
 
 export interface Order {
@@ -8,6 +9,6 @@ export interface Order {
   item: string,
   quantity: number,
   purchaseUrl: string,
-  affiliatedUser: User,
+  userId: UserId,
   orderStatus: OrderStatus,
 }

@@ -15,7 +15,6 @@ import { AppointmentEditComponent } from "./components/appointment-management/ed
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
 import { DashboardComponent } from './components/general/dashboard/dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
 import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
 import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
 import { HomepageComponent } from './components/general/homepage/homepage.component';
@@ -24,6 +23,7 @@ import { InventoryItemCreateComponent } from './components/inventory-management/
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
 import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';

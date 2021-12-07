@@ -3,17 +3,22 @@ import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { InventoryService } from "../../../services/inventory.service";
-import { Item } from "../../../types/item";
 
+import { InventoryItem } from "../../../types/inventory-item";
 
 @Component({
-  selector: 'app-item-edit',
+  selector: 'app-inventory-item-edit',
   templateUrl: './inventory-item-edit.component.html',
   styleUrls: ['./inventory-item-edit.component.scss']
 })
 export class InventoryItemEditComponent implements OnInit {
+  public inventoryItem: InventoryItem = {
+    id: null,
+    name: '',
+    description: '',
+    quantity: null,
+  };
 
-  // do we really need route here? don't really get what for
   constructor(public inventoryService: InventoryService,  private route: ActivatedRoute) {
   }
 
@@ -21,21 +26,23 @@ export class InventoryItemEditComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
-    // not sure if here should be the code for route stuff
-    // will leave the method stub like this...?
+    this.route.params.subscribe(params => {
+      this.inventoryItem.id = +params['id'];
+      this.getInventoryItemData();
+    });
   }
 
   /**
-   * Get all data of item
+   * Get all data of inventory item
    */
-  private async getItemData() : Promise<void> {
+  private async getInventoryItemData() : Promise<void> {
   }
 
   /**
-   * Opens form to change data of item
+   * Changes data of inventory item
    *
-   * @param {NgForm} itemEditForm submitted edit form
+   * @param {NgForm} inventoryItemEditForm submitted edit form
    */
-  public async openItemEditForm(itemEditForm: NgForm): Promise<void> {
+  public async editInventoryItemData(inventoryItemEditForm: NgForm): Promise<void> {
   }
 }
