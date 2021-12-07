@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   /**
-   * Refreshs authentication token of current user
+   * Refreshes authentication token of current user
    */
   public tokenRefresh(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefresh}`;
@@ -67,14 +67,14 @@ export class AuthService {
       token: this.getRefreshToken(),
     };
 
-    return this.httpClient.post(apiURL, {headers: requestBody});
+    return this.httpClient.post(apiURL, requestBody);
   }
 
   /**
    * Checks token of current user
    */
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenTest}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
 
     return this.httpClient.get(apiURL);
   }

@@ -30,16 +30,21 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets user data
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
   }
 
   /**
-   * Deletes user
+   * Opens user edit form
    */
-  public async deleteUser(): Promise<void> {
-    //use this.user.id here
+  public openUserEditForm(): void {
+  }
+
+  /**
+   * Opens user delete confirmation dialog
+   */
+  public openUserDeletionDialog(): void {
   }
 }
