@@ -31,32 +31,30 @@ export class AdminOrderListComponent implements OnInit {
 
   /**
    * Opens form to create order
-   *
-   * @param {NgForm} orderCreationForm submitted create form
    */
-  public openOrderCreationForm(orderCreationForm: NgForm): void {
+  public openOrderCreationForm(): void {
   }
 
   /**
    * Opens order edit form
    *
    * @param orderId id of order to edit
-   * @param {NgForm} orderEditForm submitted edit form
    */
-  public openOrderEditForm(orderId: OrderId, orderEditForm: NgForm): void {
+  public openOrderEditForm(orderId: OrderId): void {
   }
 
   /**
    * Opens order delete confirmation popup
    *
+   * @param orderId id of order
    */
-  public openOrderDeletionDialog(): void {
+  public openOrderDeletionDialog(orderId: OrderId): void {
   }
 
   /**
    * Opens order view popup
    *
-   * @param orderId
+   * @param orderId id of order
    */
   public openOrderView(orderId: OrderId): void {
   }
