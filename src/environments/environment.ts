@@ -16,7 +16,7 @@ export const environment = {
     login: '/token',
     tokenRefresh: '/token/refresh',
     logout: '/token',
-    tokenTest: '/token/test',
+    tokenCheck: '/token/check',
     signin: '',
     verifyEmail: '',
   }
