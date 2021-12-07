@@ -3,7 +3,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
 
 import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
 import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
@@ -102,7 +104,12 @@ import { WhitelistRetailerViewComponent } from './components/settings/global-set
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
