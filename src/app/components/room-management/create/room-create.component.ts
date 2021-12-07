@@ -22,7 +22,7 @@ export class RoomCreateComponent implements OnInit {
   /**
    * Creates room with data
    *
-   * @param roomCreationForm submitted create form
+   * @param {NgForm} roomCreationForm submitted creation form
    */
   public async createRoom(roomCreationForm: NgForm): Promise<void> {
   }
