@@ -51,7 +51,7 @@ export class AppointmentViewComponent implements OnInit {
    *
    * @param {AppointmentId} appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentEditForm(appointmentId: AppointmentId): void {
   }
 
   /**
@@ -59,6 +59,6 @@ export class AppointmentViewComponent implements OnInit {
    *
    * @param {AppointmentId} appointmentId id of appointment
    */
-  public deleteAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentDeletionDialog(appointmentId: AppointmentId): void {
   }
 }

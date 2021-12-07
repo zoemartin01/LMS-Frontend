@@ -44,7 +44,7 @@ export class RoomCalenderViewComponent implements OnInit {
   /**
    * Opens appointment creation form
    */
-  public openCreationForm(): void {
+  public openAppointmentCreationForm(): void {
   }
 
   /**
@@ -52,7 +52,7 @@ export class RoomCalenderViewComponent implements OnInit {
    *
    * @param {AppointmentId} appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentEditForm(appointmentId: AppointmentId): void {
   }
 
   /**
@@ -66,7 +66,7 @@ export class RoomCalenderViewComponent implements OnInit {
    *
    * @param {AppointmentId} appointmentId id of appointment
    */
-  public deleteAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentDeletionDialog(appointmentId: AppointmentId): void {
   }
 
   /**
