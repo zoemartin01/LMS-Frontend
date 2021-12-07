@@ -34,7 +34,7 @@ export class InventoryItemEditComponent implements OnInit {
   /**
    * Opens form to change data of item
    *
-   * @param itemEditForm submitted create form
+   * @param {NgForm} itemEditForm submitted edit form
    */
   public async openItemEditForm(itemEditForm: NgForm): Promise<void> {
   }

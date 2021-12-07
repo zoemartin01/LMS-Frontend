@@ -22,8 +22,8 @@ export class InventoryItemCreateComponent implements OnInit {
   /**
    * Creates item with data
    *
-   * @param itemCreationForm submitted create form
+   * @param {NgForm} itemCreationForm submitted create form
    */
-  public async createItem(itemCreationForm: NgForm): Promise<void> {
+  public async openItemCreationForm(itemCreationForm: NgForm): Promise<void> {
   }
 }
