@@ -15,6 +15,9 @@ export class RoomEditComponent implements OnInit {
   //@todo add fields to room type
   public room: Room = {
     id: null,
+    name: '',
+    description: '',
+    maxConBookings: 1,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -33,15 +36,17 @@ export class RoomEditComponent implements OnInit {
   /**
    * Get all data of room
    */
-  public getRoomData() : Promise<void> {
+  public async getRoomData() : Promise<void> {
     //use this.room.id here and set this.room
   }
 
   /**
    * Changes data of room
    *
-   * @param {NgForm} roomEditForm submitted creation form
+   * @param roomEditForm submitted creation form
    */
-  public openRoomEditForm(roomEditForm: NgForm): Promise<void> {
+  public async editRoomData(roomEditForm: NgForm): Promise<void> {
   }
+
+  //@todo (un-)available times setRoomData
 }

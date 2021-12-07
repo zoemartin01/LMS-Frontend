@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
+import { RoomService } from "../../../services/room.service";
+
 @Component({
   selector: 'app-room-create',
   templateUrl: './room-create.component.html',
@@ -8,7 +10,8 @@ import { NgForm } from "@angular/forms";
 })
 export class RoomCreateComponent implements OnInit {
 
-  constructor() { }
+  constructor(public roomService: RoomService) {
+  }
 
   /**
    * Init page
@@ -19,8 +22,8 @@ export class RoomCreateComponent implements OnInit {
   /**
    * Creates room with data
    *
-   * @param {NgForm} roomCreationForm submitted creation form
+   * @param roomCreationForm submitted creation form
    */
-  public openRoomCreationForm(roomCreationForm: NgForm): Promise<void> {
+  public async createRoom(roomCreationForm: NgForm): Promise<void> {
   }
 }

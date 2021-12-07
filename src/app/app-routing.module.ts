@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from "./guards/auth.guard";
-import { RoleGuard } from "./guards/role-guard.guard";
+import { AdminGuard } from "./guards/admin.guard";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmailVerificationComponent } from "./components/email-verification/email-verification.component";
+import { GlobalSettingsComponent} from "./components/global-settings/global-settings.component";
 import { HelpFaqComponent } from "./components/help-faq/help-faq.component";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { HwlabRulesComponent } from "./components/hwlab-rules/hwlab-rules.component";
 import { LoginComponent } from "./components/login/login.component";
+import { MessageBoxComponent } from "./components/message-box/message-box.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { RoomCreateComponent } from "./components/room-managment/create/room-create.component";
 import { RoomEditComponent } from "./components/room-managment/edit/room-edit.component";
@@ -17,6 +19,7 @@ import { RoomListComponent } from "./components/room-managment/list/room-list.co
 import { SafetyInstructionsComponent } from "./components/safety-instructions/safety-instructions.component";
 import { UserEditComponent } from "./components/user-management/edit/user-edit.component";
 import { UserListComponent } from "./components/user-management/list/user-list.component";
+import { UserSettingsComponent } from "./components/settings/user-settings/user-settings.component";
 import { UserViewComponent } from "./components/user-management/view/user-view.component";
 
 const routes: Routes = [
@@ -62,6 +65,15 @@ const routes: Routes = [
       title: 'Dashboard'
     }
   },
+  {
+    path: 'message-box',
+    canActivate: [AuthGuard],
+    component: MessageBoxComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Message Box'
+    }
+  },
 
   //Authentication
   {
@@ -90,10 +102,29 @@ const routes: Routes = [
   },
 
   //Settings
+  {
+    path: '/settings',
+    canActivate: [AuthGuard],
+    component: UserSettingsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Account Settings'
+    }
+  },
+  {
+    path: 'global-settings',
+    canActivate: [AuthGuard, AdminGuard],
+    component: GlobalSettingsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Global Settings'
+    }
+  },
 
   //User Management
   {
     path: 'users',
+    canActivate: [AuthGuard, AdminGuard],
     component: UserListComponent,
     pathMatch: 'full',
     data: {
@@ -102,6 +133,7 @@ const routes: Routes = [
   },
   {
     path: 'user/:id',
+    canActivate: [AuthGuard, AdminGuard],
     component: UserViewComponent,
     pathMatch: 'full',
     data: {
@@ -110,6 +142,7 @@ const routes: Routes = [
   },
   {
     path: 'user/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
     component: UserEditComponent,
     pathMatch: 'full',
     data: {
@@ -120,6 +153,7 @@ const routes: Routes = [
   //Room Management
   {
     path: 'rooms',
+    canActivate: [AuthGuard, AdminGuard],
     component: RoomListComponent,
     pathMatch: 'full',
     data: {
@@ -128,6 +162,7 @@ const routes: Routes = [
   },
   {
     path: 'room/:id',
+    canActivate: [AuthGuard, AdminGuard],
     component: RoomViewComponent,
     pathMatch: 'full',
     data: {
@@ -136,6 +171,7 @@ const routes: Routes = [
   },
   {
     path: 'room/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
     component: RoomEditComponent,
     pathMatch: 'full',
     data: {
@@ -144,6 +180,7 @@ const routes: Routes = [
   },
   {
     path: 'rooms/create',
+    canActivate: [AuthGuard, AdminGuard],
     component: RoomCreateComponent,
     pathMatch: 'full',
     data: {
