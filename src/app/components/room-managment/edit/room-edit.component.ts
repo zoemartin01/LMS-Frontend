@@ -17,6 +17,7 @@ export class RoomEditComponent implements OnInit {
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -46,4 +47,6 @@ export class RoomEditComponent implements OnInit {
    */
   public async editRoomData(roomEditForm: NgForm): Promise<void> {
   }
+
+  //@todo (un-)available times setRoomData
 }

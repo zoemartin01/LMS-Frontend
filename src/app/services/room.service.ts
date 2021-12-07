@@ -35,4 +35,6 @@ export class RoomService {
    */
   public deleteRoom(roomId: number): Observable<any> {
   }
+
+  //@todo (un-)available times setRoomData
 }

@@ -16,6 +16,7 @@ export class RoomViewComponent implements OnInit {
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {

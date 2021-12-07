@@ -5,5 +5,5 @@ export interface Room {
   name: string,
   description: string,
   maxConBookings: number,
-  automaticRequestAcceptance: boolean
+  automaticRequestAcceptance: boolean|null,
 }
