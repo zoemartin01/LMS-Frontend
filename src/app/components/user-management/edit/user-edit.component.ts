@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
-import { UserService } from "../../services/user.service";
+import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-user-edit',
@@ -27,67 +29,18 @@ export class UserEditComponent implements OnInit {
       this.getUserData();
     });
   }
-
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Get data of user
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
   }
 
   /**
-   * Accepts pending user
+   * Changes data of user
+   *
+   * @param userEditForm form to edit user
    */
-  public async acceptPendingUser(): Promise<void> {
-    //use this.user.id here
-  }
-
-  /**
-   * Denies pending user
-   */
-  public async denyPendingUser(): Promise<void> {
-    //use this.user.id here
-  }
-
-  /**
-   * Deletes user
-   */
-  public async deleteUser(): Promise<void> {
-    //use this.user.id here
-  }
-
-  /**
-   * Changes name of user
-   */
-  public async changeName(): Promise<void>{
-    //use this.user.id here
-  }
-
-  /**
-   * Changes e-mail of user
-   */
-  public async changeMail(): Promise<void>{
-    //use this.user.id here
-  }
-
-  /**
-   * Changes password of user
-   */
-  public async changePassword(): Promise<void>{
-    //use this.user.id here
-  }
-
-  /**
-   * Changes role of user
-   */
-  public async changeRole(): Promise<void>{
-    //use this.user.id here
-  }
-
-  /**
-   * Changes e-mail verification Status of user
-   */
-  public async changeMailStatus(): Promise<void>{
-    //use this.user.id here
+  public async editUserData(userEditForm: NgForm): Promise<void> {
   }
 }

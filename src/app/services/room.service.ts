@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+
+import { Room } from "../types/room";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
+  }
+
+  /**
+   * Gets room data
+   *
+   * @param roomId id of room
+   */
+  public getRoomData(roomId: number): Observable<any> {
   }
 
   /**
    * Creates room with data
    *
-   * @param roomName name of room
-   * @param description description
-   * @param maxConBookings maximum of concurrent bookings possible
+   * @param room data of new room
    */
-  public createRoom(roomName: string, description: string, maxConBookings: number): Observable<any> {
+  public createRoom(room: Room): Observable<any> {
   }
 
   /**
