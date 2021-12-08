@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { InventoryService } from "../../../services/inventory.service";
 import { NgForm } from "@angular/forms";
@@ -8,15 +8,9 @@ import { NgForm } from "@angular/forms";
   templateUrl: './inventory-item-create.component.html',
   styleUrls: ['./inventory-item-create.component.scss']
 })
-export class InventoryItemCreateComponent implements OnInit {
+export class InventoryItemCreateComponent {
 
   constructor(public inventoryService: InventoryService) {
-  }
-
-  /**
-   * Init page
-   */
-  ngOnInit(): void {
   }
 
   /**

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { NONE_TYPE } from "@angular/compiler";
 
 import { InventoryService } from "../../../services/inventory.service";
 
 import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-order-view',
@@ -12,15 +12,13 @@ import { Order } from "../../../types/order";
   styleUrls: ['./order-view.component.scss']
 })
 export class OrderViewComponent implements OnInit {
-  // why can i not null quantity?
-  // what should be the correct "null" form for User/order status
   public order: Order = {
     id: null,
     item: '',
     quantity: null,
     purchaseUrl: '',
-    affiliatedUser: NONE_TYPE,
-    orderStatus: NONE_TYPE,
+    userId: null,
+    orderStatus: OrderStatus.unknown,
   }
 
   constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
@@ -53,5 +51,4 @@ export class OrderViewComponent implements OnInit {
    */
   public openOrderDeletionDialog(): void {
   }
-
 }

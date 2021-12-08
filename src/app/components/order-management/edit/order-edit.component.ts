@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
 
 import { OrderService } from "../../../services/order.service";
+
 import { Order } from "../../../types/order";
-import { NONE_TYPE } from "@angular/compiler";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-edit',
@@ -12,14 +14,12 @@ import { NONE_TYPE } from "@angular/compiler";
 })
 export class OrderEditComponent implements OnInit {
   public order: Order = {
-    // why can i not null quantity?
-    // what should be the correct "null" form for User/order status
     id: null,
     item: '',
     quantity: null,
     purchaseUrl: '',
-    affiliatedUser: NONE_TYPE,
-    orderStatus: NONE_TYPE,
+    userId: null,
+    orderStatus: OrderStatus.unknown,
   }
 
   constructor(public orderService: OrderService, private route: ActivatedRoute) {
@@ -38,13 +38,14 @@ export class OrderEditComponent implements OnInit {
   /**
    * Get all data of order
    */
-  private async getOrderData() : Promise<void> {
+  private async getOrderData(): Promise<void> {
   }
 
   /**
    * Changes data of order
+   *
+   * @param {NgForm} orderEditForm submitted edit form
    */
-  public async openOrderEditForm(): Promise<void> {
+  public async editOrder(orderEditForm: NgForm): Promise<void> {
   }
-
 }

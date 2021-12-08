@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NONE_TYPE } from "@angular/compiler";
 import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
 
 import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
+import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
-import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-inventory-order',
@@ -13,18 +15,20 @@ import { OrderId } from "../../../types/aliases/order-id";
   styleUrls: ['./inventory-order.component.scss']
 })
 export class InventoryOrderComponent implements OnInit {
-  // why can i not null quantity?
-  // what should be the correct "null" form for User/order status
   public order: Order = {
     id: null,
     item: '',
     quantity: null,
     purchaseUrl: '',
-    affiliatedUser: NONE_TYPE,
-    orderStatus: NONE_TYPE,
+    userId: null,
+    orderStatus: OrderStatus.unknown,
   }
+  public inventoryItems: InventoryItem[] = [];
 
-  constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
+  constructor(
+    public inventoryService: InventoryService,
+    public orderService: OrderService,
+    private route: ActivatedRoute) {
   }
 
   /**
@@ -40,14 +44,20 @@ export class InventoryOrderComponent implements OnInit {
   /**
    * Get all data of order
    */
-  private async getOrderData() : Promise<void> {
+  private async getOrderData(): Promise<void> {
   }
 
   /**
-   * Opens form to put data of order in a new inventory item
-   *
-   * @param orderId id of the order to be inventoried
+   * Get all inventory items
    */
-  public async openItemCreationForm(orderId: OrderId): Promise<void> {
+  private async getInventoryItems(): Promise<void> {
+  }
+
+  /**
+   * Inventories order
+   *
+   * @param {NgForm} inventoryOrderForm submitted inventory form
+   */
+  public async inventoryOrder(inventoryOrderForm: NgForm): Promise<void> {
   }
 }

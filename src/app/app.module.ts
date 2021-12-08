@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {JwtInterceptor} from './interceptors/jwt.interceptor';
-import {UnauthorizedInterceptor} from "./interceptors/unauthorized.interceptor";
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
 
 import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
 import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
@@ -113,5 +113,4 @@ import { WhitelistRetailerViewComponent } from './components/settings/global-set
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

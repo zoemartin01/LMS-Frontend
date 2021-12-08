@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from './guards/auth.guard';
-import {AdminGuard} from './guards/admin.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
 import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';

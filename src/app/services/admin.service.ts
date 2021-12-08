@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
+import { UserId } from "../types/aliases/user-id";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +30,7 @@ export class AdminService {
    * @param userId      id of associated user
    * @param changedData changed fields of user
    */
-  public editUserData(userId: number, changedData: object): Observable<any> {
+  public editUserData(userId: UserId, changedData: object): Observable<any> {
   }
 
   /**

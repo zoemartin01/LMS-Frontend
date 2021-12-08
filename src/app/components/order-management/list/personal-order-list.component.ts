@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
 
 import { OrderService } from "../../../services/order.service";
 
@@ -12,7 +11,7 @@ import { OrderId } from "../../../types/aliases/order-id";
   styleUrls: ['./personal-order-list.component.scss']
 })
 export class PersonalOrderListComponent implements OnInit {
-  public orderList: Order[] = [];
+  public orders: Order[] = [];
 
   constructor(public orderService: OrderService) {
   }
@@ -26,7 +25,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Lists all orders with data
    */
-  private async getInventory(): Promise<void> {
+  private async getOrders(): Promise<void> {
   }
 
   /**

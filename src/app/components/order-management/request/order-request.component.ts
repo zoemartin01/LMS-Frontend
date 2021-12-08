@@ -1,22 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
+import { Component } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
 
 @Component({
   selector: 'app-order-request',
   templateUrl: './order-request.component.html',
   styleUrls: ['./order-request.component.scss']
 })
-export class OrderRequestComponent implements OnInit {
+export class OrderRequestComponent {
 
   constructor(public orderService: OrderService) {
-  }
-
-  /**
-   * Init page
-   */
-  ngOnInit(): void {
   }
 
   /**
@@ -24,7 +18,6 @@ export class OrderRequestComponent implements OnInit {
    *
    * @param {NgForm} orderCreationForm submitted create form
    */
-  public async openOrderCreationForm(orderCreationForm: NgForm): Promise<void> {
+  public async requestOrder(orderCreationForm: NgForm): Promise<void> {
   }
-
 }

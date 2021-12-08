@@ -57,5 +57,4 @@ export class AdminOrderListComponent implements OnInit {
    */
   public openOrderView(orderId: OrderId): void {
   }
-
 }
