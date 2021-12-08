@@ -13,6 +13,8 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
+    name: '',
+    url: '',
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {

@@ -15,13 +15,13 @@ export class AdminService {
   /**
    * Gets global settings
    */
-  public async getGlobalSettings(): Observable<any> {
+  public getGlobalSettings(): Observable<any> {
   }
 
   /**
    * Get user data
    */
-  public async getUserData(): Observable<any> {
+  public getUserData(): Observable<any> {
   }
 
   /**
