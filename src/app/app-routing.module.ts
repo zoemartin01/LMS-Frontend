@@ -248,21 +248,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room-overview/:id/edit',
-    canActivate: [AuthGuard, AdminGuard],
-    component: AppointmentEditComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Edit Appointment'
-    }
-  },
-  {
-    path: 'room-overview/create',
+    path: 'room-overview/:id',
     canActivate: [AuthGuard],
-    component: AppointmentCreateComponent,
+    component: RoomCalenderViewComponent,
     pathMatch: 'full',
     data: {
-      title: 'Create Appointment'
+      title: 'Room Overview'
     }
   },
   {
@@ -293,7 +284,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'appointments/:id/edit',
+    path: 'room-overview/:id/edit',
     canActivate: [AuthGuard, AdminGuard],
     component: AppointmentEditComponent,
     pathMatch: 'full',
@@ -302,7 +293,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'appointments/create',
+    path: 'room-overview/create',
     canActivate: [AuthGuard],
     component: AppointmentCreateComponent,
     pathMatch: 'full',
