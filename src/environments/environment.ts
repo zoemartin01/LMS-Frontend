@@ -19,5 +19,11 @@ export const environment = {
     tokenCheck: '/token/check',
     signin: '',
     verifyEmail: '',
+
+    //room
+    rooms: '',
+    viewRoom: '/:id',
+    editRoom: ':id/edit',
+    createRoom: '/create',
   }
 };

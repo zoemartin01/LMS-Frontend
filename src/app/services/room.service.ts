@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import { Room } from "../types/room";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class RoomService {
 
   constructor(private httpClient: HttpClient) {
   }
+  //TODO get roomsData -> list rooms
 
   /**
    * Gets room data
@@ -18,6 +20,9 @@ export class RoomService {
    * @param roomId id of room
    */
   public getRoomData(roomId: number): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewRoom}`;
+
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -26,6 +31,12 @@ export class RoomService {
    * @param room data of new room
    */
   public createRoom(room: Room): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createRoom}`;
+    const requestBody = {
+      room: room
+    };
+
+    return this.httpClient.post(apiURL, requestBody);
   }
 
   /**
@@ -35,6 +46,13 @@ export class RoomService {
    * @param changedData changed fields of room
    */
   public editRoomData(roomId: number, changedData: object): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editRoom}`;
+    const requestBody = {
+      roomId: roomId,
+      changedData: changedData,
+    };
+
+    return this.httpClient.patch(apiURL, requestBody);
   }
 
   /**
@@ -43,6 +61,7 @@ export class RoomService {
    * @param roomId id of room
    */
   public deleteRoom(roomId: number): Observable<any> {
+    //TODO zugriff über view aber auch list
   }
 
   //@todo (un-)available times setRoomData
