@@ -28,7 +28,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets user data
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
