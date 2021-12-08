@@ -2,41 +2,47 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
 import {AdminGuard} from './guards/admin.guard';
-import {EmailVerificationComponent} from "./components/email-verification/email-verification.component";
-import {LoginComponent} from "./components/login/login.component";
-import {RegisterComponent} from "./components/register/register.component";
-import {UserEditComponent} from "./components/user-management/edit/user-edit.component";
-import {UserListComponent} from "./components/user-management/list/user-list.component";
-import {UserViewComponent} from "./components/user-management/view/user-view.component";
-import {OrderEditComponent} from './components/order-management/edit/order-edit.component';
-import {AdminOrderListComponent} from './components/order-management/admin-list/admin-order-list.component';
-import {DashboardComponent} from './components/general/dashboard/dashboard.component';
-import {GlobalSettingsComponent} from './components/settings/global-settings/global-settings.component';
-import {HelpFaqComponent} from './components/general/help-faq/help-faq.component';
-import {HomepageComponent} from './components/general/homepage/homepage.component';
-import {HwlabRulesComponent} from './components/general/hwlab-rules/hwlab-rules.component';
-import {InventoryItemCreateComponent} from './components/inventory-management/item-create/inventory-item-create.component';
-import {InventoryItemEditComponent} from './components/inventory-management/item-edit/inventory-item-edit.component';
-import {InventoryItemViewComponent} from './components/inventory-management/item-view/inventory-item-view.component';
-import {InventoryListComponent} from './components/inventory-management/list/inventory-list.component';
-import {LivecamOverviewComponent} from './components/livecam/overview/livecam-overview.component';
-import {LivecamDeleteComponent} from './components/livecam/delete/livecam-delete.component';
-import {LivecamScheduleComponent} from './components/livecam/schedule/livecam-schedule.component';
-import {OrderViewComponent} from './components/order-management/view/order-view.component';
-import {InventoryOrderComponent} from './components/inventory-management/inventory-order/inventory-order.component';
-import {MessageBoxComponent} from './components/general/message-box/message-box.component';
-import {OrderRequestComponent} from './components/order-management/request/order-request.component';
-import {PersonalOrderListComponent} from './components/order-management/list/personal-order-list.component';
-import {RoomCreateComponent} from './components/room-management/create/room-create.component';
-import {RoomEditComponent} from './components/room-management/edit/room-edit.component';
-import {RoomListComponent} from './components/room-management/list/room-list.component';
-import {RoomViewComponent} from './components/room-management/view/room-view.component';
-import {SafetyInstructionsComponent} from './components/general/safety-instructions/safety-instructions.component';
-import {UserSettingsComponent} from './components/settings/user-settings/user-settings.component';
 
-import {WhitelistRetailerCreateComponent} from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
-import {WhitelistRetailerEditComponent} from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
-import {WhitelistRetailerViewComponent} from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
+import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
+import { AppointmentCreateComponent } from "./components/appointment-management/create/appointment-create.component";
+import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
+import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
+import { DashboardComponent } from './components/general/dashboard/dashboard.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
+import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
+import { HomepageComponent } from './components/general/homepage/homepage.component';
+import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
+import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
+import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
+import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
+import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
+import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
+import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
+import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
+import { LoginComponent } from './components/login/login.component';
+import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
+import { OrderRequestComponent } from './components/order-management/request/order-request.component';
+import { OrderViewComponent } from './components/order-management/view/order-view.component';
+import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
+import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
+import { RegisterComponent } from './components/register/register.component';
+import { RoomCalenderViewComponent } from "./components/appointment-management/calender-view/room-calender-view.component";
+import { RoomCreateComponent } from './components/room-management/create/room-create.component';
+import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
+import { RoomListComponent } from './components/room-management/list/room-list.component';
+import { RoomViewComponent } from './components/room-management/view/room-view.component';
+import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { UserEditComponent } from './components/user-management/edit/user-edit.component';
+import { UserListComponent } from './components/user-management/list/user-list.component';
+import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
+import { UserViewComponent } from './components/user-management/view/user-view.component';
+import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
+import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
+import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
 
 const routes: Routes = [
   //General
@@ -232,6 +238,69 @@ const routes: Routes = [
   },
 
   //Appointment Management
+  {
+    path: 'room-overview',
+    canActivate: [AuthGuard],
+    component: RoomCalenderViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Room Overview'
+    }
+  },
+  {
+    path: 'room-overview/:id',
+    canActivate: [AuthGuard],
+    component: RoomCalenderViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Room Overview'
+    }
+  },
+  {
+    path: 'appointments',
+    canActivate: [AuthGuard],
+    component: PersonalAppointmentListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'My Appointment'
+    }
+  },
+  {
+    path: 'appointments/all',
+    canActivate: [AuthGuard, AdminGuard],
+    component: AdminAppointmentListComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'All Appointments'
+    }
+  },
+  {
+    path: 'appointments/:id',
+    canActivate: [AuthGuard],
+    component: AppointmentViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'View Appointment'
+    }
+  },
+  {
+    path: 'room-overview/:id/edit',
+    canActivate: [AuthGuard, AdminGuard],
+    component: AppointmentEditComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Edit Appointment'
+    }
+  },
+  {
+    path: 'room-overview/create',
+    canActivate: [AuthGuard],
+    component: AppointmentCreateComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Create Appointment'
+    }
+  },
 
   //Inventory & Order Management
   {

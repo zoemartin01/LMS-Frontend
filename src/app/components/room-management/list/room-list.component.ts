@@ -38,7 +38,7 @@ export class RoomListComponent implements OnInit {
   /**
    * Opens room edit form
    *
-   * @param roomId id of room to edit
+   * @param {RoomId} roomId id of room to edit
    */
   public openRoomEditForm(roomId: RoomId): void {
   }
@@ -46,8 +46,8 @@ export class RoomListComponent implements OnInit {
   /**
    * Opens room delete confirmation popup
    *
-   * @param roomId id of room to delete
+   * @param {roomId} roomId id of room to delete
    */
-  public deleteRoom(roomId: RoomId): void {
+  public openRoomDeletionDialog(roomId: RoomId): void {
   }
 }

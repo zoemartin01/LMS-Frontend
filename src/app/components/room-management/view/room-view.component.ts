@@ -16,6 +16,7 @@ export class RoomViewComponent implements OnInit {
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -40,12 +41,12 @@ export class RoomViewComponent implements OnInit {
   /**
    * Opens room edit form
    */
-  public editRoom(): void {
+  public openRoomEditForm(): void {
   }
 
   /**
    * Opens room delete confirmation popup
    */
-  public deleteRoom(): void {
+  public openRoomDeletionDialog(): void {
   }
 }
