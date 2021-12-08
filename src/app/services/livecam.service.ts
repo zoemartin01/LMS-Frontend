@@ -40,4 +40,18 @@ export class LivecamService {
   public downloadRecording(recordingId: RecordingId): Observable<any> {
   }
 
+  /**
+   * Get the recording data for the recording with the submitted id
+   *
+   * @param {RecordingId} recordingId id of the recording to get data for
+   */
+  public getRecordingData(recordingId: RecordingId): Observable<any> {
+  }
+
+  /**
+   * Get the data for all recordings
+   */
+  public getAllRecordings(): Observable<any> {
+  }
+
 }
