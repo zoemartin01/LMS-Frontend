@@ -14,6 +14,20 @@ export class InventoryService {
   }
 
   /**
+   * Retrieves all inventory items
+   */
+  public getInventoryItems(): Observable<any> {
+  }
+
+  /**
+   * Retrieves all data for one inventory item
+   *
+   * @param {InventoryItemId} inventoryItemId id of inventory item
+   */
+  public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<any> {
+  }
+
+  /**
    * Creates inventory item with data
    *
    * @param {InventoryItem} inventoryItem data of new inventory item
@@ -27,7 +41,7 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of associated inventory item
    * @param {object} changedData changed fields of inventory item
    */
-  public editInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
+  public changeInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
   }
 
   /**

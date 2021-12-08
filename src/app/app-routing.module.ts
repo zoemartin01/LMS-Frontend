@@ -340,7 +340,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders',
+    path: 'order',
     canActivate: [AuthGuard],
     component: PersonalOrderListComponent,
     pathMatch: 'full',
@@ -349,7 +349,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders/all',
+    path: 'order/all',
     canActivate: [AuthGuard, AdminGuard],
     component: AdminOrderListComponent,
     pathMatch: 'full',
@@ -385,7 +385,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders/create',
+    path: 'order/create',
     canActivate: [AuthGuard],
     component: OrderRequestComponent,
     pathMatch: 'full',

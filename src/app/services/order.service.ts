@@ -14,11 +14,31 @@ export class OrderService {
   }
 
   /**
+   * Retrieves all orders
+   */
+  public getAllOrders(): Observable<any> {
+  }
+
+  /**
+   * Retrieves all orders for current user
+   */
+  public getAllOrdersForCurrentUser(): Observable<any> {
+  }
+
+  /**
+   * Retrieves all data for one order
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public getOrderData(orderId: OrderId): Observable<any> {
+  }
+
+  /**
    * Creates order with data
    *
    * @param {Order} order data of new order
    */
-  public createOrder(order: Order): Observable<any> {
+  public requestOrder(order: Order): Observable<any> {
   }
 
   /**
@@ -27,7 +47,7 @@ export class OrderService {
    * @param {OrderId} orderId    id of associated order
    * @param {object} changedData changed fields of order
    */
-  public editOrderData(orderId: OrderId, changedData: object): Observable<any> {
+  public updateOrderData(orderId: OrderId, changedData: object): Observable<any> {
   }
 
   /**
