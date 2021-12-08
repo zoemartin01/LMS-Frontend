@@ -271,7 +271,7 @@ const routes: Routes = [
     component: PersonalAppointmentListComponent,
     pathMatch: 'full',
     data: {
-      title: 'My Appointment'
+      title: 'My Appointments'
     }
   },
   {
