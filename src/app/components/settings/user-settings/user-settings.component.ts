@@ -10,7 +10,13 @@ import { UserRole } from "../../../types/enums/user-role";
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
 })
+
+/**
+ * Class for user settings
+ */
 export class UserSettingsComponent implements OnInit {
+  public emailNotification: boolean|null = null;
+  public notificationBox: boolean|null = null;
   public user: User = {
     id: null,
     firstname: '',
@@ -46,5 +52,15 @@ export class UserSettingsComponent implements OnInit {
   public openUserDeletionDialog(): void {
   }
 
-  //@todo get and set notification channel
+  /**
+   * Gets notification channel
+   */
+  public async getNotificationChannel(): Promise<void>{
+  }
+  
+  /**
+   * Sets notification channel
+   */
+  public async setNotificationChannel(): Promise<void>{
+  }
 }

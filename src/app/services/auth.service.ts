@@ -33,6 +33,12 @@ export class AuthService {
   }
 
   /**
+   * Gets notification channel
+   */
+  public getNotificationChannel() {
+  }
+
+  /**
    * Logs in user with specified credentials
    *
    * @param email    user's email address
@@ -113,6 +119,12 @@ export class AuthService {
     };
 
     return this.httpClient.post(apiURL, requestBody);
+  }
+
+  /**
+   * Sets notification channel
+   */
+  public setNotificationChannel() {
   }
 
   /**
