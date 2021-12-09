@@ -11,6 +11,9 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
   templateUrl: './global-settings.component.html',
   styleUrls: ['./global-settings.component.scss']
 })
+/**
+ * Class for global settings
+ */
 export class GlobalSettingsComponent implements OnInit {
   public maxRecordings: number|null = null;
   public autodeleteTimespan: number|null = null;
@@ -35,7 +38,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Changes data of user
    *
-   * @param globalSettingsEditForm form to edit user
+   * @param {NgForm} globalSettingsEditForm form to edit user
    */
   public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
   }
@@ -49,7 +52,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer edit form
    *
-   * @param whitelistRetailerId id of whitelist retailer
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
   }
@@ -57,7 +60,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer deletion dialog
    *
-   * @param whitelistRetailerId id of whitelist retailer
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
   }
