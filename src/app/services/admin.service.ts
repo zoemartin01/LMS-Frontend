@@ -19,16 +19,23 @@ export class AdminService {
   }
 
   /**
-   * Get user data
+   * Gets users
    */
-  public getUserData(): Observable<any> {
+  public getUsers(): Observable<any> {
+  }
+
+  /**
+   * Gets data of user with id userId
+   * @param {userId} userId Id of user
+   */
+  public getUserData(userId: UserId): Observable<any> {
   }
 
   /**
    * Changes data of user
    *
-   * @param userId      id of associated user
-   * @param changedData changed fields of user
+   * @param {userId} userId      id of associated user
+   * @param {object} changedData changed fields of user
    */
   public editUserData(userId: UserId, changedData: object): Observable<any> {
   }
@@ -36,7 +43,7 @@ export class AdminService {
   /**
    * Changes global settings
    *
-   * @param changedData changed fields of global settings
+   * @param {object} changedData changed fields of global settings
    */
   public updateGlobalSettings(changedData: object): Observable<any> {
   }
@@ -44,7 +51,7 @@ export class AdminService {
   /**
    * Deletes user
    *
-   * @param userId id of user to delete
+   * @param {userId} userId id of user to delete
    */
   public deleteUser(userId: number): Observable<any> {
   }
