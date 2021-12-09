@@ -18,6 +18,7 @@ export class RoomCalenderViewComponent implements OnInit {
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
   public appointments: Appointment[] = [];
 
@@ -44,15 +45,15 @@ export class RoomCalenderViewComponent implements OnInit {
   /**
    * Opens appointment creation form
    */
-  public openCreationForm(): void {
+  public openAppointmentCreationForm(): void {
   }
 
   /**
    * Opens appointment edit form
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
-  public editAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentEditForm(appointmentId: AppointmentId): void {
   }
 
   /**
@@ -64,15 +65,15 @@ export class RoomCalenderViewComponent implements OnInit {
   /**
    * Opens appointment deletion popup
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
-  public deleteAppointment(appointmentId: AppointmentId): void {
+  public openAppointmentDeletionDialog(appointmentId: AppointmentId): void {
   }
 
   /**
    * Sets appointment request to accepted
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
   public async acceptAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
   }
@@ -80,7 +81,7 @@ export class RoomCalenderViewComponent implements OnInit {
   /**
    * Sets appointment request to accepted
    *
-   * @param appointmentId id of appointment
+   * @param {AppointmentId} appointmentId id of appointment
    */
   public async declineAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
   }

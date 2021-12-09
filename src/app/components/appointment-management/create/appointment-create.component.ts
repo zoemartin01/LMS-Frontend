@@ -22,7 +22,7 @@ export class AppointmentCreateComponent implements OnInit {
   /**
    * Opens appointment creation form
    *
-   * @param appointmentCreationForm submitted creation form
+   * @param {NgForm} appointmentCreationForm submitted creation form
    */
   public async createAppointment(appointmentCreationForm: NgForm): Promise<void> {
   }

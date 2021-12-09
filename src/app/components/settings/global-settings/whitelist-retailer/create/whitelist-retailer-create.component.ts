@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import { GlobalSettingsService } from "../../../../../services/global-settings.service";
+import { AdminService } from "../../../../../services/admin.service";
 
 @Component({
   selector: 'app-whitelist-retailer-create',
@@ -10,7 +10,7 @@ import { GlobalSettingsService } from "../../../../../services/global-settings.s
 })
 export class WhitelistRetailerCreateComponent implements OnInit {
 
-  constructor(public globalSettingsService: GlobalSettingsService) {
+  constructor(public adminService: AdminService) {
   }
 
   ngOnInit(): void {
