@@ -176,4 +176,17 @@ export class AuthService {
   public isAdmin(): boolean {
     return this.getUserRole() === "admin";
   }
+
+  /**
+   * Gets notification channel
+   */
+  public getNotificationChannel() {
+
+  }
+  /**
+   * Sets notification channel
+   */
+  public setNotificationChannel() {
+
+  }
 }
