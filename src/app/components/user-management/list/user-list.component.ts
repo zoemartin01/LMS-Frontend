@@ -10,6 +10,9 @@ import { UserId } from "../../../types/aliases/user-id";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
+/**
+ * Class for a list of all users
+ */
 export class UserListComponent implements OnInit {
   public users: User[] = [];
 
@@ -29,7 +32,7 @@ export class UserListComponent implements OnInit {
   /**
    * Accepts pending user
    *
-   * @param userId id of pending user
+   * @param {userId} userId id of pending user
    */
   public async acceptPendingUser(userId: UserId): Promise<void> {
   }
@@ -37,7 +40,7 @@ export class UserListComponent implements OnInit {
   /**
    * Denies pending user
    *
-   * @param userId id of pending user
+   * @param {userId} userId id of pending user
    */
   public async denyPendingUser(userId: UserId): Promise<void> {
   }
@@ -45,7 +48,7 @@ export class UserListComponent implements OnInit {
   /**
    * Opens user view
    *
-   * @param userId id of user to view
+   * @param {userId} userId id of user to view
    */
   public openUserView(userId: UserId): void {
   }
@@ -53,7 +56,7 @@ export class UserListComponent implements OnInit {
   /**
    * Opens user edit form
    *
-   * @param userId id of user to edit
+   * @param {userId} userId id of user to edit
    */
   public openUserEditForm(userId: UserId): void {
   }
@@ -61,7 +64,7 @@ export class UserListComponent implements OnInit {
   /**
    * Opens user delete confirmation dialog
    *
-   * @param userId id of user to delete
+   * @param {userId} userId id of user to delete
    */
   public openUserDeletionDialog(userId: UserId): void {
   }

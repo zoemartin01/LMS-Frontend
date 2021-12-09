@@ -10,6 +10,9 @@ import { UserRole } from "../../../types/enums/user-role";
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
 })
+/**
+ * Class for user settings
+ */
 export class UserSettingsComponent implements OnInit {
   public user: User = {
     id: null,

@@ -12,6 +12,9 @@ import { NgForm } from "@angular/forms";
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
+/**
+ * Class for editing a user
+ */
 export class UserEditComponent implements OnInit {
   public user: User = {
     id: null,
@@ -39,7 +42,7 @@ export class UserEditComponent implements OnInit {
   /**
    * Changes data of user
    *
-   * @param userEditForm form to edit user
+   * @param {NgForm} userEditForm form to edit user
    */
   public async editUserData(userEditForm: NgForm): Promise<void> {
   }
