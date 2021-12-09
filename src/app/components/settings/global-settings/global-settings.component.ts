@@ -11,6 +11,7 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
   templateUrl: './global-settings.component.html',
   styleUrls: ['./global-settings.component.scss']
 })
+
 /**
  * Class for global settings
  */
