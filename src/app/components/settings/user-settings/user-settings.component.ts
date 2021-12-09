@@ -10,6 +10,7 @@ import { UserRole } from "../../../types/enums/user-role";
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
 })
+
 /**
  * Class for user settings
  */
@@ -23,7 +24,6 @@ export class UserSettingsComponent implements OnInit {
     email: '',
     userRole: UserRole.unkown,
   };
-
 
   constructor(public authService: AuthService) {
   }
@@ -56,12 +56,11 @@ export class UserSettingsComponent implements OnInit {
    * Gets notification channel
    */
   public async getNotificationChannel(): Promise<void>{
-
   }
+  
   /**
    * Sets notification channel
    */
   public async setNotificationChannel(): Promise<void>{
-
   }
 }

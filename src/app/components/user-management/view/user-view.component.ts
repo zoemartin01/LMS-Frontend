@@ -11,6 +11,7 @@ import { UserRole } from "../../../types/enums/user-role";
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.scss']
 })
+
 /**
  * Class for view of a user
  */

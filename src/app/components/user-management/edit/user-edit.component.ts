@@ -12,6 +12,7 @@ import { NgForm } from "@angular/forms";
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
+
 /**
  * Class for editing a user
  */

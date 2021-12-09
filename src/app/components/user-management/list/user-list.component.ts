@@ -10,6 +10,7 @@ import { UserId } from "../../../types/aliases/user-id";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
+
 /**
  * Class for a list of all users
  */

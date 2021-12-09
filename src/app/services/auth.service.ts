@@ -33,6 +33,12 @@ export class AuthService {
   }
 
   /**
+   * Gets notification channel
+   */
+  public getNotificationChannel() {
+  }
+
+  /**
    * Logs in user with specified credentials
    *
    * @param email    user's email address
@@ -116,6 +122,12 @@ export class AuthService {
   }
 
   /**
+   * Sets notification channel
+   */
+  public setNotificationChannel() {
+  }
+
+  /**
    * Saves access token in local storage
    *
    * @param accessToken new value of access token
@@ -175,18 +187,5 @@ export class AuthService {
    */
   public isAdmin(): boolean {
     return this.getUserRole() === "admin";
-  }
-
-  /**
-   * Gets notification channel
-   */
-  public getNotificationChannel() {
-
-  }
-  /**
-   * Sets notification channel
-   */
-  public setNotificationChannel() {
-
   }
 }
