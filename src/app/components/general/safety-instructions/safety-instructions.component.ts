@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './safety-instructions.component.html',
   styleUrls: ['./safety-instructions.component.scss']
 })
+
+/**
+ * Component for the safety instructions page
+ */
 export class SafetyInstructionsComponent {
-
-  constructor() {
-  }
-
 }
