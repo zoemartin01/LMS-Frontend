@@ -10,6 +10,7 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
   templateUrl: './whitelist-retailer-view.component.html',
   styleUrls: ['./whitelist-retailer-view.component.scss']
 })
+
 /**
  * Class for the view of a whitelist retailer
  */

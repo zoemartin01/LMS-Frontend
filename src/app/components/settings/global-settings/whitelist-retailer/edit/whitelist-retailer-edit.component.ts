@@ -11,6 +11,7 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
   templateUrl: './whitelist-retailer-edit.component.html',
   styleUrls: ['./whitelist-retailer-edit.component.scss']
 })
+
 /**
  * Class for editing a whitelist retailer
  */

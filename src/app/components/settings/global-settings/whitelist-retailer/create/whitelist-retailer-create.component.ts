@@ -8,6 +8,7 @@ import { AdminService } from "../../../../../services/admin.service";
   templateUrl: './whitelist-retailer-create.component.html',
   styleUrls: ['./whitelist-retailer-create.component.scss']
 })
+
 /**
  * Class for creating a whitelist retailer
  */

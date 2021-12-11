@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
+import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { UserId } from "../types/aliases/user-id";
-import {NgForm} from "@angular/forms";
-import {whitelistRetailer} from "../types/whitelistRetailer";
-import {WhitelistRetailer} from "../types/whitelist-retailer";
 
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for admins
  */
