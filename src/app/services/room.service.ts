@@ -8,6 +8,9 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for the room management
+ */
 export class RoomService {
 
   constructor(private httpClient: HttpClient) {

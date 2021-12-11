@@ -10,6 +10,9 @@ import { Room } from "../../../types/room";
   templateUrl: './room-view.component.html',
   styleUrls: ['./room-view.component.scss']
 })
+/**
+ * Component for the room view site, to view one room in detail
+ */
 export class RoomViewComponent implements OnInit {
   public room: Room = {
     id: null,
