@@ -19,9 +19,16 @@ export class AdminService {
   }
 
   /**
-   * Get user data
+   * Gets users
    */
-  public getUserData(): Observable<any> {
+  public getUsers(): Observable<any> {
+  }
+
+  /**
+   * Gets data of user with id userId
+   * @param {userId} userId Id of user
+   */
+  public getUserData(userId: UserId): Observable<any> {
   }
 
   /**

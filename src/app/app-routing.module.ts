@@ -275,7 +275,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'appointments/:id',
+    path: 'appointment/:id',
     canActivate: [AuthGuard],
     component: AppointmentViewComponent,
     pathMatch: 'full',
@@ -284,7 +284,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room-overview/:id/edit',
+    path: 'room-overview/:room_id/appointment/:id/edit',
     canActivate: [AuthGuard, AdminGuard],
     component: AppointmentEditComponent,
     pathMatch: 'full',
@@ -331,7 +331,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'inventory/item/create',
+    path: 'inventory/items/create',
     canActivate: [AuthGuard, AdminGuard],
     component: InventoryItemCreateComponent,
     pathMatch: 'full',
@@ -405,7 +405,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'livecam/:id/delete',
+    path: 'livecam/schedule/:id/delete',
     canActivate: [AdminGuard],
     component: LivecamDeleteComponent,
     pathMatch: 'full',
