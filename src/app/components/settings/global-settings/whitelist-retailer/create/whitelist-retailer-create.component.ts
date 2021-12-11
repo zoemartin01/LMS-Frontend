@@ -8,6 +8,9 @@ import { AdminService } from "../../../../../services/admin.service";
   templateUrl: './whitelist-retailer-create.component.html',
   styleUrls: ['./whitelist-retailer-create.component.scss']
 })
+/**
+ * Class for creating a whitelist retailer
+ */
 export class WhitelistRetailerCreateComponent implements OnInit {
 
   constructor(public adminService: AdminService) {
@@ -19,7 +22,7 @@ export class WhitelistRetailerCreateComponent implements OnInit {
   /**
    * Creates whitelist retailer with data
    *
-   * @param whitelistRetailerForm submitted create form
+   * @param {NgForm} whitelistRetailerForm submitted create form
    */
   public async createWhitelistRetailer(whitelistRetailerForm: NgForm): Promise<void> {
   }

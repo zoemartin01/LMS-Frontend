@@ -10,6 +10,9 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
   templateUrl: './whitelist-retailer-view.component.html',
   styleUrls: ['./whitelist-retailer-view.component.scss']
 })
+/**
+ * Class for the view of a whitelist retailer
+ */
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
@@ -31,7 +34,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
   }
 
   /**
-   * Gets whitelist retailer data (including: domain, name)
+   * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void>{
   }
@@ -45,6 +48,6 @@ export class WhitelistRetailerViewComponent implements OnInit {
   /**
    * Opens room delete confirmation popup
    */
-  public openWhitelistRetailerDeletePopup(): void {
+  public openWhitelistRetailerDeletionDialog(): void {
   }
 }
