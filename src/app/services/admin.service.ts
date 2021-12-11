@@ -34,7 +34,7 @@ export class AdminService {
   /**
    * Changes data of user
    *
-   * @param {userId} userId      id of associated user
+   * @param {UserId} userId      id of associated user
    * @param {object} changedData changed fields of user
    */
   public editUserData(userId: UserId, changedData: object): Observable<any> {
@@ -51,8 +51,8 @@ export class AdminService {
   /**
    * Deletes user
    *
-   * @param {userId} userId id of user to delete
+   * @param {UserId} userId id of user to delete
    */
-  public deleteUser(userId: number): Observable<any> {
+  public deleteUser(userId: UserId): Observable<any> {
   }
 }
