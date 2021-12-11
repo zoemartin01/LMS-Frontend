@@ -16,6 +16,14 @@ export class RoomService {
   constructor(private httpClient: HttpClient) {
   }
   //TODO get roomsData -> list rooms
+  /**
+   * Gets data of all rooms
+   */
+  public getRoomsData(): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms}`;
+
+    return this.httpClient.get(apiURL);
+  }
 
   /**
    * Gets room data
