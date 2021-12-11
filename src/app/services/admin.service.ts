@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
+import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { UserId } from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Service for admins
+ */
 export class AdminService {
 
   constructor(private httpClient: HttpClient) {
@@ -54,5 +59,38 @@ export class AdminService {
    * @param {UserId} userId id of user to delete
    */
   public deleteUser(userId: UserId): Observable<any> {
+  }
+
+  /**
+   * Gets whitelist retailer data
+   *
+   * @param {number} whitelistRetailerId of whitelist retailer
+   */
+  public getWhitelistRetailerData(whitelistRetailerId: number): Observable<any> {
+  }
+
+  /**
+   * Creates whitelist retailer with data
+   *
+   * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
+   */
+  public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<any> {
+  }
+
+  /**
+   * Changes data of whitelist retailer
+   *
+   * @param {number} whitelistRetailerId id of associated whitelist retailer
+   * @param {object} changedData changed fields of whitelist retailer
+   */
+  public editWhitelistRetailerData(whitelistRetailerId: number, changedData: object): Observable<any> {
+  }
+
+  /**
+   * Deletes whitelist retailer
+   *
+   * @param {number} whitelistRetailerId id of whitelist retailer
+   */
+  public deleteWhitelistRetailer(whitelistRetailerId: number): Observable<any> {
   }
 }

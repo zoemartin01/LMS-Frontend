@@ -11,6 +11,10 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
   templateUrl: './whitelist-retailer-edit.component.html',
   styleUrls: ['./whitelist-retailer-edit.component.scss']
 })
+
+/**
+ * Class for editing a whitelist retailer
+ */
 export class WhitelistRetailerEditComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
@@ -32,7 +36,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
   }
 
   /**
-   * Gets whitelist retailer data (including: domain, name)
+   * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void>{
   }
@@ -40,7 +44,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
   /**
    * Changes data of whitelist retailer
    *
-   * @param whitelistRetailerEditForm submitted edit form
+   * @param {NgForm} whitelistRetailerEditForm submitted edit form
    */
   public async editWhitelistRetailerData(whitelistRetailerEditForm: NgForm): Promise<void> {
   }
