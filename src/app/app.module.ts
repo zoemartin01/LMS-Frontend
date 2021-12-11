@@ -15,7 +15,7 @@ import { AppointmentEditComponent } from "./components/appointment-management/ed
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
 import { DashboardComponent } from './components/general/dashboard/dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
+import { GlobalSettingsComponent } from './components/settings/global-settings/admin-settings/global-settings.component';
 import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
 import { HomepageComponent } from './components/general/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
