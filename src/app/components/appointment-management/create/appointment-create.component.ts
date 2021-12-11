@@ -8,6 +8,9 @@ import {AppointmentService} from "../../../services/appointment.service";
   templateUrl: './appointment-create.component.html',
   styleUrls: ['./appointment-create.component.scss']
 })
+/**
+ * Component for the appointment create site, to create a new appointment
+ */
 export class AppointmentCreateComponent implements OnInit {
 
   constructor(public appointmentService: AppointmentService) {

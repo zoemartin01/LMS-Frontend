@@ -10,6 +10,9 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for the management of appointments
+ */
 export class AppointmentService {
 
   constructor(private httpClient: HttpClient) {
@@ -18,7 +21,7 @@ export class AppointmentService {
   /**
    * Retrieves all appointments
    */
-  public getAllAppoinments(): Observable<any> {
+  public getAllAppointments(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.allAppointments}`;
 
     return this.httpClient.get(apiURL);
@@ -27,7 +30,7 @@ export class AppointmentService {
   /**
    * Retrieves all appointments for current user
    */
-  public getAllAppoinmentsForCurrentUser(): Observable<any> {
+  public getAllAppointmentsForCurrentUser(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.myAppointments}`;
 
     return this.httpClient.get(apiURL);
@@ -38,7 +41,7 @@ export class AppointmentService {
    *
    * @param {RoomId} roomId id of room to retrieve appointments
    */
-  public getAllAppoinmentsForRoom(roomId: RoomId): Observable<any> {
+  public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.roomOverview}`;
 
     return this.httpClient.get(apiURL);
@@ -47,7 +50,7 @@ export class AppointmentService {
   /**
    * Retrieves all data for one appointment
    */
-  public getAppoinmentData(): Observable<any> {
+  public getAppointmentData(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment}`;
 
     return this.httpClient.get(apiURL);
@@ -89,7 +92,7 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId Id of an appointment
    */
   public deleteAppointment(appointmentId: number): Observable<any> {
-    //TODO möglich bei room-calender-view, admin appointment-list, appointment-view, peronal-list
+    //TODO möglich bei room-calendar-view, admin appointment-list, appointment-view, peronal-list
   }
 
   /**
@@ -98,7 +101,7 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of appointment
    */
   public acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
-    //TODO möglich bei room-calender-view, admin appointment-list
+    //TODO möglich bei room-calendar-view, admin appointment-list
   }
 
   /**
@@ -107,6 +110,6 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of appointment
    */
   public declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
-    //TODO möglich bei room-calender-view, admin appointment-list
+    //TODO möglich bei room-calendar-view, admin appointment-list
   }
 }
