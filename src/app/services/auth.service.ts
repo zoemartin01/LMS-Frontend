@@ -59,7 +59,6 @@ export class AuthService {
   public logout(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.logout}`;
 
-    //@todo check HTTP method
     return this.httpClient.delete(apiURL);
   }
 
@@ -128,11 +127,10 @@ export class AuthService {
   public setNotificationChannel(notificationChannel: NotificationChannel): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateUser}`;
     const requestBody = {
-      notificationChannel
+      notificationChannel,
     };
 
     return this.httpClient.patch(apiURL, requestBody);
-
   }
 
   /**
