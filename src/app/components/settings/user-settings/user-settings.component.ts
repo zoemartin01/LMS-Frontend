@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from "../../../services/auth.service";
-import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
@@ -11,7 +10,13 @@ import { UserRole } from "../../../types/enums/user-role";
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
 })
+
+/**
+ * Class for user settings
+ */
 export class UserSettingsComponent implements OnInit {
+  public emailNotification: boolean|null = null;
+  public notificationBox: boolean|null = null;
   public user: User = {
     id: null,
     firstname: '',
@@ -20,7 +25,7 @@ export class UserSettingsComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public userService: UserService, public authService: AuthService) {
+  constructor(public authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -29,7 +34,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets user data
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
@@ -47,5 +52,15 @@ export class UserSettingsComponent implements OnInit {
   public openUserDeletionDialog(): void {
   }
 
-  //@todo get and set notification channel
+  /**
+   * Gets notification channel
+   */
+  public async getNotificationChannel(): Promise<void>{
+  }
+  
+  /**
+   * Sets notification channel
+   */
+  public async setNotificationChannel(): Promise<void>{
+  }
 }

@@ -12,18 +12,31 @@ export const environment = {
   //routes
   apiRoutes: {
     //auth
-    userDetails: '',
+    userDetails: '/user',
     login: '/token',
     tokenRefresh: '/token/refresh',
     logout: '/token',
     tokenCheck: '/token/check',
-    signin: '',
-    verifyEmail: '',
+    signin: '/users',
+    verifyEmail: '/user/verify',
+    updateUser: '/user',
 
-    //room
+    //messaging
+
+    //admin (general settings & user management)
+
+    //room management
     rooms: '',
     viewRoom: '/:id',
     editRoom: ':id/edit',
     createRoom: '/create',
+
+    //appointment management
+
+    //inventory management
+
+    //order management
+
+    //livecam
   }
 };

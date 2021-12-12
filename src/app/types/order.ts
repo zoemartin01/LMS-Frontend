@@ -5,7 +5,7 @@ import { OrderStatus } from "./enums/order-status";
 export interface Order {
   id: OrderId,
   item: string,
-  quantity: number,
+  quantity: number|null,
   purchaseUrl: string,
   userId: UserId,
   orderStatus: OrderStatus,

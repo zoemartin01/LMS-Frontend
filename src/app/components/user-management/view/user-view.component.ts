@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
-import {UserService} from "../../../services/user.service";
+import { AuthService } from "../../../services/auth.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.scss']
 })
+
+/**
+ * Class for view of a user
+ */
 export class UserViewComponent implements OnInit {
   public user: User = {
     id: null,
@@ -20,7 +24,8 @@ export class UserViewComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public userService: UserService, private route: ActivatedRoute) { }
+  constructor(public authService: AuthService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MessagingService } from "../../../services/messaging.service";
+
 import { Message } from "../../../types/message";
+import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
 
 @Component({
@@ -8,6 +11,10 @@ import { UnreadMessages } from "../../../types/unread-messages";
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.scss']
 })
+
+/**
+ * Component for the message box page
+ */
 export class MessageBoxComponent implements OnInit {
   public messages: Message[] = [];
   public unreadMessages: UnreadMessages = {
@@ -17,28 +24,42 @@ export class MessageBoxComponent implements OnInit {
     users: 0,
   };
 
-  constructor() {
+  constructor(public messagingService: MessagingService) {
   }
 
   /**
    * Init page
    */
   ngOnInit(): void {
+    this.getUnreadMessagesAmounts();
+    this.getMessages();
   }
 
   /**
-   * Delete message
-   *
-   * @param messageId id of message to be deleted
+   * Retrieves all messages for current user
    */
-  public deleteMessage(messageId: number): void {
+  public async getMessages(): Promise<void> {
   }
 
   /**
-   * Mark specified message as read
-   *
-   * @param messageId id of message to be marked as read
+   * Retrieves the amounts of unread messages for current user
    */
-  public markMessageAsRead(messageId: number): void {
+  public async getUnreadMessagesAmounts(): Promise<void>{
+  }
+
+  /**
+   * Deletes specified message
+   *
+   * @param {MessageId} messageId id of message to be deleted
+   */
+  public async deleteMessage(messageId: MessageId): Promise<void> {
+  }
+
+  /**
+   * Marks specified message as read
+   *
+   * @param {MessageId} messageId id of message to be marked as read
+   */
+  public async markMessageAsRead(messageId: MessageId): Promise<void> {
   }
 }
