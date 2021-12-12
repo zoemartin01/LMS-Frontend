@@ -1,1 +1,1 @@
-export type RecordingId = number|null;
+export type RecordingId = string|null;

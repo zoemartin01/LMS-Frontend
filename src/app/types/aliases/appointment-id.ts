@@ -1,1 +1,1 @@
-export type AppointmentId = number|null;
+export type AppointmentId = string|null;

@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
 import { AppointmentId } from "../types/aliases/appointment-id";
-import {RoomId} from "../types/aliases/room-id";
-import {environment} from "../../environments/environment";
+import { RoomId } from "../types/aliases/room-id";
+import { ConfirmationStatus } from "../types/enums/confirmation-status";
 
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for the management of appointments
  */
@@ -42,16 +44,20 @@ export class AppointmentService {
    * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.roomOverview}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointmentsForRoom
+      .replace(':id', roomId)}`;
 
     return this.httpClient.get(apiURL);
   }
 
   /**
    * Retrieves all data for one appointment
+   *
+   * @param {AppointmentId} appointmentId id of the appointment
    */
-  public getAppointmentData(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment}`;
+  public getAppointmentData(appointmentId : AppointmentId): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment
+      .replace(':id', appointmentId)}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -77,7 +83,8 @@ export class AppointmentService {
    * @param {object} changedData   changed values as object
    */
   public editAppointment(appointmentId : AppointmentId, changedData: object): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment
+      .replace(':id', appointmentId)}`;
     const requestBody = {
       appointmentId: appointmentId,
       changedData: changedData
@@ -91,8 +98,11 @@ export class AppointmentService {
    *
    * @param {AppointmentId} appointmentId Id of an appointment
    */
-  public deleteAppointment(appointmentId: number): Observable<any> {
-    //TODO möglich bei room-calendar-view, admin appointment-list, appointment-view, peronal-list
+  public deleteAppointment(appointmentId: AppointmentId): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAppointment
+      .replace(':id', appointmentId)}`;
+
+    return this.httpClient.delete(apiURL);
   }
 
   /**
@@ -101,7 +111,7 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of appointment
    */
   public acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
-    //TODO möglich bei room-calendar-view, admin appointment-list
+    return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
   /**
@@ -110,6 +120,6 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of appointment
    */
   public declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
-    //TODO möglich bei room-calendar-view, admin appointment-list
+    return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.denied });
   }
 }

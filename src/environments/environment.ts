@@ -33,11 +33,13 @@ export const environment = {
     deleteRoom: '/rooms',
 
     //appointment management
-    myAppointments: '/appointments',
-    allAppointments: '/user/appointments',
+    myAppointments: '/user/appointments',
+    allAppointments: '/appointments',
+    appointmentsForRoom: '/rooms/:id/appointments',
     viewAppointment: '/appointments/:id',
     editAppointment: '/appointments/:id/edit',
     createAppointment: '/appointments',
+    deleteAppointment: '/appointments/:id',
 
     //inventory management
 

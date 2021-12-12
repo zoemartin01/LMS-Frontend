@@ -1,1 +1,1 @@
-export type OrderId = number|null;
+export type OrderId = string|null;

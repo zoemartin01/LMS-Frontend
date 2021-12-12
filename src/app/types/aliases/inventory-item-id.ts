@@ -1,1 +1,1 @@
-export type InventoryItemId = number|null;
+export type InventoryItemId = string|null;

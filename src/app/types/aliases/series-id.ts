@@ -1,1 +1,1 @@
-export type SeriesId = number|null;
+export type SeriesId = string|null;
