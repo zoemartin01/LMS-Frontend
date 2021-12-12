@@ -17,12 +17,11 @@ export const environment = {
     tokenRefresh: '/token/refresh',
     logout: '/token',
     tokenCheck: '/token/check',
-    signin: '/user',
+    signin: '/users',
     verifyEmail: '/user/verify',
     updateUser: '/user',
 
     //messaging
-
 
     //admin (general settings & user management)
 
