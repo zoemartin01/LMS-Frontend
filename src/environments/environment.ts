@@ -12,24 +12,37 @@ export const environment = {
   //routes
   apiRoutes: {
     //auth
-    userDetails: '',
+    userDetails: '/user',
     login: '/token',
     tokenRefresh: '/token/refresh',
     logout: '/token',
-    tokenTest: '/token/test',
-    signin: '',
-    verifyEmail: '',
+    tokenCheck: '/token/check',
+    signin: '/users',
+    verifyEmail: '/user/verify',
+    updateUser: '/user',
 
-    //appointments
-    myAppointments: '',
-    allAppointments: '/all',
-    viewAppointment: '/:id',
-    editAppointment: '/:id/edit',
-    createAppointment: '/create',
-    roomOverview: '',
-    //TODO from roomOverview editAppointment: ':id/edit',
-    //TODO from roomOverview createAppointment: '/create'
+    //messaging
 
-    //room
+    //admin (general settings & user management)
+
+    //room management
+    rooms: '/rooms',
+    viewRoom: '/rooms/:id',
+    createRoom: '/rooms',
+    editRoom: '/rooms/:id',
+    deleteRoom: '/rooms',
+
+    //appointment management
+    myAppointments: '/appointments',
+    allAppointments: '/user/appointments',
+    viewAppointment: '/appointments/:id',
+    editAppointment: '/appointments/:id/edit',
+    createAppointment: '/appointments',
+
+    //inventory management
+
+    //order management
+
+    //livecam
   }
 };

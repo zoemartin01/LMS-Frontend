@@ -8,6 +8,10 @@ import { RoomService } from "../../../services/room.service";
   templateUrl: './room-create.component.html',
   styleUrls: ['./room-create.component.scss']
 })
+
+/**
+ * Component for the room create site, to create a new room
+ */
 export class RoomCreateComponent implements OnInit {
 
   constructor(public roomService: RoomService) {
@@ -22,7 +26,7 @@ export class RoomCreateComponent implements OnInit {
   /**
    * Creates room with data
    *
-   * @param roomCreationForm submitted create form
+   * @param {NgForm} roomCreationForm submitted creation form
    */
   public async createRoom(roomCreationForm: NgForm): Promise<void> {
   }

@@ -11,13 +11,17 @@ import { Room } from "../../../types/room";
   templateUrl: './room-edit.component.html',
   styleUrls: ['./room-edit.component.scss']
 })
+
+/**
+ * Component for the room edit site, to edit one room
+ */
 export class RoomEditComponent implements OnInit {
-  //@todo add fields to room type
   public room: Room = {
     id: null,
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -43,7 +47,7 @@ export class RoomEditComponent implements OnInit {
   /**
    * Changes data of room
    *
-   * @param roomEditForm submitted create form
+   * @param {NgForm} roomEditForm submitted creation form
    */
   public async editRoomData(roomEditForm: NgForm): Promise<void> {
   }

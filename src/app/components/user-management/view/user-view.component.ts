@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
-import {UserService} from "../../../services/user.service";
+import { AuthService } from "../../../services/auth.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.scss']
 })
+
+/**
+ * Class for view of a user
+ */
 export class UserViewComponent implements OnInit {
   public user: User = {
     id: null,
@@ -20,7 +24,8 @@ export class UserViewComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public userService: UserService, private route: ActivatedRoute) { }
+  constructor(public authService: AuthService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -30,16 +35,21 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Gets user data (including: mail adress, name, role, e-mail verification status)
+   * Gets user data
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
   }
 
   /**
-   * Deletes user
+   * Opens user edit form
    */
-  public async deleteUser(): Promise<void> {
-    //use this.user.id here
+  public openUserEditForm(): void {
+  }
+
+  /**
+   * Opens user delete confirmation dialog
+   */
+  public openUserDeletionDialog(): void {
   }
 }

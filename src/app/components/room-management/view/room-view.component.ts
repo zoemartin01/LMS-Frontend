@@ -10,12 +10,17 @@ import { Room } from "../../../types/room";
   templateUrl: './room-view.component.html',
   styleUrls: ['./room-view.component.scss']
 })
+
+/**
+ * Component for the room view site, to view one room in detail
+ */
 export class RoomViewComponent implements OnInit {
   public room: Room = {
     id: null,
     name: '',
     description: '',
     maxConBookings: 1,
+    automaticRequestAcceptance: null,
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -40,12 +45,12 @@ export class RoomViewComponent implements OnInit {
   /**
    * Opens room edit form
    */
-  public editRoom(): void {
+  public openRoomEditForm(): void {
   }
 
   /**
    * Opens room delete confirmation popup
    */
-  public deleteRoom(): void {
+  public openRoomDeletionDialog(): void {
   }
 }

@@ -8,22 +8,22 @@ import { AdminOrderListComponent } from './components/order-management/admin-lis
 import { AppointmentCreateComponent } from "./components/appointment-management/create/appointment-create.component";
 import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/general/dashboard/dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
-import { HelpFaqComponent } from './components/help-faq/help-faq.component';
-import { HomepageComponent } from './components/homepage/homepage.component';
-import { HwlabRulesComponent } from './components/hwlab-rules/hwlab-rules.component';
+import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
+import { HomepageComponent } from './components/general/homepage/homepage.component';
+import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
 import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
-import { InventoryOrderComponent } from './components/inventory-management/inventory-order/inventory-order.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
 import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/login/login.component';
-import { MessageBoxComponent } from './components/message-box/message-box.component';
+import { MessageBoxComponent } from './components/general/message-box/message-box.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
@@ -35,7 +35,7 @@ import { RoomCreateComponent } from './components/room-management/create/room-cr
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
-import { SafetyInstructionsComponent } from './components/safety-instructions/safety-instructions.component';
+import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
@@ -275,7 +275,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'appointments/:id',
+    path: 'appointment/:id',
     canActivate: [AuthGuard],
     component: AppointmentViewComponent,
     pathMatch: 'full',
@@ -284,7 +284,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room-overview/:id/edit',
+    path: 'room-overview/:room_id/appointment/:id/edit',
     canActivate: [AuthGuard, AdminGuard],
     component: AppointmentEditComponent,
     pathMatch: 'full',
@@ -331,7 +331,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'inventory/item/create',
+    path: 'inventory/items/create',
     canActivate: [AuthGuard, AdminGuard],
     component: InventoryItemCreateComponent,
     pathMatch: 'full',
@@ -340,7 +340,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders',
+    path: 'order',
     canActivate: [AuthGuard],
     component: PersonalOrderListComponent,
     pathMatch: 'full',
@@ -349,7 +349,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders/all',
+    path: 'order/all',
     canActivate: [AuthGuard, AdminGuard],
     component: AdminOrderListComponent,
     pathMatch: 'full',
@@ -385,7 +385,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'orders/create',
+    path: 'order/create',
     canActivate: [AuthGuard],
     component: OrderRequestComponent,
     pathMatch: 'full',
@@ -405,7 +405,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'livecam/:id/delete',
+    path: 'livecam/schedule/:id/delete',
     canActivate: [AdminGuard],
     component: LivecamDeleteComponent,
     pathMatch: 'full',

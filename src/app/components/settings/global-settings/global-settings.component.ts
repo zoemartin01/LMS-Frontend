@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
-import { GlobalSettingsService } from "../../../services/global-settings.service";
+import { AdminService } from "../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
@@ -10,12 +11,16 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
   templateUrl: './global-settings.component.html',
   styleUrls: ['./global-settings.component.scss']
 })
+
+/**
+ * Class for global settings
+ */
 export class GlobalSettingsComponent implements OnInit {
   public maxRecordings: number|null = null;
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
-  constructor(public globalSettingsService: GlobalSettingsService) {
+  constructor(public adminService: AdminService) {
   }
 
   /**
@@ -26,9 +31,17 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Gets global settings (including: max recordings, timespan before autodeletion, whitelist retailers)
+   * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+  }
+
+  /**
+   * Changes data of user
+   *
+   * @param {NgForm} globalSettingsEditForm form to edit user
+   */
+  public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
   }
 
   /**
@@ -40,16 +53,16 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer edit form
    *
-   * @param whitelistRetailerId id of whitelist retailer
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
   }
 
   /**
-   * Opens whitelist retailer deletion form
+   * Opens whitelist retailer deletion dialog
    *
-   * @param whitelistRetailerId id of whitelist retailer
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public openWhitelistRetailerDeletePopup(whitelistRetailerId: WhitelistRetailerId): void {
+  public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
   }
 }

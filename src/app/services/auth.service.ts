@@ -5,10 +5,15 @@ import { Observable } from "rxjs";
 
 import { User } from "../types/user";
 import { UserId } from "../types/aliases/user-id";
+import { NotificationChannel } from "../types/enums/notification-channel";
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Service that provides API access for authentication system
+ */
 export class AuthService {
 
   constructor(private httpClient: HttpClient) {
@@ -26,7 +31,7 @@ export class AuthService {
   /**
    * Returns full name of specified user
    *
-   * @param user a user
+   * @param {User} user a user
    */
   public getFullName(user: User): string {
     return `${user.firstname} ${user.lastname}`;
@@ -35,8 +40,8 @@ export class AuthService {
   /**
    * Logs in user with specified credentials
    *
-   * @param email    user's email address
-   * @param password user's password
+   * @param {string} email    user's email address
+   * @param {string} password user's password
    */
   public login(email: string, password: string): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.login}`;
@@ -54,7 +59,6 @@ export class AuthService {
   public logout(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.logout}`;
 
-    //@todo check HTTP method
     return this.httpClient.delete(apiURL);
   }
 
@@ -67,14 +71,14 @@ export class AuthService {
       token: this.getRefreshToken(),
     };
 
-    return this.httpClient.post(apiURL, {headers: requestBody});
+    return this.httpClient.post(apiURL, requestBody);
   }
 
   /**
    * Checks token of current user
    */
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenTest}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -82,10 +86,10 @@ export class AuthService {
   /**
    * Signs in user with his personal information
    *
-   * @param firstname new user's firstname
-   * @param lastname  new user's lastname
-   * @param email     new user's email address
-   * @param password  new user's password
+   * @param {string} firstname new user's firstname
+   * @param {string} lastname  new user's lastname
+   * @param {string} email     new user's email address
+   * @param {string} password  new user's password
    */
   public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.signin}`;
@@ -102,8 +106,8 @@ export class AuthService {
   /**
    * Verifies email address using a token sent on signin
    *
-   * @param userId user's id
-   * @param token  token to verify email
+   * @param {UserId} userId user's id
+   * @param {string} token  token to verify email
    */
   public verifyEmail(userId: UserId, token: string): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.verifyEmail}`;
@@ -116,9 +120,23 @@ export class AuthService {
   }
 
   /**
+   * Sets notification channel
+   *
+   * @param {NotificationChannel} notificationChannel new value of notification channel
+   */
+  public setNotificationChannel(notificationChannel: NotificationChannel): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateUser}`;
+    const requestBody = {
+      notificationChannel,
+    };
+
+    return this.httpClient.patch(apiURL, requestBody);
+  }
+
+  /**
    * Saves access token in local storage
    *
-   * @param accessToken new value of access token
+   * @param {string} accessToken new value of access token
    */
   public setAccessToken(accessToken: string): void {
     localStorage.setItem(environment.storageKeys.accessToken, accessToken);
@@ -134,7 +152,7 @@ export class AuthService {
   /**
    * Saves refresh token in local storage
    *
-   * @param refreshToken new value of refresh token
+   * @param {string} refreshToken new value of refresh token
    */
   public setRefreshToken(refreshToken: string): void {
     localStorage.setItem(environment.storageKeys.refreshToken, refreshToken);
@@ -150,7 +168,7 @@ export class AuthService {
   /**
    * Saves user role in local storage
    *
-   * @param userRole
+   * @param {string} userRole
    */
   public setUserRole(userRole: string): void {
     localStorage.setItem(environment.storageKeys.userRole, userRole);
