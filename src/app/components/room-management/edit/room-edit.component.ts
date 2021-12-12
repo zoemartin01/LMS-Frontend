@@ -11,6 +11,7 @@ import { Room } from "../../../types/room";
   templateUrl: './room-edit.component.html',
   styleUrls: ['./room-edit.component.scss']
 })
+
 /**
  * Component for the room edit site, to edit one room
  */

@@ -26,10 +26,11 @@ export const environment = {
     //admin (general settings & user management)
 
     //room management
-    rooms: '',
-    viewRoom: '/:id',
-    editRoom: ':id/edit',
-    createRoom: '/create',
+    rooms: '/rooms',
+    viewRoom: '/rooms/',
+    createRoom: '/rooms',
+    editRoom: '/rooms/',
+    deleteRoom: '/rooms',
 
     //appointment management
 

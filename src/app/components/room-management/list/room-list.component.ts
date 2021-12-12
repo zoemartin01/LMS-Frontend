@@ -10,6 +10,7 @@ import { RoomId } from "../../../types/aliases/room-id";
   templateUrl: './room-list.component.html',
   styleUrls: ['./room-list.component.scss']
 })
+
 /**
  * Component for the room list site, to list all rooms
  */
