@@ -59,7 +59,7 @@ export class RoomService {
    * @param {object} changedData changed fields of room
    */
   public editRoomData(roomId: RoomId, changedData: object): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editRoom}${roomId}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editRoom.replace(':id', roomId)}`;
     const requestBody = {
       roomId: roomId,
       changedData: changedData,
@@ -74,7 +74,7 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public deleteRoom(roomId: RoomId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteRoom}${roomId}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteRoom.replace(':id', roomId)}`;
 
     return this.httpClient.delete(apiURL);
   }

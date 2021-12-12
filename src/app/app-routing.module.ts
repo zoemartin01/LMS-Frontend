@@ -30,7 +30,7 @@ import { OrderViewComponent } from './components/order-management/view/order-vie
 import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
 import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
 import { RegisterComponent } from './components/register/register.component';
-import { RoomCalenderViewComponent } from "./components/appointment-management/calender-view/room-calender-view.component";
+import { RoomCalendarViewComponent } from "./components/appointment-management/calendar-view/room-calendar-view.component";
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
@@ -241,7 +241,7 @@ const routes: Routes = [
   {
     path: 'room-overview',
     canActivate: [AuthGuard],
-    component: RoomCalenderViewComponent,
+    component: RoomCalendarViewComponent,
     pathMatch: 'full',
     data: {
       title: 'Room Overview'
@@ -250,7 +250,7 @@ const routes: Routes = [
   {
     path: 'room-overview/:id',
     canActivate: [AuthGuard],
-    component: RoomCalenderViewComponent,
+    component: RoomCalendarViewComponent,
     pathMatch: 'full',
     data: {
       title: 'Room Overview'
@@ -262,7 +262,7 @@ const routes: Routes = [
     component: PersonalAppointmentListComponent,
     pathMatch: 'full',
     data: {
-      title: 'My Appointment'
+      title: 'My Appointments'
     }
   },
   {

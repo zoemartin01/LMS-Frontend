@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RoomCalenderViewComponent } from './room-calender-view.component';
+import { RoomCalendarViewComponent } from './room-calendar-view.component';
 
-describe('RoomCalenderViewComponent', () => {
-  let component: RoomCalenderViewComponent;
-  let fixture: ComponentFixture<RoomCalenderViewComponent>;
+describe('RoomCalendarViewComponent', () => {
+  let component: RoomCalendarViewComponent;
+  let fixture: ComponentFixture<RoomCalendarViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RoomCalenderViewComponent ]
+      declarations: [ RoomCalendarViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoomCalenderViewComponent);
+    fixture = TestBed.createComponent(RoomCalendarViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

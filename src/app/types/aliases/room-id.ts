@@ -1,1 +1,1 @@
-export type RoomId = number|null;
+export type RoomId = string|null;

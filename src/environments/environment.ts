@@ -27,12 +27,19 @@ export const environment = {
 
     //room management
     rooms: '/rooms',
-    viewRoom: '/rooms/',
+    viewRoom: '/rooms/:id',
     createRoom: '/rooms',
-    editRoom: '/rooms/',
+    editRoom: '/rooms/:id',
     deleteRoom: '/rooms',
 
     //appointment management
+    myAppointments: '/user/appointments',
+    allAppointments: '/appointments',
+    appointmentsForRoom: '/rooms/:id/appointments',
+    viewAppointment: '/appointments/:id',
+    editAppointment: '/appointments/:id/edit',
+    createAppointment: '/appointments',
+    deleteAppointment: '/appointments/:id',
 
     //inventory management
 

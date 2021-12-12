@@ -13,6 +13,10 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
   templateUrl: './appointment-view.component.html',
   styleUrls: ['./appointment-view.component.scss']
 })
+
+/**
+ * Component for the appointment view site, to view one appointment in detail
+ */
 export class AppointmentViewComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
