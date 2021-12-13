@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AdminService } from "../../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
@@ -13,12 +13,14 @@ import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
 
 /**
  * Class for the view of a whitelist retailer
+ * @typedef {Component} WhitelistRetailerViewComponent
+ * @class
  */
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
-    url: '',
+    domains: [],
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
