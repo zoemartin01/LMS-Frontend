@@ -14,6 +14,8 @@ import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 
 /**
  * Service for admins
+ * @typedef {Service} Admin
+ * @class
  */
 export class AdminService {
 

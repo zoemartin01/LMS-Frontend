@@ -14,12 +14,14 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Class for editing a whitelist retailer
+ * @typedef {Component} WhitelistRetailerEdit
+ * @class
  */
 export class WhitelistRetailerEditComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
-    url: [],
+    domain: null,
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
