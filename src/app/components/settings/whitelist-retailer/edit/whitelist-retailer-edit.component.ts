@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { AdminService } from "../../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-edit',
