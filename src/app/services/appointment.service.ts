@@ -45,7 +45,7 @@ export class AppointmentService {
    * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
-    if (roomId == null) {
+    if (roomId === null) {
       throw ParseArgumentException;
     }
 
@@ -61,7 +61,7 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of the appointment
    */
   public getAppointmentData(appointmentId : AppointmentId): Observable<any> {
-    if (appointmentId == null) {
+    if (appointmentId === null) {
       throw ParseArgumentException;
     }
 
@@ -92,7 +92,7 @@ export class AppointmentService {
    * @param {object} changedData   changed values as object
    */
   public editAppointment(appointmentId: AppointmentId, changedData: object): Observable<any> {
-    if (appointmentId == null) {
+    if (appointmentId === null) {
       throw ParseArgumentException;
     }
 
@@ -112,7 +112,7 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId Id of an appointment
    */
   public deleteAppointment(appointmentId: AppointmentId): Observable<any> {
-    if (appointmentId == null) {
+    if (appointmentId === null) {
       throw ParseArgumentException;
     }
 
