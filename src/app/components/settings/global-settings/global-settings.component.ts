@@ -14,7 +14,7 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
 
 /**
  * Class for global settings
- * @typedef {Component} GlobalSettings
+ * @typedef {Component} GlobalSettingsComponent
  * @class
  */
 export class GlobalSettingsComponent implements OnInit {

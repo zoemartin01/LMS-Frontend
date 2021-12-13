@@ -14,6 +14,8 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Class for view of a user
+ * @typedef {Component} UserViewComponent
+ * @class
  */
 export class UserViewComponent implements OnInit {
   public user: User = {

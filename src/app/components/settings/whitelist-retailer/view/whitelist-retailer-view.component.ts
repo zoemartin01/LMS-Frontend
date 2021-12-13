@@ -13,7 +13,7 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Class for the view of a whitelist retailer
- * @typedef {Component} WhitelistRetailerView
+ * @typedef {Component} WhitelistRetailerViewComponent
  * @class
  */
 export class WhitelistRetailerViewComponent implements OnInit {

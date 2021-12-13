@@ -11,7 +11,7 @@ import { AdminService } from "../../../../services/admin.service";
 
 /**
  * Class for creating a whitelist retailer
- * @typedef {Component} WhitelistRetailerCreate
+ * @typedef {Component} WhitelistRetailerCreateComponent
  * @class
  */
 export class WhitelistRetailerCreateComponent implements OnInit {
