@@ -5,6 +5,7 @@ import { environment } from "../../environments/environment";
 
 import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class RoomService {
    * @param {object} changedData changed fields of room
    */
   public editRoomData(roomId: RoomId, changedData: object): Observable<any> {
+    if(roomId === null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.editRoom.replace(':id', roomId)}`;
     const requestBody = {
       roomId: roomId,
@@ -74,6 +79,10 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public deleteRoom(roomId: RoomId): Observable<any> {
+    if(roomId === null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteRoom.replace(':id', roomId)}`;
 
     return this.httpClient.delete(apiURL);
