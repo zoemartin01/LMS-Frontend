@@ -34,7 +34,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.room.id = +params['id'];
+      this.room.id = params['id'];
       this.getRoomData();
       this.getAppointments();
     });
