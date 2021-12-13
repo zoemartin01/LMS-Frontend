@@ -8,11 +8,15 @@ import { AppointmentId } from "../../../types/aliases/appointment-id";
 import { Room } from "../../../types/room";
 
 @Component({
-  selector: 'app-room-calender-view',
-  templateUrl: './room-calender-view.component.html',
-  styleUrls: ['./room-calender-view.component.scss']
+  selector: 'app-room-calendar-view',
+  templateUrl: './room-calendar-view.component.html',
+  styleUrls: ['./room-calendar-view.component.scss']
 })
-export class RoomCalenderViewComponent implements OnInit {
+
+/**
+ * Component for the room calendar view site, to view all appointments and thus free slots of one room
+ */
+export class RoomCalendarViewComponent implements OnInit {
   public room: Room = {
     id: null,
     name: '',

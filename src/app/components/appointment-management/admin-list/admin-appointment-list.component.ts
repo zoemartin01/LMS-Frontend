@@ -10,6 +10,10 @@ import { AppointmentId } from "../../../types/aliases/appointment-id";
   templateUrl: './admin-appointment-list.component.html',
   styleUrls: ['./admin-appointment-list.component.scss']
 })
+
+/**
+ * Component for the admin appointment list site, to view all appointments and all requested appointments
+ */
 export class AdminAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
 

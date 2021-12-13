@@ -1,1 +1,1 @@
-export type WhitelistRetailerId = number|null;
+export type WhitelistRetailerId = string|null;
