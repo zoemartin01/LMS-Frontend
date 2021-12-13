@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
-import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { UserId } from "../types/aliases/user-id";
-import {WhitelistRetailerId} from "../types/aliases/whitelist-retailer-id";
-import {WhitelistRetailerDomainId} from "../types/aliases/whitelist-retailer-domain-id";
+import { WhitelistRetailer } from "../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
+import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 
 /**
  * Service for admins
- * @typedef {Service} Admin
+ * @typedef {Service} AdminService
  * @class
  */
 export class AdminService {

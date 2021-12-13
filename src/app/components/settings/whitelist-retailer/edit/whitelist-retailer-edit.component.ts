@@ -21,7 +21,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
-    domain: null,
+    domains: [],
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
