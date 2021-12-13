@@ -48,6 +48,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
 import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
 import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/global-set
     WhitelistRetailerCreateComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
+    RoomTimeslotsComponent,
   ],
   imports: [
     AppRoutingModule,
