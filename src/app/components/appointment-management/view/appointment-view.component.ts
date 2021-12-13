@@ -39,7 +39,7 @@ export class AppointmentViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.appointment.id = +params['id'];
+      this.appointment.id = params['id'];
       this.getAppointmentData();
     });
   }

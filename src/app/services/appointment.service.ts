@@ -7,6 +7,7 @@ import { Appointment } from "../types/appointment";
 import { AppointmentId } from "../types/aliases/appointment-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,10 @@ export class AppointmentService {
    * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
+    if (roomId == null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointmentsForRoom
       .replace(':id', roomId)}`;
 
@@ -56,6 +61,10 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of the appointment
    */
   public getAppointmentData(appointmentId : AppointmentId): Observable<any> {
+    if (appointmentId == null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment
       .replace(':id', appointmentId)}`;
 
@@ -82,7 +91,11 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId id of the appointment to be edited
    * @param {object} changedData   changed values as object
    */
-  public editAppointment(appointmentId : AppointmentId, changedData: object): Observable<any> {
+  public editAppointment(appointmentId: AppointmentId, changedData: object): Observable<any> {
+    if (appointmentId == null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment
       .replace(':id', appointmentId)}`;
     const requestBody = {
@@ -99,6 +112,10 @@ export class AppointmentService {
    * @param {AppointmentId} appointmentId Id of an appointment
    */
   public deleteAppointment(appointmentId: AppointmentId): Observable<any> {
+    if (appointmentId == null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAppointment
       .replace(':id', appointmentId)}`;
 
