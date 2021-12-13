@@ -34,6 +34,7 @@ import { RoomCalendarViewComponent } from "./components/appointment-management/c
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
+import { RoomTimeslotsComponent } from "./components/room-management/room-timeslots/room-timeslots.component";
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
@@ -43,7 +44,6 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
 import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
 import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
-import {RoomTimeslotsComponent} from "./components/room-management/room-timeslots/room-timeslots.component";
 
 const routes: Routes = [
   //General

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {RoomService} from "../../../services/room.service";
-import {ActivatedRoute} from "@angular/router";
-import {NgForm} from "@angular/forms";
-import {Room} from "../../../types/room";
+import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-timeslots',
@@ -21,7 +23,8 @@ export class RoomTimeslotsComponent implements OnInit {
     description: '',
     maxConBookings: 1,
     automaticRequestAcceptance: null,
-    //TODO (un-)available timeslots?
+    availableTimeslots: [],
+    unavailableTimeslots: [],
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
@@ -47,7 +50,7 @@ export class RoomTimeslotsComponent implements OnInit {
   /**
    * Changes data of timeslot of room
    *
-   * @param {NgForm} timeslotEditForm submitted creation form
+   * @param {NgForm} timeslotEditForm submitted timeslot edit form
    */
   public async editTimeslotData(timeslotEditForm: NgForm): Promise<void> {
   }

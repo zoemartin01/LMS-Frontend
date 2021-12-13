@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
-import {ParseArgumentException} from "@angular/cli/models/parser";
-import {TimespanId} from "../types/aliases/timespan-id";
+import { TimespanId } from "../types/aliases/timespan-id";
 
 @Injectable({
   providedIn: 'root'
@@ -127,7 +127,8 @@ export class RoomService {
     if(TimespanId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAvailableTimeslot.replace(':timeslot_id', TimespanId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAvailableTimeslot
+      .replace(':timeslot_id', TimespanId)}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -141,7 +142,8 @@ export class RoomService {
     if(TimespanId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteUnavailableTimeslot.replace(':timeslot_id', TimespanId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteUnavailableTimeslot
+      .replace(':timeslot_id', TimespanId)}`;
 
     return this.httpClient.delete(apiURL);
   }

@@ -22,7 +22,8 @@ export class RoomEditComponent implements OnInit {
     description: '',
     maxConBookings: 1,
     automaticRequestAcceptance: null,
-    //TODO (un-)available timeslots?
+    availableTimeslots: [],
+    unavailableTimeslots: [],
   };
 
   constructor(public roomService: RoomService, private route: ActivatedRoute) {

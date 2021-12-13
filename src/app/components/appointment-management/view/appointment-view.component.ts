@@ -7,7 +7,6 @@ import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
-import {SeriesId} from "../../../types/aliases/series-id";
 
 @Component({
   selector: 'app-appointment-view',
