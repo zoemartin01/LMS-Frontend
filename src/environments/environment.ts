@@ -48,7 +48,12 @@ export const environment = {
     //inventory management
 
     //order management
-
+    
     //livecam
+    recordings: '/livecam/recordings',
+    getRecording: '/livecam/recordings/:id',
+    scheduleRecording: '/livecam/recordings/schedule',
+    deleteRecording: '/livecam/recordings/:id/download',
+    downloadRecording: '/livecam/recordings/:id',
   }
 };
