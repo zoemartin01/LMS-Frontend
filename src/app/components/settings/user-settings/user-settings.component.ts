@@ -13,7 +13,7 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Class for user settings
- * @typedef {Component} UserSettings
+ * @typedef {Component} UserSettingsComponent
  * @class
  */
 export class UserSettingsComponent implements OnInit {
