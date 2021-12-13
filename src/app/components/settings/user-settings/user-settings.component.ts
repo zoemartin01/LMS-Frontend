@@ -13,6 +13,8 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Class for user settings
+ * @typedef {Component} UserSettings
+ * @class
  */
 export class UserSettingsComponent implements OnInit {
   public emailNotification: boolean|null = null;
@@ -57,7 +59,7 @@ export class UserSettingsComponent implements OnInit {
    */
   public async getNotificationChannel(): Promise<void>{
   }
-  
+
   /**
    * Sets notification channel
    */
