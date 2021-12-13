@@ -43,6 +43,7 @@ import { UserViewComponent } from './components/user-management/view/user-view.c
 import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
 import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import {RoomTimeslotsComponent} from "./components/room-management/room-timeslots/room-timeslots.component";
 
 const routes: Routes = [
   //General
@@ -225,6 +226,15 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Edit Room'
+    }
+  },
+  {
+    path: 'room/:id/edit-timeslots',
+    canActivate: [AuthGuard, AdminGuard],
+    component: RoomTimeslotsComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Edit Timeslots'
     }
   },
   {

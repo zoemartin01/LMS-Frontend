@@ -31,6 +31,10 @@ export const environment = {
     createRoom: '/rooms',
     editRoom: '/rooms/:id',
     deleteRoom: '/rooms',
+    createAvailableTimeslot: '/rooms/:id/availableTimeslot',
+    createUnavailableTimeslot: '/rooms/:id/unavailableTimeslot',
+    deleteAvailableTimeslot: '/rooms/:room_id/availableTimeslot/:timeslot_id',
+    deleteUnavailableTimeslot: '/rooms/:room_id/unavailableTimeslot/:timeslot_id',
 
     //appointment management
     myAppointments: '/user/appointments',
