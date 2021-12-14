@@ -115,7 +115,7 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    *
    */
-  public editDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  public editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
   }
 
   /**
@@ -124,6 +124,6 @@ export class AdminService {
    * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public deleteDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
   }
 }
