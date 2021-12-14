@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from "../../../services/auth.service";
-
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-user-settings',
@@ -27,7 +26,7 @@ export class UserSettingsComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public authService: AuthService) {
+  constructor(public userService: UserService) {
   }
 
   ngOnInit(): void {
