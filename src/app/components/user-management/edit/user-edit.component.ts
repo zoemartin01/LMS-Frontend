@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AuthService } from "../../../services/auth.service";
-
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NgForm } from "@angular/forms";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -27,7 +26,7 @@ export class UserEditComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public authService : AuthService, private route: ActivatedRoute) { }
+  constructor(public userService : UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

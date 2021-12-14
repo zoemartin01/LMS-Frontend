@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AuthService } from "../../../services/auth.service";
-
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 
@@ -26,7 +24,7 @@ export class UserViewComponent implements OnInit {
     userRole: UserRole.unkown,
   };
 
-  constructor(public authService: AuthService, private route: ActivatedRoute) {
+  constructor(public userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
