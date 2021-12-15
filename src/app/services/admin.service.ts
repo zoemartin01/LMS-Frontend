@@ -3,10 +3,20 @@ import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
 import { UserId } from "../types/aliases/user-id";
+import { WhitelistRetailer } from "../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
+import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Service for admins
+ * @typedef {Service} AdminService
+ * @class
+ */
 export class AdminService {
 
   constructor(private httpClient: HttpClient) {
@@ -25,22 +35,6 @@ export class AdminService {
   }
 
   /**
-   * Gets data of user with id userId
-   * @param {userId} userId Id of user
-   */
-  public getUserData(userId: UserId): Observable<any> {
-  }
-
-  /**
-   * Changes data of user
-   *
-   * @param {userId} userId      id of associated user
-   * @param {object} changedData changed fields of user
-   */
-  public editUserData(userId: UserId, changedData: object): Observable<any> {
-  }
-
-  /**
    * Changes global settings
    *
    * @param {object} changedData changed fields of global settings
@@ -48,11 +42,65 @@ export class AdminService {
   public updateGlobalSettings(changedData: object): Observable<any> {
   }
 
+
   /**
-   * Deletes user
+   * Gets whitelist retailer data
    *
-   * @param {userId} userId id of user to delete
+   * @param {WhitelistRetailerId} whitelistRetailerId of whitelist retailer
    */
-  public deleteUser(userId: number): Observable<any> {
+  public getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+  }
+
+  /**
+   * Creates whitelist retailer with data
+   *
+   * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
+   */
+  public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<any> {
+  }
+
+  /**
+   * Changes data of whitelist retailer
+   *
+   * @param {WhitelistRetailerId} whitelistRetailerId id of associated whitelist retailer
+   * @param {object} changedData changed fields of whitelist retailer
+   */
+  public editWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId, changedData: object): Observable<any> {
+  }
+
+  /**
+   * Deletes whitelist retailer
+   *
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   */
+  public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+  }
+
+  /**
+   * Adds domain to whitelist retailer
+   *
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   * @param {WhitelistRetailerDomain} whitelistRetailerDomain whitelist retailer domain
+   */
+  public addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: WhitelistRetailerDomain): Observable<any> {
+  }
+
+  /**
+   * Edits domain of whitelist retailer
+   *
+   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   *
+   */
+  public editDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  }
+
+  /**
+   * Deletes domain of whitelist retailer
+   *
+   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   */
+  public deleteDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
   }
 }

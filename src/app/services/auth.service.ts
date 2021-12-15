@@ -22,24 +22,6 @@ export class AuthService {
   }
 
   /**
-   * Retrieves user details
-   */
-  public getUserDetails(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.userDetails}`;
-
-    return this.httpClient.get(apiURL);
-  }
-
-  /**
-   * Returns full name of specified user
-   *
-   * @param {User} user a user
-   */
-  public getFullName(user: User): string {
-    return `${user.firstname} ${user.lastname}`;
-  }
-
-  /**
    * Logs in user with specified credentials
    *
    * @param {string} email    user's email address
@@ -85,55 +67,6 @@ export class AuthService {
     return this.httpClient.get(apiURL);
   }
 
-  /**
-   * Signs in user with his personal information
-   *
-   * @param {string} firstname new user's firstname
-   * @param {string} lastname  new user's lastname
-   * @param {string} email     new user's email address
-   * @param {string} password  new user's password
-   */
-  public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.signin}`;
-    const requestBody = {
-      firstname,
-      lastname,
-      email,
-      password
-    };
-
-    return this.httpClient.post(apiURL, requestBody);
-  }
-
-  /**
-   * Verifies email address using a token sent on signin
-   *
-   * @param {UserId} userId user's id
-   * @param {string} token  token to verify email
-   */
-  public verifyEmail(userId: UserId, token: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.verifyEmail}`;
-    const requestBody = {
-      userId,
-      token
-    };
-
-    return this.httpClient.post(apiURL, requestBody);
-  }
-
-  /**
-   * Sets notification channel
-   *
-   * @param {NotificationChannel} notificationChannel new value of notification channel
-   */
-  public setNotificationChannel(notificationChannel: NotificationChannel): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateUser}`;
-    const requestBody = {
-      notificationChannel,
-    };
-
-    return this.httpClient.patch(apiURL, requestBody);
-  }
 
   /**
    * Saves access token in local storage

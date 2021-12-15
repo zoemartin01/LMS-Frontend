@@ -12,8 +12,4 @@ import { Component } from '@angular/core';
  * @class
  */
 export class HwlabRulesComponent{
-
-  constructor() {
-  }
-
 }

@@ -1,20 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AdminService } from "../../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../../types/whitelist-retailer";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
   templateUrl: './whitelist-retailer-view.component.html',
   styleUrls: ['./whitelist-retailer-view.component.scss']
 })
+
+/**
+ * Class for the view of a whitelist retailer
+ * @typedef {Component} WhitelistRetailerViewComponent
+ * @class
+ */
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
-    url: '',
+    domains: [],
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
@@ -31,7 +37,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
   }
 
   /**
-   * Gets whitelist retailer data (including: domain, name)
+   * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void>{
   }
@@ -45,6 +51,6 @@ export class WhitelistRetailerViewComponent implements OnInit {
   /**
    * Opens room delete confirmation popup
    */
-  public openWhitelistRetailerDeletePopup(): void {
+  public openWhitelistRetailerDeletionDialog(): void {
   }
 }

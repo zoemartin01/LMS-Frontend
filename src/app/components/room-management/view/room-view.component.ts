@@ -10,6 +10,10 @@ import { Room } from "../../../types/room";
   templateUrl: './room-view.component.html',
   styleUrls: ['./room-view.component.scss']
 })
+
+/**
+ * Component for the room view site, to view one room in detail
+ */
 export class RoomViewComponent implements OnInit {
   public room: Room = {
     id: null,
@@ -27,7 +31,7 @@ export class RoomViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.room.id = +params['id'];
+      this.room.id = params['id'];
       this.getRoomData();
     });
   }

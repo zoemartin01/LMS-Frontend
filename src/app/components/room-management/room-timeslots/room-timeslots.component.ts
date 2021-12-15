@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
 
 import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
 
 @Component({
-  selector: 'app-room-edit',
-  templateUrl: './room-edit.component.html',
-  styleUrls: ['./room-edit.component.scss']
+  selector: 'app-room-timeslots',
+  templateUrl: './room-timeslots.component.html',
+  styleUrls: ['./room-timeslots.component.scss']
 })
 
 /**
- * Component for the room edit site, to edit one room
+ * Component for the room edit site, to edit the available and unavailable timeslots one room
  */
-export class RoomEditComponent implements OnInit {
+export class RoomTimeslotsComponent implements OnInit {
+
   public room: Room = {
     id: null,
     name: '',
@@ -42,15 +43,15 @@ export class RoomEditComponent implements OnInit {
   /**
    * Get all data of room
    */
-  public async getRoomData() : Promise<void> {
+  public async getRoomData(): Promise<void> {
     //use this.room.id here and set this.room
   }
 
   /**
-   * Changes data of room
+   * Changes data of timeslot of room
    *
-   * @param {NgForm} roomEditForm submitted creation form
+   * @param {NgForm} timeslotEditForm submitted timeslot edit form
    */
-  public async editRoomData(roomEditForm: NgForm): Promise<void> {
+  public async editTimeslotData(timeslotEditForm: NgForm): Promise<void> {
   }
 }

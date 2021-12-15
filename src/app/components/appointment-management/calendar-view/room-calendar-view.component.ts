@@ -1,29 +1,52 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
+import { Room } from "../../../types/room";
+import { RoomId } from "../../../types/aliases/room-id";
 
 @Component({
-  selector: 'app-personal-appointment-list',
-  templateUrl: './personal-appointment-list.component.html',
-  styleUrls: ['./personal-appointment-list.component.scss']
+  selector: 'app-room-calendar-view',
+  templateUrl: './room-calendar-view.component.html',
+  styleUrls: ['./room-calendar-view.component.scss']
 })
+
 /**
- * Component for the personal appointments list site, to view all appointments of one user
+ * Component for the room calendar view site, to view all appointments and thus free slots of one room
  */
-export class PersonalAppointmentListComponent implements OnInit {
+export class RoomCalendarViewComponent implements OnInit {
+  public room: Room = {
+    id: null,
+    name: '',
+    description: '',
+    maxConBookings: 1,
+    automaticRequestAcceptance: null,
+    availableTimeslots: [],
+    unavailableTimeslots: []
+  };
   public appointments: Appointment[] = [];
 
-  constructor(public appointmentService: AppointmentService) {
+  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
   }
 
   /**
    * Init page
    */
   ngOnInit(): void {
-    this.getAppointments();
+    this.route.params.subscribe(params => {
+      this.room.id = params['id'];
+      this.getRoomData();
+      this.getAppointmentsForRoom(this.room.id);
+    });
+  }
+
+  /**
+   * Get all data of room
+   */
+  private async getRoomData() : Promise<void> {
   }
 
   /**
@@ -41,9 +64,11 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Gets appointment data of all appointments for current user
+   * Gets appointment data of all appointments of one room
+   *
+   * @param {RoomId} roomId id of room
    */
-  public async getAppointments(): Promise<void> {
+  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
   }
 
   /**

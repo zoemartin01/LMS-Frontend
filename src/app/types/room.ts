@@ -1,4 +1,5 @@
 import { RoomId } from "./aliases/room-id";
+import { RoomTimespan } from "./room-timespan";
 
 export interface Room {
   id: RoomId,
@@ -6,4 +7,6 @@ export interface Room {
   description: string,
   maxConBookings: number,
   automaticRequestAcceptance: boolean|null,
+  availableTimeslots: RoomTimespan[],
+  unavailableTimeslots: RoomTimespan[],
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UnreadMessages } from "../../../types/unread-messages";
 
 import { AuthService } from "../../../services/auth.service";
+import { MessagingService } from "../../../services/messaging.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -23,18 +24,19 @@ export class DashboardComponent implements OnInit {
     users: 0,
   };
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, public messagingService: MessagingService) {
   }
 
   /**
    * Init page
    */
   ngOnInit(): void {
-    this.unreadMessages = {
-      sum: 7,
-      appointments: 2,
-      orders: 3,
-      users: 1,
-    };
+    this.getUnreadMessagesAmounts();
+  }
+
+  /**
+   * Retrieves the amounts of unread messages for current user
+   */
+  public async getUnreadMessagesAmounts(): Promise<void>{
   }
 }

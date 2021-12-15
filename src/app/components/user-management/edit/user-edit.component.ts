@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import { NgForm } from "@angular/forms";
 
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
-import { NgForm } from "@angular/forms";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-edit',
@@ -15,6 +16,8 @@ import { NgForm } from "@angular/forms";
 
 /**
  * Class for editing a user
+ * @typedef {Component} UserEditComponent
+ * @class
  */
 export class UserEditComponent implements OnInit {
   public user: User = {
@@ -23,16 +26,22 @@ export class UserEditComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public authService : AuthService, private route: ActivatedRoute) { }
+  constructor(public userService : UserService, private route: ActivatedRoute) {
+  }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.user.id = +params['id'];
+      this.user.id = params['id'];
       this.getUserData();
     });
   }
+
   /**
    * Get data of user
    */

@@ -13,16 +13,18 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
   templateUrl: './appointment-edit.component.html',
   styleUrls: ['./appointment-edit.component.scss']
 })
+
+/**
+ * Component for the appointment edi site, to edit one appointment
+ */
 export class AppointmentEditComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
     userId: null,
-    roomTimespan: {
-      roomId: null,
-      start: null,
-      end: null,
-      type: RoomTimespanType.appointment,
-    },
+    roomId: null,
+    start: null,
+    end: null,
+    type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
   };
@@ -35,7 +37,7 @@ export class AppointmentEditComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.appointment.id = +params['id'];
+      this.appointment.id = params['id'];
       this.getAppointmentData();
     });
   }

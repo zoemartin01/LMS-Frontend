@@ -1,1 +1,1 @@
-export type MessageId = number;
+export type MessageId = string;
