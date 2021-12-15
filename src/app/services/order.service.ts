@@ -8,6 +8,7 @@ import { OrderId } from "../types/aliases/order-id";
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for the management of orders
  *

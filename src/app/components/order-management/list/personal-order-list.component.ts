@@ -10,6 +10,7 @@ import { OrderId } from "../../../types/aliases/order-id";
   templateUrl: './personal-order-list.component.html',
   styleUrls: ['./personal-order-list.component.scss']
 })
+
 /**
  * Component for personal order list page
  *

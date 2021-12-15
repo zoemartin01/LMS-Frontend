@@ -10,6 +10,7 @@ import { OrderId } from "../../../types/aliases/order-id";
   templateUrl: './admin-order-list.component.html',
   styleUrls: ['./admin-order-list.component.scss']
 })
+
 /**
  * Component for the admin order list page
  * @typedef {Component} AdminOrderListComponent

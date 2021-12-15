@@ -11,6 +11,7 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './order-view.component.html',
   styleUrls: ['./order-view.component.scss']
 })
+
 /**
  * Component for the order view page
  *
