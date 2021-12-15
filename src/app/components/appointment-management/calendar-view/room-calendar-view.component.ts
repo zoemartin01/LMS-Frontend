@@ -6,6 +6,7 @@ import { AppointmentService } from "../../../services/appointment.service";
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { Room } from "../../../types/room";
+import { RoomId } from "../../../types/aliases/room-id";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -23,6 +24,8 @@ export class RoomCalendarViewComponent implements OnInit {
     description: '',
     maxConBookings: 1,
     automaticRequestAcceptance: null,
+    availableTimeslots: [],
+    unavailableTimeslots: []
   };
   public appointments: Appointment[] = [];
 
@@ -34,9 +37,9 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.room.id = +params['id'];
+      this.room.id = params['id'];
       this.getRoomData();
-      this.getAppointments();
+      this.getAppointmentsForRoom(this.room.id);
     });
   }
 
@@ -62,8 +65,10 @@ export class RoomCalendarViewComponent implements OnInit {
 
   /**
    * Gets appointment data of all appointments of one room
+   *
+   * @param {RoomId} roomId id of room
    */
-  public async getAppointments(): Promise<void> {
+  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
   }
 
   /**
