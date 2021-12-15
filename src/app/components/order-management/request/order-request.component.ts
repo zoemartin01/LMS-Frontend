@@ -9,7 +9,7 @@ import { OrderService } from "../../../services/order.service";
   styleUrls: ['./order-request.component.scss']
 })
 /**
- * Component for order request page
+ * Component for order request popup
  *
  * @typedef {Component} OrderRequestComponent
  * @class

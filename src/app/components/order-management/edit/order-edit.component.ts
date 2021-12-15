@@ -13,7 +13,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
   styleUrls: ['./order-edit.component.scss']
 })
 /**
- * Component for the order edit page
+ * Component for the order edit popup
+ *
  * @typedef {Component} OrderEditComponent
  * @class
  */
