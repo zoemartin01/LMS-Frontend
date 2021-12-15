@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
 
 import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
@@ -10,6 +9,7 @@ import { InventoryItem } from "../../../types/inventory-item";
   templateUrl: './inventory-item-view.component.html',
   styleUrls: ['./inventory-item-view.component.scss']
 })
+
 /**
  * Component for the inventory item view popup
  *

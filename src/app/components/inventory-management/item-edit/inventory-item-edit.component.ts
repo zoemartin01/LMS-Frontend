@@ -11,6 +11,7 @@ import { InventoryItem } from "../../../types/inventory-item";
   templateUrl: './inventory-item-edit.component.html',
   styleUrls: ['./inventory-item-edit.component.scss']
 })
+
 /**
  * Component for the inventory item edit popup
  *

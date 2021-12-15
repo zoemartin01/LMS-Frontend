@@ -8,6 +8,7 @@ import { NgForm } from "@angular/forms";
   templateUrl: './inventory-item-create.component.html',
   styleUrls: ['./inventory-item-create.component.scss']
 })
+
 /**
  * Component for the inventory item create popup
  *

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
 
-import { OrderService } from "../../../services/order.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
@@ -12,6 +10,7 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
+
 /**
  * Component for the inventory list page
  *

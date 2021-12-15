@@ -8,6 +8,7 @@ import { InventoryItemId } from "../types/aliases/inventory-item-id";
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for the management of the Inventory
  *
