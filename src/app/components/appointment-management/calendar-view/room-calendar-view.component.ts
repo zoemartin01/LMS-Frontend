@@ -15,7 +15,9 @@ import { RoomId } from "../../../types/aliases/room-id";
 })
 
 /**
- * Component for the room calendar view site, to view all appointments and thus free slots of one room
+ * Component for the room calendar view page, to view all appointments and thus free slots of one room
+ * @typedef {Component} RoomCalendarViewComponent
+ * @class
  */
 export class RoomCalendarViewComponent implements OnInit {
   public room: Room = {

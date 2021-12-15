@@ -15,7 +15,9 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 })
 
 /**
- * Component for the appointment edi site, to edit one appointment
+ * Component for the appointment edit popup, to edit one appointment
+ * @typedef {Component} AppointmentEditComponent
+ * @class
  */
 export class AppointmentEditComponent implements OnInit {
   public appointment: Appointment = {

@@ -15,6 +15,8 @@ import { ConfirmationStatus } from "../types/enums/confirmation-status";
 
 /**
  * Service for the management of appointments
+ * @typedef {Service} AppointmentService
+ * @class
  */
 export class AppointmentService {
 
