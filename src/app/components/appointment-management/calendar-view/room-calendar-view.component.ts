@@ -6,7 +6,7 @@ import { AppointmentService } from "../../../services/appointment.service";
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { Room } from "../../../types/room";
-import {RoomId} from "../../../types/aliases/room-id";
+import { RoomId } from "../../../types/aliases/room-id";
 
 @Component({
   selector: 'app-room-calendar-view',

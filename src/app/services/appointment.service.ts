@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
@@ -7,7 +8,6 @@ import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
-import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root'
