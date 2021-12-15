@@ -13,7 +13,6 @@ import { OrderId } from "../../../types/aliases/order-id";
 
 /**
  * Component for personal order list page
- *
  * @typedef {Component} PersonalOrderListComponent
  * @class
  */
