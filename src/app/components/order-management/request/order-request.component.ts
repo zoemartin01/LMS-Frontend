@@ -8,6 +8,7 @@ import { OrderService } from "../../../services/order.service";
   templateUrl: './order-request.component.html',
   styleUrls: ['./order-request.component.scss']
 })
+
 /**
  * Component for order request popup
  *

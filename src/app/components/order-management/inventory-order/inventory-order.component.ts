@@ -14,6 +14,7 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './inventory-order.component.html',
   styleUrls: ['./inventory-order.component.scss']
 })
+
 /**
  * Component to inventory an order
  *
@@ -60,7 +61,7 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Sets order status to "inventoried" and opens inventory item create popup
+   * Sets order status to "inventoried" and creates new inventory item
    *
    * @param {NgForm} inventoryOrderForm submitted inventory form
    */
