@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-view',
@@ -24,11 +25,15 @@ export class UserViewComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public authService: AuthService, private route: ActivatedRoute) {
+  constructor(public userService: UserService, private route: ActivatedRoute) {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.user.id = +params['id'];

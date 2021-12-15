@@ -35,22 +35,6 @@ export class AdminService {
   }
 
   /**
-   * Gets data of user with id userId
-   * @param {UserId} userId Id of user
-   */
-  public getUserData(userId: UserId): Observable<any> {
-  }
-
-  /**
-   * Changes data of user
-   *
-   * @param {UserId} userId      id of associated user
-   * @param {object} changedData changed fields of user
-   */
-  public editUserData(userId: UserId, changedData: object): Observable<any> {
-  }
-
-  /**
    * Changes global settings
    *
    * @param {object} changedData changed fields of global settings
@@ -58,13 +42,6 @@ export class AdminService {
   public updateGlobalSettings(changedData: object): Observable<any> {
   }
 
-  /**
-   * Deletes user
-   *
-   * @param {UserId} userId id of user to delete
-   */
-  public deleteUser(userId: UserId): Observable<any> {
-  }
 
   /**
    * Gets whitelist retailer data
