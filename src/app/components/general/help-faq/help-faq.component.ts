@@ -7,6 +7,12 @@ import {AuthService} from "../../../services/auth.service";
   templateUrl: './help-faq.component.html',
   styleUrls: ['./help-faq.component.scss']
 })
+
+/**
+ * Component for the help & faq page
+ * @typedef {Component} HelpFaqComponent
+ * @class
+ */
 export class HelpFaqComponent {
 
   constructor(public authService: AuthService) {

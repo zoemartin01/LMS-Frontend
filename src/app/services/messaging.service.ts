@@ -8,6 +8,12 @@ import { UserId } from "../types/aliases/user-id";
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Service that provides API access for message system
+ * @typedef {Service} MessagingService
+ * @class
+ */
 export class MessagingService {
 
   constructor(private httpClient: HttpClient) {

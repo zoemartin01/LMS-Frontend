@@ -9,6 +9,12 @@ import { AuthService } from "../../services/auth.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
+/**
+ * Component for the login page
+ * @typedef {Component} LoginComponent
+ * @class
+ */
 export class LoginComponent {
   loginError: boolean = false;
 

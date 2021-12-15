@@ -9,6 +9,12 @@ import { AuthService } from "../../../services/auth.service";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
+/**
+ * Component for the dashboard page
+ * @typedef {Component} DashboardComponent
+ * @class
+ */
 export class DashboardComponent implements OnInit {
   public unreadMessages: UnreadMessages = {
     sum: 0,

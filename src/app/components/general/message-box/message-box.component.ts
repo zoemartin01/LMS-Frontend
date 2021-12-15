@@ -8,6 +8,12 @@ import { UnreadMessages } from "../../../types/unread-messages";
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.scss']
 })
+
+/**
+ * Component for the message box page
+ * @typedef {Component} MessageBoxComponent
+ * @class
+ */
 export class MessageBoxComponent implements OnInit {
   public messages: Message[] = [];
   public unreadMessages: UnreadMessages = {

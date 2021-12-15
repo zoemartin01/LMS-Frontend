@@ -8,6 +8,12 @@ import { AuthService } from "../../services/auth.service";
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+
+/**
+ * Component for the register page
+ * @typedef {Component} RegisterComponent
+ * @class
+ */
 export class RegisterComponent {
 
   constructor() {

@@ -5,6 +5,12 @@ import { Component } from '@angular/core';
   templateUrl: './safety-instructions.component.html',
   styleUrls: ['./safety-instructions.component.scss']
 })
+
+/**
+ * Component for the safety instructions page
+ * @typedef {Component} SafetyInstructionsComponent
+ * @class
+ */
 export class SafetyInstructionsComponent {
 
   constructor() {
