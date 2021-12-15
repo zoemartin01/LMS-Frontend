@@ -12,6 +12,8 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 })
 /**
  * Component for the personal appointments list site, to view all appointments of one user
+ * @typedef {Component} PersonalAppointmentListComponent
+ * @class
  */
 export class PersonalAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
