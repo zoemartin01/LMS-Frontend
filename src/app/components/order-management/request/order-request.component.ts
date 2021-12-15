@@ -8,6 +8,12 @@ import { OrderService } from "../../../services/order.service";
   templateUrl: './order-request.component.html',
   styleUrls: ['./order-request.component.scss']
 })
+/**
+ * Component for order request page
+ *
+ * @typedef {Component} OrderRequestComponent
+ * @class
+ */
 export class OrderRequestComponent {
 
   constructor(public orderService: OrderService) {

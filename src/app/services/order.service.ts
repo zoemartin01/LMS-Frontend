@@ -8,6 +8,12 @@ import { OrderId } from "../types/aliases/order-id";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for the management of orders
+ *
+ * @typedef {Service} OrderService
+ * @class
+ */
 export class OrderService {
 
   constructor(private httpClient: HttpClient) {

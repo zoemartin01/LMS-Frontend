@@ -10,6 +10,12 @@ import { OrderId } from "../../../types/aliases/order-id";
   templateUrl: './personal-order-list.component.html',
   styleUrls: ['./personal-order-list.component.scss']
 })
+/**
+ * Component for personal order list page
+ *
+ * @typedef {Component} PersonalOrderListComponent
+ * @class
+ */
 export class PersonalOrderListComponent implements OnInit {
   public orders: Order[] = [];
 

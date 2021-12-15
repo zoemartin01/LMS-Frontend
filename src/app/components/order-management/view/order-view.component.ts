@@ -11,6 +11,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './order-view.component.html',
   styleUrls: ['./order-view.component.scss']
 })
+/**
+ * Component for the order view page
+ *
+ * @typedef {Component} OrderViewComponent
+ * @class
+ */
 export class OrderViewComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -29,7 +35,7 @@ export class OrderViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }
