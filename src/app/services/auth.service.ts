@@ -13,6 +13,8 @@ import { NotificationChannel } from "../types/enums/notification-channel";
 
 /**
  * Service that provides API access for authentication system
+ * @typedef {Service} AuthService
+ * @class
  */
 export class AuthService {
 

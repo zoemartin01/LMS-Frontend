@@ -10,6 +10,8 @@ import { MessageId } from "../types/aliases/message-id";
 
 /**
  * Service that provides API access for message system
+ * @typedef {Service} MessagingService
+ * @class
  */
 export class MessagingService {
 
