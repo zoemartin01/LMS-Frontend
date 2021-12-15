@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
-import {UserId} from "../types/aliases/user-id";
-import {User} from "../types/user";
-import {HttpClient} from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
+import { UserId } from "../types/aliases/user-id";
+import { User } from "../types/user";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for user
  * @typedef {Service} UserService
@@ -15,7 +16,8 @@ import {HttpClient} from "@angular/common/http";
  */
 export class UserService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   /**
    * Retrieves user details
@@ -53,7 +55,7 @@ export class UserService {
    * @param {string} email     new user's email address
    * @param {string} password  new user's password
    */
-  public signIn(firstname: string, lastname: string, email: string, password: string): Observable<any> {
+  public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.signin}`;
     const requestBody = {
       firstname,
@@ -64,7 +66,6 @@ export class UserService {
 
     return this.httpClient.post(apiURL, requestBody);
   }
-
 
   /**
    * Verifies email address using a token sent on signin
@@ -81,7 +82,6 @@ export class UserService {
 
     return this.httpClient.post(apiURL, requestBody);
   }
-
 
   /**
    * Deletes user

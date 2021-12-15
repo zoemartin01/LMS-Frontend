@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserService } from "../../../services/user.service";
+
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
-import {UserService} from "../../../services/user.service";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-settings',
@@ -24,7 +26,7 @@ export class UserSettingsComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
-    notificationChannel: 0,
+    notificationChannel: NotificationChannel.unknown,
   };
 
   constructor(public userService: UserService) {
