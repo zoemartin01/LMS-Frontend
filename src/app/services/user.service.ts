@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {UserId} from "../types/aliases/user-id";
-import {NotificationChannel} from "../types/enums/notification-channel";
 import {User} from "../types/user";
 import {HttpClient} from "@angular/common/http";
 
@@ -90,20 +89,5 @@ export class UserService {
    * @param {UserId} userId id of user to delete
    */
   public deleteUser(userId: UserId): Observable<any> {
-  }
-
-  // in editUserData schon inbegriffen?
-  /**
-   * Sets notification channel
-   *
-   * @param {NotificationChannel} notificationChannel new value of notification channel
-   */
-  public setNotificationChannel(notificationChannel: NotificationChannel): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateUser}`;
-    const requestBody = {
-      notificationChannel,
-    };
-
-    return this.httpClient.patch(apiURL, requestBody);
   }
 }
