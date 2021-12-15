@@ -10,6 +10,12 @@ import { InventoryItem } from "../../../types/inventory-item";
   templateUrl: './inventory-item-view.component.html',
   styleUrls: ['./inventory-item-view.component.scss']
 })
+/**
+ * Component for the inventory item view popup
+ *
+ * @typedef {Component} InventoryItemViewComponent
+ * @class
+ */
 export class InventoryItemViewComponent implements OnInit {
   public inventoryItem: InventoryItem = {
     id: null,
@@ -26,7 +32,7 @@ export class InventoryItemViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.inventoryItem.id = +params['id'];
+      this.inventoryItem.id = params['id'];
       this.getInventoryItemData();
     });
   }

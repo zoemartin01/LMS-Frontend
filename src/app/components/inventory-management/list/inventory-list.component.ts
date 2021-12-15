@@ -12,6 +12,12 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
+/**
+ * Component for the inventory list page
+ *
+ * @typedef {Component} InventoryListComponent
+ * @class
+ */
 export class InventoryListComponent implements OnInit {
   public inventory: InventoryItem[] = [];
 
