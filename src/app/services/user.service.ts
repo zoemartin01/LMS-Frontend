@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
 })
 
 /**
- * Service for user
+ * Service for user management
  * @typedef {Service} UserService
  * @class
  */

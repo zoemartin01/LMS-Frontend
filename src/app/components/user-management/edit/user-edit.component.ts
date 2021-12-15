@@ -15,7 +15,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * Class for editing a user
+ * Component for user edit popup
  * @typedef {Component} UserEditComponent
  * @class
  */

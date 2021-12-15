@@ -12,7 +12,7 @@ import { UserId } from "../../../types/aliases/user-id";
 })
 
 /**
- * Class for a list of all users
+ * Component for a list of all users
  * @typedef {Component} UserListComponent
  * @class
  */

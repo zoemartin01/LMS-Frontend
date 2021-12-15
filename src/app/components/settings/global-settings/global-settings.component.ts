@@ -13,7 +13,7 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
 })
 
 /**
- * Class for global settings
+ * Component for global settings page
  * @typedef {Component} GlobalSettingsComponent
  * @class
  */

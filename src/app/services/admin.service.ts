@@ -13,7 +13,7 @@ import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-d
 })
 
 /**
- * Service for admins
+ * Service for admin management
  * @typedef {Service} AdminService
  * @class
  */

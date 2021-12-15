@@ -13,7 +13,7 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Class for editing a whitelist retailer
+ * Component for whitelist retailer edit popup
  * @typedef {Component} WhitelistRetailerEditComponent
  * @class
  */
@@ -32,7 +32,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.whitelistRetailer.id = +params['id'];
+      this.whitelistRetailer.id = params['id'];
       this.getWhitelistRetailerData();
     });
   }
