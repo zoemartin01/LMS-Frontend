@@ -24,6 +24,7 @@ export class UserEditComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: 0,
   };
 
   constructor(public userService : UserService, private route: ActivatedRoute) { }

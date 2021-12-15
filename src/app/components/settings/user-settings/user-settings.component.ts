@@ -24,6 +24,7 @@ export class UserSettingsComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: 0,
   };
 
   constructor(public userService: UserService) {
@@ -51,12 +52,6 @@ export class UserSettingsComponent implements OnInit {
    * Opens user delete confirmation dialog
    */
   public openUserDeletionDialog(): void {
-  }
-
-  /**
-   * Gets notification channel
-   */
-  public async getNotificationChannel(): Promise<void>{
   }
 
   /**

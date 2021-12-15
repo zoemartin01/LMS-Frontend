@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-user-view',
@@ -22,6 +23,7 @@ export class UserViewComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: 0,
   };
 
   constructor(public userService: UserService, private route: ActivatedRoute) {
