@@ -14,6 +14,8 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit site, to edit the available and unavailable timeslots one room
+ * @typedef {Component} RoomTimeslotsComponent
+ * @class
  */
 export class RoomTimeslotsComponent implements OnInit {
 

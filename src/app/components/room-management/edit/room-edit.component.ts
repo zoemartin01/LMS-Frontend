@@ -14,6 +14,8 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit site, to edit one room
+ * @typedef {Component} RoomEditComponent
+ * @class
  */
 export class RoomEditComponent implements OnInit {
   public room: Room = {
