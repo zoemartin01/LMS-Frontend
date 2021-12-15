@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 
 /**
  * Component for the hardware lab rules page
+ * @typedef {Component} HwlabRulesComponent
+ * @class
  */
 export class HwlabRulesComponent{
 }

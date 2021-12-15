@@ -10,6 +10,8 @@ import { AuthService } from "../../../services/auth.service";
 
 /**
  * Component for the help & faq page
+ * @typedef {Component} HelpFaqComponent
+ * @class
  */
 export class HelpFaqComponent {
 

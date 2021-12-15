@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
-import { AppointmentId } from "../../../types/aliases/appointment-id";
+import { TimespanId } from "../../../types/aliases/timespan-id";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -36,9 +36,9 @@ export class AdminAppointmentListComponent implements OnInit {
   /**
    * Opens appointment edit form
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentEditForm(appointmentId: AppointmentId): void {
+  public openAppointmentEditForm(appointmentId: TimespanId): void {
   }
 
   /**
@@ -50,24 +50,24 @@ export class AdminAppointmentListComponent implements OnInit {
   /**
    * Opens appointment deletion popup
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentDeletionDialog(appointmentId: AppointmentId): void {
+  public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
   }
 
   /**
    * Sets appointment request to accepted
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public async acceptAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
+  public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
   }
 
   /**
    * Sets appointment request to accepted
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public async declineAppointmentRequest(appointmentId: AppointmentId): Promise<void> {
+  public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
   }
 }

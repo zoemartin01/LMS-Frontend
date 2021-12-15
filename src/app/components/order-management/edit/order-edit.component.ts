@@ -12,6 +12,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.scss']
 })
+
+/**
+ * Component for the order edit popup
+ * @typedef {Component} OrderEditComponent
+ * @class
+ */
 export class OrderEditComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -30,7 +36,7 @@ export class OrderEditComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }

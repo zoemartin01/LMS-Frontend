@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
-import { AppointmentId } from "../types/aliases/appointment-id";
+import { TimespanId } from "../types/aliases/timespan-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 
@@ -44,6 +45,10 @@ export class AppointmentService {
    * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointmentsForRoom
       .replace(':id', roomId)}`;
 
@@ -53,9 +58,13 @@ export class AppointmentService {
   /**
    * Retrieves all data for one appointment
    *
-   * @param {AppointmentId} appointmentId id of the appointment
+   * @param {TimespanId} appointmentId id of the appointment
    */
-  public getAppointmentData(appointmentId : AppointmentId): Observable<any> {
+  public getAppointmentData(appointmentId : TimespanId): Observable<any> {
+    if (appointmentId === null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment
       .replace(':id', appointmentId)}`;
 
@@ -79,10 +88,13 @@ export class AppointmentService {
   /**
    * Edits an appointment
    *
-   * @param {AppointmentId} appointmentId id of the appointment to be edited
+   * @param {TimespanId} appointmentId id of the appointment to be edited
    * @param {object} changedData   changed values as object
    */
-  public editAppointment(appointmentId : AppointmentId, changedData: object): Observable<any> {
+  public editAppointment(appointmentId: TimespanId, changedData: object): Observable<any> {
+    if (appointmentId === null) {
+      throw ParseArgumentException;
+    }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment
       .replace(':id', appointmentId)}`;
     const requestBody = {
@@ -96,9 +108,13 @@ export class AppointmentService {
   /**
    * Deletes appointment
    *
-   * @param {AppointmentId} appointmentId Id of an appointment
+   * @param {TimespanId} appointmentId Id of an appointment
    */
-  public deleteAppointment(appointmentId: AppointmentId): Observable<any> {
+  public deleteAppointment(appointmentId: TimespanId): Observable<any> {
+    if (appointmentId === null) {
+      throw ParseArgumentException;
+    }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAppointment
       .replace(':id', appointmentId)}`;
 
@@ -108,18 +124,18 @@ export class AppointmentService {
   /**
    * Sets appointment request to accepted
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public acceptAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
+  public acceptAppointmentRequest(appointmentId: TimespanId): Observable<any> {
     return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
   /**
    * Sets appointment request to accepted
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public declineAppointmentRequest(appointmentId: AppointmentId): Observable<any> {
+  public declineAppointmentRequest(appointmentId: TimespanId): Observable<any> {
     return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.denied });
   }
 }

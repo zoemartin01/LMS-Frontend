@@ -2,13 +2,19 @@ import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
+/**
+ * Component for the login page
+ * @typedef {Component} LoginComponent
+ * @class
+ */
 export class LoginComponent {
   loginError: boolean = false;
 

@@ -47,12 +47,12 @@ export class LivecamOverviewComponent implements OnInit {
    *
    * @param recordingId id of recording
    */
-  public deleteRecording(recordingId: RecordingId): void {
+  public openDeleteRecordingDialog(recordingId: RecordingId): void {
   }
 
   /**
    * Open recording schedule dialog
    */
-  public scheduleRecording(): void {
+  public openScheduleRecordingDialog(): void {
   }
 }

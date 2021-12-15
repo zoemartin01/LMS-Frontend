@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpClient } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import {AuthService} from "../services/auth.service";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
+
+/**
+ * Interceptor that handles authorisation errors
+ * @typedef {HttpInterceptor} UnauthorizedInterceptor
+ * @class
+ */
 export class UnauthorizedInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
+  /**
+   * Checks if an unauthorized error happened
+   *
+   * @param {HttpRequest<any>} request current request
+   * @param {HttpHandler} next next function that handles the request
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
       if (err.status == 401 && this.authService.isUserLoggedIn()) {
@@ -22,6 +35,13 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
     }))
   }
 
+  /**
+   * Handles an unauthorized error by refreshing token
+   *
+   * @param {HttpRequest<any>} request current request
+   * @param {HttpHandler} next next function that handles the request
+   * @private
+   */
   private handleUnauthorized(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.authService.tokenRefresh().pipe(
       switchMap((res: { accessToken: string }) => {

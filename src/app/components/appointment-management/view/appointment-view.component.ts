@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
-import { AppointmentId } from "../../../types/aliases/appointment-id";
+import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 
@@ -21,12 +21,10 @@ export class AppointmentViewComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
     userId: null,
-    roomTimespan: {
-      roomId: null,
-      start: null,
-      end: null,
-      type: RoomTimespanType.appointment,
-    },
+    roomId: null,
+    start: null,
+    end: null,
+    type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
   };
@@ -39,7 +37,7 @@ export class AppointmentViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.appointment.id = +params['id'];
+      this.appointment.id = params['id'];
       this.getAppointmentData();
     });
   }
@@ -53,16 +51,16 @@ export class AppointmentViewComponent implements OnInit {
   /**
    * Opens appointment edit form
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentEditForm(appointmentId: AppointmentId): void {
+  public openAppointmentEditForm(appointmentId: TimespanId): void {
   }
 
   /**
    * Opens appointment deletion popup
    *
-   * @param {AppointmentId} appointmentId id of appointment
+   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentDeletionDialog(appointmentId: AppointmentId): void {
+  public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
   }
 }

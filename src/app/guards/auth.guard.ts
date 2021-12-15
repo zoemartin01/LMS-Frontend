@@ -7,9 +7,22 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
 
+/**
+ * Guard that provides authorisation for admins
+ * @typedef {Guard} AdminGuard
+ * @class
+ */
+export class AuthGuard implements CanActivate {
+
+  constructor(private authService: AuthService, private router: Router) {
+  }
+
+  /**
+   * Checks if user is logged in and otherwise redirects user to login page
+   *
+   * @param {ActivatedRouteSnapshot} route route that activated the guard
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -20,5 +33,4 @@ export class AuthGuard implements CanActivate {
 
     return true;
   }
-
 }

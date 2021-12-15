@@ -31,6 +31,10 @@ export const environment = {
     createRoom: '/rooms',
     editRoom: '/rooms/:id',
     deleteRoom: '/rooms',
+    createAvailableTimeslot: '/rooms/:id/availableTimeslot',
+    createUnavailableTimeslot: '/rooms/:id/unavailableTimeslot',
+    deleteAvailableTimeslot: '/rooms/:room_id/availableTimeslot/:timeslot_id',
+    deleteUnavailableTimeslot: '/rooms/:room_id/unavailableTimeslot/:timeslot_id',
 
     //appointment management
     myAppointments: '/user/appointments',
@@ -44,7 +48,12 @@ export const environment = {
     //inventory management
 
     //order management
-
+    
     //livecam
+    recordings: '/livecam/recordings',
+    getRecording: '/livecam/recordings/:id',
+    scheduleRecording: '/livecam/recordings/schedule',
+    deleteRecording: '/livecam/recordings/:id/download',
+    downloadRecording: '/livecam/recordings/:id',
   }
 };

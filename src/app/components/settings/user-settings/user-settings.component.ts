@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-settings',
@@ -13,6 +14,8 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Class for user settings
+ * @typedef {Component} UserSettingsComponent
+ * @class
  */
 export class UserSettingsComponent implements OnInit {
   public emailNotification: boolean|null = null;
@@ -23,9 +26,10 @@ export class UserSettingsComponent implements OnInit {
     lastname: '',
     email: '',
     userRole: UserRole.unkown,
+    notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public authService: AuthService) {
+  constructor(public userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -52,12 +56,6 @@ export class UserSettingsComponent implements OnInit {
   public openUserDeletionDialog(): void {
   }
 
-  /**
-   * Gets notification channel
-   */
-  public async getNotificationChannel(): Promise<void>{
-  }
-  
   /**
    * Sets notification channel
    */
