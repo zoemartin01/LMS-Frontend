@@ -13,7 +13,7 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Class for editing a whitelist retailer
+ * Component for whitelist retailer edit popup
  * @typedef {Component} WhitelistRetailerEditComponent
  * @class
  */

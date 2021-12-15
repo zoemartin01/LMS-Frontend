@@ -12,7 +12,7 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Class for the view of a whitelist retailer
+ * Components for whitelist retailer view popup
  * @typedef {Component} WhitelistRetailerViewComponent
  * @class
  */

@@ -10,7 +10,7 @@ import { AdminService } from "../../../../services/admin.service";
 })
 
 /**
- * Class for creating a whitelist retailer
+ * Component whitelist retailer creation popup
  * @typedef {Component} WhitelistRetailerCreateComponent
  * @class
  */

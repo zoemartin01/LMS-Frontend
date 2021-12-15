@@ -13,7 +13,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * Class for user settings
+ * Component for user settings page
  * @typedef {Component} UserSettingsComponent
  * @class
  */
