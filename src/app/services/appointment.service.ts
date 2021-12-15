@@ -60,7 +60,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId id of the appointment
    */
-  public getAppointmentData(appointmentId : AppointmentId): Observable<any> {
+  public getAppointmentData(appointmentId : TimespanId): Observable<any> {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
@@ -91,14 +91,14 @@ export class AppointmentService {
    * @param {TimespanId} appointmentId id of the appointment to be edited
    * @param {object} changedData   changed values as object
    */
-  public editAppointment(timespanId: TimespanId, changedData: object): Observable<any> {
-    if (timespanId === null) {
+  public editAppointment(appointmentId: TimespanId, changedData: object): Observable<any> {
+    if (appointmentId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment
-      .replace(':id', timespanId)}`;
+      .replace(':id', appointmentId)}`;
     const requestBody = {
-      appointmentId: timespanId,
+      appointmentId: appointmentId,
       changedData: changedData
     };
 
@@ -110,7 +110,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId Id of an appointment
    */
-  public deleteAppointment(appointmentId: AppointmentId): Observable<any> {
+  public deleteAppointment(appointmentId: TimespanId): Observable<any> {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }

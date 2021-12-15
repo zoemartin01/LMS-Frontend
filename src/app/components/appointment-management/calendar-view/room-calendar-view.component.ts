@@ -24,6 +24,8 @@ export class RoomCalendarViewComponent implements OnInit {
     description: '',
     maxConBookings: 1,
     automaticRequestAcceptance: null,
+    availableTimeslots: [],
+    unavailableTimeslots: []
   };
   public appointments: Appointment[] = [];
 
