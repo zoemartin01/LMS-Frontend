@@ -36,7 +36,7 @@ export class UserViewComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.user.id = +params['id'];
+      this.user.id = params['id'];
       this.getUserData();
     });
   }

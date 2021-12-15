@@ -23,7 +23,7 @@ export class LivecamDeleteComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.recording.id = +params['id'];
+      this.recording.id = params['id'];
     });
   }
 
