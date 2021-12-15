@@ -13,7 +13,6 @@ import { OrderId } from "../../../types/aliases/order-id";
 
 /**
  * Component for the admin order list page
- *
  * @typedef {Component} AdminOrderListComponent
  * @class
  */
