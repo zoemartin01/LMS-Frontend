@@ -13,6 +13,8 @@ import { RoomId } from "../../../types/aliases/room-id";
 
 /**
  * Component for the room list site, to list all rooms
+ * @typedef {Component} RoomListComponent
+ * @class
  */
 export class RoomListComponent implements OnInit {
   public rooms: Room[] = [];

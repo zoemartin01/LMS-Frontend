@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 
 import { RoomService } from "../../../services/room.service";
-
 import { Room } from "../../../types/room";
 
 @Component({
@@ -14,6 +13,8 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit site, to edit the available and unavailable timeslots one room
+ * @typedef {Component} RoomTimeslotsComponent
+ * @class
  */
 export class RoomTimeslotsComponent implements OnInit {
 

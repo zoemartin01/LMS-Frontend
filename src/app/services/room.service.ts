@@ -15,6 +15,8 @@ import { TimespanId } from "../types/aliases/timespan-id";
 
 /**
  * Service for the room management
+ * @typedef {Service} RoomService
+ * @class
  */
 export class RoomService {
 
