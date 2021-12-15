@@ -21,12 +21,10 @@ export class AppointmentEditComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
     userId: null,
-    roomTimespan: {
-      roomId: null,
-      start: null,
-      end: null,
-      type: RoomTimespanType.appointment,
-    },
+    roomId: null,
+    start: null,
+    end: null,
+    type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
   };

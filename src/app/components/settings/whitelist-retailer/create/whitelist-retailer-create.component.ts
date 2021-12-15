@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import { AdminService } from "../../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
 @Component({
   selector: 'app-whitelist-retailer-create',
@@ -11,6 +11,8 @@ import { AdminService } from "../../../../../services/admin.service";
 
 /**
  * Class for creating a whitelist retailer
+ * @typedef {Component} WhitelistRetailerCreateComponent
+ * @class
  */
 export class WhitelistRetailerCreateComponent implements OnInit {
 

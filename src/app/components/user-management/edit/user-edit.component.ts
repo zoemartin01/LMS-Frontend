@@ -15,6 +15,8 @@ import { NgForm } from "@angular/forms";
 
 /**
  * Class for editing a user
+ * @typedef {Component} UserEditComponent
+ * @class
  */
 export class UserEditComponent implements OnInit {
   public user: User = {

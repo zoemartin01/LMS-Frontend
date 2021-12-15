@@ -39,15 +39,16 @@ import { RoomCalendarViewComponent } from "./components/appointment-management/c
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
+import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
-import { WhitelistRetailerCreateComponent } from './components/settings/global-settings/whitelist-retailer/create/whitelist-retailer-create.component';
-import { WhitelistRetailerEditComponent } from './components/settings/global-settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
-import { WhitelistRetailerViewComponent } from './components/settings/global-settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { WhitelistRetailerCreateComponent } from './components/settings/whitelist-retailer/create/whitelist-retailer-create.component';
+import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
+import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/global-set
     RoomCreateComponent,
     RoomEditComponent,
     RoomListComponent,
+    RoomTimeslotsComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
     UserEditComponent,

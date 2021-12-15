@@ -14,6 +14,13 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './inventory-order.component.html',
   styleUrls: ['./inventory-order.component.scss']
 })
+
+/**
+ * Component to inventory an order
+ *
+ * @typedef {Component} InventoryOrderComponent
+ * @class
+ */
 export class InventoryOrderComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -36,7 +43,7 @@ export class InventoryOrderComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }
@@ -54,7 +61,7 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Inventories order
+   * Sets order status to "inventoried" and creates new inventory item
    *
    * @param {NgForm} inventoryOrderForm submitted inventory form
    */
