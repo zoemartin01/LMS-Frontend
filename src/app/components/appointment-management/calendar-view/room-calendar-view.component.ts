@@ -14,13 +14,11 @@ import { RoomId } from "../../../types/aliases/room-id";
   styleUrls: ['./room-calendar-view.component.scss']
 })
 
-
 /**
  * Component for the room calendar view page, to view all appointments and thus free slots of one room
  * @typedef {Component} RoomCalendarViewComponent
  * @class
  */
-
 export class RoomCalendarViewComponent implements OnInit {
   public room: Room = {
     id: null,
