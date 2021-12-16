@@ -45,6 +45,9 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
 import { UserDeleteComponent } from './components/user-management/delete/user-delete.component';
+import {
+  WhitelistRetailerDeleteComponent
+} from "./components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component";
 
 const routes: Routes = [
   //General
@@ -160,6 +163,15 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Whitelist-Retailer Edit'
+    }
+  },
+  {
+    path: 'global-settings/whitelist-retailer/:id/delete',
+    canActivate: [AuthGuard, AdminGuard],
+    component: WhitelistRetailerDeleteComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Whitelist-Retailer Delete'
     }
   },
   {
