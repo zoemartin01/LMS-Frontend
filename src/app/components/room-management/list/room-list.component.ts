@@ -23,7 +23,7 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getRooms()

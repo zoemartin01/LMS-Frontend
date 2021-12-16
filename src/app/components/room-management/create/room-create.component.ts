@@ -20,7 +20,7 @@ export class RoomCreateComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

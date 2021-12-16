@@ -23,7 +23,7 @@ export class AdminOrderListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

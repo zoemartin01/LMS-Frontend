@@ -26,7 +26,7 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getGlobalSettings();

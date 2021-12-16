@@ -24,7 +24,7 @@ export class InventoryListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getInventory();

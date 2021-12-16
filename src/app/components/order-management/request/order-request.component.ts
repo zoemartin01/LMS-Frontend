@@ -20,7 +20,7 @@ export class OrderRequestComponent {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

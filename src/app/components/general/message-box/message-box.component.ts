@@ -30,7 +30,7 @@ export class MessageBoxComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();

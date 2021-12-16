@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUserData();

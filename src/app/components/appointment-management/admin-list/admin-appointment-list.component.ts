@@ -23,7 +23,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getAppointments();

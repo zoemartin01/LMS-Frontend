@@ -20,7 +20,7 @@ export class AppointmentCreateComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

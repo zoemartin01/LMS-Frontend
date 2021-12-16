@@ -23,7 +23,7 @@ export class PersonalOrderListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

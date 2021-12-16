@@ -21,7 +21,7 @@ export class InventoryItemCreateComponent {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

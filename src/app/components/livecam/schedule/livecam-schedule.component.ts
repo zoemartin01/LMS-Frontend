@@ -20,7 +20,7 @@ export class LivecamScheduleComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

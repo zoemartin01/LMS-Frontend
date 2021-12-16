@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUsers();
