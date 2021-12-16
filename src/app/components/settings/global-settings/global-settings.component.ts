@@ -53,6 +53,14 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
+   * Opens whitelist retailer view
+   *
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   */
+  public openWhitelistRetailerView(whitelistRetailerId: WhitelistRetailerId): void {
+  }
+
+  /**
    * Opens whitelist retailer edit form
    *
    * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer

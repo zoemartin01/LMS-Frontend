@@ -36,9 +36,9 @@ export class InventoryItemViewComponent implements OnInit {
       this.getInventoryItemData();
     });
   }
-//gets
+
   /**
-   * Get all data of inventory item
+   * Gets all data of inventory item
    */
   private async getInventoryItemData() : Promise<void> {
   }
@@ -48,9 +48,9 @@ export class InventoryItemViewComponent implements OnInit {
    */
   public openInventoryItemEditForm(): void {
   }
-//deletion
+
   /**
-   * Opens inventory item delete confirmation popup
+   * Opens inventory item deletion confirmation dialog
    */
   public openInventoryItemDeletionDialog(): void {
   }

@@ -42,6 +42,14 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
+   * Opens room view
+   *
+   * @param {RoomId} roomId id of room to view
+   */
+  public openRoomView(roomId: RoomId): void {
+  }
+
+  /**
    * Opens room edit form
    *
    * @param {RoomId} roomId id of room to edit

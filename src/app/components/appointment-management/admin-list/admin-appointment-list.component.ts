@@ -36,6 +36,14 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
+   * Opens appointment view
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
+  }
+
+  /**
    * Opens appointment edit form
    *
    * @param {TimespanId} appointmentId id of appointment

@@ -29,7 +29,6 @@ export class PersonalAppointmentListComponent implements OnInit {
     this.getAppointments();
   }
 
-  //@TODO openAppointmentView
   /**
    * Opens appointment creation form
    */
@@ -42,6 +41,14 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
+  }
+
+  /**
+   * Opens appointment view
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
   }
 
   /**
