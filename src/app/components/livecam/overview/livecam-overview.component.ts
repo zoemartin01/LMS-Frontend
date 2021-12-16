@@ -10,6 +10,12 @@ import { RecordingId } from 'src/app/types/aliases/recording-id';
   templateUrl: './livecam-overview.component.html',
   styleUrls: ['./livecam-overview.component.scss']
 })
+
+/**
+ * Component for the overview of the livecam
+ * @typedef {Component} LivecamOverviewComponent
+ * @class
+ */
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];
 
@@ -23,7 +29,7 @@ export class LivecamOverviewComponent implements OnInit {
   }
 
   /**
-   * Gets recording data
+   * Gets recording data of all recordings
    */
   public async getRecordings(): Promise<void> {
   }
@@ -35,7 +41,7 @@ export class LivecamOverviewComponent implements OnInit {
   }
 
   /**
-   * Download a recording
+   * Downloads a recording
    *
    * @param recordingId id of recording
    */
@@ -43,16 +49,16 @@ export class LivecamOverviewComponent implements OnInit {
   }
 
   /**
-   * Open recording deletion dialog
+   * Opens recording deletion dialog
    *
    * @param recordingId id of recording
    */
-  public openDeleteRecordingDialog(recordingId: RecordingId): void {
+  public openRecordingDeletionDialog(recordingId: RecordingId): void {
   }
 
   /**
-   * Open recording schedule dialog
+   * Opens recording schedule form
    */
-  public openScheduleRecordingDialog(): void {
+  public openScheduleRecordingForm(): void {
   }
 }

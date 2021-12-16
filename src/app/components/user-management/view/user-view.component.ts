@@ -55,7 +55,7 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

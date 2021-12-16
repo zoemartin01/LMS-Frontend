@@ -19,6 +19,9 @@ export class WhitelistRetailerCreateComponent implements OnInit {
   constructor(public adminService: AdminService) {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
   }
 

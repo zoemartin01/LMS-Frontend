@@ -29,7 +29,7 @@ export class InventoryListComponent implements OnInit {
   ngOnInit(): void {
     this.getInventory();
   }
-
+// doesnt list them, just gets the data?
   /**
    * Lists all items with data
    */
@@ -65,7 +65,7 @@ export class InventoryListComponent implements OnInit {
    */
   public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
   }
-
+//deletion
   /**
    * Opens inventory item delete confirmation popup
    */

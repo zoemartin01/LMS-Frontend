@@ -10,7 +10,7 @@ import { AppointmentService } from "../../../services/appointment.service";
 })
 
 /**
- * Component for the appointment create popup, to create a new appointment
+ * Component for the appointment create popup
  * @typedef {Component} AppointmentCreateComponent
  * @class
  */

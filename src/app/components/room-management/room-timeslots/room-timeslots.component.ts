@@ -13,7 +13,7 @@ import { Room } from "../../../types/room";
 })
 
 /**
- * Component for the room edit site, to edit the available and unavailable timeslots one room
+ * Component for the room edit popup, to edit the available and unavailable timeslots of one room
  * @typedef {Component} RoomTimeslotsComponent
  * @class
  */
@@ -43,7 +43,7 @@ export class RoomTimeslotsComponent implements OnInit {
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
   public async getRoomData(): Promise<void> {
     //use this.room.id here and set this.room

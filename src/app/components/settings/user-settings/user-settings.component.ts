@@ -32,6 +32,9 @@ export class UserSettingsComponent implements OnInit {
   constructor(public userService: UserService) {
   }
 
+  /**
+   * Init page
+   */
   ngOnInit(): void {
     this.getUserData();
     //@todo get
@@ -51,7 +54,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

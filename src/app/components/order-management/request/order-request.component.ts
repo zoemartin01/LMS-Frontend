@@ -20,7 +20,13 @@ export class OrderRequestComponent {
   }
 
   /**
-   * Creates order with data
+   * Init page
+   */
+  ngOnInit(): void {
+  }
+
+  /**
+   * Creates order request with data
    *
    * @param {NgForm} orderCreationForm submitted create form
    */

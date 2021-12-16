@@ -50,7 +50,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -66,7 +66,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

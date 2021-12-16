@@ -36,7 +36,7 @@ export class InventoryItemViewComponent implements OnInit {
       this.getInventoryItemData();
     });
   }
-
+//gets
   /**
    * Get all data of inventory item
    */
@@ -48,7 +48,7 @@ export class InventoryItemViewComponent implements OnInit {
    */
   public openInventoryItemEditForm(): void {
   }
-
+//deletion
   /**
    * Opens inventory item delete confirmation popup
    */

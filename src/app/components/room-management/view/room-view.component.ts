@@ -12,7 +12,7 @@ import { Room } from "../../../types/room";
 })
 
 /**
- * Component for the room view site, to view one room in detail
+ * Component for the room view popup
  */
 export class RoomViewComponent implements OnInit {
   public room: Room = {
@@ -39,7 +39,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
   private async getRoomData() : Promise<void> {
   }
@@ -51,7 +51,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   /**
-   * Opens room delete confirmation popup
+   * Opens room deletion confirmation dialog
    */
   public openRoomDeletionDialog(): void {
   }

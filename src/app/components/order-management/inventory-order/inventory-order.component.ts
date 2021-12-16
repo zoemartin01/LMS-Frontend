@@ -48,17 +48,17 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
   private async getOrderData(): Promise<void> {
   }
 
   /**
-   * Get all inventory items
+   * Gets all inventory items
    */
   private async getInventoryItems(): Promise<void> {
   }
-
+//@TODO creates always or only if item is new?
   /**
    * Sets order status to "inventoried" and creates new inventory item
    *

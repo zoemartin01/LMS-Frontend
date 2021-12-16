@@ -48,7 +48,7 @@ export class MessageBoxComponent implements OnInit {
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
   }
-
+//@TODO openDeletionDialog
   /**
    * Deletes specified message
    *

@@ -22,7 +22,7 @@ export class LoginComponent {
   }
 
   /**
-   * Login user with provided credentials
+   * Logs in user with provided credentials
    *
    * @param authForm submitted login form
    */

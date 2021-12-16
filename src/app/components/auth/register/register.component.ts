@@ -20,7 +20,7 @@ export class RegisterComponent {
   }
 
   /**
-   * Register user with provided data
+   * Registers user with provided data
    *
    * @param registerForm submitted register form
    */

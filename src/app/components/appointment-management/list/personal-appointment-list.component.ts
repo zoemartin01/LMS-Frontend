@@ -12,7 +12,7 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 })
 
 /**
- * Component for the personal appointments list site, to view all appointments of one user
+ * Component for the personal appointments list page
  * @typedef {Component} PersonalAppointmentListComponent
  * @class
  */
@@ -29,6 +29,7 @@ export class PersonalAppointmentListComponent implements OnInit {
     this.getAppointments();
   }
 
+  //@TODO openAppointmentView
   /**
    * Opens appointment creation form
    */
@@ -50,7 +51,7 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -66,7 +67,7 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

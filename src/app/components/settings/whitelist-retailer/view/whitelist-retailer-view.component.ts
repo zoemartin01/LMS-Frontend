@@ -12,7 +12,7 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Components for whitelist retailer view popup
+ * Component for whitelist retailer view popup
  * @typedef {Component} WhitelistRetailerViewComponent
  * @class
  */
@@ -49,7 +49,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
   }
 
   /**
-   * Opens room delete confirmation popup
+   * Opens room delete confirmation dialog
    */
   public openWhitelistRetailerDeletionDialog(): void {
   }
