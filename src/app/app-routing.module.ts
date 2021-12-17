@@ -118,7 +118,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'verify-email',
+    path: 'register/verify-email',
     component: EmailVerificationComponent,
     pathMatch: 'full',
     data: {
@@ -305,7 +305,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'appointment/:id',
+    path: 'room-overview/:room_id/appointment/:id',
     canActivate: [AuthGuard],
     component: AppointmentViewComponent,
     pathMatch: 'full',
@@ -323,7 +323,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room-overview/create',
+    path: 'room-overview/:room_id/appointments/create',
     canActivate: [AuthGuard],
     component: AppointmentCreateComponent,
     pathMatch: 'full',
@@ -370,7 +370,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'order',
+    path: 'orders',
     canActivate: [AuthGuard],
     component: PersonalOrderListComponent,
     pathMatch: 'full',
@@ -379,7 +379,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'order/all',
+    path: 'orders/all',
     canActivate: [AuthGuard, AdminGuard],
     component: AdminOrderListComponent,
     pathMatch: 'full',
@@ -415,7 +415,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'order/create',
+    path: 'orders/request',
     canActivate: [AuthGuard],
     component: OrderRequestComponent,
     pathMatch: 'full',
