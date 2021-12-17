@@ -25,7 +25,7 @@ export class UserSettingsComponent implements OnInit {
     firstname: '',
     lastname: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
   };
 
