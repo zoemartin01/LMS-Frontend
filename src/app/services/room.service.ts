@@ -95,7 +95,7 @@ export class RoomService {
   /**
    * Creates timeslot where room is available, room is now bookable in this timeslot
    *
-   * @param timeslot time
+   * @param {RoomTimespan} timeslot time
    */
   public createAvailableTimeslot(timeslot: RoomTimespan) {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.createAvailableTimeslot}`;
@@ -109,7 +109,7 @@ export class RoomService {
   /**
    * Creates timeslot where room is unavailable, room is now not bookable in the timeslot
    *
-   * @param timeslot time
+   * @param {RoomTimespan} timeslot time
    */
   public createUnavailableTimeslot(timeslot: RoomTimespan) {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.createUnavailableTimeslot}`;
@@ -123,14 +123,14 @@ export class RoomService {
   /**
    * Deletes an available timeslot
    *
-   * @param TimespanId id of timeslot
+   * @param {TimespanId} timespanId id of timeslot
    */
-  public deleteAvailableTimeslot(TimespanId: TimespanId): Observable<any> {
-    if(TimespanId === null) {
+  public deleteAvailableTimeslot(timespanId: TimespanId): Observable<any> {
+    if(timespanId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAvailableTimeslot
-      .replace(':timeslot_id', TimespanId)}`;
+      .replace(':timeslot_id', timespanId)}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -138,14 +138,14 @@ export class RoomService {
   /**
    * Deletes an unavailable timeslot
    *
-   * @param TimespanId id of timeslot
+   * @param {TimespanId} timespanId id of timeslot
    */
-  public deleteUnavailableTimeslot(TimespanId: TimespanId): Observable<any> {
-    if(TimespanId === null) {
+  public deleteUnavailableTimeslot(timespanId: TimespanId): Observable<any> {
+    if(timespanId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteUnavailableTimeslot
-      .replace(':timeslot_id', TimespanId)}`;
+      .replace(':timeslot_id', timespanId)}`;
 
     return this.httpClient.delete(apiURL);
   }

@@ -28,7 +28,7 @@ export class UserService {
 
     return this.httpClient.get(apiURL);
   }
-
+//@TODO user as param or id
   /**
    * Returns full name of specified user
    *

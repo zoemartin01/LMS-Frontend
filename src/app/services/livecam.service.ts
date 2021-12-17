@@ -9,13 +9,19 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for the management of the livecam
+ *
+ * @typedef {Service} LivecamService
+ * @class
+ */
 export class LivecamService {
 
   constructor(private httpClient: HttpClient) {
   }
 
   /**
-   * Schedules a recording with with the submitted parameters
+   * Schedules a recording with the submitted parameters
    *
    * @param {Date} startTime start time of the recording
    * @param {Date} endTime end time of the recording
@@ -58,7 +64,7 @@ export class LivecamService {
   }
 
   /**
-   * Get the recording data for the recording with the submitted id
+   * Gets the recording data for the recording with the submitted id
    *
    * @param {RecordingId} recordingId id of the recording to get data for
    */
@@ -68,7 +74,7 @@ export class LivecamService {
   }
 
   /**
-   * Get the data for all recordings
+   * Gets the data for all recordings
    */
   public getAllRecordings(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.recordings}`;

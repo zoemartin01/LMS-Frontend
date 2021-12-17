@@ -3,10 +3,6 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 
-import { User } from "../types/user";
-import { UserId } from "../types/aliases/user-id";
-import { NotificationChannel } from "../types/enums/notification-channel";
-
 @Injectable({
   providedIn: 'root'
 })
@@ -99,7 +95,7 @@ export class AuthService {
   public getRefreshToken(): string {
     return <string>localStorage.getItem(environment.storageKeys.refreshToken);
   }
-
+//@TODO userRole type userRole instead of string
   /**
    * Saves user role in local storage
    *
