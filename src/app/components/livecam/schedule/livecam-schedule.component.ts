@@ -8,13 +8,19 @@ import { LivecamService } from '../../../services/livecam.service';
   templateUrl: './livecam-schedule.component.html',
   styleUrls: ['./livecam-schedule.component.scss']
 })
+
+/**
+ * Component for the scheduling of a livecam recording
+ * @typedef {Component} LivecamScheduleComponent
+ * @class
+ */
 export class LivecamScheduleComponent implements OnInit {
 
   constructor(public livecamService: LivecamService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

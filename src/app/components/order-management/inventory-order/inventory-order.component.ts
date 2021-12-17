@@ -38,7 +38,7 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -48,19 +48,19 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
   private async getOrderData(): Promise<void> {
   }
 
   /**
-   * Get all inventory items
+   * Gets all inventory items
    */
   private async getInventoryItems(): Promise<void> {
   }
 
   /**
-   * Sets order status to "inventoried" and creates new inventory item
+   * Sets order status to "inventoried" and creates new inventory item if needed
    *
    * @param {NgForm} inventoryOrderForm submitted inventory form
    */

@@ -30,7 +30,7 @@ export class InventoryItemEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -40,7 +40,7 @@ export class InventoryItemEditComponent implements OnInit {
   }
 
   /**
-   * Get all data of inventory item
+   * Gets all data of inventory item
    */
   private async getInventoryItemData() : Promise<void> {
   }

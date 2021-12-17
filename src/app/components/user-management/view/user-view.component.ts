@@ -32,7 +32,7 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -55,7 +55,7 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

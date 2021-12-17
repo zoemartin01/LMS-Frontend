@@ -30,7 +30,7 @@ export class MessageBoxComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();
@@ -48,7 +48,7 @@ export class MessageBoxComponent implements OnInit {
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
   }
-
+//@TODO openDeletionDialog
   /**
    * Deletes specified message
    *

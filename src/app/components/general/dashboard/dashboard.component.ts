@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();

@@ -33,7 +33,7 @@ export class UserEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -43,7 +43,7 @@ export class UserEditComponent implements OnInit {
   }
 
   /**
-   * Get data of user
+   * Gets data of user
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user
