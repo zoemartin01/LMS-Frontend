@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 /**
  * Service for the management of the livecam
  *

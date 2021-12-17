@@ -79,7 +79,7 @@ export class AdminService {
    * Adds domain to whitelist retailer
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
-   * @param {WhitelistRetailerDomain} whitelistRetailerDomain id of whitelist retailer domain
+   * @param {WhitelistRetailerDomain} whitelistRetailerDomain new whitelist retailer domain
    */
   public addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: WhitelistRetailerDomain): Observable<any> {
   }
