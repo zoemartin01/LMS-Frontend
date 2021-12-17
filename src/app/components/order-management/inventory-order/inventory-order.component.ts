@@ -58,9 +58,9 @@ export class InventoryOrderComponent implements OnInit {
    */
   private async getInventoryItems(): Promise<void> {
   }
-//@TODO creates always or only if item is new?
+
   /**
-   * Sets order status to "inventoried" and creates new inventory item
+   * Sets order status to "inventoried" and creates new inventory item if needed
    *
    * @param {NgForm} inventoryOrderForm submitted inventory form
    */

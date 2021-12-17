@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {AdminService} from "../../../../services/admin.service";
+import { ActivatedRoute } from "@angular/router";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { AdminService } from "../../../../services/admin.service";
 
 @Component({
   selector: 'app-delete',
   templateUrl: './whitelist-retailer-delete.component.html',
   styleUrls: ['./whitelist-retailer-delete.component.scss']
 })
+
 /**
  * Component for the deletion of a whitelist retailer
  * @typedef {Component} WhitelistRetailerDeleteComponent
@@ -17,8 +18,7 @@ export class WhitelistRetailerDeleteComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
     domains: [],
     id: null,
-    name: ""
-
+    name: "",
   }
 
   constructor(public adminService: AdminService, private route: ActivatedRoute) {

@@ -15,7 +15,7 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 })
 
 /**
- * Component for the appointment view popup
+ * Component for the appointment view page
  * @typedef {Component} AppointmentViewComponent
  * @class
  */
