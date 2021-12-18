@@ -58,16 +58,16 @@ export const environment = {
 
     //appointment management
     allAppointments: '/appointments',
-    appointmentsForSeries: '/user/appointments', //TODO
+    appointmentsForSeries: '/user/appointments/series/:seriesId',
     myAppointments: '/user/appointments',
     appointmentsForRoom: '/rooms/:id/appointments',
     viewAppointment: '/appointments/:id',
     createAppointment: '/appointments',
-    createAppointmentSeries: '/appointments', //TODO
+    createAppointmentSeries: '/appointments',
     editAppointment: '/appointments/:id',
-    editAppointmentSeries: '/appointments/:id/edit', //TODO
+    editAppointmentSeries: '/appointments/:id',
     deleteAppointment: '/appointments/:id',
-    deleteAppointmentSeries: '/appointments/:id', //TODO
+    deleteAppointmentSeries: '/appointments/:id',
 
     //inventory management
     getAllInventoryItems: '/inventory-items',
