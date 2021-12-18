@@ -33,7 +33,7 @@ export class InventoryListComponent implements OnInit {
   /**
    * Gets all items with data
    */
-  private async getInventory(): Promise<void> {
+  public async getInventory(): Promise<void> {
   }
 
   /**

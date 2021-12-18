@@ -32,7 +32,7 @@ export class RoomListComponent implements OnInit {
   /**
    * Gets all rooms with data
    */
-  private async getRooms(): Promise<void> {
+  public async getRooms(): Promise<void> {
   }
 
   /**

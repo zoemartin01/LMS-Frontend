@@ -41,7 +41,7 @@ export class RoomViewComponent implements OnInit {
   /**
    * Gets all data of room
    */
-  private async getRoomData() : Promise<void> {
+  public async getRoomData() : Promise<void> {
   }
 
   /**

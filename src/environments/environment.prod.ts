@@ -25,7 +25,7 @@ export const environment = {
 
     //personal user settings
     getThisUser: '/user',
-    signin: '/users',
+    register: '/users',
     verifyEmail: '/user/verify-email',
     updateThisUser: '/user',
     deleteThisUser: '/user',

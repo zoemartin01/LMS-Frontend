@@ -25,7 +25,7 @@ export const environment = {
 
     //personal user settings
     getThisUser: '/user',
-    signin: '/users',
+    register: '/users',
     verifyEmail: '/user/verify-email',
     updateThisUser: '/user',
     deleteThisUser: '/user',
@@ -41,6 +41,7 @@ export const environment = {
     addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
     editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
     deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
+    checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers',
 
     getUsers: '/users',
     getUser: '/users/:id',

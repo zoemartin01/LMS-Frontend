@@ -62,7 +62,7 @@ export class AuthService {
   public tokenCheck(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.post(apiURL, []);
   }
 
   /**

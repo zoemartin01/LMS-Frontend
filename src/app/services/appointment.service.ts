@@ -204,7 +204,7 @@ export class AppointmentService {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

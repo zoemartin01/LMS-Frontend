@@ -50,13 +50,13 @@ export class InventoryOrderComponent implements OnInit {
   /**
    * Gets all data of order
    */
-  private async getOrderData(): Promise<void> {
+  public async getOrderData(): Promise<void> {
   }
 
   /**
    * Gets all inventory items
    */
-  private async getInventoryItems(): Promise<void> {
+  public async getInventoryItems(): Promise<void> {
   }
 
   /**
