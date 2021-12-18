@@ -82,4 +82,11 @@ export class LivecamService {
     return this.httpClient.get(apiURL);
   }
 
+  /**
+   * Gets the live stream feed
+   */
+  public getLiveStreamFeed(): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livestreamFeed}`;
+    return this.httpClient.get(apiURL);
+  }
 }

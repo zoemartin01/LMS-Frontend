@@ -85,11 +85,12 @@ export const environment = {
     deleteOrder: '/orders/:id',
 
     //livecam
-    recordings: '/livecam-recordings',
-    getRecording: '/livecam-recordings/:id',
-    scheduleRecording: '/livecam-recordings/schedule',
-    updateRecording: '/livecam-recordings/:id',
-    downloadRecording: '/livecam-recordings/:id/download',
-    deleteRecording: '/livecam-recordings/:id',
+    recordings: '/livecam/recordings',
+    getRecording: '/livecam/recordings/:id',
+    scheduleRecording: '/livecam/recordings/schedule',
+    updateRecording: '/livecam/recordings/:id',
+    downloadRecording: '/livecam/recordings/:id/download',
+    deleteRecording: '/livecam/recordings/:id',
+    livestreamFeed: '/livecam/stream'
   }
 };
