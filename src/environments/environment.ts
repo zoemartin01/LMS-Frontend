@@ -39,16 +39,20 @@ export const environment = {
     //appointment management
     myAppointments: '/user/appointments',
     allAppointments: '/appointments',
+    appointmentsForSeries: '/appointments/help', //TODO series
     appointmentsForRoom: '/rooms/:id/appointments',
     viewAppointment: '/appointments/:id',
     editAppointment: '/appointments/:id/edit',
+    editAppointmentSeries: '/appointments/:id/edit', //TODO
     createAppointment: '/appointments',
+    createAppointmentSeries: '/appointments', //TODO
     deleteAppointment: '/appointments/:id',
+    deleteAppointmentSeries: '/appointments/:id', //TODO
 
     //inventory management
 
     //order management
-    
+
     //livecam
     recordings: '/livecam/recordings',
     getRecording: '/livecam/recordings/:id',
