@@ -8,6 +8,7 @@ import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
 import {UserId} from "../types/aliases/user-id";
 import {UserRole} from "../types/enums/user-role";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -142,5 +143,15 @@ export class AdminService {
    */
   public declineUserRequest(userId: UserId): Observable<any> {
     return this.deleteUser(userId);
+  }
+
+  /**
+   * Checks domain against whitelist
+   *
+   * @param {String} domain domain which is checked against whitelist
+   */
+  public checkDomainAgainstWhitelist(domain: string): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.checkDomainAgainstWhitelist}`;
+    return this.httpClient.post(apiURL, {domain});
   }
 }
