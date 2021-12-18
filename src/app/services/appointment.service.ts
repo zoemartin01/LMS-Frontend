@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
-import {ObjectUnsubscribedError, Observable} from "rxjs";
+import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
-import {SeriesId} from "../types/aliases/series-id";
+import { SeriesId } from "../types/aliases/series-id";
 
 @Injectable({
   providedIn: 'root'
@@ -209,15 +209,24 @@ export class AppointmentService {
    * @param {TimespanId} appointmentId id of appointment
    */
   public declineAppointmentRequest(appointmentId: TimespanId): Observable<any> {
-    return this.editAppointmentSeries(appointmentId, { confirmationStatus: ConfirmationStatus.denied });
+    return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.denied });
   }
 
   /**
-   * Sets series appointment request to accepted
+   * Sets series appointments request to accepted
    *
    * @param {SeriesId} seriesId id of series of appointment
    */
   public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
+    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
+  }
+
+  /**
+   * Sets series of appointments request to accepted
+   *
+   * @param {SeriesId} seriesId id of series of appointment
+   */
+  public declineAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
     return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
   }
 }

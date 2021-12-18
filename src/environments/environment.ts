@@ -58,7 +58,7 @@ export const environment = {
 
     //appointment management
     allAppointments: '/appointments',
-    appointmentsForSeries: '/user/appointments/series/:seriesId',
+    appointmentsForSeries: '/appointments/series/:id',
     myAppointments: '/user/appointments',
     appointmentsForRoom: '/rooms/:id/appointments',
     viewAppointment: '/appointments/:id',
