@@ -47,7 +47,7 @@ export class UserService {
   }
 
   /**
-   * Registers user with his personal information
+   * Registers user with their personal information
    *
    * @param {string} firstname new user's firstname
    * @param {string} lastname  new user's lastname
