@@ -89,5 +89,4 @@ export class LivecamService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livestreamFeed}`;
     return this.httpClient.get(apiURL);
   }
-
 }
