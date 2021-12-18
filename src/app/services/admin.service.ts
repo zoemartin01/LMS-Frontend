@@ -7,8 +7,6 @@ import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
 import {UserId} from "../types/aliases/user-id";
-import {TimespanId} from "../types/aliases/timespan-id";
-import {ConfirmationStatus} from "../types/enums/confirmation-status";
 import {UserRole} from "../types/enums/user-role";
 
 @Injectable({
