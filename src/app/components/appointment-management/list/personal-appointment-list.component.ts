@@ -26,7 +26,7 @@ export class PersonalAppointmentListComponent implements OnInit {
    * Init page
    */
   ngOnInit(): void {
-    this.getAppointments();
+    this.getAllAppointmentsForCurrentUser();
   }
 
   /**
@@ -46,7 +46,7 @@ export class PersonalAppointmentListComponent implements OnInit {
   /**
    * Gets appointment data of all appointments for current user
    */
-  public async getAppointments(): Promise<void> {
+  public async getAllAppointmentsForCurrentUser(): Promise<void> {
   }
 
   /**
