@@ -13,7 +13,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * Class for user settings
+ * Component for user settings page
  * @typedef {Component} UserSettingsComponent
  * @class
  */
@@ -22,16 +22,19 @@ export class UserSettingsComponent implements OnInit {
   public notificationBox: boolean|null = null;
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
   };
 
   constructor(public userService: UserService) {
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.getUserData();
     //@todo get
@@ -51,7 +54,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

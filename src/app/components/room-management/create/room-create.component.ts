@@ -10,7 +10,9 @@ import { RoomService } from "../../../services/room.service";
 })
 
 /**
- * Component for the room create site, to create a new room
+ * Component for the room create popup
+ * @typedef {Component} RoomCreateComponent
+ * @class
  */
 export class RoomCreateComponent implements OnInit {
 
@@ -18,7 +20,7 @@ export class RoomCreateComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

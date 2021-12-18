@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: 'app-register',
@@ -16,11 +16,11 @@ import { AuthService } from "../../../services/auth.service";
  */
 export class RegisterComponent {
 
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   /**
-   * Register user with provided data
+   * Registers user with provided data
    *
    * @param registerForm submitted register form
    */
@@ -28,5 +28,4 @@ export class RegisterComponent {
     if (registerForm.valid) {
     }
   }
-
 }

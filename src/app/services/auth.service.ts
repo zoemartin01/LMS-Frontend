@@ -62,9 +62,8 @@ export class AuthService {
   public tokenCheck(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.post(apiURL, []);
   }
-
 
   /**
    * Saves access token in local storage
@@ -101,17 +100,23 @@ export class AuthService {
   /**
    * Saves user role in local storage
    *
-   * @param {string} userRole
+   * @param {UserRole} userRole
    */
-  public setUserRole(userRole: string): void {
-    localStorage.setItem(environment.storageKeys.userRole, userRole);
+  public setUserRole(userRole: UserRole): void {
+    localStorage.setItem(environment.storageKeys.userRole, userRole.toString());
   }
 
   /**
    * Returns user role from local storage
    */
-  public getUserRole(): string {
-    return <string>localStorage.getItem(environment.storageKeys.userRole);
+  public getUserRole(): UserRole {
+    let userRole = localStorage.getItem(environment.storageKeys.userRole);
+
+    if (userRole === null) {
+      return UserRole.unknown;
+    }
+
+    return +userRole;
   }
 
   /**
@@ -125,6 +130,6 @@ export class AuthService {
    * Returns if current user is admin
    */
   public isAdmin(): boolean {
-    return this.getUserRole() === "admin";
+    return this.getUserRole() === UserRole.admin;
   }
 }

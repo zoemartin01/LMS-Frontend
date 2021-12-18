@@ -13,7 +13,9 @@ import { Room } from "../../../types/room";
 })
 
 /**
- * Component for the room edit site, to edit one room
+ * Component for the room edit popup
+ * @typedef {Component} RoomEditComponent
+ * @class
  */
 export class RoomEditComponent implements OnInit {
   public room: Room = {
@@ -30,7 +32,7 @@ export class RoomEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -40,7 +42,7 @@ export class RoomEditComponent implements OnInit {
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
   public async getRoomData() : Promise<void> {
     //use this.room.id here and set this.room
@@ -49,7 +51,7 @@ export class RoomEditComponent implements OnInit {
   /**
    * Changes data of room
    *
-   * @param {NgForm} roomEditForm submitted creation form
+   * @param {NgForm} roomEditForm submitted edit form
    */
   public async editRoomData(roomEditForm: NgForm): Promise<void> {
   }

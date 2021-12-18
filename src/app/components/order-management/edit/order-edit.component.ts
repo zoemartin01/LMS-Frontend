@@ -32,7 +32,7 @@ export class OrderEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -42,9 +42,9 @@ export class OrderEditComponent implements OnInit {
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
-  private async getOrderData(): Promise<void> {
+  public async getOrderData(): Promise<void> {
   }
 
   /**

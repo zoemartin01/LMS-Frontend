@@ -15,17 +15,17 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * Class for editing a user
+ * Component for user edit popup
  * @typedef {Component} UserEditComponent
  * @class
  */
 export class UserEditComponent implements OnInit {
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
   };
 
@@ -33,7 +33,7 @@ export class UserEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -43,7 +43,7 @@ export class UserEditComponent implements OnInit {
   }
 
   /**
-   * Get data of user
+   * Gets data of user
    */
   public async getUserData(): Promise<void> {
     //use this.user.id here and set this.user

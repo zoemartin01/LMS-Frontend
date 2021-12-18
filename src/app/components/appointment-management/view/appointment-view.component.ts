@@ -15,7 +15,9 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 })
 
 /**
- * Component for the appointment view site, to view one appointment in detail
+ * Component for the appointment view page
+ * @typedef {Component} AppointmentViewComponent
+ * @class
  */
 export class AppointmentViewComponent implements OnInit {
   public appointment: Appointment = {
@@ -33,7 +35,7 @@ export class AppointmentViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -43,7 +45,7 @@ export class AppointmentViewComponent implements OnInit {
   }
 
   /**
-   * Get all data of appointment
+   * Gets all data of appointment
    */
   public async getAppointmentData(): Promise<void> {
   }
@@ -57,7 +59,7 @@ export class AppointmentViewComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */

@@ -28,7 +28,7 @@ export class InventoryItemViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -38,9 +38,9 @@ export class InventoryItemViewComponent implements OnInit {
   }
 
   /**
-   * Get all data of inventory item
+   * Gets all data of inventory item
    */
-  private async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData() : Promise<void> {
   }
 
   /**
@@ -50,7 +50,7 @@ export class InventoryItemViewComponent implements OnInit {
   }
 
   /**
-   * Opens inventory item delete confirmation popup
+   * Opens inventory item deletion confirmation dialog
    */
   public openInventoryItemDeletionDialog(): void {
   }

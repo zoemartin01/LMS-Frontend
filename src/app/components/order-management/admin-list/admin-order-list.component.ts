@@ -23,15 +23,16 @@ export class AdminOrderListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }
+  //@TODO accept/deny
 
   /**
-   * Lists all orders with data
+   * Gets all orders with data
    */
-  private async getInventory(): Promise<void> {
+  public async getInventory(): Promise<void> {
   }
 
   /**
@@ -49,7 +50,7 @@ export class AdminOrderListComponent implements OnInit {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    *
    * @param orderId id of order
    */
