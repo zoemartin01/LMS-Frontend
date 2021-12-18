@@ -44,7 +44,7 @@ export class OrderEditComponent implements OnInit {
   /**
    * Gets all data of order
    */
-  private async getOrderData(): Promise<void> {
+  public async getOrderData(): Promise<void> {
   }
 
   /**

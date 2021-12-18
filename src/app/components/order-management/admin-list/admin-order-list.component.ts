@@ -32,7 +32,7 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Gets all orders with data
    */
-  private async getInventory(): Promise<void> {
+  public async getInventory(): Promise<void> {
   }
 
   /**

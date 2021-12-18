@@ -40,7 +40,7 @@ export class InventoryItemViewComponent implements OnInit {
   /**
    * Gets all data of inventory item
    */
-  private async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData() : Promise<void> {
   }
 
   /**

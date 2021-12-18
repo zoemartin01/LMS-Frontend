@@ -31,7 +31,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Gets data of all orders
    */
-  private async getOrders(): Promise<void> {
+  public async getOrders(): Promise<void> {
   }
 
   /**
