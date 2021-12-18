@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "../../../services/auth.service";
 
+import { UserRole } from "../../../types/enums/user-role";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,12 +29,13 @@ export class LoginComponent {
    * @param authForm submitted login form
    */
   public async login(authForm: NgForm): Promise<void> {
+    const isActiveDirectory: boolean = false;
     if (authForm.valid) {
-      this.authService.login(authForm.value.email, authForm.value.password).subscribe({
+      this.authService.login(authForm.value.email, authForm.value.password, isActiveDirectory).subscribe({
         next: (res: {accessToken: string, refreshToken: string, role: string}) => {
           this.authService.setAccessToken(res.accessToken);
           this.authService.setRefreshToken(res.refreshToken);
-          this.authService.setUserRole(res.role);
+          this.authService.setUserRole(<UserRole><unknown>res.role ?? UserRole.unknown);
 
           this.router.navigate(['/dashboard']);
         },
