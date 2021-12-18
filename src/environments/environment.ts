@@ -39,7 +39,7 @@ export const environment = {
     //appointment management
     myAppointments: '/user/appointments',
     allAppointments: '/appointments',
-    appointmentsForSeries: '/appointments/help', //TODO series
+    appointmentsForSeries: '/user/appointments', //TODO
     appointmentsForRoom: '/rooms/:id/appointments',
     viewAppointment: '/appointments/:id',
     editAppointment: '/appointments/:id/edit',
