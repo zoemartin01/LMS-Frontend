@@ -6,6 +6,7 @@ import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
+import {UserId} from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,12 @@ export class AdminService {
   }
 
   /**
+   * Gets user data
+   * @param userId id of user
+   */
+  public getUser(userId: UserId): Observable<any> {}
+
+  /**
    * Gets users
    */
   public getUsers(): Observable<any> {
@@ -41,6 +48,21 @@ export class AdminService {
   public updateGlobalSettings(changedData: object): Observable<any> {
   }
 
+
+  /**
+   * Changes user data
+   *
+   * @param {object} changedData changed fields of user
+   * @param {UserId} userId if of user
+   */
+  public updateUser(changedData: object, userId : UserId): Observable<any> {}
+
+  /**
+   * Deletes user
+   *
+   * @param {UserId} userId if of user
+   */
+  public deleteUser(userId : UserId): Observable<any> {}
 
   /**
    * Gets whitelist retailer data
@@ -91,7 +113,7 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    *
    */
-  public editDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  public editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
   }
 
   /**
@@ -100,6 +122,6 @@ export class AdminService {
    * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer domain
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public deleteDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
   }
 }
