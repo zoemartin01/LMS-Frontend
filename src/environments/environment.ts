@@ -41,7 +41,7 @@ export const environment = {
     addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
     editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
     deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
-    checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers',
+    checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
 
     getUsers: '/users',
     getUser: '/users/:id',
