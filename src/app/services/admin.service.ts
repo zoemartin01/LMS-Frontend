@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
-import {UserId} from "../types/aliases/user-id";
-import {UserRole} from "../types/enums/user-role";
-import {environment} from "../../environments/environment";
+import { UserId } from "../types/aliases/user-id";
+import { UserRole } from "../types/enums/user-role";
 
 @Injectable({
   providedIn: 'root'
@@ -32,9 +32,11 @@ export class AdminService {
 
   /**
    * Gets user data
+   *
    * @param userId id of user
    */
-  public getUser(userId: UserId): Observable<any> {}
+  public getUser(userId: UserId): Observable<any> {
+  }
 
   /**
    * Gets users
@@ -50,21 +52,22 @@ export class AdminService {
   public updateGlobalSettings(changedData: object): Observable<any> {
   }
 
-
   /**
    * Changes user data
    *
    * @param {object} changedData changed fields of user
    * @param {UserId} userId if of user
    */
-  public updateUser(userId : UserId, changedData: object): Observable<any> {}
+  public updateUser(userId : UserId, changedData: object): Observable<any> {
+  }
 
   /**
    * Deletes user
    *
    * @param {UserId} userId if of user
    */
-  public deleteUser(userId : UserId): Observable<any> {}
+  public deleteUser(userId : UserId): Observable<any> {
+  }
 
   /**
    * Gets whitelist retailer data
