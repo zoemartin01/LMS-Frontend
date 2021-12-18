@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
-
-import { User } from "../types/user";
-import { UserId } from "../types/aliases/user-id";
-import { NotificationChannel } from "../types/enums/notification-channel";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +22,14 @@ export class AuthService {
    *
    * @param {string} email    user's email address
    * @param {string} password user's password
+   * @param {boolean} isActiveDirectory if authentication should use ActiveDirectory
    */
-  public login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string, isActiveDirectory: boolean): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.login}`;
     const requestBody = {
       email,
       password,
+      isActiveDirectory,
     };
 
     return this.httpClient.post(apiURL, requestBody);
