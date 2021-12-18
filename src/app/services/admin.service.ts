@@ -7,6 +7,9 @@ import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
 import {UserId} from "../types/aliases/user-id";
+import {TimespanId} from "../types/aliases/timespan-id";
+import {ConfirmationStatus} from "../types/enums/confirmation-status";
+import {UserRole} from "../types/enums/user-role";
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +58,7 @@ export class AdminService {
    * @param {object} changedData changed fields of user
    * @param {UserId} userId if of user
    */
-  public updateUser(changedData: object, userId : UserId): Observable<any> {}
+  public updateUser(userId : UserId, changedData: object): Observable<any> {}
 
   /**
    * Deletes user
@@ -123,5 +126,23 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+  }
+
+  /**
+   * Sets user request to accepted
+   *
+   * @param {UserId} userId id of pending user
+   */
+  public acceptUserRequest(userId: UserId): Observable<any> {
+    return this.updateUser(userId, { userRole: UserRole.visitor });
+  }
+
+  /**
+   * Declines user request and deletes user
+   *
+   * @param {UserId} userId id of pending user
+   */
+  public declineUserRequest(userId: UserId): Observable<any> {
+    return this.deleteUser(userId);
   }
 }
