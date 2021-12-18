@@ -35,7 +35,7 @@ export class UserService {
    * @param {User} user a user
    */
   public getFullName(user: User): string {
-    return `${user.firstname} ${user.lastname}`;
+    return `${user.firstName} ${user.lastName}`;
   }
 
   /**

@@ -22,8 +22,8 @@ export class UserSettingsComponent implements OnInit {
   public notificationBox: boolean|null = null;
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
