@@ -12,7 +12,9 @@ import { RoomId } from "../../../types/aliases/room-id";
 })
 
 /**
- * Component for the room list site, to list all rooms
+ * Component for the room list page
+ * @typedef {Component} RoomListComponent
+ * @class
  */
 export class RoomListComponent implements OnInit {
   public rooms: Room[] = [];
@@ -21,14 +23,14 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getRooms()
   }
 
   /**
-   * Lists all rooms with data
+   * Gets all rooms with data
    */
   private async getRooms(): Promise<void> {
   }
@@ -40,6 +42,14 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
+   * Opens room view
+   *
+   * @param {RoomId} roomId id of room to view
+   */
+  public openRoomView(roomId: RoomId): void {
+  }
+
+  /**
    * Opens room edit form
    *
    * @param {RoomId} roomId id of room to edit
@@ -48,7 +58,7 @@ export class RoomListComponent implements OnInit {
   }
 
   /**
-   * Opens room delete confirmation popup
+   * Opens room deletion confirmation dialog
    *
    * @param {roomId} roomId id of room to delete
    */

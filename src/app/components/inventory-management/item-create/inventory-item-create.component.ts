@@ -21,10 +21,16 @@ export class InventoryItemCreateComponent {
   }
 
   /**
-   * Creates inventory item with data
+   * Inits page
+   */
+  ngOnInit(): void {
+  }
+
+  /**
+   * Opens inventory creation form
    *
    * @param {NgForm} inventoryItemCreationForm submitted create form
    */
-  public async openInventoryItemCreationForm(inventoryItemCreationForm: NgForm): Promise<void> {
+  public async createInventoryItem(inventoryItemCreationForm: NgForm): Promise<void> {
   }
 }

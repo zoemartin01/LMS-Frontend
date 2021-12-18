@@ -23,13 +23,13 @@ export class PersonalOrderListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }
 
   /**
-   * Lists all orders with data
+   * Gets data of all orders
    */
   private async getOrders(): Promise<void> {
   }
@@ -49,7 +49,7 @@ export class PersonalOrderListComponent implements OnInit {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    *
    * @param orderId id of the order
    */

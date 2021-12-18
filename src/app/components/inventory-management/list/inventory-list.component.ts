@@ -24,14 +24,14 @@ export class InventoryListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getInventory();
   }
 
   /**
-   * Lists all items with data
+   * Gets all items with data
    */
   private async getInventory(): Promise<void> {
   }
@@ -67,7 +67,7 @@ export class InventoryListComponent implements OnInit {
   }
 
   /**
-   * Opens inventory item delete confirmation popup
+   * Opens inventory item deletion confirmation dialog
    */
   public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
   }

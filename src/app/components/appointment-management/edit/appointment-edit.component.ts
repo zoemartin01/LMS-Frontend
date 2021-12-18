@@ -15,7 +15,7 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 })
 
 /**
- * Component for the appointment edit popup, to edit one appointment
+ * Component for the appointment edit page
  * @typedef {Component} AppointmentEditComponent
  * @class
  */
@@ -35,7 +35,7 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -45,7 +45,7 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   /**
-   * Get all data of appointment
+   * Gets all data of appointment
    */
   public async getAppointmentData() : Promise<void> {
     //use this.appointment.id here and set this.appointment

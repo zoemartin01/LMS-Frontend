@@ -31,7 +31,7 @@ export class OrderViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -41,7 +41,7 @@ export class OrderViewComponent implements OnInit {
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
   private async getOrderData() : Promise<void> {
   }
@@ -53,7 +53,7 @@ export class OrderViewComponent implements OnInit {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    */
   public openOrderDeletionDialog(): void {
   }

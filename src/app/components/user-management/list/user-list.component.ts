@@ -12,7 +12,7 @@ import { UserId } from "../../../types/aliases/user-id";
 })
 
 /**
- * Class for a list of all users
+ * Component for a list of all users
  * @typedef {Component} UserListComponent
  * @class
  */
@@ -22,13 +22,16 @@ export class UserListComponent implements OnInit {
   constructor(public userService: UserService) {
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.getUsers();
   }
 
   /**
    * Gets data of all users
-    */
+   */
   public async getUsers(): Promise<void> {
   }
 
@@ -65,7 +68,7 @@ export class UserListComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    *
    * @param {userId} userId id of user to delete
    */

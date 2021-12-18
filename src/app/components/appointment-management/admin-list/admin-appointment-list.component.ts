@@ -23,7 +23,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getAppointments();
@@ -33,6 +33,14 @@ export class AdminAppointmentListComponent implements OnInit {
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+  }
+
+  /**
+   * Opens appointment view
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
   }
 
   /**
@@ -50,7 +58,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -66,7 +74,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

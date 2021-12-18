@@ -10,6 +10,12 @@ import { LivecamService } from 'src/app/services/livecam.service';
   templateUrl: './livecam-delete.component.html',
   styleUrls: ['./livecam-delete.component.scss']
 })
+
+/**
+ * Component for the deletion of a livecam recording
+ * @typedef {Component} LivecamDeleteComponent
+ * @class
+ */
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {
     id: null,
@@ -19,16 +25,16 @@ export class LivecamDeleteComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.recording.id = +params['id'];
+      this.recording.id = params['id'];
     });
   }
 
   /**
-   * Delete recording
+   * Deletes recording
    */
   public async deleteRecording(): Promise<void> {
     await this.livecamService.deleteRecording(this.recording.id);

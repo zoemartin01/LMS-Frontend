@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
 })
 
 /**
- * Service for user
+ * Service for user management
  * @typedef {Service} UserService
  * @class
  */
@@ -24,7 +24,7 @@ export class UserService {
    * @param {UserId} userId Id of user
    */
   public getUserDetails(userId : UserId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.userDetails}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.getUser}`;
 
     return this.httpClient.get(apiURL);
   }

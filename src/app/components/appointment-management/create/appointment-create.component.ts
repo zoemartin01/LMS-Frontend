@@ -10,7 +10,7 @@ import { AppointmentService } from "../../../services/appointment.service";
 })
 
 /**
- * Component for the appointment create popup, to create a new appointment
+ * Component for the appointment create page
  * @typedef {Component} AppointmentCreateComponent
  * @class
  */
@@ -20,7 +20,7 @@ export class AppointmentCreateComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
   }

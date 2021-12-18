@@ -14,7 +14,7 @@ import { AppointmentCreateComponent } from "./components/appointment-management/
 import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
 import { DashboardComponent } from './components/general/dashboard/dashboard.component';
-import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
 import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
 import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
 import { HomepageComponent } from './components/general/homepage/homepage.component';
@@ -27,14 +27,14 @@ import { InventoryOrderComponent } from './components/order-management/inventory
 import { LivecamDeleteComponent } from './components/livecam/delete/livecam-delete.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
 import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
 import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { RoomCalendarViewComponent } from "./components/appointment-management/calendar-view/room-calendar-view.component";
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
@@ -42,11 +42,13 @@ import { RoomListComponent } from './components/room-management/list/room-list.c
 import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { UserDeleteComponent } from './components/user-management/delete/user-delete.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
 import { WhitelistRetailerCreateComponent } from './components/settings/whitelist-retailer/create/whitelist-retailer-create.component';
+import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
 
@@ -87,11 +89,13 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     RoomTimeslotsComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    UserDeleteComponent,
     UserEditComponent,
     UserListComponent,
     UserSettingsComponent,
     UserViewComponent,
     WhitelistRetailerCreateComponent,
+    WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
   ],

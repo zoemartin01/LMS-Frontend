@@ -14,6 +14,8 @@ import { UnreadMessages } from "../../../types/unread-messages";
 
 /**
  * Component for the message box page
+ * @typedef {Component} MessageBoxComponent
+ * @class
  */
 export class MessageBoxComponent implements OnInit {
   public messages: Message[] = [];
@@ -28,7 +30,7 @@ export class MessageBoxComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();
@@ -46,7 +48,7 @@ export class MessageBoxComponent implements OnInit {
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
   }
-
+//@TODO openDeletionDialog
   /**
    * Deletes specified message
    *

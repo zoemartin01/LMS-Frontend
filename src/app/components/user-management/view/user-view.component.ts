@@ -14,7 +14,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * Class for view of a user
+ * Component for user view popup
  * @typedef {Component} UserViewComponent
  * @class
  */
@@ -24,7 +24,7 @@ export class UserViewComponent implements OnInit {
     firstname: '',
     lastname: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
   };
 
@@ -32,11 +32,11 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.user.id = +params['id'];
+      this.user.id = params['id'];
       this.getUserData();
     });
   }
@@ -55,7 +55,7 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

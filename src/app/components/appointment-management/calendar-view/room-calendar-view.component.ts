@@ -35,7 +35,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -46,9 +46,9 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
-  private async getRoomData() : Promise<void> {
+  public async getRoomData() : Promise<void> {
   }
 
   /**
@@ -74,7 +74,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -90,7 +90,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

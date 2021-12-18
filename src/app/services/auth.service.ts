@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from "rxjs";
+import {environment} from '../../environments/environment';
 
-import { User } from "../types/user";
-import { UserId } from "../types/aliases/user-id";
-import { NotificationChannel } from "../types/enums/notification-channel";
+import {UserRole} from "../types/enums/user-role";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +11,8 @@ import { NotificationChannel } from "../types/enums/notification-channel";
 
 /**
  * Service that provides API access for authentication system
+ * @typedef {Service} AuthService
+ * @class
  */
 export class AuthService {
 
@@ -65,7 +65,6 @@ export class AuthService {
     return this.httpClient.get(apiURL);
   }
 
-
   /**
    * Saves access token in local storage
    *
@@ -101,17 +100,23 @@ export class AuthService {
   /**
    * Saves user role in local storage
    *
-   * @param {string} userRole
+   * @param {UserRole} userRole
    */
-  public setUserRole(userRole: string): void {
-    localStorage.setItem(environment.storageKeys.userRole, userRole);
+  public setUserRole(userRole: UserRole): void {
+    localStorage.setItem(environment.storageKeys.userRole, userRole.toString());
   }
 
   /**
    * Returns user role from local storage
    */
-  public getUserRole(): string {
-    return <string>localStorage.getItem(environment.storageKeys.userRole);
+  public getUserRole(): UserRole {
+    let userRole = localStorage.getItem(environment.storageKeys.userRole);
+
+    if (userRole === null) {
+      return UserRole.unknown;
+    }
+
+    return +userRole;
   }
 
   /**
@@ -125,6 +130,6 @@ export class AuthService {
    * Returns if current user is admin
    */
   public isAdmin(): boolean {
-    return this.getUserRole() === "admin";
+    return this.getUserRole() === UserRole.admin;
   }
 }
