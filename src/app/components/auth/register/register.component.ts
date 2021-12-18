@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import { AuthService } from "../../../services/auth.service";
-import {UserService} from "../../../services/user.service";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: 'app-register',
@@ -29,5 +28,4 @@ export class RegisterComponent {
     if (registerForm.valid) {
     }
   }
-
 }
