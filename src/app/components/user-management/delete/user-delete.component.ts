@@ -19,8 +19,8 @@ import { UserRole } from "../../../types/enums/user-role";
 export class UserDeleteComponent implements OnInit {
   public user: User = {
     id: null,
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,

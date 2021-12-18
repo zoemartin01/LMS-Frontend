@@ -21,8 +21,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 export class UserViewComponent implements OnInit {
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     userRole: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
