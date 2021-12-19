@@ -45,7 +45,7 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create order
    *
-   * @param inventoryItemId id of item to order
+   * @param {InventoryItemId} inventoryItemId id of item to order
    */
   public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
   }
@@ -53,7 +53,7 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens inventory item view
    *
-   * @param inventoryItemId id of item to view
+   * @param {InventoryItemId} inventoryItemId id of item to view
    */
   public openInventoryItemView(inventoryItemId: InventoryItemId): void {
   }
@@ -61,13 +61,15 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens inventory item edit form
    *
-   * @param inventoryItemId id of item to edit
+   * @param {InventoryItemId} inventoryItemId id of item to edit
    */
   public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
   }
 
   /**
    * Opens inventory item deletion confirmation dialog
+   *
+   * @param {InventoryItemId} inventoryItemId id of item to delete
    */
   public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
   }
