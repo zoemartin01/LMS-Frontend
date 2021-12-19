@@ -87,9 +87,9 @@ export const environment = {
 
     //livecam
     recordings: '/livecam/recordings',
-    scheduledRecordings: '',
+    scheduledRecordings: '/livecam/recordings/schedules',
     getRecording: '/livecam/recordings/:id',
-    scheduleRecording: '/livecam/recordings/schedule',
+    scheduleRecording: '/livecam/recordings/schedules',
     updateRecording: '/livecam/recordings/:id',
     downloadRecording: '/livecam/recordings/:id/download',
     deleteRecording: '/livecam/recordings/:id',
