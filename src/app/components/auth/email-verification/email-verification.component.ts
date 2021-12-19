@@ -22,7 +22,7 @@ export class EmailVerificationComponent {
   /**
    * Verifies user's email with provided data
    *
-   * @param verifyForm submitted verification form
+   * @param {NgForm} verifyForm submitted verification form
    */
   public async verifyEmail(verifyForm: NgForm): Promise<void> {
     if (verifyForm.valid) {

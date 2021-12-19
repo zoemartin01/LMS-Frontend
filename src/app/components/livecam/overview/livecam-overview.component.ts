@@ -43,7 +43,7 @@ export class LivecamOverviewComponent implements OnInit {
   /**
    * Downloads a recording
    *
-   * @param recordingId id of recording
+   * @param {RecordingId} recordingId id of recording
    */
   public async downloadRecording(recordingId: RecordingId): Promise<void> {
   }
@@ -51,7 +51,7 @@ export class LivecamOverviewComponent implements OnInit {
   /**
    * Opens recording deletion dialog
    *
-   * @param recordingId id of recording
+   * @param {RecordingId} recordingId id of recording
    */
   public openRecordingDeletionDialog(recordingId: RecordingId): void {
   }
