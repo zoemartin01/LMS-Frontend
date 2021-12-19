@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Room} from "../../../types/room";
-import {RoomService} from "../../../services/room.service";
+import { ActivatedRoute } from "@angular/router";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-delete',
   templateUrl: './room-delete.component.html',
   styleUrls: ['./room-delete.component.scss']
 })
+
 /**
  * Component for the deletion of a room
  * @typedef {Component} RoomDeleteComponent
