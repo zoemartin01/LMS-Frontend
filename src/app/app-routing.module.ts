@@ -46,6 +46,7 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from "./components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component";
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import {RoomDeleteComponent} from "./components/room-management/room-delete/room-delete.component";
 
 const routes: Routes = [
   //General
@@ -246,6 +247,15 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Edit Room'
+    }
+  },
+  {
+    path: 'room/:id/delete',
+    canActivate: [AuthGuard, AdminGuard],
+    component: RoomDeleteComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Delete Room'
     }
   },
   {
