@@ -35,6 +35,12 @@ export class LivecamOverviewComponent implements OnInit {
   }
 
   /**
+   * Gets recording data of all scheduled recordings
+   */
+  public async getScheduledRecordings(): Promise<void> {
+  }
+
+  /**
    * Gets live stream feed
    */
   public async getLiveStreamFeed(): Promise<void> {
