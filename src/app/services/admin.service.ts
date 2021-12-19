@@ -33,7 +33,7 @@ export class AdminService {
   /**
    * Gets user data
    *
-   * @param userId id of user
+   * @param {UserId} userId id of user
    */
   public getUser(userId: UserId): Observable<any> {
   }

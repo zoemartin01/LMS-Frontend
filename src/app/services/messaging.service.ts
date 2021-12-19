@@ -33,7 +33,7 @@ export class MessagingService {
   /**
    * Deletes a message from database
    *
-   * @param messageId id of concerned message
+   * @param {MessageId} messageId id of concerned message
    */
   public deleteMessage(messageId: MessageId): Observable<any> {
   }
@@ -41,7 +41,7 @@ export class MessagingService {
   /**
    * Marks a message as read
    *
-   * @param messageId id of concerned message
+   * @param {MessageId} messageId id of concerned message
    */
   public markMessageAsRead(messageId: MessageId): Observable<any> {
   }

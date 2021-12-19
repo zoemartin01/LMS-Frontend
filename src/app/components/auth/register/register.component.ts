@@ -22,7 +22,7 @@ export class RegisterComponent {
   /**
    * Registers user with provided data
    *
-   * @param registerForm submitted register form
+   * @param {NgForm} registerForm submitted register form
    */
   public async register(registerForm: NgForm): Promise<void> {
     if (registerForm.valid) {
