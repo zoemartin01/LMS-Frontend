@@ -47,6 +47,9 @@ import { WhitelistRetailerDeleteComponent } from "./components/settings/whitelis
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
 import {RoomDeleteComponent} from "./components/room-management/room-delete/room-delete.component";
+import {
+  AppointmentDeleteComponent
+} from "./components/appointment-management/appointment-delete/appointment-delete.component";
 
 const routes: Routes = [
   //General
@@ -330,6 +333,15 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Edit Appointment'
+    }
+  },
+  {
+    path: 'room-overview/:room_id/appointment/:id/delete',
+    canActivate: [AuthGuard],
+    component: AppointmentDeleteComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Delete Appointment'
     }
   },
   {
