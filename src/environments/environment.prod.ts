@@ -39,8 +39,9 @@ export const environment = {
     updateWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
     deleteWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
     addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
-    editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
-    deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:did',
+    editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
+    deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
+    checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
 
     getUsers: '/users',
     getUser: '/users/:id',
@@ -60,10 +61,14 @@ export const environment = {
     allAppointments: '/appointments',
     myAppointments: '/user/appointments',
     appointmentsForRoom: '/rooms/:id/appointments',
+    appointmentsForSeries: '/appointments/series/:id',
     viewAppointment: '/appointments/:id',
     createAppointment: '/appointments',
+    createAppointmentSeries: '/appointments/series',
     editAppointment: '/appointments/:id',
+    editAppointmentSeries: '/appointments/series/:id',
     deleteAppointment: '/appointments/:id',
+    deleteAppointmentSeries: '/appointments/series/:id',
 
     //inventory management
     getAllInventoryItems: '/inventory-items',
@@ -81,11 +86,12 @@ export const environment = {
     deleteOrder: '/orders/:id',
 
     //livecam
-    recordings: '/livecam-recordings',
-    getRecording: '/livecam-recordings/:id',
-    scheduleRecording: '/livecam-recordings/schedule',
-    updateRecording: '/livecam-recordings/:id',
-    downloadRecording: '/livecam-recordings/:id/download',
-    deleteRecording: '/livecam-recordings/:id',
+    recordings: '/livecam/recordings',
+    getRecording: '/livecam/recordings/:id',
+    scheduleRecording: '/livecam/recordings/schedule',
+    updateRecording: '/livecam/recordings/:id',
+    downloadRecording: '/livecam/recordings/:id/download',
+    deleteRecording: '/livecam/recordings/:id',
+    livestreamFeed: '/livecam/stream'
   }
 };
