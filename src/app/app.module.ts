@@ -11,6 +11,7 @@ import { AdminAppointmentListComponent } from "./components/appointment-manageme
 import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
 import { AppComponent } from './app.component';
 import { AppointmentCreateComponent } from "./components/appointment-management/create/appointment-create.component";
+import { AppointmentDeleteComponent } from './components/appointment-management/delete/appointment-delete.component';
 import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
 import { DashboardComponent } from './components/general/dashboard/dashboard.component';
@@ -37,6 +38,7 @@ import { PersonalOrderListComponent } from './components/order-management/list/p
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RoomCalendarViewComponent } from "./components/appointment-management/calendar-view/room-calendar-view.component";
 import { RoomCreateComponent } from './components/room-management/create/room-create.component';
+import { RoomDeleteComponent } from './components/room-management/delete/room-delete.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
 import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
@@ -58,6 +60,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     AdminOrderListComponent,
     AppComponent,
     AppointmentCreateComponent,
+    AppointmentDeleteComponent,
     AppointmentEditComponent,
     AppointmentViewComponent,
     DashboardComponent,
@@ -84,6 +87,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     RegisterComponent,
     RoomCalendarViewComponent,
     RoomCreateComponent,
+    RoomDeleteComponent,
     RoomEditComponent,
     RoomListComponent,
     RoomTimeslotsComponent,

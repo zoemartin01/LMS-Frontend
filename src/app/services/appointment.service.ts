@@ -215,16 +215,16 @@ export class AppointmentService {
   /**
    * Sets series appointments request to accepted
    *
-   * @param {SeriesId} seriesId id of series of appointment
+   * @param {SeriesId} seriesId id of series of appointments
    */
   public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
     return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
   }
 
   /**
-   * Sets series of appointments request to accepted
+   * Sets series of appointments request to declined
    *
-   * @param {SeriesId} seriesId id of series of appointment
+   * @param {SeriesId} seriesId id of series of appointments
    */
   public declineAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
     return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
