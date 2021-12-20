@@ -15,6 +15,11 @@ import { AuthService } from '../services/auth.service';
  */
 export class AuthGuard implements CanActivate {
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   * @param {Router} router router providing navigation
+   */
   constructor(private authService: AuthService, private router: Router) {
   }
 

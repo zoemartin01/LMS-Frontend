@@ -16,6 +16,10 @@ import { LivecamService } from '../../../services/livecam.service';
  */
 export class LivecamScheduleComponent implements OnInit {
 
+  /**
+   * Constructor
+   * @param {LivecamService} livecamService service providing livecam functionalities
+   */
   constructor(public livecamService: LivecamService) {
   }
 

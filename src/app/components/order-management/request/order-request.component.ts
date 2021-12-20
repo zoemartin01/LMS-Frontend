@@ -16,6 +16,10 @@ import { OrderService } from "../../../services/order.service";
  */
 export class OrderRequestComponent {
 
+  /**
+   * Constructor
+   * @param {OrderService} orderService service providing order functionalities
+   */
   constructor(public orderService: OrderService) {
   }
 

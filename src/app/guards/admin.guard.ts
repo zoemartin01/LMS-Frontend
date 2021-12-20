@@ -15,6 +15,11 @@ import { AuthService } from '../services/auth.service';
  */
 export class AdminGuard implements CanActivate {
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   * @param {Router} router router providing navigation
+   */
   constructor(public authService: AuthService, public router: Router) {
   }
 

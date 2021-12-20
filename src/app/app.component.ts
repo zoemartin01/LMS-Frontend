@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
     users: 0,
   };
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   */
   constructor(public authService: AuthService) {
   }
 

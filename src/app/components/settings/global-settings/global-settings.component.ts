@@ -22,6 +22,10 @@ export class GlobalSettingsComponent implements OnInit {
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
+  /**
+   * Constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   */
   constructor(public adminService: AdminService) {
   }
 

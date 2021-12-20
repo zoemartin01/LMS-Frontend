@@ -19,6 +19,10 @@ import { RecordingId } from 'src/app/types/aliases/recording-id';
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];
 
+  /**
+   * Constructor
+   * @param {LivecamService} livecamService service providing livecam functionalities
+   */
   constructor(public livecamService: LivecamService) {
   }
 

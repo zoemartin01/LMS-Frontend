@@ -19,6 +19,10 @@ import { UserId } from "../../../types/aliases/user-id";
 export class UserListComponent implements OnInit {
   public users: User[] = [];
 
+  /**
+   * Constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   */
   constructor(public adminService: AdminService) {
   }
 

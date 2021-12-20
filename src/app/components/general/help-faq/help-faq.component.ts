@@ -15,6 +15,10 @@ import { AuthService } from "../../../services/auth.service";
  */
 export class HelpFaqComponent {
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   */
   constructor(public authService: AuthService) {
   }
 

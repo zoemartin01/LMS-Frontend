@@ -30,6 +30,11 @@ export class AppointmentDeleteComponent implements OnInit {
     confirmationStatus: ConfirmationStatus.unknown,
   };
 
+  /**
+   * Constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
   }
 
