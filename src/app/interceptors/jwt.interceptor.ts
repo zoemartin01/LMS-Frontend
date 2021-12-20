@@ -13,6 +13,10 @@ import { AuthService } from "../services/auth.service";
  */
 export class JwtInterceptor implements HttpInterceptor {
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   */
   constructor(private authService: AuthService) {
   }
 

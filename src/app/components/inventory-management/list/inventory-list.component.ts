@@ -20,6 +20,10 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 export class InventoryListComponent implements OnInit {
   public inventory: InventoryItem[] = [];
 
+  /**
+   * Constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   */
   constructor(public inventoryService: InventoryService) {
   }
 

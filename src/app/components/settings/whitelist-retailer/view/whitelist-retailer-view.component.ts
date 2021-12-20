@@ -23,6 +23,11 @@ export class WhitelistRetailerViewComponent implements OnInit {
     domains: [],
   }
 
+  /**
+   * Constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 

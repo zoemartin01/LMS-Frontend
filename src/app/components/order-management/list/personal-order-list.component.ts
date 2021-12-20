@@ -19,6 +19,10 @@ import { OrderId } from "../../../types/aliases/order-id";
 export class PersonalOrderListComponent implements OnInit {
   public orders: Order[] = [];
 
+  /**
+   * Constructor
+   * @param {OrderService} orderService service providing order functionalities
+   */
   constructor(public orderService: OrderService) {
   }
 

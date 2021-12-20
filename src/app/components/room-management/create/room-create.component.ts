@@ -16,6 +16,10 @@ import { RoomService } from "../../../services/room.service";
  */
 export class RoomCreateComponent implements OnInit {
 
+  /**
+   * Constructor
+   * @param {RoomService} roomService service providing room functionalities
+   */
   constructor(public roomService: RoomService) {
   }
 

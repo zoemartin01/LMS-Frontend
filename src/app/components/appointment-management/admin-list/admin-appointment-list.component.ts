@@ -19,6 +19,10 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 export class AdminAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
 
+  /**
+   * Constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   */
   constructor(public appointmentService: AppointmentService) {
   }
 

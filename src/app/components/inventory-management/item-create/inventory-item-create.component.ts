@@ -17,6 +17,10 @@ import { NgForm } from "@angular/forms";
  */
 export class InventoryItemCreateComponent {
 
+  /**
+   * Constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   */
   constructor(public inventoryService: InventoryService) {
   }
 

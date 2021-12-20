@@ -16,6 +16,10 @@ import { AppointmentService } from "../../../services/appointment.service";
  */
 export class AppointmentCreateComponent implements OnInit {
 
+  /**
+   * Constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   */
   constructor(public appointmentService: AppointmentService) {
   }
 

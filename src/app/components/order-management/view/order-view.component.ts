@@ -27,6 +27,11 @@ export class OrderViewComponent implements OnInit {
     orderStatus: OrderStatus.unknown,
   }
 
+  /**
+   * Constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
   }
 

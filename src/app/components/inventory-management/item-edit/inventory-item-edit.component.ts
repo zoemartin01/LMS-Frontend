@@ -26,6 +26,11 @@ export class InventoryItemEditComponent implements OnInit {
     quantity: null,
   };
 
+  /**
+   * Constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public inventoryService: InventoryService,  private route: ActivatedRoute) {
   }
 

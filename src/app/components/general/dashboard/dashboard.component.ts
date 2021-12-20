@@ -24,6 +24,11 @@ export class DashboardComponent implements OnInit {
     users: 0,
   };
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   * @param {MessagingService} messagingService service providing messaging functionalities
+   */
   constructor(public authService: AuthService, public messagingService: MessagingService) {
   }
 

@@ -29,6 +29,11 @@ export class RoomTimeslotsComponent implements OnInit {
     unavailableTimeslots: [],
   };
 
+  /**
+   * Constructor
+   * @param {RoomService} roomService service providing room functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
   }
 
