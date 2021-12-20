@@ -27,7 +27,6 @@ export class AdminOrderListComponent implements OnInit {
    */
   ngOnInit(): void {
   }
-  //@TODO accept/deny
 
   /**
    * Gets all orders with data
@@ -64,4 +63,21 @@ export class AdminOrderListComponent implements OnInit {
    */
   public openOrderView(orderId: OrderId): void {
   }
+
+  /**
+   * Sets order request to accepted
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public async acceptOrderRequest(orderId: OrderId): Promise<void> {
+  }
+
+  /**
+   * Sets order request to declined
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public async declineOrderRequest(orderId: OrderId): Promise<void> {
+  }
+}
 }
