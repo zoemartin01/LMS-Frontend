@@ -21,6 +21,7 @@ import { HelpFaqComponent } from './components/general/help-faq/help-faq.compone
 import { HomepageComponent } from './components/general/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
 import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
+import { InventoryItemDeleteComponent } from './components/inventory-management/item-delete/inventory-item-delete.component';
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
@@ -53,7 +54,6 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
-import { ItemDeleteComponent } from './components/inventory-management/item-delete/item-delete.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +71,7 @@ import { ItemDeleteComponent } from './components/inventory-management/item-dele
     HomepageComponent,
     HwlabRulesComponent,
     InventoryItemCreateComponent,
+    InventoryItemDeleteComponent,
     InventoryItemEditComponent,
     InventoryItemViewComponent,
     InventoryListComponent,
@@ -103,7 +104,6 @@ import { ItemDeleteComponent } from './components/inventory-management/item-dele
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
-    ItemDeleteComponent,
   ],
   imports: [
     AppRoutingModule,

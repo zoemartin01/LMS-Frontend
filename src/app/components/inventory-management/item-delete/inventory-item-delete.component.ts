@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-item-delete',
-  templateUrl: './item-delete.component.html',
-  styleUrls: ['./item-delete.component.scss']
+  templateUrl: './inventory-item-delete.component.html',
+  styleUrls: ['./inventory-item-delete.component.scss']
 })
 
 /**
  * Component for the deletion of an inventory item
- * @typedef {Component} ItemDeleteComponent
+ * @typedef {Component} InventoryItemDeleteComponent
  * @class
  */
-export class ItemDeleteComponent implements OnInit {
+export class InventoryItemDeleteComponent implements OnInit {
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
@@ -32,9 +32,6 @@ export class ItemDeleteComponent implements OnInit {
   constructor(public inventoryService: InventoryService,  private route: ActivatedRoute) {
   }
 
-  /**
-   * Inits page
-   */
   /**
    * Inits page
    */
