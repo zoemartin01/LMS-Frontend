@@ -4,6 +4,7 @@ import { User } from "../../../types/user";
 import { UserService } from "../../../services/user.service";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { UserRole } from "../../../types/enums/user-role";
+import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-delete',
@@ -26,7 +27,7 @@ export class UserDeleteComponent implements OnInit {
     notificationChannel: NotificationChannel.unknown,
   }
 
-  constructor(public userService: UserService, private route: ActivatedRoute) {
+  constructor(public userService: UserService, public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**

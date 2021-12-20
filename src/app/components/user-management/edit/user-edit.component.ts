@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 
-import { UserService } from "../../../services/user.service";
-
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -29,7 +28,7 @@ export class UserEditComponent implements OnInit {
     notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public userService : UserService, private route: ActivatedRoute) {
+  constructor(public adminService : AdminService, private route: ActivatedRoute) {
   }
 
   /**
