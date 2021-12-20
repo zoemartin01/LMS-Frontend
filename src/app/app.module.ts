@@ -31,6 +31,7 @@ import { LivecamOverviewComponent } from './components/livecam/overview/livecam-
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
 import { OrderViewComponent } from './components/order-management/view/order-view.component';
@@ -81,6 +82,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     LivecamScheduleComponent,
     LoginComponent,
     MessageBoxComponent,
+    OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
     OrderViewComponent,

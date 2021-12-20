@@ -7,17 +7,17 @@ import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
-  selector: 'app-order-view',
-  templateUrl: './order-view.component.html',
-  styleUrls: ['./order-view.component.scss']
+  selector: 'app-order-delete',
+  templateUrl: './order-delete.component.html',
+  styleUrls: ['./order-delete.component.scss']
 })
 
 /**
- * Component for the order view popup
- * @typedef {Component} OrderViewComponent
+ * Component for the deletion of an order
+ * @typedef {Component} OrderDeleteComponent
  * @class
  */
-export class OrderViewComponent implements OnInit {
+export class OrderDeleteComponent implements OnInit {
   public order: Order = {
     id: null,
     item: '',
@@ -41,25 +41,12 @@ export class OrderViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.order.id = params['id'];
-      this.getOrderData();
     });
   }
 
   /**
-   * Gets all data of order
+   * Deletes order
    */
-  public async getOrderData() : Promise<void> {
-  }
-
-  /**
-   * Opens order edit form
-   */
-  public openOrderEditForm(): void {
-  }
-
-  /**
-   * Opens order deletion confirmation dialog
-   */
-  public openOrderDeletionDialog(): void {
+  public async deleteOrder(): Promise<void> {
   }
 }
