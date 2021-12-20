@@ -21,6 +21,7 @@ import { HelpFaqComponent } from './components/general/help-faq/help-faq.compone
 import { HomepageComponent } from './components/general/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
 import { InventoryItemCreateComponent } from './components/inventory-management/item-create/inventory-item-create.component';
+import { InventoryItemDeleteComponent } from './components/inventory-management/item-delete/inventory-item-delete.component';
 import { InventoryItemEditComponent } from './components/inventory-management/item-edit/inventory-item-edit.component';
 import { InventoryItemViewComponent } from './components/inventory-management/item-view/inventory-item-view.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
@@ -71,6 +72,7 @@ import { OrderDeleteComponent } from './components/order-management/delete/order
     HomepageComponent,
     HwlabRulesComponent,
     InventoryItemCreateComponent,
+    InventoryItemDeleteComponent,
     InventoryItemEditComponent,
     InventoryItemViewComponent,
     InventoryListComponent,
