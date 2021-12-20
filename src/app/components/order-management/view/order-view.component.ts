@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
@@ -27,7 +27,7 @@ export class OrderViewComponent implements OnInit {
     orderStatus: OrderStatus.unknown,
   }
 
-  constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
+  constructor(public orderService: OrderService, private route: ActivatedRoute) {
   }
 
   /**
