@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderStatus} from "../../../types/enums/order-status";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-order-delete',
   templateUrl: './order-delete.component.html',
   styleUrls: ['./order-delete.component.scss']
 })
+
 /**
  * Component for the deletion of an order
  * @typedef {Component} OrderDeleteComponent
@@ -48,5 +49,4 @@ export class OrderDeleteComponent implements OnInit {
    */
   public async deleteOrder(): Promise<void> {
   }
-
 }
