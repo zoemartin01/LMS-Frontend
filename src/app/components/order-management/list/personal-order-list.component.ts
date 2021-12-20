@@ -43,7 +43,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Opens order edit form
    *
-   * @param orderId id of order to edit
+   * @param {OrderId} orderId id of order to edit
    */
   public openOrderEditForm(orderId: OrderId): void {
   }
@@ -51,7 +51,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Opens order deletion confirmation dialog
    *
-   * @param orderId id of the order
+   * @param {OrderId} orderId id of the order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
   }
@@ -59,7 +59,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Opens order view popup
    *
-   * @param orderId
+   * @param {OrderId} orderId id of the order
    */
   public openOrderView(orderId: OrderId): void {
   }

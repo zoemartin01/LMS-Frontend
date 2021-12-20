@@ -44,7 +44,7 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Opens order edit form
    *
-   * @param orderId id of order to edit
+   * @param {OrderId} orderId id of order to edit
    */
   public openOrderEditForm(orderId: OrderId): void {
   }
@@ -52,7 +52,7 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Opens order deletion confirmation dialog
    *
-   * @param orderId id of order
+   * @param {OrderId} orderId id of order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
   }
@@ -60,7 +60,7 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Opens order view popup
    *
-   * @param orderId id of order
+   * @param {OrderId} orderId id of order
    */
   public openOrderView(orderId: OrderId): void {
   }

@@ -26,7 +26,7 @@ export class LoginComponent {
   /**
    * Logs in user with provided credentials
    *
-   * @param authForm submitted login form
+   * @param {NgForm} authForm submitted login form
    */
   public async login(authForm: NgForm): Promise<void> {
     const isActiveDirectory: boolean = false;
