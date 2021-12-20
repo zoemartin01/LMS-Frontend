@@ -16,6 +16,10 @@ import { AdminService } from "../../../../services/admin.service";
  */
 export class WhitelistRetailerCreateComponent implements OnInit {
 
+  /**
+   * Constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   */
   constructor(public adminService: AdminService) {
   }
 

@@ -29,6 +29,10 @@ export class UserSettingsComponent implements OnInit {
     notificationChannel: NotificationChannel.unknown,
   };
 
+  /**
+   * Constructor
+   * @param {UserService} userService service providing user functionalities
+   */
   constructor(public userService: UserService) {
   }
 

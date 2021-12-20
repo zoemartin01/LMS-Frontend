@@ -16,6 +16,10 @@ import { UserService } from "../../../services/user.service";
  */
 export class RegisterComponent {
 
+  /**
+   * Constructor
+   * @param {UserService} userService service providing user functionalities
+   */
   constructor(private userService: UserService) {
   }
 

@@ -19,6 +19,10 @@ import { OrderId } from "../../../types/aliases/order-id";
 export class AdminOrderListComponent implements OnInit {
   public orderList: Order[] = [];
 
+  /**
+   * Constructor
+   * @param {OrderService} orderService service providing order functionalities
+   */
   constructor(public orderService: OrderService) {
   }
 

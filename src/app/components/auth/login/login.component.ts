@@ -20,6 +20,11 @@ import { UserRole } from "../../../types/enums/user-role";
 export class LoginComponent {
   loginError: boolean = false;
 
+  /**
+   * Constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   * @param {Router} router router providing navigation
+   */
   constructor(private authService: AuthService, private router: Router) {
   }
 
