@@ -80,4 +80,3 @@ export class AdminOrderListComponent implements OnInit {
   public async declineOrderRequest(orderId: OrderId): Promise<void> {
   }
 }
-}
