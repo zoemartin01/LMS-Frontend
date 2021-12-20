@@ -83,6 +83,14 @@ export class LivecamService {
   }
 
   /**
+   * Gets the data for all scheduled recordings
+   */
+  public getAllScheduledRecordings(): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.scheduledRecordings}`;
+    return this.httpClient.get(apiURL);
+  }
+
+  /**
    * Gets the live stream feed
    */
   public getLiveStreamFeed(): Observable<any> {
