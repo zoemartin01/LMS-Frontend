@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 
-import { UserService } from "../../../services/user.service";
+import { AdminService } from "../../../services/admin.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
@@ -29,7 +29,7 @@ export class UserEditComponent implements OnInit {
     notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public userService : UserService, private route: ActivatedRoute) {
+  constructor(public adminService : AdminService, private route: ActivatedRoute) {
   }
 
   /**

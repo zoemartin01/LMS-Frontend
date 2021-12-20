@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+
+import { AdminService } from "../../../services/admin.service";
+
 import { User } from "../../../types/user";
-import { UserService } from "../../../services/user.service";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-delete',
@@ -26,7 +28,7 @@ export class UserDeleteComponent implements OnInit {
     notificationChannel: NotificationChannel.unknown,
   }
 
-  constructor(public userService: UserService, private route: ActivatedRoute) {
+  constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**
