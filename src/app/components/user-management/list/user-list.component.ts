@@ -13,14 +13,15 @@ import { UserId } from "../../../types/aliases/user-id";
 
 /**
  * Component for a list of all users
- * @typedef {Component} UserListComponent
- * @class
+ *
+ *
  */
 export class UserListComponent implements OnInit {
   public users: User[] = [];
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    */
   constructor(public adminService: AdminService) {

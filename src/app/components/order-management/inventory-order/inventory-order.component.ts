@@ -17,8 +17,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component to inventory an order
- * @typedef {Component} InventoryOrderComponent
- * @class
+ *
+ *
  */
 export class InventoryOrderComponent implements OnInit {
   public order: Order = {
@@ -33,6 +33,7 @@ export class InventoryOrderComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {OrderService} orderService service providing order functionalities
    * @param {ActivatedRoute} route route that activated this component

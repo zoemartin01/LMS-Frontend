@@ -16,8 +16,8 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 
 /**
  * Component for the appointment view page
- * @typedef {Component} AppointmentViewComponent
- * @class
+ *
+ *
  */
 export class AppointmentViewComponent implements OnInit {
   public appointment: Appointment = {
@@ -33,6 +33,7 @@ export class AppointmentViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

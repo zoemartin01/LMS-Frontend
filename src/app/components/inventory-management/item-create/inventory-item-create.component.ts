@@ -12,14 +12,15 @@ import { NgForm } from "@angular/forms";
 /**
  * Component for the inventory item create popup
  *
- * @typedef {Component} InventoryItemCreateComponent
- * @class
+ *
+ *
  */
 export class InventoryItemCreateComponent {
   public inventoryItems: String[] = []
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    */
   constructor(public inventoryService: InventoryService) {

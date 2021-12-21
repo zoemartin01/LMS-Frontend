@@ -15,8 +15,8 @@ import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 
 /**
  * Component for the deletion of an appointment or a series of appointments
- * @typedef {Component} AppointmentDeleteComponent
- * @class
+ *
+ *
  */
 export class AppointmentDeleteComponent implements OnInit {
   public appointment: Appointment = {
@@ -32,6 +32,7 @@ export class AppointmentDeleteComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

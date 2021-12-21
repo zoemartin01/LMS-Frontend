@@ -13,14 +13,15 @@ import { OrderService } from "../../../services/order.service";
 
 /**
  * Component for order request popup
- * @typedef {Component} OrderRequestComponent
- * @class
+ *
+ *
  */
 export class OrderRequestComponent {
   public existingItems: String[] = []
 
   /**
    * Constructor
+   * @constructor
    * @param {OrderService} orderService service providing order functionalities
    */
   constructor(public orderService: OrderService, public adminService: AdminService, public inventoryService: InventoryService) {

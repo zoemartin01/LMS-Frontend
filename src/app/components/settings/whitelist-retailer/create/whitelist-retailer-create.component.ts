@@ -11,13 +11,14 @@ import { AdminService } from "../../../../services/admin.service";
 
 /**
  * Component whitelist retailer creation popup
- * @typedef {Component} WhitelistRetailerCreateComponent
- * @class
+ *
+ *
  */
 export class WhitelistRetailerCreateComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    */
   constructor(public adminService: AdminService) {

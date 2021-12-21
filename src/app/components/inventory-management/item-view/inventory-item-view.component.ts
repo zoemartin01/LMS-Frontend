@@ -13,8 +13,8 @@ import { InventoryItem } from "../../../types/inventory-item";
 /**
  * Component for the inventory item view popup
  *
- * @typedef {Component} InventoryItemViewComponent
- * @class
+ *
+ *
  */
 export class InventoryItemViewComponent implements OnInit {
   public inventoryItem: InventoryItem = {
@@ -26,6 +26,7 @@ export class InventoryItemViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

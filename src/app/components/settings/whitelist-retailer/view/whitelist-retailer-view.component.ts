@@ -13,8 +13,8 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Component for whitelist retailer view popup
- * @typedef {Component} WhitelistRetailerViewComponent
- * @class
+ *
+ *
  */
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
@@ -25,6 +25,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

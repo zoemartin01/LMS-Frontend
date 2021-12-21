@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    */
   constructor(public authService: AuthService) {

@@ -11,13 +11,14 @@ import { AppointmentService } from "../../../services/appointment.service";
 
 /**
  * Component for the appointment create page
- * @typedef {Component} AppointmentCreateComponent
- * @class
+ *
+ *
  */
 export class AppointmentCreateComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    */
   constructor(public appointmentService: AppointmentService) {
