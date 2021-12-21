@@ -14,8 +14,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component for the order view popup
- * @typedef {Component} OrderViewComponent
- * @class
+ *
+ *
  */
 export class OrderViewComponent implements OnInit {
   public order: Order = {
@@ -29,6 +29,7 @@ export class OrderViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {OrderService} orderService service providing order functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

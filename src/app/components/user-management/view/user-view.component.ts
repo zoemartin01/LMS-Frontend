@@ -15,8 +15,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user view popup
- * @typedef {Component} UserViewComponent
- * @class
+ *
+ *
  */
 export class UserViewComponent implements OnInit {
   public user: User = {
@@ -30,6 +30,7 @@ export class UserViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

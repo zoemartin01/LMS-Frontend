@@ -14,8 +14,8 @@ import { UnreadMessages } from "../../../types/unread-messages";
 
 /**
  * Component for the message box page
- * @typedef {Component} MessageBoxComponent
- * @class
+ *
+ *
  */
 export class MessageBoxComponent implements OnInit {
   public messages: Message[] = [];
@@ -28,6 +28,7 @@ export class MessageBoxComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {MessagingService} messagingService service providing messaging functionalities
    */
   constructor(public messagingService: MessagingService) {

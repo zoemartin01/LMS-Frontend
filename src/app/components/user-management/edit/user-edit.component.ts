@@ -16,8 +16,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user edit popup
- * @typedef {Component} UserEditComponent
- * @class
+ *
+ *
  */
 export class UserEditComponent implements OnInit {
   public user: User = {
@@ -31,6 +31,7 @@ export class UserEditComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

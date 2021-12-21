@@ -13,14 +13,15 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 
 /**
  * Component for the admin appointment list page, to view all appointments and all requested appointments
- * @typedef {Component} AdminAppointmentListComponent
- * @class
+ *
+ *
  */
 export class AdminAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    */
   constructor(public appointmentService: AppointmentService) {

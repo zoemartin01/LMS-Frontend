@@ -13,14 +13,15 @@ import { RoomId } from "../../../types/aliases/room-id";
 
 /**
  * Component for the room list page
- * @typedef {Component} RoomListComponent
- * @class
+ *
+ *
  */
 export class RoomListComponent implements OnInit {
   public rooms: Room[] = [];
 
   /**
    * Constructor
+   * @constructor
    * @param {RoomService} roomService service providing room functionalities
    */
   constructor(public roomService: RoomService) {

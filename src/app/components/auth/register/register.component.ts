@@ -11,13 +11,14 @@ import { UserService } from "../../../services/user.service";
 
 /**
  * Component for the register page
- * @typedef {Component} RegisterComponent
- * @class
+ *
+ *
  */
 export class RegisterComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {UserService} userService service providing user functionalities
    */
   constructor(private userService: UserService) {

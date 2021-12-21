@@ -11,11 +11,16 @@ import { AuthService } from "../../../services/auth.service";
 
 /**
  * Component for the email verification page
- * @typedef {Component} EmailVerificationComponent
- * @class
+ *
+ *
  */
 export class EmailVerificationComponent {
 
+  /**
+   * Constructor
+   * @constructor
+   * @param
+   */
   constructor() {
   }
 
