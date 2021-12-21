@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
+import { AdminService } from "../../../services/admin.service";
+import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
 
 @Component({
@@ -15,18 +17,34 @@ import { OrderService } from "../../../services/order.service";
  * @class
  */
 export class OrderRequestComponent {
+  public existingItems: String[] = []
 
   /**
    * Constructor
    * @param {OrderService} orderService service providing order functionalities
    */
-  constructor(public orderService: OrderService) {
+  constructor(public orderService: OrderService, public adminService: AdminService, public inventoryService: InventoryService) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
+    this.getAllInventoryItems()
+  }
+
+  /**
+   * Gets all inventory items
+   */
+  public async getAllInventoryItems(): Promise<void> {
+  }
+
+  /**
+   * Checks url of item to order against urls of whitelisted retailers
+   *
+   * @param {String} orderUrl name of item to be ordered
+   */
+  public async checkUrlAgainstWhitelistedRetailers(orderUrl: String): Promise<void> {
   }
 
   /**
