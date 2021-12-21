@@ -17,6 +17,7 @@ export class AdminGuard implements CanActivate {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {Router} router router providing navigation
    */
