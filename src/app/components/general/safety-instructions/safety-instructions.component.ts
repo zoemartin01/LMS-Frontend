@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 
 /**
  * Component for the safety instructions page
- * @typedef {Component} SafetyInstructionsComponent
- * @class
+ *
+ *
  */
 export class SafetyInstructionsComponent {
 }

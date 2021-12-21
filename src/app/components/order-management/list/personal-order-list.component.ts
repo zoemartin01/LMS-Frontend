@@ -13,8 +13,8 @@ import { OrderId } from "../../../types/aliases/order-id";
 
 /**
  * Component for personal order list page
- * @typedef {Component} PersonalOrderListComponent
- * @class
+ *
+ *
  */
 export class PersonalOrderListComponent implements OnInit {
   public orders: Order[] = [];

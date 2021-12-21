@@ -15,8 +15,8 @@ import { InventoryItem } from "../../../types/inventory-item";
 /**
  * Component for the inventory item edit popup
  *
- * @typedef {Component} InventoryItemEditComponent
- * @class
+ *
+ *
  */
 export class InventoryItemEditComponent implements OnInit {
   public inventoryItem: InventoryItem = {

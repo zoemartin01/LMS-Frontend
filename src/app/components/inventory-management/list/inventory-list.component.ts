@@ -14,8 +14,8 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 /**
  * Component for the inventory list page
  *
- * @typedef {Component} InventoryListComponent
- * @class
+ *
+ *
  */
 export class InventoryListComponent implements OnInit {
   public inventory: InventoryItem[] = [];

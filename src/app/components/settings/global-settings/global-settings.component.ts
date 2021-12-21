@@ -14,8 +14,8 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
 
 /**
  * Component for global settings page
- * @typedef {Component} GlobalSettingsComponent
- * @class
+ *
+ *
  */
 export class GlobalSettingsComponent implements OnInit {
   public maxRecordings: number|null = null;

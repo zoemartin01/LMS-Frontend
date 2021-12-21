@@ -14,8 +14,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user settings page
- * @typedef {Component} UserSettingsComponent
- * @class
+ *
+ *
  */
 export class UserSettingsComponent implements OnInit {
   public emailNotification: boolean|null = null;

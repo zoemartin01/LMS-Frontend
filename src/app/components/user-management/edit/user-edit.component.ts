@@ -16,8 +16,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user edit popup
- * @typedef {Component} UserEditComponent
- * @class
+ *
+ *
  */
 export class UserEditComponent implements OnInit {
   public user: User = {

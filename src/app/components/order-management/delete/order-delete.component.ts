@@ -14,8 +14,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component for the deletion of an order
- * @typedef {Component} OrderDeleteComponent
- * @class
+ *
+ *
  */
 export class OrderDeleteComponent implements OnInit {
   public order: Order = {

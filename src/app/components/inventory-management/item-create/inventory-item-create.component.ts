@@ -12,8 +12,8 @@ import { NgForm } from "@angular/forms";
 /**
  * Component for the inventory item create popup
  *
- * @typedef {Component} InventoryItemCreateComponent
- * @class
+ *
+ *
  */
 export class InventoryItemCreateComponent {
   public inventoryItems: String[] = []

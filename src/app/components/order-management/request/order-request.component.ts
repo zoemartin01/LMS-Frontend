@@ -13,8 +13,8 @@ import { OrderService } from "../../../services/order.service";
 
 /**
  * Component for order request popup
- * @typedef {Component} OrderRequestComponent
- * @class
+ *
+ *
  */
 export class OrderRequestComponent {
   public existingItems: String[] = []

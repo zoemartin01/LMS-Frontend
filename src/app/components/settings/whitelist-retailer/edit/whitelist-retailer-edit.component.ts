@@ -14,8 +14,8 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Component for whitelist retailer edit popup
- * @typedef {Component} WhitelistRetailerEditComponent
- * @class
+ *
+ *
  */
 export class WhitelistRetailerEditComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {

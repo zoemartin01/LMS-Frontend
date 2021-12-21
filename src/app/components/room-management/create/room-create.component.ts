@@ -11,8 +11,8 @@ import { RoomService } from "../../../services/room.service";
 
 /**
  * Component for the room create popup
- * @typedef {Component} RoomCreateComponent
- * @class
+ *
+ *
  */
 export class RoomCreateComponent implements OnInit {
 

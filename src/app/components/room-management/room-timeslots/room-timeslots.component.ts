@@ -14,8 +14,8 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit popup, to edit the available and unavailable timeslots of one room
- * @typedef {Component} RoomTimeslotsComponent
- * @class
+ *
+ *
  */
 export class RoomTimeslotsComponent implements OnInit {
 

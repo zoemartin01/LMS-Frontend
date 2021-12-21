@@ -14,8 +14,8 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the login page
- * @typedef {Component} LoginComponent
- * @class
+ *
+ *
  */
 export class LoginComponent {
   loginError: boolean = false;

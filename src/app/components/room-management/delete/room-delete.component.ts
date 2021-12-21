@@ -13,8 +13,8 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the deletion of a room
- * @typedef {Component} RoomDeleteComponent
- * @class
+ *
+ *
  */
 export class RoomDeleteComponent implements OnInit {
   public room: Room = {

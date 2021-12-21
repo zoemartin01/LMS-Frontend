@@ -17,8 +17,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component to inventory an order
- * @typedef {Component} InventoryOrderComponent
- * @class
+ *
+ *
  */
 export class InventoryOrderComponent implements OnInit {
   public order: Order = {

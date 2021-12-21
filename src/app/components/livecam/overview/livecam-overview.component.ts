@@ -13,8 +13,8 @@ import { RecordingId } from 'src/app/types/aliases/recording-id';
 
 /**
  * Component for the overview of the livecam
- * @typedef {Component} LivecamOverviewComponent
- * @class
+ *
+ *
  */
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];

@@ -11,8 +11,8 @@ import { UserService } from "../../../services/user.service";
 
 /**
  * Component for the register page
- * @typedef {Component} RegisterComponent
- * @class
+ *
+ *
  */
 export class RegisterComponent {
 

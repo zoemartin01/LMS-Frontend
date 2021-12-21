@@ -15,8 +15,8 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component for the order edit popup
- * @typedef {Component} OrderEditComponent
- * @class
+ *
+ *
  */
 export class OrderEditComponent implements OnInit {
   public order: Order = {

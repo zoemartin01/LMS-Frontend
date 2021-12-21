@@ -15,8 +15,8 @@ import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 
 /**
  * Component for the deletion of an appointment or a series of appointments
- * @typedef {Component} AppointmentDeleteComponent
- * @class
+ *
+ *
  */
 export class AppointmentDeleteComponent implements OnInit {
   public appointment: Appointment = {

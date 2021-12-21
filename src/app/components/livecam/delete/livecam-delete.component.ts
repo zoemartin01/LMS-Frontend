@@ -13,8 +13,8 @@ import { LivecamService } from 'src/app/services/livecam.service';
 
 /**
  * Component for the deletion of a livecam recording
- * @typedef {Component} LivecamDeleteComponent
- * @class
+ *
+ *
  */
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {

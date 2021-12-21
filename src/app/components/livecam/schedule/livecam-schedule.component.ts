@@ -11,8 +11,8 @@ import { LivecamService } from '../../../services/livecam.service';
 
 /**
  * Component for the scheduling of a livecam recording
- * @typedef {Component} LivecamScheduleComponent
- * @class
+ *
+ *
  */
 export class LivecamScheduleComponent implements OnInit {
 

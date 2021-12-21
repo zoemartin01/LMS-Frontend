@@ -13,8 +13,8 @@ import { InventoryItem } from "../../../types/inventory-item";
 /**
  * Component for the inventory item view popup
  *
- * @typedef {Component} InventoryItemViewComponent
- * @class
+ *
+ *
  */
 export class InventoryItemViewComponent implements OnInit {
   public inventoryItem: InventoryItem = {

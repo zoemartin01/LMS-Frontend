@@ -15,8 +15,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for the deletion of a user
- * @typedef {Component} UserDeleteComponent
- * @class
+ *
+ *
  */
 export class UserDeleteComponent implements OnInit {
   public user: User = {
