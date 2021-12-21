@@ -39,14 +39,6 @@ export class InventoryItemCreateComponent {
   }
 
   /**
-   * Checks if name of item to be created against the names of all existing items
-   *
-   * @param {String} itemName name of the item to be created
-   */
-  public checkNameAgainstExistingInventoryItems(itemName: String): void {
-  }
-
-  /**
    * Opens inventory creation form
    *
    * @param {NgForm} inventoryItemCreationForm submitted create form
