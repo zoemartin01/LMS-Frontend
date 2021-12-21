@@ -30,13 +30,6 @@ export class InventoryItemCreateComponent {
    * Inits page
    */
   ngOnInit(): void {
-    this.getAllInventoryItems()
-  }
-
-  /**
-   * Gets all inventory items
-   */
-  public async getAllInventoryItems(): Promise<void> {
   }
 
   /**
