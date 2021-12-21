@@ -21,6 +21,7 @@ export class PersonalOrderListComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {OrderService} orderService service providing order functionalities
    */
   constructor(public orderService: OrderService) {

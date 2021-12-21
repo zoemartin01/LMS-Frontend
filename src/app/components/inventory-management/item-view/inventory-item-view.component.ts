@@ -26,6 +26,7 @@ export class InventoryItemViewComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

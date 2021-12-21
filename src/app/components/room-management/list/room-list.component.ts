@@ -21,6 +21,7 @@ export class RoomListComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {RoomService} roomService service providing room functionalities
    */
   constructor(public roomService: RoomService) {

@@ -29,6 +29,7 @@ export class RoomDeleteComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

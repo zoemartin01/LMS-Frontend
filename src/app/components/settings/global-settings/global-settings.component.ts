@@ -24,6 +24,7 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    */
   constructor(public adminService: AdminService) {

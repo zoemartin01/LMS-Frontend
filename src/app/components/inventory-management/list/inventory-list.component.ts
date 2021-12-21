@@ -22,6 +22,7 @@ export class InventoryListComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    */
   constructor(public inventoryService: InventoryService) {

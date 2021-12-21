@@ -28,6 +28,7 @@ export class MessageBoxComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {MessagingService} messagingService service providing messaging functionalities
    */
   constructor(public messagingService: MessagingService) {

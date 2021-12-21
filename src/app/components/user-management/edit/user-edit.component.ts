@@ -31,6 +31,7 @@ export class UserEditComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

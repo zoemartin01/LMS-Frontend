@@ -33,6 +33,7 @@ export class AppointmentEditComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

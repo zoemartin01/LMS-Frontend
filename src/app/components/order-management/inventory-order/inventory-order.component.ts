@@ -33,6 +33,7 @@ export class InventoryOrderComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {OrderService} orderService service providing order functionalities
    * @param {ActivatedRoute} route route that activated this component

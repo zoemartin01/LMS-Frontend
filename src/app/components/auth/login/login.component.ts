@@ -22,6 +22,7 @@ export class LoginComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {Router} router router providing navigation
    */

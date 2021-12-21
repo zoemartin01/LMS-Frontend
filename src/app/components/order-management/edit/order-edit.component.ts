@@ -30,6 +30,7 @@ export class OrderEditComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {OrderService} orderService service providing order functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

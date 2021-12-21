@@ -21,6 +21,7 @@ export class PersonalAppointmentListComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    */
   constructor(public appointmentService: AppointmentService) {

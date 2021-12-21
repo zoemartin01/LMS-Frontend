@@ -16,6 +16,11 @@ import { AuthService } from "../../../services/auth.service";
  */
 export class EmailVerificationComponent {
 
+  /**
+   * Constructor
+   * @constructor
+   * @param
+   */
   constructor() {
   }
 

@@ -17,6 +17,7 @@ export class HelpFaqComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    */
   constructor(public authService: AuthService) {

@@ -31,6 +31,7 @@ export class UserSettingsComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {UserService} userService service providing user functionalities
    */
   constructor(public userService: UserService) {

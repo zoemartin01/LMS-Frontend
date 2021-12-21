@@ -23,6 +23,7 @@ export class LivecamDeleteComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
    * @param {ActivatedRoute} route route that activated this component
    */

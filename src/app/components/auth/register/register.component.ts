@@ -18,6 +18,7 @@ export class RegisterComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {UserService} userService service providing user functionalities
    */
   constructor(private userService: UserService) {

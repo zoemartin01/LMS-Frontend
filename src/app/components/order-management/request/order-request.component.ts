@@ -21,6 +21,7 @@ export class OrderRequestComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {OrderService} orderService service providing order functionalities
    */
   constructor(public orderService: OrderService, public adminService: AdminService, public inventoryService: InventoryService) {

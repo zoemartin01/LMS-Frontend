@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {MessagingService} messagingService service providing messaging functionalities
    */

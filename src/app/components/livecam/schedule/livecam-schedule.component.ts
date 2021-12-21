@@ -18,6 +18,7 @@ export class LivecamScheduleComponent implements OnInit {
 
   /**
    * Constructor
+   * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
    */
   constructor(public livecamService: LivecamService) {

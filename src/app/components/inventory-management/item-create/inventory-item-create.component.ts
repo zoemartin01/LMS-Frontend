@@ -20,6 +20,7 @@ export class InventoryItemCreateComponent {
 
   /**
    * Constructor
+   * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    */
   constructor(public inventoryService: InventoryService) {
