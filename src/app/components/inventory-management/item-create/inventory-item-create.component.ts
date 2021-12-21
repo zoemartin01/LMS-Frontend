@@ -16,6 +16,7 @@ import { NgForm } from "@angular/forms";
  * @class
  */
 export class InventoryItemCreateComponent {
+  public inventoryItemNames: String[] = []
 
   /**
    * Constructor
@@ -28,7 +29,23 @@ export class InventoryItemCreateComponent {
    * Inits page
    */
   ngOnInit(): void {
+    this.getAllInventoryItemNames()
   }
+
+  /**
+   * Gets all names of existing inventory items
+   */
+  public async getAllInventoryItemNames(): Promise<void> {
+  }
+
+  /**
+   * Checks if name of item to be created against the names of all existing items
+   *
+   * @param {String} itemName name of the item to be created
+   */
+  public async checkNameAgainstExistingInventoryItems(itemName: String): Promise<void> {
+  }
+
 
   /**
    * Opens inventory creation form
