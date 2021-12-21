@@ -16,6 +16,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
 
   /**
    * Constructor
+   * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    */
   constructor(private authService: AuthService) {
