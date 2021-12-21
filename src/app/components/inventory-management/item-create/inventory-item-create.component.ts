@@ -29,21 +29,6 @@ export class InventoryItemCreateComponent {
    * Inits page
    */
   ngOnInit(): void {
-    this.getAllInventoryItems()
-  }
-
-  /**
-   * Gets all inventory items
-   */
-  public async getAllInventoryItems(): Promise<void> {
-  }
-
-  /**
-   * Checks if name of item to be created against the names of all existing items
-   *
-   * @param {String} itemName name of the item to be created
-   */
-  public checkNameAgainstExistingInventoryItems(itemName: String): void {
   }
 
   /**
