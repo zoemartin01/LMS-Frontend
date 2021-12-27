@@ -28,6 +28,18 @@ export class AdminService {
    * Gets global settings
    */
   public getGlobalSettings(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
+  }
+
+  /**
+   * Gets user data
+   *
+   * @param {UserId} userId id of user
+   */
+  public getUser(userId: UserId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -42,6 +54,8 @@ export class AdminService {
    * Gets users
    */
   public getUsers(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -50,6 +64,8 @@ export class AdminService {
    * @param {object} changedData changed fields of global settings
    */
   public updateGlobalSettings(changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -59,6 +75,8 @@ export class AdminService {
    * @param {UserId} userId if of user
    */
   public updateUser(userId : UserId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -67,6 +85,8 @@ export class AdminService {
    * @param {UserId} userId if of user
    */
   public deleteUser(userId : UserId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -75,6 +95,8 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -83,6 +105,8 @@ export class AdminService {
    * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
    */
   public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -92,6 +116,8 @@ export class AdminService {
    * @param {object} changedData changed fields of whitelist retailer
    */
   public editWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -100,6 +126,8 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -109,6 +137,8 @@ export class AdminService {
    * @param {WhitelistRetailerDomain} whitelistRetailerDomain new whitelist retailer domain
    */
   public addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: WhitelistRetailerDomain): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -119,6 +149,8 @@ export class AdminService {
    *
    */
   public editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -128,6 +160,8 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
