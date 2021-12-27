@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Recording } from 'src/app/types/recording';
+import { VideoResolution } from "../../../types/enums/video-resolution";
 
 import { LivecamService } from 'src/app/services/livecam.service';
 
@@ -19,6 +20,12 @@ import { LivecamService } from 'src/app/services/livecam.service';
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {
     id: null,
+    userId: null,
+    start: null,
+    end: null,
+    resolution: VideoResolution.unknown,
+    bitrate: 0,
+    size: 0,
   }
 
   /**
