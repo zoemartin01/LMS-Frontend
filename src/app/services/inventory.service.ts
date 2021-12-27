@@ -24,6 +24,8 @@ export class InventoryService {
    * Retrieves all inventory items
    */
   public getInventoryItems(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -32,6 +34,8 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
   public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -40,6 +44,8 @@ export class InventoryService {
    * @param {InventoryItem} inventoryItem data of new inventory item
    */
   public createInventoryItem(inventoryItem: InventoryItem): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -49,6 +55,8 @@ export class InventoryService {
    * @param {object} changedData changed fields of inventory item
    */
   public changeInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -57,5 +65,7 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
   public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 }
