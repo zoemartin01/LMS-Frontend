@@ -44,6 +44,8 @@ export class UserService {
    * @param {object} changedData changed fields of user
    */
   public editUserData(changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -86,5 +88,7 @@ export class UserService {
    * Deletes user
    */
   public deleteUser(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 }
