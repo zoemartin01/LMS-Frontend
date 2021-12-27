@@ -88,22 +88,6 @@ export class OrderService {
   }
 
   /**
-   * Sets order request to accepted
-   *
-   * @param {OrderId} orderId id of order
-   */
-  public acceptOrderRequest(orderId: OrderId): Observable<any> {
-  }
-
-  /**
-   * Sets order request to declined
-   *
-   * @param {OrderId} orderId id of order
-   */
-  public declineOrderRequest(orderId: OrderId): Observable<any> {
-  }
-
-  /**
    * Deletes order
    *
    * @param {OrderId} orderId id of order
