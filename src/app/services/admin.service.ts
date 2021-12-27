@@ -43,14 +43,6 @@ export class AdminService {
   }
 
   /**
-   * Gets user data
-   *
-   * @param {UserId} userId id of user
-   */
-  public getUser(userId: UserId): Observable<any> {
-  }
-
-  /**
    * Gets users
    */
   public getUsers(): Observable<any> {
