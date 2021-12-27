@@ -8,6 +8,6 @@ export interface Recording {
     start: moment.Moment|null,
     end: moment.Moment|null,
     resolution: VideoResolution,
-    bitrate: number,
-    size: number,
+    bitrate: number|null,
+    size: number|null,
 }
