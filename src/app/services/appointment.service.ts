@@ -132,7 +132,7 @@ export class AppointmentService {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.editAppointment
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointment
       .replace(':id', appointmentId)}`;
     const requestBody = {
       appointmentId: appointmentId,
@@ -152,7 +152,7 @@ export class AppointmentService {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.editAppointmentSeries
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointmentSeries
       .replace(':id', seriesId)}`;
     const requestBody = {
       appointmentId: seriesId,

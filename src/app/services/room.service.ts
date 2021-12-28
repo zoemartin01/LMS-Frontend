@@ -68,7 +68,7 @@ export class RoomService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.editRoom.replace(':id', roomId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.updateRoom.replace(':id', roomId)}`;
     const requestBody = {
       roomId: roomId,
       changedData: changedData,

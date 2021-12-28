@@ -44,7 +44,7 @@ export const environment = {
       deleteWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
 
       addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
-      editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
+      updateDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
       deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
 
       checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
@@ -61,7 +61,7 @@ export const environment = {
       getSingleRoom: '/rooms/:id',
 
       createRoom: '/rooms',
-      editRoom: '/rooms/:id',
+      updateRoom: '/rooms/:id',
       deleteRoom: '/rooms/:id',
 
       createTimeslot: '/rooms/:roomId/timeslots',
@@ -77,8 +77,8 @@ export const environment = {
 
       createAppointment: '/appointments',
       createAppointmentSeries: '/appointments/series',
-      editAppointment: '/appointments/:id',
-      editAppointmentSeries: '/appointments/series/:id',
+      updateAppointment: '/appointments/:id',
+      updateAppointmentSeries: '/appointments/series/:id',
       deleteAppointment: '/appointments/:id',
       deleteAppointmentSeries: '/appointments/series/:id',
 
