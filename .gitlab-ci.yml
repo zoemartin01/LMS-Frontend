@@ -1,11 +1,11 @@
-image: node
+image: node:latest
 
-stage:
- - lint
+stages:
+   - lint
 
 eslint:
- stage: lint
- script:
-    - npm ci
-    - npm i -g eslint
-    - eslint -c .eslintrc.json --ext .ts,.js src/
+   stage: lint
+   script:
+      - npm ci
+      - npm install -g eslint
+      - eslint -c .eslintrc.json --ext .ts,.js src/
