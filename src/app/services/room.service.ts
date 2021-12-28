@@ -27,7 +27,7 @@ export class RoomService {
    * Gets data of all rooms
    */
   public getRoomsData(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -38,7 +38,7 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public getRoomData(roomId: RoomId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewRoom}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -49,7 +49,7 @@ export class RoomService {
    * @param {Room} room data of new room
    */
   public createRoom(room: Room): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createRoom}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
       room: room
     };
@@ -68,7 +68,7 @@ export class RoomService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editRoom.replace(':id', roomId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.editRoom.replace(':id', roomId)}`;
     const requestBody = {
       roomId: roomId,
       changedData: changedData,
@@ -87,7 +87,7 @@ export class RoomService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteRoom.replace(':id', roomId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteRoom.replace(':id', roomId)}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -98,7 +98,7 @@ export class RoomService {
    * @param {RoomTimespan} timeslot time
    */
   public createAvailableTimeslot(timeslot: RoomTimespan) {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createTimeslot}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
     const requestBody = {
       timeslot: timeslot,
     };
@@ -112,7 +112,7 @@ export class RoomService {
    * @param {RoomTimespan} timeslot time
    */
   public createUnavailableTimeslot(timeslot: RoomTimespan) {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createTimeslot}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
     const requestBody = {
       timeslot: timeslot,
     };
@@ -130,7 +130,7 @@ export class RoomService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteTimeslot
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
     return this.httpClient.delete(apiURL);
@@ -146,7 +146,7 @@ export class RoomService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteTimeslot
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
     return this.httpClient.delete(apiURL);
