@@ -24,7 +24,7 @@ export class UserService {
    * @param {UserId} userId Id of user
    */
   public getUserDetails(userId : UserId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.getUser}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.getCurrentUser}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -57,7 +57,7 @@ export class UserService {
    * @param {string} password  new user's password
    */
   public register(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.register}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.register}`;
     const requestBody = {
       firstname,
       lastname,
@@ -75,7 +75,7 @@ export class UserService {
    * @param {string} token  token to verify email
    */
   public verifyEmail(userId: UserId, token: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.verifyEmail}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.verifyEmail}`;
     const requestBody = {
       userId,
       token

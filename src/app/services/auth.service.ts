@@ -27,7 +27,7 @@ export class AuthService {
    * @param {boolean} isActiveDirectory if authentication should use ActiveDirectory
    */
   public login(email: string, password: string, isActiveDirectory: boolean): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.login}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.login}`;
     const requestBody = {
       email,
       password,
@@ -41,7 +41,7 @@ export class AuthService {
    * Logs out current user
    */
   public logout(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.logout}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.logout}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -50,7 +50,7 @@ export class AuthService {
    * Refreshes authentication token of current user
    */
   public tokenRefresh(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefresh}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`;
     const requestBody = {
       token: this.getRefreshToken(),
     };
@@ -62,7 +62,7 @@ export class AuthService {
    * Checks token of current user
    */
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.tokenCheck}`;
 
     return this.httpClient.post(apiURL, []);
   }
