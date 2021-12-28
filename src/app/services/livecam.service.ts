@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
-
-import { RecordingId } from '../types/aliases/recording-id';
-import { VideoResolution } from '../types/enums/video-resolution';
 import { environment } from 'src/environments/environment';
+
 import { Recording } from '../types/recording';
+import { RecordingId } from '../types/aliases/recording-id';
 
 @Injectable({
   providedIn: 'root'
