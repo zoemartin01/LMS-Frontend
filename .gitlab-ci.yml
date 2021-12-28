@@ -5,8 +5,7 @@ stage:
 
 eslint:
  stage: lint
- before_script:
-    - npm ci
  script:
+    - npm ci
     - npm i -g eslint
     - eslint -c .eslintrc.json --ext .ts,.js src/
