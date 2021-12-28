@@ -23,7 +23,7 @@ export class MessagingService {
    * Retrieves all messages for current user
    */
   public getMessages(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.getMessages}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserMessages}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -32,7 +32,7 @@ export class MessagingService {
    * Retrieves the amounts of unread messages for current user
    */
   public getUnreadMessagesAmounts(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.getUnreadMessagesAmounts}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserUnreadMessagesAmounts}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -43,7 +43,7 @@ export class MessagingService {
    * @param {MessageId} messageId id of concerned message
    */
   public deleteMessage(messageId: MessageId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteMessage.replace(':id', messageId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.deleteMessage.replace(':id', messageId)}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -54,7 +54,7 @@ export class MessagingService {
    * @param {MessageId} messageId id of concerned message
    */
   public markMessageAsRead(messageId: MessageId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateMessage.replace(':id', messageId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.updateMessage.replace(':id', messageId)}`;
     const requestBody = {
       read: true,
     };
