@@ -11,88 +11,107 @@ export const environment = {
 
   //routes
   apiRoutes: {
-    //auth
-    login: '/token',
-    logout: '/token',
-    tokenRefresh: '/token/refresh',
-    tokenCheck: '/token/check',
+    auth: {
+      login: '/token',
+      logout: '/token',
+      tokenRefresh: '/token/refresh',
+      tokenCheck: '/token/check',
+    },
+    messages: {
+      getCurrentUserMessages: '/user/messages',
+      getCurrentUserUnreadMessagesAmounts: '/user/messages/unread-amounts',
 
-    //messaging
-    getMessages: '/user/messages',
-    getUnreadMessagesAmounts: '/user/messages/unread-amounts',
-    deleteMessage: '/messages/:id',
-    updateMessage: '/messages/:id',
+      deleteMessage: '/messages/:id',
+      updateMessage: '/messages/:id',
+    },
+    user_settings: {
+      getCurrentUser: '/user',
 
-    //personal user settings
-    getThisUser: '/user',
-    register: '/users',
-    verifyEmail: '/user/verify-email',
-    updateThisUser: '/user',
-    deleteThisUser: '/user',
+      register: '/users',
+      updateCurrentUser: '/user',
+      deleteCurrentUser: '/user',
 
-    //admin (general settings & user management)
-    getGlobalSettings: '/global-settings',
-    updateGlobalSettings: '/global-settings',
+      verifyEmail: '/user/verify-email',
+    },
+    admin_settings: {
+      getGlobalSettings: '/global-settings',
+      updateGlobalSettings: '/global-settings',
 
-    getWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
-    createWhitelistRetailer: '/global-settings/whitelist-retailers',
-    updateWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
-    deleteWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
-    addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
-    editDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
-    deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
-    checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
+      getWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
 
-    getUsers: '/users',
-    getUser: '/users/:id',
-    updateUser: '/users/:id',
-    deleteUser: '/users/:id',
+      createWhitelistRetailer: '/global-settings/whitelist-retailers',
+      updateWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
+      deleteWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
 
-    //room management
-    rooms: '/rooms',
-    viewRoom: '/rooms/:id',
-    createRoom: '/rooms',
-    editRoom: '/rooms/:id',
-    deleteRoom: '/rooms/:id',
-    createTimeslot: '/rooms/:roomId/timeslots',
-    deleteTimeslot: '/rooms/:roomId/timeslots/:timeslotId',
+      addDomainToWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains',
+      updateDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
+      deleteDomainOfWhitelistRetailer: '/global-settings/whitelist-retailers/:id/domains/:domainId',
 
-    //appointment management
-    allAppointments: '/appointments',
-    myAppointments: '/user/appointments',
-    appointmentsForRoom: '/rooms/:id/appointments',
-    appointmentsForSeries: '/appointments/series/:id',
-    viewAppointment: '/appointments/:id',
-    createAppointment: '/appointments',
-    createAppointmentSeries: '/appointments/series',
-    editAppointment: '/appointments/:id',
-    editAppointmentSeries: '/appointments/series/:id',
-    deleteAppointment: '/appointments/:id',
-    deleteAppointmentSeries: '/appointments/series/:id',
+      checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
+    },
+    user_management: {
+      getAllUsers: '/users',
+      getSingleUser: '/users/:id',
 
-    //inventory management
-    getAllInventoryItems: '/inventory-items',
-    getInventoryItem: '/inventory-items/:id',
-    createInventoryItem: '/inventory-items',
-    updateInventoryItem: '/inventory-items/:id',
-    deleteInventoryItem: '/inventory-items/:id',
+      updateUser: '/users/:id',
+      deleteUser: '/users/:id',
+    },
+    rooms: {
+      getAllRooms: '/rooms',
+      getSingleRoom: '/rooms/:id',
 
-    //order management
-    getAllOrders: '/orders',
-    getOrdersForCurrentUser: '/user/orders',
-    getOrder: '/orders/:id',
-    createOrder: '/orders',
-    updateOrder: '/orders/:id',
-    deleteOrder: '/orders/:id',
+      createRoom: '/rooms',
+      updateRoom: '/rooms/:id',
+      deleteRoom: '/rooms/:id',
 
-    //livecam
-    recordings: '/livecam/recordings',
-    scheduledRecordings: '/livecam/recordings/schedules',
-    getRecording: '/livecam/recordings/:id',
-    scheduleRecording: '/livecam/recordings/schedules',
-    updateRecording: '/livecam/recordings/:id',
-    downloadRecording: '/livecam/recordings/:id/download',
-    deleteRecording: '/livecam/recordings/:id',
-    livestreamFeed: '/livecam/stream'
+      createTimeslot: '/rooms/:roomId/timeslots',
+      deleteTimeslot: '/rooms/:roomId/timeslots/:timeslotId',
+    },
+    appointments: {
+      getCurrentUserAppointments: '/user/appointments',
+      getRoomAppointments: '/rooms/:id/appointments',
+      getSeriesAppointments: '/appointments/series/:id',
+
+      getAllAppointments: '/appointments',
+      getSingleAppointment: '/appointments/:id',
+
+      createAppointment: '/appointments',
+      createAppointmentSeries: '/appointments/series',
+      updateAppointment: '/appointments/:id',
+      updateAppointmentSeries: '/appointments/series/:id',
+      deleteAppointment: '/appointments/:id',
+      deleteAppointmentSeries: '/appointments/series/:id',
+
+    },
+    inventory_item: {
+      getAllItems: '/inventory-items',
+      getSingleItem: '/inventory-items/:id',
+
+      createItem: '/inventory-items',
+      updateItem: '/inventory-items/:id',
+      deleteItem: '/inventory-items/:id',
+    },
+    orders: {
+      getCurrentUserOrders: '/user/orders',
+
+      getAllOrders: '/orders',
+      getSingleOrder: '/orders/:id',
+
+      createOrder: '/orders',
+      updateOrder: '/orders/:id',
+      deleteOrder: '/orders/:id',
+    },
+    livecam: {
+      getAllRecordings: '/livecam/recordings',
+      getAllScheduled: '/livecam/recordings/schedules',
+      getSingleRecording: '/livecam/recordings/:id',
+
+      createSchedule: '/livecam/recordings/schedules',
+      updateRecording: '/livecam/recordings/:id',
+      deleteRecording: '/livecam/recordings/:id',
+
+      downloadRecording: '/livecam/recordings/:id/download',
+      streamFeed: '/livecam/stream'
+    }
   }
 };
