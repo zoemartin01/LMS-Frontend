@@ -28,7 +28,7 @@ export class AppointmentService {
    * Retrieves all appointments
    */
   public getAllAppointments(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.allAppointments}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -37,7 +37,7 @@ export class AppointmentService {
    * Retrieves all appointments for current user
    */
   public getAllAppointmentsForCurrentUser(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.myAppointments}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}`;
 
     return this.httpClient.get(apiURL);
   }
@@ -52,7 +52,7 @@ export class AppointmentService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointmentsForRoom
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments
       .replace(':id', roomId)}`;
 
     return this.httpClient.get(apiURL);
@@ -68,7 +68,7 @@ export class AppointmentService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.viewAppointment
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSingleAppointment
       .replace(':id', appointmentId)}`;
 
     return this.httpClient.get(apiURL);
@@ -84,7 +84,7 @@ export class AppointmentService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointmentsForSeries
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments
       .replace(':id', seriesId)}`;
 
     return this.httpClient.get(apiURL);
@@ -96,7 +96,7 @@ export class AppointmentService {
    * @param {Appointment} appointment all data about the requested appointment
    */
   public createAppointment(appointment: Appointment): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createAppointment}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       appointment: appointment,
     };
@@ -112,7 +112,7 @@ export class AppointmentService {
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
   public createAppointmentSeries(appointment: Appointment, difference: number, amount: number) {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.createAppointmentSeries}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
       appointment: appointment,
       difference: difference,
@@ -132,7 +132,7 @@ export class AppointmentService {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointment
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointment
       .replace(':id', appointmentId)}`;
     const requestBody = {
       appointmentId: appointmentId,
@@ -152,7 +152,7 @@ export class AppointmentService {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.editAppointmentSeries
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointmentSeries
       .replace(':id', seriesId)}`;
     const requestBody = {
       appointmentId: seriesId,
@@ -172,7 +172,7 @@ export class AppointmentService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAppointment
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.deleteAppointment
       .replace(':id', appointmentId)}`;
 
     return this.httpClient.delete(apiURL);
@@ -188,7 +188,7 @@ export class AppointmentService {
       throw ParseArgumentException;
     }
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.deleteAppointmentSeries
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.deleteAppointmentSeries
       .replace(':id', seriesId)}`;
 
     return this.httpClient.delete(apiURL);
