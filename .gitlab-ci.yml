@@ -1,0 +1,19 @@
+image: node:latest
+
+stages:
+   - lint
+   - build
+
+eslint:
+   stage: lint
+   script:
+      - npm ci
+      - npm install -g eslint
+      - eslint -c .eslintrc.json --ext .ts,.js src/
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm install -g @angular/cli
+    - ng b
