@@ -2,7 +2,7 @@
   <header class="bg-navbar kit-rounded bg-primary">
     <nav class="navbar navbar-expand-lg navbar-dark nav-fill w-100">
       <div class="container-fluid" style="height: 3rem;">
-        <a class="navbar-brand" href="/"><img src="/assets/teco_logo.png" alt="logo of TECO">Hardware Lab</a>
+        <a class="navbar-brand" routerLink="/"><img src="/assets/teco_logo.png" alt="logo of TECO">Hardware Lab</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -10,43 +10,43 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="!authService.isUserLoggedIn()">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-          <a href="/login" role="button" class="btn btn-light mx-1">Log in</a>
-          <a href="/register" role="button" class="btn btn-light mx-1">Register</a>
+          <a routerLink="/login" role="button" class="btn btn-light mx-1">Log in</a>
+          <a routerLink="/register" role="button" class="btn btn-light mx-1">Register</a>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"
              *ngIf="authService.isUserLoggedIn() && !authService.isAdmin()">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/dashboard">Dashboard</a>
+              <a class="nav-link" routerLink="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAppointments" role="button"
+              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownAppointments" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Appointments
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownAppointments">
-                <a class="dropdown-item" href="/appointments">My Appointments</a>
+                <a class="dropdown-item" routerLink="/appointments">My Appointments</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/inventory">Inventory</a>
+              <a class="nav-link" routerLink="/inventory">Inventory</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOrders" role="button"
+              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownOrders" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Orders
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownOrders">
-                <a class="dropdown-item" href="#">My Orders</a>
-                <a class="dropdown-item" href="/orders/new">New Order</a>
+                <a class="dropdown-item" routerLink="#">My Orders</a>
+                <a class="dropdown-item" routerLink="/orders/new">New Order</a>
               </div>
             </li>
           </ul>
           <div class="d-flex">
-            <a href="#">
+            <a routerLink="#">
               <i class="bi bi-question-circle px-2" style="font-size: 2rem;"></i>
             </a>
-            <a href="#">
+            <a routerLink="#">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                       style="left: 42px !important; top: 12px !important;">
@@ -56,12 +56,12 @@
               </i>
             </a>
             <div class="dropdown">
-              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" href="#" id="accountDropdownAdmin"
+              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" routerLink="#" id="accountDropdownAdmin"
                  role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 2rem;"></i>
               <div class="dropdown-menu" aria-labelledby="accountDropdownAdmin">
-                <a class="dropdown-item" href="">Account Settings</a>
+                <a class="dropdown-item" routerLink="">Account Settings</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="/login">Log out</a>
+                <a class="dropdown-item" routerLink="/login">Log out</a>
               </div>
             </div>
           </div>
@@ -70,51 +70,51 @@
              *ngIf="authService.isUserLoggedIn() && authService.isAdmin()">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/dashboard">Dashboard</a>
+              <a class="nav-link" routerLink="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAppointmentsAdmin" role="button"
+              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownAppointmentsAdmin" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Appointments
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownAppointmentsAdmin">
-                <a class="dropdown-item" href="/appointments">My Appointments</a>
+                <a class="dropdown-item" routerLink="/appointments">My Appointments</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="/room-overview/145">Room Overview</a>
-                <a class="dropdown-item" href="#">All Appointments</a>
+                <a class="dropdown-item" routerLink="/room-overview/145">Room Overview</a>
+                <a class="dropdown-item" routerLink="#">All Appointments</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Rooms</a>
+              <a class="nav-link" routerLink="#">Rooms</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/inventory">Inventory</a>
+              <a class="nav-link" routerLink="/inventory">Inventory</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOrdersAdmin" role="button"
+              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownOrdersAdmin" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Orders
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownOrdersAdmin">
-                <a class="dropdown-item" href="#">My Orders</a>
-                  <a class="dropdown-item" href="/orders/new">New Order</a>
+                <a class="dropdown-item" routerLink="#">My Orders</a>
+                  <a class="dropdown-item" routerLink="/orders/new">New Order</a>
                   <hr class="dropdown-divider">
-                  <a class="dropdown-item" href="#">All Orders</a>
-                  <a class="dropdown-item" href="/orders/requests">Order Requests</a>
+                  <a class="dropdown-item" routerLink="#">All Orders</a>
+                  <a class="dropdown-item" routerLink="/orders/requests">Order Requests</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">LiveCam</a>
+              <a class="nav-link" routerLink="#">LiveCam</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Users</a>
+              <a class="nav-link" routerLink="#">Users</a>
             </li>
           </ul>
           <div class="d-flex">
-            <a href="#">
+            <a routerLink="#">
               <i class="bi bi-question-circle px-2" style="font-size: 2rem;"></i>
             </a>
-            <a href="#">
+            <a routerLink="#">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                     style="left: 42px !important; top: 12px !important;">
@@ -124,14 +124,14 @@
               </i>
             </a>
             <div class="dropdown">
-              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" href="#" id="accountDropdown"
+              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" routerLink="#" id="accountDropdown"
                  role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 2rem;"></i>
               <div class="dropdown-menu" aria-labelledby="accountDropdown">
-              <a class="dropdown-item" href="">Account Settings</a>
+              <a class="dropdown-item" routerLink="">Account Settings</a>
               <hr class="dropdown-divider">
-                <a class="dropdown-item" href="">Application Settings</a>
+                <a class="dropdown-item" routerLink="">Application Settings</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="/login">Log out</a>
+                <a class="dropdown-item" routerLink="/login">Log out</a>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
 <script>
   $(function(){
     $("a").each(function(){
-      if ($(this).attr("href") == window.location.pathname){
+      if ($(this).attr("routerLink") == window.location.pathname){
         $(this).addClass("active");
         $(this).attr("aria-current", "page");
       }
