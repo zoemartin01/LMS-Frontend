@@ -44,5 +44,13 @@ export class DashboardComponent implements OnInit {
    * Retrieves the amounts of unread messages for current user
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
+    this.messagingService.getUnreadMessagesAmounts().subscribe({
+      next: res => {
+        this.unreadMessages = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }
