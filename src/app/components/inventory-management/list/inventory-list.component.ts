@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
@@ -24,8 +25,9 @@ export class InventoryListComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    */
-  constructor(public inventoryService: InventoryService) {
+  constructor(public inventoryService: InventoryService, public authService: AuthService) {
   }
 
   /**

@@ -8,9 +8,9 @@
       <h5 class="card-title">Appointments</h5>
       <p class="card-text">You can book appointments to use rooms of TECO.</p>
       <div class="col text-center">
-        <a href="/appointments" class="btn btn-primary" role="button">My Appointments</a>
-        <a href="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
-        <a href="#" class="btn btn-secondary position-relative" role="button" *ngIf="authService.isAdmin()">
+        <a routerLink="/appointments" class="btn btn-primary" role="button">My Appointments</a>
+        <a routerLink="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
+        <a routerLink="/appointments/all" class="btn btn-secondary position-relative" role="button" *ngIf="authService.isAdmin()">
           All Appointments
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ unreadMessages.appointments }}
@@ -25,7 +25,7 @@
       <h5 class="card-title">Rooms</h5>
       <p class="card-text">You can manage the rooms of TECO available for appointments.</p>
       <div class="col text-center">
-        <a href="#" class="btn btn-secondary" role="button">Manage Rooms</a>
+        <a routerLink="/rooms" class="btn btn-secondary" role="button">Manage Rooms</a>
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
       <h5 class="card-title">Inventory</h5>
       <p class="card-text">You can see what TECO lab has in stock.</p>
       <div class="col text-center">
-        <a href="/inventory" class="btn btn-primary" role="button">Show Inventory</a>
+        <a routerLink="/inventory" class="btn btn-primary" role="button">Show Inventory</a>
       </div>
     </div>
   </div>
@@ -44,12 +44,9 @@
       <p class="card-text">If you need something you can request an order.<br>
         <span *ngIf="authService.isAdmin()"> As admin you can manage order requests.</span></p>
       <div class="col text-center">
-        <a href="#" class="btn btn-primary" role="button">My Orders</a>
-        <a href="/orders/new" class="btn btn-primary" role="button">New Order</a>
-        <a href="#" class="btn btn-secondary" role="button">All Orders</a>
-        <a href="/orders/requests" class="btn btn-secondary position-relative" role="button"
-           *ngIf="authService.isAdmin()">
-          Order Requests
+        <a routerLink="/orders" class="btn btn-primary" role="button">My Orders</a>
+        <a routerLink="/orders/request" class="btn btn-primary" role="button">New Order</a>
+        <a routerLink="/orders/all" class="btn btn-secondary" role="button" *ngIf="authService.isAdmin()">All Orders
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ unreadMessages.orders }}
             <span class="visually-hidden">unread messages</span>
@@ -58,12 +55,12 @@
       </div>
     </div>
   </div>
-  <div class="card">
+  <div class="card" *ngIf="authService.isAdmin()">
     <div class="card-body">
       <h5 class="card-title">LiveCam</h5>
       <p class="card-text">You can supervise usage of the lab via a camera.</p>
       <div class="col text-center">
-        <a href="#" class="btn btn-secondary" role="button">Show LiveCam</a>
+        <a routerLink="/livecam" class="btn btn-secondary" role="button">Show LiveCam</a>
       </div>
     </div>
   </div>
@@ -72,7 +69,7 @@
       <h5 class="card-title">Users</h5>
       <p class="card-text">You can manage users of this application.</p>
       <div class="col text-center">
-          <a href="#" class="btn btn-secondary position-relative" role="button">Manage Users
+          <a routerLink="/users" class="btn btn-secondary position-relative" role="button">Manage Users
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               {{ unreadMessages.users }}
               <span class="visually-hidden">unread messages</span>
@@ -85,7 +82,7 @@
       <h5 class="card-title">Message Box</h5>
       <p class="card-text">You get messages from this application in your message box.</p>
       <div class="col text-center">
-        <a href="#" class="btn btn-primary position-relative" role="button">Show messages
+        <a routerLink="/message-box" class="btn btn-primary position-relative" role="button">Show messages
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ unreadMessages.sum }}
             <span class="visually-hidden">unread messages</span>
@@ -101,9 +98,9 @@
         <span *ngIf="authService.isAdmin()">As admin additionally you can change the application's settings.</span>
       </p>
       <div class="col text-center">
-        <a href="#" class="btn btn-primary" role="button">Account Settings</a>
+        <a routerLink="/settings" class="btn btn-primary" role="button">Account Settings</a>
         <span *ngIf="authService.isAdmin()">
-          <a href="#" class="btn btn-secondary" role="button">Application Settings</a>
+          <a routerLink="/global-settings" class="btn btn-secondary" role="button">Application Settings</a>
         </span>
       </div>
     </div>
@@ -113,7 +110,7 @@
       <h5 class="card-title">Help</h5>
       <p class="card-text">You can get help to use this application.</p>
       <div class="col text-center">
-        <a href="#" class="btn btn-primary" role="button">Show help & FAQs</a>
+        <a routerLink="/help" class="btn btn-primary" role="button">Show help & FAQs</a>
       </div>
     </div>
   </div>
