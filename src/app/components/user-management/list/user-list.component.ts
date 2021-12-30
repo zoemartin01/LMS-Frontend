@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from "../../../services/admin.service";
+import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-list',
@@ -17,14 +19,16 @@ import { UserId } from "../../../types/aliases/user-id";
  *
  */
 export class UserListComponent implements OnInit {
-  public users: User[] = [];
+  public pendingUsers: User[] = [];
+  public acceptedUsers: User[] = [];
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UserService} userService service providing user functionalities
    */
-  constructor(public adminService: AdminService) {
+  constructor(public adminService: AdminService, public userService: UserService) {
   }
 
   /**
@@ -38,6 +42,15 @@ export class UserListComponent implements OnInit {
    * Gets data of all users
    */
   public async getUsers(): Promise<void> {
+    this.adminService.getUsers().subscribe({
+      next: res => {
+        this.pendingUsers = res.filter((user: User) => user.userRole == UserRole.pending);
+        this.acceptedUsers = res.filter((user: User) => user.userRole != UserRole.pending);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
