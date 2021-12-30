@@ -20,7 +20,7 @@
               <a class="nav-link" routerLink="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownAppointments" role="button"
+              <a class="nav-link dropdown-toggle" id="navbarDropdownAppointments" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Appointments
               </a>
@@ -32,21 +32,21 @@
               <a class="nav-link" routerLink="/inventory">Inventory</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownOrders" role="button"
+              <a class="nav-link dropdown-toggle" id="navbarDropdownOrders" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Orders
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownOrders">
-                <a class="dropdown-item" routerLink="#">My Orders</a>
-                <a class="dropdown-item" routerLink="/orders/new">New Order</a>
+                <a class="dropdown-item" routerLink="/orders">My Orders</a>
+                <a class="dropdown-item" routerLink="/orders/request">New Order</a>
               </div>
             </li>
           </ul>
           <div class="d-flex">
-            <a routerLink="#">
+            <a routerLink="/help">
               <i class="bi bi-question-circle px-2" style="font-size: 2rem;"></i>
             </a>
-            <a routerLink="#">
+            <a routerLink="/message-box">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                       style="left: 42px !important; top: 12px !important;">
@@ -56,12 +56,12 @@
               </i>
             </a>
             <div class="dropdown">
-              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" routerLink="#" id="accountDropdownAdmin"
+              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" id="accountDropdownAdmin"
                  role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 2rem;"></i>
               <div class="dropdown-menu" aria-labelledby="accountDropdownAdmin">
-                <a class="dropdown-item" routerLink="">Account Settings</a>
+                <a class="dropdown-item" routerLink="/settings">Account Settings</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" routerLink="/login">Log out</a>
+                <a class="dropdown-item" (click)="authService.logout()">Log out</a>
               </div>
             </div>
           </div>
@@ -73,48 +73,47 @@
               <a class="nav-link" routerLink="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownAppointmentsAdmin" role="button"
+              <a class="nav-link dropdown-toggle" id="navbarDropdownAppointmentsAdmin" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Appointments
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownAppointmentsAdmin">
                 <a class="dropdown-item" routerLink="/appointments">My Appointments</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" routerLink="/room-overview/145">Room Overview</a>
-                <a class="dropdown-item" routerLink="#">All Appointments</a>
+                <a class="dropdown-item" routerLink="/room-overview">Room Overview</a>
+                <a class="dropdown-item" routerLink="/appointments/all">All Appointments</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="#">Rooms</a>
+              <a class="nav-link" routerLink="/rooms">Rooms</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/inventory">Inventory</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownOrdersAdmin" role="button"
+              <a class="nav-link dropdown-toggle" id="navbarDropdownOrdersAdmin" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 Orders
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownOrdersAdmin">
-                <a class="dropdown-item" routerLink="#">My Orders</a>
-                  <a class="dropdown-item" routerLink="/orders/new">New Order</a>
+                <a class="dropdown-item" routerLink="/orders">My Orders</a>
+                  <a class="dropdown-item" routerLink="/orders/request">New Order</a>
                   <hr class="dropdown-divider">
-                  <a class="dropdown-item" routerLink="#">All Orders</a>
-                  <a class="dropdown-item" routerLink="/orders/requests">Order Requests</a>
+                  <a class="dropdown-item" routerLink="/orders/all">All Orders</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="#">LiveCam</a>
+              <a class="nav-link" routerLink="/livecam">LiveCam</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="#">Users</a>
+              <a class="nav-link" routerLink="/users">Users</a>
             </li>
           </ul>
           <div class="d-flex">
-            <a routerLink="#">
+            <a routerLink="/help">
               <i class="bi bi-question-circle px-2" style="font-size: 2rem;"></i>
             </a>
-            <a routerLink="#">
+            <a routerLink="/message-box">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                     style="left: 42px !important; top: 12px !important;">
@@ -124,14 +123,14 @@
               </i>
             </a>
             <div class="dropdown">
-              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" routerLink="#" id="accountDropdown"
+              <i class="bi bi-person-circle px-2 dropdown-toggle bg-primary" id="accountDropdown"
                  role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 2rem;"></i>
               <div class="dropdown-menu" aria-labelledby="accountDropdown">
-              <a class="dropdown-item" routerLink="">Account Settings</a>
+              <a class="dropdown-item" routerLink="/settings">Account Settings</a>
               <hr class="dropdown-divider">
-                <a class="dropdown-item" routerLink="">Application Settings</a>
+                <a class="dropdown-item" routerLink="/global-settings">Application Settings</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" routerLink="/login">Log out</a>
+                <a class="dropdown-item" (click)="authService.logout()">Log out</a>
               </div>
             </div>
           </div>
