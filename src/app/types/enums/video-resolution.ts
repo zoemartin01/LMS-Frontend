@@ -1,5 +1,5 @@
 export enum VideoResolution {
-  unknown = 0,
+  unknown = '',
   V720 = '720p',
   V1080 = '1080p',
   V1440 = '1440p',

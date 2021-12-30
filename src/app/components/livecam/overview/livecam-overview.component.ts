@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {LivecamService} from "../../../services/livecam.service";
+import { LivecamService } from "../../../services/livecam.service";
 
 import { Recording } from 'src/app/types/recording';
 import { RecordingId } from 'src/app/types/aliases/recording-id';
