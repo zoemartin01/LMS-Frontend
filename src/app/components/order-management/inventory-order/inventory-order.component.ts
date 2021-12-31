@@ -27,6 +27,7 @@ export class InventoryOrderComponent implements OnInit {
     quantity: null,
     purchaseUrl: '',
     userId: null,
+    userFullName: '',
     orderStatus: OrderStatus.unknown,
   }
   public inventoryItems: InventoryItem[] = [];

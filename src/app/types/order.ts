@@ -8,5 +8,6 @@ export interface Order {
   quantity: number|null,
   purchaseUrl: string,
   userId: UserId,
+  userFullName: string,
   orderStatus: OrderStatus,
 }
