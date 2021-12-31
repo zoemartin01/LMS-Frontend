@@ -18,11 +18,14 @@ import { OrderService } from "../../../services/order.service";
  */
 export class OrderRequestComponent {
   public existingItems: String[] = []
+  public linkWarning: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {InventoryService} inventoryService service providing inventory functionalities
    */
   constructor(public orderService: OrderService, public adminService: AdminService, public inventoryService: InventoryService) {
   }
