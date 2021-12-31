@@ -25,6 +25,7 @@ export class OrderEditComponent implements OnInit {
     quantity: null,
     purchaseUrl: '',
     userId: null,
+    userFullName: '',
     orderStatus: OrderStatus.unknown,
   }
 
