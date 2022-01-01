@@ -35,6 +35,12 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
+   * Gets appointment data of all appointments
+   */
+  public async getAppointments(): Promise<void> {
+  }
+
+  /**
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
@@ -54,12 +60,6 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
-  }
-
-  /**
-   * Gets appointment data of all appointments
-   */
-  public async getAppointments(): Promise<void> {
   }
 
   /**

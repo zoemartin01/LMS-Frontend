@@ -7,6 +7,7 @@ import { RoomTimespanType } from "./enums/timespan-type";
 export interface RoomTimespan {
   id: TimespanId,
   roomId: RoomId,
+  roomName: string,
   start: moment.Moment|null,
   end: moment.Moment|null,
   type: RoomTimespanType,
