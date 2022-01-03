@@ -57,25 +57,25 @@
       <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
       <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
       <ng-container *ngFor="let column of columnKeys">
-      <td class="cal-grey" *ngIf="timespans[day][column].type == 3"></td>
+      <td class="cal-grey" *ngIf="timespans[day][column].type === 3"></td>
       <td class="cal-green" *ngIf="!timespans[day][column]"></td>
       <td class="cal-red" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
-          *ngIf="timespans[day][column].type == 1
-          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus == 2">
+          *ngIf="timespans[day][column].type === 1
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 2">
         <a (click)="openAppointmentEditForm(timespans[day][column].id)"
            *ngIf="authService.isAdmin()
-           || authService.getUserId() == roomService.timespanToAppointment(timespans[day][column]).userId">
+           || authService.getUserId() === roomService.timespanToAppointment(timespans[day][column]).userId">
           <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
         </a>
         <a (click)="openAppointmentDeletionDialog(timespans[day][column].id)"
            *ngIf="authService.isAdmin()
-           || authService.getUserId() == roomService.timespanToAppointment(timespans[day][column]).userId">
+           || authService.getUserId() === roomService.timespanToAppointment(timespans[day][column]).userId">
           <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
         </a>
       </td>
       <td class="cal-orange" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
-          *ngIf="timespans[day][column].type == 1
-          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus == 1">
+          *ngIf="timespans[day][column].type === 1
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 1">
         <a (click)="acceptAppointmentRequest(timespans[day][column].id)" *ngIf="authService.isAdmin()"
            type="button" class="btn btn-success mx-1">
           <i class="bi bi-check"></i>

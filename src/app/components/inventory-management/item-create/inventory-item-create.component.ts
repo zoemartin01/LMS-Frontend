@@ -27,12 +27,6 @@ export class InventoryItemCreateComponent {
   }
 
   /**
-   * Inits page
-   */
-  ngOnInit(): void {
-  }
-
-  /**
    * Opens inventory creation form
    *
    * @param {NgForm} inventoryItemCreationForm submitted create form
