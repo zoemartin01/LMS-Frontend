@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
+import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
+import { RoomService } from "../../../services/room.service";
 
 import { Appointment } from "../../../types/appointment";
-import { TimespanId } from "../../../types/aliases/timespan-id";
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
+import { RoomTimespan } from "../../../types/room-timespan";
+import { TimespanId } from "../../../types/aliases/timespan-id";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -27,17 +30,26 @@ export class RoomCalendarViewComponent implements OnInit {
     maxConBookings: 1,
     automaticRequestAcceptance: null,
     availableTimeslots: [],
-    unavailableTimeslots: []
+    unavailableTimeslots: [],
   };
   public appointments: Appointment[] = [];
+  public displayTimespans: RoomTimespan[][][] = [];
+  public minTimeslot: number = 0;
+  public columnKeys = Array.from(Array(10).keys());
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public authService: AuthService,
+    public roomService: RoomService,
+    private route: ActivatedRoute) {
   }
 
   /**
@@ -46,8 +58,7 @@ export class RoomCalendarViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.room.id = params['id'];
-      this.getRoomData();
-      this.getAppointmentsForRoom(this.room.id);
+      this.updateCalendar();
     });
   }
 
@@ -55,6 +66,28 @@ export class RoomCalendarViewComponent implements OnInit {
    * Gets all data of room
    */
   public async getRoomData() : Promise<void> {
+  }
+
+  /**
+   * Gets appointment data of all appointments of one room
+   *
+   * @param {RoomId} roomId id of room
+   */
+  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
+  }
+
+  /**
+   * Updates array to display appointments using the appointment
+   * @private
+   */
+  private async updateCalendar() {
+    this.getRoomData().then(() => {
+      this.getAppointmentsForRoom(this.room.id).then(() => {
+        let result = this.roomService.getTimespansAsCalendar(this.room, this.appointments);
+        this.displayTimespans = result.displayTimespans;
+        this.minTimeslot = result.minTimeslot;
+      });
+    });
   }
 
   /**
@@ -69,14 +102,6 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
-  }
-
-  /**
-   * Gets appointment data of all appointments of one room
-   *
-   * @param {RoomId} roomId id of room
-   */
-  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
   }
 
   /**
