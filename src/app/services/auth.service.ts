@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from '../../environments/environment';
 
 import { UserRole } from "../types/enums/user-role";
+import { UserId } from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,22 @@ export class AuthService {
    */
   public getRefreshToken(): string {
     return <string>localStorage.getItem(environment.storageKeys.refreshToken);
+  }
+
+  /**
+   * Saves user id in local storage
+   *
+   * @param {UserId} userId
+   */
+  public setUserId(userId: string): void {
+    localStorage.setItem(environment.storageKeys.userId, userId);
+  }
+
+  /**
+   * Returns user id from local storage
+   */
+  public getUserId(): UserId {
+    return <string>localStorage.getItem(environment.storageKeys.userId);
   }
 
   /**

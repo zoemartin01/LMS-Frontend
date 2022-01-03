@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
@@ -23,8 +24,9 @@ export class PersonalAppointmentListComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    */
-  constructor(public appointmentService: AppointmentService) {
+  constructor(public appointmentService: AppointmentService, public authService: AuthService) {
   }
 
   /**
@@ -35,17 +37,15 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Opens appointment creation form
+   * Gets appointment data of all appointments for current user
    */
-  public openAppointmentCreationForm(): void {
+  public async getAllAppointmentsForCurrentUser(): Promise<void> {
   }
 
   /**
-   * Opens appointment edit form
-   *
-   * @param {TimespanId} appointmentId id of appointment
+   * Opens appointment creation form
    */
-  public openAppointmentEditForm(appointmentId: TimespanId): void {
+  public openAppointmentCreationForm(): void {
   }
 
   /**
@@ -57,32 +57,10 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Gets appointment data of all appointments for current user
-   */
-  public async getAllAppointmentsForCurrentUser(): Promise<void> {
-  }
-
-  /**
    * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
-  }
-
-  /**
-   * Sets appointment request to accepted
-   *
-   * @param {TimespanId} appointmentId id of appointment
-   */
-  public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
-  }
-
-  /**
-   * Sets appointment request to declined
-   *
-   * @param {TimespanId} appointmentId id of appointment
-   */
-  public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
   }
 }

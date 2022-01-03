@@ -24,6 +24,7 @@ export class AppointmentViewComponent implements OnInit {
     id: null,
     userId: null,
     roomId: null,
+    roomName: '',
     start: null,
     end: null,
     type: RoomTimespanType.appointment,

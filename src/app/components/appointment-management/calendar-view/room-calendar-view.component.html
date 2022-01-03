@@ -1,1 +1,108 @@
-<p>room-calendar-view works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">Room Overview</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/appointments">My Appointments</a>
+  </li>
+  <li class="nav-item" *ngIf="authService.isAdmin()">
+    <a class="nav-link" routerLink="/appointments/all">All Appointments</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page">Room Overview</a>
+  </li>
+</ul>
+
+<form class="form-inline col-sm-11 mx-auto py-3">
+  <div class="form-group">
+    <div class="input-group justify-content-center">
+      <div class="col-sm-5 form-group">
+        <div class="input-group">
+          <select class="form-select">
+            <option>Select Room</option>
+            <option value="145" selected>Meeting Room</option>
+            <option value="2">Students Pool</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-1 form-group">
+      </div>
+      <div class="col-sm-5 form-group">
+        <div class="input-group" id="DateField">
+          <input type="text" class="form-control" id="weeklyDatePicker" placeholder="Select Week"
+                 value="28.11.2021 - 04.12.2021">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <table class="table table-bordered cal-table">
+    <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th [attr.colspan]="room.maxConBookings">Monday</th>
+      <th [attr.colspan]="room.maxConBookings">Tuesday</th>
+      <th [attr.colspan]="room.maxConBookings">Wednesday</th>
+      <th [attr.colspan]="room.maxConBookings">Thursday</th>
+      <th [attr.colspan]="room.maxConBookings">Friday</th>
+      <th [attr.colspan]="room.maxConBookings">Saturday</th>
+      <th [attr.colspan]="room.maxConBookings">Sunday</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let timespans of displayTimespans; index as i">
+      <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
+      <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
+      <ng-container *ngFor="let column of columnKeys">
+      <td class="cal-grey" *ngIf="timespans[day][column].type == 3"></td>
+      <td class="cal-green" *ngIf="!timespans[day][column]"></td>
+      <td class="cal-red" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
+          *ngIf="timespans[day][column].type == 1
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus == 2">
+        <a (click)="openAppointmentEditForm(timespans[day][column].id)"
+           *ngIf="authService.isAdmin()
+           || authService.getUserId() == roomService.timespanToAppointment(timespans[day][column]).userId">
+          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+        </a>
+        <a (click)="openAppointmentDeletionDialog(timespans[day][column].id)"
+           *ngIf="authService.isAdmin()
+           || authService.getUserId() == roomService.timespanToAppointment(timespans[day][column]).userId">
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+        </a>
+      </td>
+      <td class="cal-orange" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
+          *ngIf="timespans[day][column].type == 1
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus == 1">
+        <a (click)="acceptAppointmentRequest(timespans[day][column].id)" *ngIf="authService.isAdmin()"
+           type="button" class="btn btn-success mx-1">
+          <i class="bi bi-check"></i>
+        </a>
+        <a (click)="declineAppointmentRequest(timespans[day][column].id)" *ngIf="authService.isAdmin()"
+           type="button" class="btn btn-danger mx-1">
+          <i class="bi bi-x"></i>
+        </a>
+      </td>
+      </ng-container>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#weeklyDatePicker").datepicker({
+      format: 'dd.mm.yyyy'
+    });
+
+    $('#weeklyDatePicker').on('changeDate', function (e) {
+      $("#weeklyDatePicker").datepicker('hide');
+      var value = $("#weeklyDatePicker").val();
+      var firstDate = moment(value, "DD.MM.YYYY").day(0).format("DD.MM.YYYY");
+      var lastDate =  moment(value, "DD.MM.YYYY").day(6).format("DD.MM.YYYY");
+      $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+    });
+  });
+</script>

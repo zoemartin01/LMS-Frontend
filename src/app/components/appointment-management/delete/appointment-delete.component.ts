@@ -23,6 +23,7 @@ export class AppointmentDeleteComponent implements OnInit {
     id: null,
     userId: null,
     roomId: null,
+    roomName: '',
     start: null,
     end: null,
     type: RoomTimespanType.appointment,
@@ -45,7 +46,6 @@ export class AppointmentDeleteComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.appointment.id = params['id'];
-      //@TODO need this?: this.appointment.seriesId = params['seriesId'];
     });
   }
 
