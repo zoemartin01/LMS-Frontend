@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
 import { RoomService } from "../../../services/room.service";
@@ -14,7 +14,7 @@ import { RoomService } from "../../../services/room.service";
  *
  *
  */
-export class RoomCreateComponent implements OnInit {
+export class RoomCreateComponent {
 
   /**
    * Constructor
@@ -22,12 +22,6 @@ export class RoomCreateComponent implements OnInit {
    * @param {RoomService} roomService service providing room functionalities
    */
   constructor(public roomService: RoomService) {
-  }
-
-  /**
-   * Inits page
-   */
-  ngOnInit(): void {
   }
 
   /**
