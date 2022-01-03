@@ -6,6 +6,7 @@ export const environment = {
   storageKeys: {
     accessToken: 'accessToken',
     refreshToken: 'refreshToken',
+    userId: 'userId',
     userRole: 'userRole',
   },
 
