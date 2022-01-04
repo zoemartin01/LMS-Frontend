@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import * as moment from "moment";
 
 import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
@@ -10,7 +11,6 @@ import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
 import { RoomTimespan } from "../../../types/room-timespan";
 import { TimespanId } from "../../../types/aliases/timespan-id";
-import * as moment from "moment";
 
 @Component({
   selector: 'app-room-calendar-view',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
+import * as moment from "moment";
 
 import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
@@ -12,7 +13,6 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
 import { RoomTimespan } from "../../../types/room-timespan";
-import * as moment from "moment";
 
 @Component({
   selector: 'app-appointment-edit',
