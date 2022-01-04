@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
 import { AdminService } from "../../../services/admin.service";
@@ -16,7 +16,7 @@ import { OrderService } from "../../../services/order.service";
  *
  *
  */
-export class OrderRequestComponent {
+export class OrderRequestComponent implements OnInit {
   public existingItems: String[] = []
   public linkWarning: boolean = false;
 

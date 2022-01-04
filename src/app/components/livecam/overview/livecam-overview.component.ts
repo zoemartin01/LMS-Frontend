@@ -31,6 +31,8 @@ export class LivecamOverviewComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.getRecordings();
+    this.getScheduledRecordings();
   }
 
   /**

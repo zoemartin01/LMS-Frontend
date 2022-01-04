@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import * as moment from "moment";
 
 import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
@@ -32,10 +33,12 @@ export class RoomCalendarViewComponent implements OnInit {
     availableTimeslots: [],
     unavailableTimeslots: [],
   };
+  public rooms: Room[] = [];
   public appointments: Appointment[] = [];
   public displayTimespans: RoomTimespan[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(10).keys());
+  public now: moment.Moment = moment();
 
   /**
    * Constructor
@@ -59,6 +62,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.room.id = params['id'];
       this.updateCalendar();
+      this.getRooms();
     });
   }
 
@@ -88,6 +92,12 @@ export class RoomCalendarViewComponent implements OnInit {
         this.minTimeslot = result.minTimeslot;
       });
     });
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public getRooms(): void {
   }
 
   /**

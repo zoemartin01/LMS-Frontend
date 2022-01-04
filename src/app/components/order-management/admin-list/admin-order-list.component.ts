@@ -31,6 +31,7 @@ export class AdminOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.getInventory();
   }
 
   /**

@@ -185,6 +185,10 @@ export class RoomService {
       }
     }
 
+    if (minTimeslot === 23 && maxTimeslot === 0) {
+      return { displayTimespans: [], minTimeslot: 0 };
+    }
+
     //initialise array (timeslot, days, parallel bookings)
     let displayTimespans: RoomTimespan[][][] = [...Array((maxTimeslot - minTimeslot + 1))]
       .map(() => [...Array(7)]

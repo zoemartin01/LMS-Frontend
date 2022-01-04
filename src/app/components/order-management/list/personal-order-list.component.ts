@@ -31,6 +31,7 @@ export class PersonalOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.getOrders();
   }
 
   /**
