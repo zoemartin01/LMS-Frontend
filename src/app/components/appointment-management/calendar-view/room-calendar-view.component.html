@@ -20,9 +20,10 @@
       <div class="col-sm-5 form-group">
         <div class="input-group">
           <select class="form-select">
-            <option>Select Room</option>
-            <option value="145" selected>Meeting Room</option>
-            <option value="2">Students Pool</option>
+            <option disabled>Select Room</option>
+            <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
+              {{ oneRoom.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -31,7 +32,7 @@
       <div class="col-sm-5 form-group">
         <div class="input-group" id="DateField">
           <input type="text" class="form-control" id="weeklyDatePicker" placeholder="Select Week"
-                 value="28.11.2021 - 04.12.2021">
+                 value="{{ now.format('DD.MM.YYYY') }} - {{ now.add(6, 'days').format('DD.MM.YYYY') }}">
         </div>
       </div>
     </div>

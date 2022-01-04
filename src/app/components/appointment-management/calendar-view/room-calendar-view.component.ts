@@ -10,6 +10,7 @@ import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
 import { RoomTimespan } from "../../../types/room-timespan";
 import { TimespanId } from "../../../types/aliases/timespan-id";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -32,10 +33,12 @@ export class RoomCalendarViewComponent implements OnInit {
     availableTimeslots: [],
     unavailableTimeslots: [],
   };
+  public rooms: Room[] = [];
   public appointments: Appointment[] = [];
   public displayTimespans: RoomTimespan[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(10).keys());
+  public now: moment.Moment = moment();
 
   /**
    * Constructor
@@ -59,6 +62,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.room.id = params['id'];
       this.updateCalendar();
+      this.getRooms();
     });
   }
 
@@ -88,6 +92,12 @@ export class RoomCalendarViewComponent implements OnInit {
         this.minTimeslot = result.minTimeslot;
       });
     });
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public getRooms(): void {
   }
 
   /**

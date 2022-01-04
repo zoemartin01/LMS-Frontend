@@ -1,1 +1,160 @@
-<p>appointment-edit works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">Room Overview</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/appointments">My Appointments</a>
+  </li>
+  <li class="nav-item" *ngIf="authService.isAdmin()">
+    <a class="nav-link" routerLink="/appointments/all">All Appointments</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page">Room Overview</a>
+  </li>
+</ul>
+
+<form class="form-inline col-sm-11 mx-auto py-3">
+  <div class="form-group">
+    <div class="input-group justify-content-center">
+      <div class="col-sm-5 form-group">
+        <div class="input-group">
+          <select class="form-select">
+            <option disabled>Select Room</option>
+            <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
+              {{ oneRoom.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-1 form-group">
+      </div>
+      <div class="col-sm-5 form-group">
+        <div class="input-group" id="DateField">
+          <input type="text" class="form-control" id="weeklyDatePicker" placeholder="Select Week"
+                 value="{{ now.subtract((6 + +now.format('e'))%7, 'days')
+                 .format('DD.MM.YYYY') }} - {{ now.add((7 - +now.format('e'))%7, 'days')
+                 .format('DD.MM.YYYY') }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal" id="edit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Appointment</h5>
+        <a routerLink="/room-overview/145" class="btn-close" role="button"></a>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline col-sm-6 mx-auto py-3">
+          <div class="form-group">
+            <label for="weekday" class="my-1">Weekday</label>
+            <div class="input-group">
+              <select class="form-select" id="weekday" name="weekday">
+                <option value="1" [selected]="appointment.start !== null && +appointment.start.format('e') === 1">Monday</option>
+                <option value="2" [selected]="appointment.start !== null && +appointment.start.format('e') === 2">Tuesday</option>
+                <option value="3" [selected]="appointment.start !== null && +appointment.start.format('e') === 3">Wednesday</option>
+                <option value="4" [selected]="appointment.start !== null && +appointment.start.format('e') === 4">Thursday</option>
+                <option value="5" [selected]="appointment.start !== null && +appointment.start.format('e') === 5">Friday</option>
+                <option value="6" [selected]="appointment.start !== null && +appointment.start.format('e') === 6">Saturday</option>
+                <option value="0" [selected]="appointment.start !== null && +appointment.start.format('e') === 0">Sunday</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="startTime" class="my-1">Start time</label>
+            <div class="input-group">
+              <select class="form-select" id="startTime" name="startTime">
+                <option [value]="i" [selected]="appointment.start !== null && +appointment.start.format('HH') === i"
+                        *ngFor="let i of startTimeSlots">{{ i }}:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="endTime" class="my-1">End time</label>
+            <div class="input-group">
+              <select class="form-select" id="endTime" name="endTime">
+                <option [value]="i" [selected]="appointment.start !== null && +appointment.start.format('HH') === i"
+                        *ngFor="let i of endTimeSlots">{{ i }}:00</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col text-center">
+              <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" id="remember_me">
+                <label class="form-check-label" for="remember_me">Recurring Appointment</label>
+              </div>
+            </div>
+          </div>
+          <br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col text-center">
+          <a routerLink="#" class="btn btn-primary" role="button">Save</a>
+          <a routerLink="#" class="btn btn-primary" role="button">Save recurring</a>
+          <a routerLink="/room-overview/145" class="btn btn-danger" role="button">Abort</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <table class="table table-bordered cal-table">
+    <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th [attr.colspan]="room.maxConBookings">Monday</th>
+      <th [attr.colspan]="room.maxConBookings">Tuesday</th>
+      <th [attr.colspan]="room.maxConBookings">Wednesday</th>
+      <th [attr.colspan]="room.maxConBookings">Thursday</th>
+      <th [attr.colspan]="room.maxConBookings">Friday</th>
+      <th [attr.colspan]="room.maxConBookings">Saturday</th>
+      <th [attr.colspan]="room.maxConBookings">Sunday</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let timespans of displayTimespans; index as i">
+      <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
+      <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
+        <ng-container *ngFor="let column of columnKeys">
+          <td class="cal-grey" *ngIf="timespans[day][column].type === 3"></td>
+          <td class="cal-green" *ngIf="!timespans[day][column]"></td>
+          <td class="cal-info" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
+              *ngIf="timespans[day][column].type === 1 && timespans[day][column].id === appointment.id">
+          </td>
+          <td class="cal-red" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
+              *ngIf="timespans[day][column].type === 1 && timespans[day][column].id !== appointment.id
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 2">
+          </td>
+          <td class="cal-orange" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
+              *ngIf="timespans[day][column].type === 1 && timespans[day][column].id !== appointment.id
+          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 1">
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#weeklyDatePicker").datepicker({
+      format: 'dd.mm.yyyy'
+    });
+
+    $('#weeklyDatePicker').on('changeDate', function () {
+      $("#weeklyDatePicker").datepicker('hide');
+      var value = $("#weeklyDatePicker").val();
+      var firstDate = moment(value, "DD.MM.YYYY").day(0).format("DD.MM.YYYY");
+      var lastDate =  moment(value, "DD.MM.YYYY").day(6).format("DD.MM.YYYY");
+      $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+    });
+  });
+</script>
