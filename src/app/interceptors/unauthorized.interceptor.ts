@@ -4,6 +4,8 @@ import { Observable, switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from "../services/auth.service";
+import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 
@@ -13,13 +15,13 @@ import { AuthService } from "../services/auth.service";
  * @class
  */
 export class UnauthorizedInterceptor implements HttpInterceptor {
-
   /**
    * Constructor
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
+   * @param {Router} router router providing navigation
    */
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   /**
@@ -35,9 +37,8 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
       }
 
       const error = (err && err.error && err.error.message) || err.statusText;
-      console.error(err);
       return throwError(error);
-    }))
+    }));
   }
 
   /**
@@ -56,6 +57,16 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${this.authService.getAccessToken()}`,
           }
         }));
+      }),
+      catchError(err => {
+        if (err.status == 401) {
+          localStorage.removeItem(environment.storageKeys.userId);
+          localStorage.removeItem(environment.storageKeys.userRole);
+          localStorage.removeItem(environment.storageKeys.accessToken);
+          localStorage.removeItem(environment.storageKeys.refreshToken);
+        }
+        const error = (err && err.error && err.error.message) || err.statusText;
+        return throwError(() => new Error(error));
       })
     );
   }
