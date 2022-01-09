@@ -5,7 +5,6 @@ import { MessagingService } from "../../../services/messaging.service";
 import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
-import {UserRole} from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-message-box',
