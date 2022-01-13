@@ -12,6 +12,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.scss']
 })
+
+/**
+ * Component for the order edit popup
+ *
+ *
+ */
 export class OrderEditComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -19,26 +25,33 @@ export class OrderEditComponent implements OnInit {
     quantity: null,
     purchaseUrl: '',
     userId: null,
+    userFullName: '',
     orderStatus: OrderStatus.unknown,
   }
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {OrderService} orderService service providing order functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public orderService: OrderService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
-  private async getOrderData(): Promise<void> {
+  public async getOrderData(): Promise<void> {
   }
 
   /**

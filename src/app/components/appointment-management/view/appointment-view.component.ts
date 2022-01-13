@@ -15,13 +15,16 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 })
 
 /**
- * Component for the appointment view site, to view one appointment in detail
+ * Component for the appointment view page
+ *
+ *
  */
 export class AppointmentViewComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
     userId: null,
     roomId: null,
+    roomName: '',
     start: null,
     end: null,
     type: RoomTimespanType.appointment,
@@ -29,21 +32,27 @@ export class AppointmentViewComponent implements OnInit {
     confirmationStatus: ConfirmationStatus.unknown,
   };
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.appointment.id = +params['id'];
+      this.appointment.id = params['id'];
       this.getAppointmentData();
     });
   }
 
   /**
-   * Get all data of appointment
+   * Gets all data of appointment
    */
   public async getAppointmentData(): Promise<void> {
   }
@@ -57,7 +66,7 @@ export class AppointmentViewComponent implements OnInit {
   }
 
   /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */

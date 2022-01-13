@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
 
 import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
@@ -10,6 +9,13 @@ import { InventoryItem } from "../../../types/inventory-item";
   templateUrl: './inventory-item-view.component.html',
   styleUrls: ['./inventory-item-view.component.scss']
 })
+
+/**
+ * Component for the inventory item view popup
+ *
+ *
+ *
+ */
 export class InventoryItemViewComponent implements OnInit {
   public inventoryItem: InventoryItem = {
     id: null,
@@ -18,23 +24,29 @@ export class InventoryItemViewComponent implements OnInit {
     quantity: null,
   };
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.inventoryItem.id = +params['id'];
+      this.inventoryItem.id = params['id'];
       this.getInventoryItemData();
     });
   }
 
   /**
-   * Get all data of inventory item
+   * Gets all data of inventory item
    */
-  private async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData() : Promise<void> {
   }
 
   /**
@@ -44,7 +56,7 @@ export class InventoryItemViewComponent implements OnInit {
   }
 
   /**
-   * Opens inventory item delete confirmation popup
+   * Opens inventory item deletion confirmation dialog
    */
   public openInventoryItemDeletionDialog(): void {
   }

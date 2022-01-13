@@ -13,7 +13,9 @@ import { Room } from "../../../types/room";
 })
 
 /**
- * Component for the room edit site, to edit the available and unavailable timeslots one room
+ * Component for the room edit popup, to edit the available and unavailable timeslots of one room
+ *
+ *
  */
 export class RoomTimeslotsComponent implements OnInit {
 
@@ -27,11 +29,17 @@ export class RoomTimeslotsComponent implements OnInit {
     unavailableTimeslots: [],
   };
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {RoomService} roomService service providing room functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public roomService: RoomService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -41,7 +49,7 @@ export class RoomTimeslotsComponent implements OnInit {
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
   public async getRoomData(): Promise<void> {
     //use this.room.id here and set this.room

@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
-import { UserId } from "../types/aliases/user-id";
 import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
+import { UserId } from "../types/aliases/user-id";
+import { UserRole } from "../types/enums/user-role";
 
 @Injectable({
   providedIn: 'root'
 })
 
 /**
- * Service for admins
+ * Service for admin management
  * @typedef {Service} AdminService
  * @class
  */
@@ -26,28 +28,26 @@ export class AdminService {
    * Gets global settings
    */
   public getGlobalSettings(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
+  }
+
+  /**
+   * Gets user data
+   *
+   * @param {UserId} userId id of user
+   */
+  public getUser(userId: UserId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Gets users
    */
   public getUsers(): Observable<any> {
-  }
-
-  /**
-   * Gets data of user with id userId
-   * @param {UserId} userId Id of user
-   */
-  public getUserData(userId: UserId): Observable<any> {
-  }
-
-  /**
-   * Changes data of user
-   *
-   * @param {UserId} userId      id of associated user
-   * @param {object} changedData changed fields of user
-   */
-  public editUserData(userId: UserId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -56,22 +56,39 @@ export class AdminService {
    * @param {object} changedData changed fields of global settings
    */
   public updateGlobalSettings(changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
+  }
+
+  /**
+   * Changes user data
+   *
+   * @param {object} changedData changed fields of user
+   * @param {UserId} userId if of user
+   */
+  public updateUser(userId : UserId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Deletes user
    *
-   * @param {UserId} userId id of user to delete
+   * @param {UserId} userId if of user
    */
-  public deleteUser(userId: UserId): Observable<any> {
+  public deleteUser(userId : UserId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Gets whitelist retailer data
    *
-   * @param {WhitelistRetailerId} whitelistRetailerId of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -80,15 +97,19 @@ export class AdminService {
    * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
    */
   public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Changes data of whitelist retailer
    *
-   * @param {WhitelistRetailerId} whitelistRetailerId id of associated whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    * @param {object} changedData changed fields of whitelist retailer
    */
   public editWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId, changedData: object): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
@@ -97,33 +118,69 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Adds domain to whitelist retailer
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
-   * @param {WhitelistRetailerDomain} whitelistRetailerDomain whitelist retailer domain
+   * @param {WhitelistRetailerDomain} whitelistRetailerDomain new whitelist retailer domain
    */
   public addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: WhitelistRetailerDomain): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Edits domain of whitelist retailer
    *
-   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer
+   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer domain
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    *
    */
   public editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
   }
 
   /**
    * Deletes domain of whitelist retailer
    *
-   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer
+   * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer domain
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
+  }
+
+  /**
+   * Sets user request to accepted
+   *
+   * @param {UserId} userId id of pending user
+   */
+  public acceptUserRequest(userId: UserId): Observable<any> {
+    return this.updateUser(userId, { userRole: UserRole.visitor });
+  }
+
+  /**
+   * Declines user request and deletes user
+   *
+   * @param {UserId} userId id of pending user
+   */
+  public declineUserRequest(userId: UserId): Observable<any> {
+    return this.deleteUser(userId);
+  }
+
+  /**
+   * Checks domain against whitelist
+   *
+   * @param {String} domain domain which is checked against whitelist
+   */
+  public checkDomainAgainstWhitelist(domain: string): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`;
+    return this.httpClient.post(apiURL, {domain});
   }
 }

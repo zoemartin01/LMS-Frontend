@@ -11,6 +11,13 @@ import { InventoryItem } from "../../../types/inventory-item";
   templateUrl: './inventory-item-edit.component.html',
   styleUrls: ['./inventory-item-edit.component.scss']
 })
+
+/**
+ * Component for the inventory item edit popup
+ *
+ *
+ *
+ */
 export class InventoryItemEditComponent implements OnInit {
   public inventoryItem: InventoryItem = {
     id: null,
@@ -19,23 +26,29 @@ export class InventoryItemEditComponent implements OnInit {
     quantity: null,
   };
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public inventoryService: InventoryService,  private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.inventoryItem.id = +params['id'];
+      this.inventoryItem.id = params['id'];
       this.getInventoryItemData();
     });
   }
 
   /**
-   * Get all data of inventory item
+   * Gets all data of inventory item
    */
-  private async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData() : Promise<void> {
   }
 
   /**

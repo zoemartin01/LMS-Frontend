@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
+import { environment } from '../../environments/environment';
 
-import { User } from "../types/user";
+import { UserRole } from "../types/enums/user-role";
 import { UserId } from "../types/aliases/user-id";
-import { NotificationChannel } from "../types/enums/notification-channel";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,8 @@ import { NotificationChannel } from "../types/enums/notification-channel";
 
 /**
  * Service that provides API access for authentication system
+ * @typedef {Service} AuthService
+ * @class
  */
 export class AuthService {
 
@@ -20,34 +21,18 @@ export class AuthService {
   }
 
   /**
-   * Retrieves user details
-   */
-  public getUserDetails(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.userDetails}`;
-
-    return this.httpClient.get(apiURL);
-  }
-
-  /**
-   * Returns full name of specified user
-   *
-   * @param {User} user a user
-   */
-  public getFullName(user: User): string {
-    return `${user.firstname} ${user.lastname}`;
-  }
-
-  /**
    * Logs in user with specified credentials
    *
    * @param {string} email    user's email address
    * @param {string} password user's password
+   * @param {boolean} isActiveDirectory if authentication should use ActiveDirectory
    */
-  public login(email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.login}`;
+  public login(email: string, password: string, isActiveDirectory: boolean): Observable<any> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.login}`;
     const requestBody = {
       email,
       password,
+      isActiveDirectory,
     };
 
     return this.httpClient.post(apiURL, requestBody);
@@ -57,7 +42,7 @@ export class AuthService {
    * Logs out current user
    */
   public logout(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.logout}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.logout}`;
 
     return this.httpClient.delete(apiURL);
   }
@@ -66,7 +51,7 @@ export class AuthService {
    * Refreshes authentication token of current user
    */
   public tokenRefresh(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenRefresh}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`;
     const requestBody = {
       token: this.getRefreshToken(),
     };
@@ -78,59 +63,9 @@ export class AuthService {
    * Checks token of current user
    */
   public tokenCheck(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.tokenCheck}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.tokenCheck}`;
 
-    return this.httpClient.get(apiURL);
-  }
-
-  /**
-   * Signs in user with his personal information
-   *
-   * @param {string} firstname new user's firstname
-   * @param {string} lastname  new user's lastname
-   * @param {string} email     new user's email address
-   * @param {string} password  new user's password
-   */
-  public signin(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.signin}`;
-    const requestBody = {
-      firstname,
-      lastname,
-      email,
-      password
-    };
-
-    return this.httpClient.post(apiURL, requestBody);
-  }
-
-  /**
-   * Verifies email address using a token sent on signin
-   *
-   * @param {UserId} userId user's id
-   * @param {string} token  token to verify email
-   */
-  public verifyEmail(userId: UserId, token: string): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.verifyEmail}`;
-    const requestBody = {
-      userId,
-      token
-    };
-
-    return this.httpClient.post(apiURL, requestBody);
-  }
-
-  /**
-   * Sets notification channel
-   *
-   * @param {NotificationChannel} notificationChannel new value of notification channel
-   */
-  public setNotificationChannel(notificationChannel: NotificationChannel): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.updateUser}`;
-    const requestBody = {
-      notificationChannel,
-    };
-
-    return this.httpClient.patch(apiURL, requestBody);
+    return this.httpClient.post(apiURL, []);
   }
 
   /**
@@ -166,19 +101,41 @@ export class AuthService {
   }
 
   /**
+   * Saves user id in local storage
+   *
+   * @param {UserId} userId
+   */
+  public setUserId(userId: string): void {
+    localStorage.setItem(environment.storageKeys.userId, userId);
+  }
+
+  /**
+   * Returns user id from local storage
+   */
+  public getUserId(): UserId {
+    return <string>localStorage.getItem(environment.storageKeys.userId);
+  }
+
+  /**
    * Saves user role in local storage
    *
-   * @param {string} userRole
+   * @param {UserRole} userRole
    */
-  public setUserRole(userRole: string): void {
-    localStorage.setItem(environment.storageKeys.userRole, userRole);
+  public setUserRole(userRole: UserRole): void {
+    localStorage.setItem(environment.storageKeys.userRole, userRole.toString());
   }
 
   /**
    * Returns user role from local storage
    */
-  public getUserRole(): string {
-    return <string>localStorage.getItem(environment.storageKeys.userRole);
+  public getUserRole(): UserRole {
+    let userRole = localStorage.getItem(environment.storageKeys.userRole);
+
+    if (userRole === null) {
+      return UserRole.unknown;
+    }
+
+    return +userRole;
   }
 
   /**
@@ -192,6 +149,6 @@ export class AuthService {
    * Returns if current user is admin
    */
   public isAdmin(): boolean {
-    return this.getUserRole() === "admin";
+    return this.getUserRole() === UserRole.admin;
   }
 }

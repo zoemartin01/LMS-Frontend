@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
@@ -11,6 +11,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './order-view.component.html',
   styleUrls: ['./order-view.component.scss']
 })
+
+/**
+ * Component for the order view popup
+ *
+ *
+ */
 export class OrderViewComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -18,26 +24,33 @@ export class OrderViewComponent implements OnInit {
     quantity: null,
     purchaseUrl: '',
     userId: null,
+    userFullName: '',
     orderStatus: OrderStatus.unknown,
   }
 
-  constructor(public inventoryService: InventoryService, private route: ActivatedRoute) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {OrderService} orderService service providing order functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
+  constructor(public orderService: OrderService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
-  private async getOrderData() : Promise<void> {
+  public async getOrderData() : Promise<void> {
   }
 
   /**
@@ -47,7 +60,7 @@ export class OrderViewComponent implements OnInit {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    */
   public openOrderDeletionDialog(): void {
   }

@@ -13,20 +13,25 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
 })
 
 /**
- * Class for global settings
- * @typedef {Component} GlobalSettingsComponent
- * @class
+ * Component for global settings page
+ *
+ *
  */
 export class GlobalSettingsComponent implements OnInit {
   public maxRecordings: number|null = null;
   public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   */
   constructor(public adminService: AdminService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getGlobalSettings();
@@ -50,6 +55,14 @@ export class GlobalSettingsComponent implements OnInit {
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
+  }
+
+  /**
+   * Opens whitelist retailer view
+   *
+   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   */
+  public openWhitelistRetailerView(whitelistRetailerId: WhitelistRetailerId): void {
   }
 
   /**

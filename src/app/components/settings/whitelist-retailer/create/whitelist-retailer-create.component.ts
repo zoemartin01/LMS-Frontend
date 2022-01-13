@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
 import { AdminService } from "../../../../services/admin.service";
@@ -10,16 +10,18 @@ import { AdminService } from "../../../../services/admin.service";
 })
 
 /**
- * Class for creating a whitelist retailer
- * @typedef {Component} WhitelistRetailerCreateComponent
- * @class
+ * Component whitelist retailer creation popup
+ *
+ *
  */
-export class WhitelistRetailerCreateComponent implements OnInit {
+export class WhitelistRetailerCreateComponent {
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   */
   constructor(public adminService: AdminService) {
-  }
-
-  ngOnInit(): void {
   }
 
   /**

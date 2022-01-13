@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {LivecamService} from "../../../services/livecam.service";
+import { LivecamService } from "../../../services/livecam.service";
 
 import { Recording } from 'src/app/types/recording';
 import { RecordingId } from 'src/app/types/aliases/recording-id';
@@ -10,22 +10,41 @@ import { RecordingId } from 'src/app/types/aliases/recording-id';
   templateUrl: './livecam-overview.component.html',
   styleUrls: ['./livecam-overview.component.scss']
 })
+
+/**
+ * Component for the overview of the livecam
+ *
+ *
+ */
 export class LivecamOverviewComponent implements OnInit {
   public recordings: Recording[] = [];
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {LivecamService} livecamService service providing livecam functionalities
+   */
   constructor(public livecamService: LivecamService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
+    this.getRecordings();
+    this.getScheduledRecordings();
   }
 
   /**
-   * Gets recording data
+   * Gets recording data of all recordings
    */
   public async getRecordings(): Promise<void> {
+  }
+
+  /**
+   * Gets recording data of all scheduled recordings
+   */
+  public async getScheduledRecordings(): Promise<void> {
   }
 
   /**
@@ -35,24 +54,24 @@ export class LivecamOverviewComponent implements OnInit {
   }
 
   /**
-   * Download a recording
+   * Downloads a recording
    *
-   * @param recordingId id of recording
+   * @param {RecordingId} recordingId id of recording
    */
   public async downloadRecording(recordingId: RecordingId): Promise<void> {
   }
 
   /**
-   * Open recording deletion dialog
+   * Opens recording deletion dialog
    *
-   * @param recordingId id of recording
+   * @param {RecordingId} recordingId id of recording
    */
-  public openDeleteRecordingDialog(recordingId: RecordingId): void {
+  public openRecordingDeletionDialog(recordingId: RecordingId): void {
   }
 
   /**
-   * Open recording schedule dialog
+   * Opens recording schedule form
    */
-  public openScheduleRecordingDialog(): void {
+  public openScheduleRecordingForm(): void {
   }
 }

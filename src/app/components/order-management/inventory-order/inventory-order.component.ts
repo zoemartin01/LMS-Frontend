@@ -14,6 +14,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
   templateUrl: './inventory-order.component.html',
   styleUrls: ['./inventory-order.component.scss']
 })
+
+/**
+ * Component to inventory an order
+ *
+ *
+ */
 export class InventoryOrderComponent implements OnInit {
   public order: Order = {
     id: null,
@@ -21,10 +27,18 @@ export class InventoryOrderComponent implements OnInit {
     quantity: null,
     purchaseUrl: '',
     userId: null,
+    userFullName: '',
     orderStatus: OrderStatus.unknown,
   }
   public inventoryItems: InventoryItem[] = [];
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {OrderService} orderService service providing order functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(
     public inventoryService: InventoryService,
     public orderService: OrderService,
@@ -32,29 +46,29 @@ export class InventoryOrderComponent implements OnInit {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.order.id = +params['id'];
+      this.order.id = params['id'];
       this.getOrderData();
     });
   }
 
   /**
-   * Get all data of order
+   * Gets all data of order
    */
-  private async getOrderData(): Promise<void> {
+  public async getOrderData(): Promise<void> {
   }
 
   /**
-   * Get all inventory items
+   * Gets all inventory items
    */
-  private async getInventoryItems(): Promise<void> {
+  public async getInventoryItems(): Promise<void> {
   }
 
   /**
-   * Inventories order
+   * Sets order status to "inventoried" and creates new inventory item if needed
    *
    * @param {NgForm} inventoryOrderForm submitted inventory form
    */

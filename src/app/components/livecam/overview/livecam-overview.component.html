@@ -1,1 +1,31 @@
-<p>overview works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">Livecam</h1>
+</div>
+
+<div class="row">
+  <div class="mx-auto" style="width: 600px; height: 400px; background-color: #6c757d"></div>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Scheduled Recordings</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Resolution</th>
+      <th class="col-sm-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let recording of recordings">
+      <td>{{ recording.start?.format("DD.MM.YYYY, HH:mm") }}</td>
+      <td>{{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
+      <td>{{ recording.resolution }}</td>
+      <td class="col-sm-2">
+        <a routerLink="/livecam/schedule/{{ recording.id }}/delete"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

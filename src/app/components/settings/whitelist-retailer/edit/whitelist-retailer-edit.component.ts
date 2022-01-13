@@ -13,9 +13,9 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Class for editing a whitelist retailer
- * @typedef {Component} WhitelistRetailerEditComponent
- * @class
+ * Component for whitelist retailer edit popup
+ *
+ *
  */
 export class WhitelistRetailerEditComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
@@ -24,15 +24,21 @@ export class WhitelistRetailerEditComponent implements OnInit {
     domains: [],
   }
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.whitelistRetailer.id = +params['id'];
+      this.whitelistRetailer.id = params['id'];
       this.getWhitelistRetailerData();
     });
   }

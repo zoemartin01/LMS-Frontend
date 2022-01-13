@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 
 /**
  * Component for the safety instructions page
+ *
+ *
  */
 export class SafetyInstructionsComponent {
 }

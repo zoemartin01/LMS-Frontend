@@ -1,22 +1,33 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import { AuthService } from "../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: 'app-email-verification',
   templateUrl: './email-verification.component.html',
   styleUrls: ['./email-verification.component.scss']
 })
+
+/**
+ * Component for the email verification page
+ *
+ *
+ */
 export class EmailVerificationComponent {
 
-  constructor() {
+  /**
+   * Constructor
+   * @constructor
+   * @param {UserService} userService service providing user functionalities
+   */
+  constructor(private userService: UserService) {
   }
 
   /**
-   * Verify user's email with provided data
+   * Verifies user's email with provided data
    *
-   * @param verifyForm submitted register form
+   * @param {NgForm} verifyForm submitted verification form
    */
   public async verifyEmail(verifyForm: NgForm): Promise<void> {
     if (verifyForm.valid) {

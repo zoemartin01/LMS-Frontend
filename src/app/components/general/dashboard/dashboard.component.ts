@@ -13,6 +13,8 @@ import { MessagingService } from "../../../services/messaging.service";
 
 /**
  * Component for the dashboard page
+ *
+ *
  */
 export class DashboardComponent implements OnInit {
   public unreadMessages: UnreadMessages = {
@@ -22,11 +24,17 @@ export class DashboardComponent implements OnInit {
     users: 0,
   };
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AuthService} authService service providing appointment functionalities
+   * @param {MessagingService} messagingService service providing messaging functionalities
+   */
   constructor(public authService: AuthService, public messagingService: MessagingService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();
@@ -36,5 +44,13 @@ export class DashboardComponent implements OnInit {
    * Retrieves the amounts of unread messages for current user
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
+    this.messagingService.getUnreadMessagesAmounts().subscribe({
+      next: res => {
+        this.unreadMessages = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }

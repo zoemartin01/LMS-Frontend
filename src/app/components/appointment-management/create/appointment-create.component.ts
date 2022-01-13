@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
 import { AppointmentService } from "../../../services/appointment.service";
@@ -10,17 +10,18 @@ import { AppointmentService } from "../../../services/appointment.service";
 })
 
 /**
- * Component for the appointment create site, to create a new appointment
+ * Component for the appointment create page
+ *
+ *
  */
-export class AppointmentCreateComponent implements OnInit {
-
-  constructor(public appointmentService: AppointmentService) {
-  }
+export class AppointmentCreateComponent {
 
   /**
-   * Init page
+   * Constructor
+   * @constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
    */
-  ngOnInit(): void {
+  constructor(public appointmentService: AppointmentService) {
   }
 
   /**

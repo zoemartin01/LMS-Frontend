@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 
 /**
  * Component for the homepage
+ * @typedef {Component} HomepageComponent
+ * @class
  */
 export class HomepageComponent {
 }

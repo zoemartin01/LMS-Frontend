@@ -10,22 +10,34 @@ import { OrderId } from "../../../types/aliases/order-id";
   templateUrl: './personal-order-list.component.html',
   styleUrls: ['./personal-order-list.component.scss']
 })
+
+/**
+ * Component for personal order list page
+ *
+ *
+ */
 export class PersonalOrderListComponent implements OnInit {
   public orders: Order[] = [];
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {OrderService} orderService service providing order functionalities
+   */
   constructor(public orderService: OrderService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
+    this.getOrders();
   }
 
   /**
-   * Lists all orders with data
+   * Gets data of all orders
    */
-  private async getOrders(): Promise<void> {
+  public async getOrders(): Promise<void> {
   }
 
   /**
@@ -37,15 +49,15 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Opens order edit form
    *
-   * @param orderId id of order to edit
+   * @param {OrderId} orderId id of order to edit
    */
   public openOrderEditForm(orderId: OrderId): void {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    *
-   * @param orderId id of the order
+   * @param {OrderId} orderId id of the order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
   }
@@ -53,7 +65,7 @@ export class PersonalOrderListComponent implements OnInit {
   /**
    * Opens order view popup
    *
-   * @param orderId
+   * @param {OrderId} orderId id of the order
    */
   public openOrderView(orderId: OrderId): void {
   }

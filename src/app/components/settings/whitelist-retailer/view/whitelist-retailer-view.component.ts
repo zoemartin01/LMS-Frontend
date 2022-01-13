@@ -12,9 +12,9 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 })
 
 /**
- * Class for the view of a whitelist retailer
- * @typedef {Component} WhitelistRetailerViewComponent
- * @class
+ * Component for whitelist retailer view popup
+ *
+ *
  */
 export class WhitelistRetailerViewComponent implements OnInit {
   public whitelistRetailer: WhitelistRetailer = {
@@ -23,15 +23,21 @@ export class WhitelistRetailerViewComponent implements OnInit {
     domains: [],
   }
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
   constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.whitelistRetailer.id = +params['id'];
+      this.whitelistRetailer.id = params['id'];
       this.getWhitelistRetailerData();
     });
   }
@@ -49,7 +55,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
   }
 
   /**
-   * Opens room delete confirmation popup
+   * Opens room delete confirmation dialog
    */
   public openWhitelistRetailerDeletionDialog(): void {
   }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
-import { AuthService } from "../../../services/auth.service";
+import { AdminService } from "../../../services/admin.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-view',
@@ -13,25 +14,35 @@ import { UserRole } from "../../../types/enums/user-role";
 })
 
 /**
- * Class for view of a user
- * @typedef {Component} UserViewComponent
- * @class
+ * Component for user view popup
+ *
+ *
  */
 export class UserViewComponent implements OnInit {
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
+    notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public authService: AuthService, private route: ActivatedRoute) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
+  constructor(public adminService: AdminService, private route: ActivatedRoute) {
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.user.id = +params['id'];
+      this.user.id = params['id'];
       this.getUserData();
     });
   }
@@ -50,7 +61,7 @@ export class UserViewComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
   }

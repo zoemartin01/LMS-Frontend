@@ -8,16 +8,29 @@ import { NgForm } from "@angular/forms";
   templateUrl: './inventory-item-create.component.html',
   styleUrls: ['./inventory-item-create.component.scss']
 })
-export class InventoryItemCreateComponent {
 
+/**
+ * Component for the inventory item create popup
+ *
+ *
+ *
+ */
+export class InventoryItemCreateComponent {
+  public inventoryItems: String[] = []
+
+  /**
+   * Constructor
+   * @constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   */
   constructor(public inventoryService: InventoryService) {
   }
 
   /**
-   * Creates inventory item with data
+   * Opens inventory creation form
    *
    * @param {NgForm} inventoryItemCreationForm submitted create form
    */
-  public async openInventoryItemCreationForm(inventoryItemCreationForm: NgForm): Promise<void> {
+  public async createInventoryItem(inventoryItemCreationForm: NgForm): Promise<void> {
   }
 }

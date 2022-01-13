@@ -10,22 +10,34 @@ import { OrderId } from "../../../types/aliases/order-id";
   templateUrl: './admin-order-list.component.html',
   styleUrls: ['./admin-order-list.component.scss']
 })
-export class AdminOrderListComponent implements OnInit {
-  public orderList: Order[] = [];
 
+/**
+ * Component for the admin order list page
+ *
+ *
+ */
+export class AdminOrderListComponent implements OnInit {
+  public orders: Order[] = [];
+
+  /**
+   * Constructor
+   * @constructor
+   * @param {OrderService} orderService service providing order functionalities
+   */
   constructor(public orderService: OrderService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
+    this.getInventory();
   }
 
   /**
-   * Lists all orders with data
+   * Gets all orders with data
    */
-  private async getInventory(): Promise<void> {
+  public async getInventory(): Promise<void> {
   }
 
   /**
@@ -37,15 +49,15 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Opens order edit form
    *
-   * @param orderId id of order to edit
+   * @param {OrderId} orderId id of order to edit
    */
   public openOrderEditForm(orderId: OrderId): void {
   }
 
   /**
-   * Opens order delete confirmation popup
+   * Opens order deletion confirmation dialog
    *
-   * @param orderId id of order
+   * @param {OrderId} orderId id of order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
   }
@@ -53,8 +65,24 @@ export class AdminOrderListComponent implements OnInit {
   /**
    * Opens order view popup
    *
-   * @param orderId id of order
+   * @param {OrderId} orderId id of order
    */
   public openOrderView(orderId: OrderId): void {
+  }
+
+  /**
+   * Sets order request to accepted
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public async acceptOrderRequest(orderId: OrderId): Promise<void> {
+  }
+
+  /**
+   * Sets order request to declined
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public async declineOrderRequest(orderId: OrderId): Promise<void> {
   }
 }

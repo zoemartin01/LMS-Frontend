@@ -12,25 +12,46 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 })
 
 /**
- * Component for the admin appointment list site, to view all appointments and all requested appointments
+ * Component for the admin appointment list page, to view all appointments and all requested appointments
+ *
+ *
  */
 export class AdminAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
 
+  /**
+   * Constructor
+   * @constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   */
   constructor(public appointmentService: AppointmentService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getAppointments();
   }
 
   /**
+   * Gets appointment data of all appointments
+   */
+  public async getAppointments(): Promise<void> {
+  }
+
+  /**
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+  }
+
+  /**
+   * Opens appointment view
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
   }
 
   /**
@@ -42,13 +63,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Gets appointment data of all appointments
-   */
-  public async getAppointments(): Promise<void> {
-  }
-
-  /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -64,7 +79,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

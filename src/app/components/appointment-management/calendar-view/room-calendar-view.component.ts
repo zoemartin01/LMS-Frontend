@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import * as moment from "moment";
 
+import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
+import { RoomService } from "../../../services/room.service";
 
 import { Appointment } from "../../../types/appointment";
-import { TimespanId } from "../../../types/aliases/timespan-id";
 import { Room } from "../../../types/room";
+import { RoomId } from "../../../types/aliases/room-id";
+import { RoomTimespan } from "../../../types/room-timespan";
+import { TimespanId } from "../../../types/aliases/timespan-id";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -14,7 +19,9 @@ import { Room } from "../../../types/room";
 })
 
 /**
- * Component for the room calendar view site, to view all appointments and thus free slots of one room
+ * Component for the room calendar view page, to view all appointments and thus free slots of one room
+ *
+ *
  */
 export class RoomCalendarViewComponent implements OnInit {
   public room: Room = {
@@ -23,27 +30,74 @@ export class RoomCalendarViewComponent implements OnInit {
     description: '',
     maxConBookings: 1,
     automaticRequestAcceptance: null,
+    availableTimeslots: [],
+    unavailableTimeslots: [],
   };
+  public rooms: Room[] = [];
   public appointments: Appointment[] = [];
+  public displayTimespans: RoomTimespan[][][] = [];
+  public minTimeslot: number = 0;
+  public columnKeys = Array.from(Array(10).keys());
+  public now: moment.Moment = moment();
 
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   * @param {RoomService} roomService service providing room functionalities
+   * @param {ActivatedRoute} route route that activated this component
+   */
+  constructor(
+    public appointmentService: AppointmentService,
+    public authService: AuthService,
+    public roomService: RoomService,
+    private route: ActivatedRoute) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.room.id = +params['id'];
-      this.getRoomData();
-      this.getAppointments();
+      this.room.id = params['id'];
+      this.updateCalendar();
+      this.getRooms();
     });
   }
 
   /**
-   * Get all data of room
+   * Gets all data of room
    */
-  private async getRoomData() : Promise<void> {
+  public async getRoomData() : Promise<void> {
+  }
+
+  /**
+   * Gets appointment data of all appointments of one room
+   *
+   * @param {RoomId} roomId id of room
+   */
+  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
+  }
+
+  /**
+   * Updates array to display appointments using the appointment
+   * @private
+   */
+  private async updateCalendar() {
+    this.getRoomData().then(() => {
+      this.getAppointmentsForRoom(this.room.id).then(() => {
+        let result = this.roomService.getTimespansAsCalendar(this.room, this.appointments);
+        this.displayTimespans = result.displayTimespans;
+        this.minTimeslot = result.minTimeslot;
+      });
+    });
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public getRooms(): void {
   }
 
   /**
@@ -61,13 +115,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Gets appointment data of all appointments of one room
-   */
-  public async getAppointments(): Promise<void> {
-  }
-
-  /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
@@ -83,7 +131,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Sets appointment request to accepted
+   * Sets appointment request to declined
    *
    * @param {TimespanId} appointmentId id of appointment
    */

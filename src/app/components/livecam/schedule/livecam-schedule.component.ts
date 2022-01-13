@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { LivecamService } from '../../../services/livecam.service';
@@ -8,15 +8,20 @@ import { LivecamService } from '../../../services/livecam.service';
   templateUrl: './livecam-schedule.component.html',
   styleUrls: ['./livecam-schedule.component.scss']
 })
-export class LivecamScheduleComponent implements OnInit {
 
-  constructor(public livecamService: LivecamService) {
-  }
+/**
+ * Component for the scheduling of a livecam recording
+ *
+ *
+ */
+export class LivecamScheduleComponent {
 
   /**
-   * Init page
+   * Constructor
+   * @constructor
+   * @param {LivecamService} livecamService service providing livecam functionalities
    */
-  ngOnInit(): void {
+  constructor(public livecamService: LivecamService) {
   }
 
   /**

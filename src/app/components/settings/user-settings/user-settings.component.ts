@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-settings',
@@ -12,24 +13,33 @@ import { UserRole } from "../../../types/enums/user-role";
 })
 
 /**
- * Class for user settings
- * @typedef {Component} UserSettingsComponent
- * @class
+ * Component for user settings page
+ *
+ *
  */
 export class UserSettingsComponent implements OnInit {
   public emailNotification: boolean|null = null;
   public notificationBox: boolean|null = null;
   public user: User = {
     id: null,
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    userRole: UserRole.unkown,
+    userRole: UserRole.unknown,
+    notificationChannel: NotificationChannel.unknown,
   };
 
-  constructor(public authService: AuthService) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {UserService} userService service providing user functionalities
+   */
+  constructor(public userService: UserService) {
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.getUserData();
     //@todo get
@@ -49,15 +59,9 @@ export class UserSettingsComponent implements OnInit {
   }
 
   /**
-   * Opens user delete confirmation dialog
+   * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
-  }
-
-  /**
-   * Gets notification channel
-   */
-  public async getNotificationChannel(): Promise<void>{
   }
 
   /**

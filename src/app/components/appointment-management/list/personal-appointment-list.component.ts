@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
@@ -10,20 +11,35 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
   templateUrl: './personal-appointment-list.component.html',
   styleUrls: ['./personal-appointment-list.component.scss']
 })
+
 /**
- * Component for the personal appointments list site, to view all appointments of one user
+ * Component for the personal appointments list page
+ *
+ *
  */
 export class PersonalAppointmentListComponent implements OnInit {
   public appointments: Appointment[] = [];
 
-  constructor(public appointmentService: AppointmentService) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   */
+  constructor(public appointmentService: AppointmentService, public authService: AuthService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
-    this.getAppointments();
+    this.getAllAppointmentsForCurrentUser();
+  }
+
+  /**
+   * Gets appointment data of all appointments for current user
+   */
+  public async getAllAppointmentsForCurrentUser(): Promise<void> {
   }
 
   /**
@@ -33,40 +49,18 @@ export class PersonalAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Opens appointment edit form
+   * Opens appointment view
    *
    * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentEditForm(appointmentId: TimespanId): void {
+  public openAppointmentView(appointmentId: TimespanId): void {
   }
 
   /**
-   * Gets appointment data of all appointments for current user
-   */
-  public async getAppointments(): Promise<void> {
-  }
-
-  /**
-   * Opens appointment deletion popup
+   * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
-  }
-
-  /**
-   * Sets appointment request to accepted
-   *
-   * @param {TimespanId} appointmentId id of appointment
-   */
-  public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
-  }
-
-  /**
-   * Sets appointment request to accepted
-   *
-   * @param {TimespanId} appointmentId id of appointment
-   */
-  public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
   }
 }

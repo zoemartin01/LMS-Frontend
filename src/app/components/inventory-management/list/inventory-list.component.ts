@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
 
-import { OrderService } from "../../../services/order.service";
+import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
@@ -12,23 +11,36 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
+
+/**
+ * Component for the inventory list page
+ *
+ *
+ *
+ */
 export class InventoryListComponent implements OnInit {
   public inventory: InventoryItem[] = [];
 
-  constructor(public inventoryService: InventoryService) {
+  /**
+   * Constructor
+   * @constructor
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   */
+  constructor(public inventoryService: InventoryService, public authService: AuthService) {
   }
 
   /**
-   * Init page
+   * Inits page
    */
   ngOnInit(): void {
     this.getInventory();
   }
 
   /**
-   * Lists all items with data
+   * Gets all items with data
    */
-  private async getInventory(): Promise<void> {
+  public async getInventory(): Promise<void> {
   }
 
   /**
@@ -40,7 +52,7 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create order
    *
-   * @param inventoryItemId id of item to order
+   * @param {InventoryItemId} inventoryItemId id of item to order
    */
   public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
   }
@@ -48,7 +60,7 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens inventory item view
    *
-   * @param inventoryItemId id of item to view
+   * @param {InventoryItemId} inventoryItemId id of item to view
    */
   public openInventoryItemView(inventoryItemId: InventoryItemId): void {
   }
@@ -56,13 +68,15 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens inventory item edit form
    *
-   * @param inventoryItemId id of item to edit
+   * @param {InventoryItemId} inventoryItemId id of item to edit
    */
   public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
   }
 
   /**
-   * Opens inventory item delete confirmation popup
+   * Opens inventory item deletion confirmation dialog
+   *
+   * @param {InventoryItemId} inventoryItemId id of item to delete
    */
   public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
   }

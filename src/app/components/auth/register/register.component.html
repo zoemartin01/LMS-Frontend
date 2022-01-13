@@ -1,0 +1,76 @@
+<div class="row">
+  <h1 class="display-2 text-center">Registration</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-center">
+  <div class="card col-md-4">
+    <div class="col-auto card-body">
+      <form (keyup.enter)="register(registerForm)" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+        <div class="form-group row">
+          <div class="col">
+            <label for="firstname" class="my-1">First Name</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="First Name" aria-describedby="inputGroupPrepend"
+                     id="firstname" required name="firstname" autocomplete="given-name" ngModel>
+            </div>
+          </div>
+          <div class="col">
+            <label for="name" class="my-1">Last Name</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Last Name" aria-describedby="inputGroupPrepend"
+                     id="name" required name="name" autocomplete="family-name" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="my-1">E-Mail Address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+            </div>
+            <input class="form-control" type="email" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
+                   id="email" required name="email" autocomplete="email" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="my-1">Password</label>
+          <input class="form-control" type="password" placeholder="Password" id="password" required name="password"
+                 autocomplete="password" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="password_confirmation" class="my-1">Password Confirmation</label>
+          <input class="form-control" type="password" placeholder="Password Confirmation"
+                 id="password_confirmation" required name="password_confirmation" autocomplete="password" ngModel>
+        </div>
+        <br>
+        <div class="row text-center">
+          <div class="form-group">
+            <input type="checkbox" class="form-check-input" id="safetyInstructions" required
+                   name="safetyInstructions" ngModel>
+            <label class="form-check-label" for="safetyInstructions">
+              I have read and agree to the <a routerLink="/safety-instructions">Safety Introductions of Hardware Lab</a>
+            </label>
+          </div>
+          <div class="form-group">
+            <input type="checkbox" class="form-check-input" id="hwlabRules" required
+                   name="hwlabRules" ngModel>
+            <label class="form-check-label" for="hwlabRules">
+              I have read and agree to the <a routerLink="/hwlab-rules">Rules of Hardware Lab</a>
+            </label>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-primary" [disabled]="!registerForm.valid" role="button">Register</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row text-center my-1">
+    <p>Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>
