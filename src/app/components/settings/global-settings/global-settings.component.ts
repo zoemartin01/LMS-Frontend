@@ -44,6 +44,13 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
+   * Gets whitelist retailers
+   */
+  public async getWhitelistRetailers(): Promise<void> {
+  }
+
+
+  /**
    * Changes data of user
    *
    * @param {NgForm} globalSettingsEditForm form to edit user

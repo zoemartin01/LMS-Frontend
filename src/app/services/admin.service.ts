@@ -92,6 +92,16 @@ export class AdminService {
   }
 
   /**
+   * Gets all whitelist retailers
+   *
+   */
+  public getWhitelistRetailers(): Observable<any> {
+    //@todo implement
+    return this.httpClient.get('');
+  }
+
+
+  /**
    * Creates whitelist retailer with data
    *
    * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
