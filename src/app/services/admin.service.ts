@@ -100,7 +100,6 @@ export class AdminService {
     return this.httpClient.get('');
   }
 
-
   /**
    * Creates whitelist retailer with data
    *

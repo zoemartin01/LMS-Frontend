@@ -49,7 +49,6 @@ export class GlobalSettingsComponent implements OnInit {
   public async getWhitelistRetailers(): Promise<void> {
   }
 
-
   /**
    * Changes data of user
    *
