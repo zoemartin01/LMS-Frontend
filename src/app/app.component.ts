@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
    * @param {Router} router router providing navigation
    */
   constructor(
-      private authService: AuthService,
+      public authService: AuthService,
       public messagingService: MessagingService,
       private userService: UserService,
       private router: Router
