@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
+import { AuthService } from "../../../services/auth.service";
 import { MessagingService } from "../../../services/messaging.service";
+import { UserService } from "../../../services/user.service";
 
 import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-message-box',
@@ -30,15 +34,36 @@ export class MessageBoxComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {MessagingService} messagingService service providing messaging functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   * @param {Router} router router providing navigation
    */
-  constructor(public messagingService: MessagingService) {
+  constructor(
+    public messagingService: MessagingService,
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.updatePage();
+    this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+      next: (res) => {
+        const notificationChannel = res.notificationChannel;
+        if (notificationChannel === NotificationChannel.emailAndMessageBox
+          || notificationChannel === NotificationChannel.messageBoxOnly) {
+          this.router.navigateByUrl('/dashboard');
+        }
+
+        this.updatePage();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**

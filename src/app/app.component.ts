@@ -3,8 +3,10 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "./services/auth.service";
 import { MessagingService } from "./services/messaging.service";
+import { UserService } from "./services/user.service";
 
 import { UnreadMessages } from "./types/unread-messages";
+import { NotificationChannel } from "./types/enums/notification-channel";
 
 @Component({
   selector: 'app-root',
@@ -24,15 +26,22 @@ export class AppComponent implements OnInit {
     orders: 0,
     users: 0,
   };
+  public showMessageBox: boolean = false;
 
   /**
    * Constructor
    * @constructor
-   * @param {AuthService} authService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {MessagingService} messagingService service providing messaging functionalities
+   * @param {UserService} userService service providing user functionalities
    * @param {Router} router router providing navigation
    */
-  constructor(public authService: AuthService, private messagingService: MessagingService, private router: Router) {
+  constructor(
+      public authService: AuthService,
+      public messagingService: MessagingService,
+      private userService: UserService,
+      private router: Router
+    ) {
   }
 
   /**
@@ -41,6 +50,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
       this.getUnreadMessagesAmounts();
+
+      this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+        next: (res) => {
+          const notificationChannel = res.notificationChannel;
+          this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
+            || notificationChannel === NotificationChannel.messageBoxOnly);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
     }
   }
 
