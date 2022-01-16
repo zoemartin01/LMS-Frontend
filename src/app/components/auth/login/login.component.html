@@ -42,7 +42,8 @@
         </div>
         <br>
         <div class="alert alert-danger" role="alert" *ngIf="loginError">
-          Login failed!
+          <b>Login failed:</b><br>
+          {{ loginErrorMessage }}
         </div>
         <div class="row">
           <div class="col text-center">
