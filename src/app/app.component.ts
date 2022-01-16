@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     if (this.authService.isUserLoggedIn()) {
       this.getUnreadMessagesAmounts();
 
-      this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+      this.userService.getUserDetails().subscribe({
         next: (res) => {
           const notificationChannel = res.notificationChannel;
           this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
