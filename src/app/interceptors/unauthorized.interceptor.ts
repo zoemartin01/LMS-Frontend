@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Router } from "@angular/router";
 import { Observable, switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from "../../environments/environment";
 
 import { AuthService } from "../services/auth.service";
 
@@ -13,13 +15,13 @@ import { AuthService } from "../services/auth.service";
  * @class
  */
 export class UnauthorizedInterceptor implements HttpInterceptor {
-
   /**
    * Constructor
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
+   * @param {Router} router router providing navigation
    */
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   /**
@@ -30,14 +32,13 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      if (err.status == 401 && this.authService.isUserLoggedIn()) {
+      if (err.status === 401 && this.authService.isUserLoggedIn()) {
         return this.handleUnauthorized(request, next);
       }
 
       const error = (err && err.error && err.error.message) || err.statusText;
-      console.error(err);
       return throwError(error);
-    }))
+    }));
   }
 
   /**
@@ -48,6 +49,11 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
    * @private
    */
   private handleUnauthorized(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.url === `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`) {
+      localStorage.clear();
+      return next.handle(request);
+    }
+
     return this.authService.tokenRefresh().pipe(
       switchMap((res: { accessToken: string }) => {
         this.authService.setAccessToken(res.accessToken);
@@ -56,6 +62,10 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${this.authService.getAccessToken()}`,
           }
         }));
+      }),
+      catchError(err => {
+        const error = (err && err.error && err.error.message) || err.statusText;
+        return throwError(() => new Error(error));
       })
     );
   }

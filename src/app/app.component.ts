@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 import { AuthService } from "./services/auth.service";
 import { MessagingService } from "./services/messaging.service";
@@ -29,15 +30,18 @@ export class AppComponent implements OnInit {
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {MessagingService} messagingService service providing messaging functionalities
+   * @param {Router} router router providing navigation
    */
-  constructor(public authService: AuthService, private messagingService: MessagingService) {
+  constructor(public authService: AuthService, private messagingService: MessagingService, private router: Router) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.getUnreadMessagesAmounts();
+    if (this.authService.isUserLoggedIn()) {
+      this.getUnreadMessagesAmounts();
+    }
   }
 
   /**
@@ -47,6 +51,22 @@ export class AppComponent implements OnInit {
     this.messagingService.getUnreadMessagesAmounts().subscribe({
       next: res => {
         this.unreadMessages = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  /**
+   * Triggers logout of user
+   */
+  public async logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.clear();
+
+        this.router.navigate(['/']);
       },
       error: error => {
         console.error('There was an error!', error);

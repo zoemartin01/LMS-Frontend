@@ -19,6 +19,7 @@ import { UserRole } from "../../../types/enums/user-role";
  */
 export class LoginComponent {
   loginError: boolean = false;
+  activeDirectory: boolean = false;
 
   /**
    * Constructor
@@ -35,10 +36,9 @@ export class LoginComponent {
    * @param {NgForm} authForm submitted login form
    */
   public async login(authForm: NgForm): Promise<void> {
-    const isActiveDirectory: boolean = false;
     if (authForm.valid) {
-      this.authService.login(authForm.value.email, authForm.value.password, isActiveDirectory).subscribe({
-        next: (res: {accessToken: string, refreshToken: string, userId: string, role: string}) => {
+      this.authService.login(authForm.value.email, authForm.value.password, this.activeDirectory).subscribe({
+        next: (res: { accessToken: string, refreshToken: string, userId: string, role: string }) => {
           this.authService.setAccessToken(res.accessToken);
           this.authService.setRefreshToken(res.refreshToken);
           this.authService.setUserId(res.userId);
