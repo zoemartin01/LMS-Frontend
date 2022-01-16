@@ -39,7 +39,9 @@ export class AppComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getUnreadMessagesAmounts();
+    if (this.authService.isUserLoggedIn()) {
+      this.getUnreadMessagesAmounts();
+    }
   }
 
   /**
