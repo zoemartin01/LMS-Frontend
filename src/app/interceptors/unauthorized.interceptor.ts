@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable, switchMap, throwError } from 'rxjs';
+import { Router } from "@angular/router";
+import { Observable, switchMap, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from "../../environments/environment";
 
 import { AuthService } from "../services/auth.service";
-import {Router} from "@angular/router";
-import {environment} from "../../environments/environment";
 
 @Injectable()
 
@@ -32,7 +32,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      if (err.status == 401 && this.authService.isUserLoggedIn()) {
+      if (err.status === 401 && this.authService.isUserLoggedIn()) {
         return this.handleUnauthorized(request, next);
       }
 
@@ -49,6 +49,11 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
    * @private
    */
   private handleUnauthorized(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.url === `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`) {
+      localStorage.clear();
+      return next.handle(request);
+    }
+
     return this.authService.tokenRefresh().pipe(
       switchMap((res: { accessToken: string }) => {
         this.authService.setAccessToken(res.accessToken);
@@ -59,12 +64,6 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
         }));
       }),
       catchError(err => {
-        if (err.status == 401) {
-          localStorage.removeItem(environment.storageKeys.userId);
-          localStorage.removeItem(environment.storageKeys.userRole);
-          localStorage.removeItem(environment.storageKeys.accessToken);
-          localStorage.removeItem(environment.storageKeys.refreshToken);
-        }
         const error = (err && err.error && err.error.message) || err.statusText;
         return throwError(() => new Error(error));
       })
