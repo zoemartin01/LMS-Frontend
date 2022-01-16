@@ -12,7 +12,6 @@ import { AuthService } from "../services/auth.service";
  * @class
  */
 export class JwtInterceptor implements HttpInterceptor {
-
   /**
    * Constructor
    * @constructor

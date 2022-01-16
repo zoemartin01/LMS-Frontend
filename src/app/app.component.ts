@@ -48,18 +48,20 @@ export class AppComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getUnreadMessagesAmounts();
+    if (this.authService.isUserLoggedIn()) {
+      this.getUnreadMessagesAmounts();
 
-    this.userService.getUserDetails(this.authService.getUserId()).subscribe({
-      next: (res) => {
-        const notificationChannel = res.notificationChannel;
-        this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
-          || notificationChannel === NotificationChannel.messageBoxOnly);
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+      this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+        next: (res) => {
+          const notificationChannel = res.notificationChannel;
+          this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
+            || notificationChannel === NotificationChannel.messageBoxOnly);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
+    }
   }
 
   /**
@@ -69,6 +71,22 @@ export class AppComponent implements OnInit {
     this.messagingService.getUnreadMessagesAmounts().subscribe({
       next: res => {
         this.unreadMessages = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  /**
+   * Triggers logout of user
+   */
+  public async logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.clear();
+
+        this.router.navigate(['/']);
       },
       error: error => {
         console.error('There was an error!', error);
