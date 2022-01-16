@@ -1,3 +1,7 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
 :root {
   --grey600:   #6c757d;
   --yellow:    #fce500;
@@ -147,6 +151,3 @@ input.warning {
 .warning {
   color: var(--warning);
 }
-
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
