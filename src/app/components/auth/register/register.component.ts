@@ -16,6 +16,9 @@ import { UserService } from "../../../services/user.service";
  *
  */
 export class RegisterComponent {
+  registerError: boolean = false;
+  registerErrorMessage: string = '';
+  passwordConfirmationFails: boolean = false;
 
   /**
    * Constructor
@@ -43,9 +46,16 @@ export class RegisterComponent {
           this.router.navigate(['/register/verify-email']);
         },
         error: error => {
+          this.registerError = true;
+          this.registerErrorMessage = error;
           console.error('There was an error!', error);
         }
       })
     }
+  }
+
+  checkPasswordConfirmation(registerForm: NgForm) {
+    this.passwordConfirmationFails = !(registerForm.value.password === registerForm.value.password_confirmation
+      || registerForm.value.password_confirmation === '');
   }
 }
