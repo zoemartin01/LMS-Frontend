@@ -53,7 +53,7 @@ export class AuthService {
   public tokenRefresh(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`;
     const requestBody = {
-      token: this.getRefreshToken(),
+      refreshToken: this.getRefreshToken(),
     };
 
     return this.httpClient.post(apiURL, requestBody);
