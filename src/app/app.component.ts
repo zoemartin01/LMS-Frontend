@@ -58,6 +58,9 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Triggers logout of user
+   */
   public async logout() {
     this.authService.logout().subscribe({
       next: () => {
