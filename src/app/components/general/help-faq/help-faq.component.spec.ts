@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
 
 import { HelpFaqComponent } from './help-faq.component';
 
@@ -8,7 +9,12 @@ describe('HelpFaqComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HelpFaqComponent ]
+      declarations: [
+        HelpFaqComponent,
+      ],
+      imports: [
+        HttpClientModule,
+      ],
     })
     .compileComponents();
   });

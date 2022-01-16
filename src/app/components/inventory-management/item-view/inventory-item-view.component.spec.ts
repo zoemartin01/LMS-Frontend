@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { InventoryItemViewComponent } from './inventory-item-view.component';
 
@@ -8,7 +10,13 @@ describe('InventoryItemViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InventoryItemViewComponent ]
+      declarations: [
+        InventoryItemViewComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
   });
