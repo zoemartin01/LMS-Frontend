@@ -46,10 +46,10 @@
             <a routerLink="/help">
               <i class="bi bi-question-circle px-2" style="font-size: 2rem;"></i>
             </a>
-            <a routerLink="/message-box">
+            <a routerLink="/message-box" *ngIf="showMessageBox">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                      style="left: 42px !important; top: 12px !important;">
+                      style="left: 42px !important; top: 12px !important;" *ngIf="unreadMessages.sum !== 0">
                   {{ unreadMessages.sum }}
                   <span class="visually-hidden">unread messages</span>
                 </span>
@@ -116,7 +116,7 @@
             <a routerLink="/message-box" *ngIf="showMessageBox">
               <i class="bi bi-envelope px-2 position-relative" style="font-size: 2rem;">
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style="left: 42px !important; top: 12px !important;">
+                    style="left: 42px !important; top: 12px !important;" *ngIf="unreadMessages.sum !== 0">
                 {{ unreadMessages.sum }}
                 <span class="visually-hidden">unread messages</span>
               </span>
