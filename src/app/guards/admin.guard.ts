@@ -29,11 +29,9 @@ export class AdminGuard implements CanActivate {
    * @param {ActivatedRouteSnapshot} route route that activated the guard
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isAdmin()){
-      return true;
-    }
-
-    return this.router.parseUrl('/dashboard');
+    return this.authService.isAdmin()
+      ? true
+      : this.router.parseUrl('/dashboard');
   }
 }
 
