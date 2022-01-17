@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable, using} from "rxjs";
+import {environment} from "../../environments/environment";
 
-import { User } from "../types/user";
-import { UserId } from "../types/aliases/user-id";
+import {User} from "../types/user";
+import {UserId} from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,6 @@ export class UserService {
 
   /**
    * Retrieves user details
-   * @param {UserId} userId Id of user
    */
   public getUserDetails(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.getCurrentUser}`;
@@ -45,8 +44,9 @@ export class UserService {
    * @param {object} changedData changed fields of user
    */
   public editUserData(changedData: object): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.updateCurrentUser}`;
+
+    return this.httpClient.patch(apiURL, changedData);
   }
 
   /**
@@ -89,7 +89,7 @@ export class UserService {
    * Deletes user
    */
   public deleteUser(): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.deleteCurrentUser}`;
+    return this.httpClient.delete(apiURL);
   }
 }
