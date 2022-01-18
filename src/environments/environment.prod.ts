@@ -41,7 +41,6 @@ export const environment = {
       getWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
       getWhitelistRetailers: '/global-settings/whitelist-retailers',
 
-
       createWhitelistRetailer: '/global-settings/whitelist-retailers',
       updateWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
       deleteWhitelistRetailer: '/global-settings/whitelist-retailers/:id',
