@@ -36,35 +36,46 @@
         </div>
         <div class="form-group">
           <label for="password" class="my-1">Password</label>
-          <input class="form-control" type="password" placeholder="Password" id="password" required name="password"
-                 autocomplete="password" ngModel>
+          <input class="form-control" type="password" placeholder="Password"
+                 id="password" required name="password" autocomplete="password" ngModel
+                 (change)="checkPasswordConfirmation(registerForm)">
         </div>
         <div class="form-group">
           <label for="password_confirmation" class="my-1">Password Confirmation</label>
           <input class="form-control" type="password" placeholder="Password Confirmation"
-                 id="password_confirmation" required name="password_confirmation" autocomplete="password" ngModel>
+                 id="password_confirmation" required name="password_confirmation" autocomplete="password" ngModel
+                 (change)="checkPasswordConfirmation(registerForm)">
+          <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails">
+            <b>Registration failed:</b><br>
+            {{ registerErrorMessage }}
+          </div>
         </div>
         <br>
-        <div class="row text-center">
+        <div class="row">
           <div class="form-group">
-            <input type="checkbox" class="form-check-input" id="safetyInstructions" required
-                   name="safetyInstructions" ngModel>
             <label class="form-check-label" for="safetyInstructions">
+              <input type="checkbox" class="form-check-input" id="safetyInstructions" required
+                     name="safetyInstructions" ngModel>
               I have read and agree to the <a routerLink="/safety-instructions">Safety Introductions of Hardware Lab</a>
             </label>
           </div>
           <div class="form-group">
-            <input type="checkbox" class="form-check-input" id="hwlabRules" required
-                   name="hwlabRules" ngModel>
             <label class="form-check-label" for="hwlabRules">
+              <input type="checkbox" class="form-check-input" id="hwlabRules" required
+                     name="hwlabRules" ngModel>
               I have read and agree to the <a routerLink="/hwlab-rules">Rules of Hardware Lab</a>
             </label>
           </div>
         </div>
         <br>
+        <div class="alert alert-danger" role="alert" *ngIf="registerError">
+          <b>Registration failed:</b><br>
+          {{ registerErrorMessage }}
+        </div>
         <div class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!registerForm.valid" role="button">Register</button>
+            <button class="btn btn-primary" [disabled]="!registerForm.valid && !passwordConfirmationFails"
+                    role="button">Register</button>
           </div>
         </div>
       </form>

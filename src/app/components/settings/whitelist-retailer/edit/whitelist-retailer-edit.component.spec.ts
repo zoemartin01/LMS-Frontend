@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { WhitelistRetailerEditComponent } from './whitelist-retailer-edit.component';
 
@@ -8,7 +11,14 @@ describe('RetailerEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WhitelistRetailerEditComponent ]
+      declarations: [
+        WhitelistRetailerEditComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        FormsModule,
+      ],
     })
     .compileComponents();
   });

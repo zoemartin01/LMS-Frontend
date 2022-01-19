@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();
 
-    this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+    this.userService.getUserDetails().subscribe({
       next: (res) => {
         const notificationChannel = res.notificationChannel;
         this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox

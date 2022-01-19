@@ -24,7 +24,7 @@ export class UserService {
    * Retrieves user details
    * @param {UserId} userId Id of user
    */
-  public getUserDetails(userId : UserId): Observable<any> {
+  public getUserDetails(): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.getCurrentUser}`;
 
     return this.httpClient.get(apiURL);

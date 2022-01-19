@@ -50,7 +50,7 @@ export class MessageBoxComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.userService.getUserDetails(this.authService.getUserId()).subscribe({
+    this.userService.getUserDetails().subscribe({
       next: (res) => {
         const notificationChannel = res.notificationChannel;
         if (notificationChannel === NotificationChannel.emailAndMessageBox

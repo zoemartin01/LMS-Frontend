@@ -19,6 +19,7 @@ import { UserRole } from "../../../types/enums/user-role";
  */
 export class LoginComponent {
   loginError: boolean = false;
+  loginErrorMessage: string = '';
   activeDirectory: boolean = false;
 
   /**
@@ -47,11 +48,9 @@ export class LoginComponent {
           this.router.navigate(['/dashboard']);
         },
         error: error => {
-          if (error.status == 400) {
-            this.loginError = true;
-          }else{
-            console.error('There was an error!', error);
-          }
+          this.loginError = true;
+          this.loginErrorMessage = error;
+          console.error('There was an error!', error);
         }
       })
     }
