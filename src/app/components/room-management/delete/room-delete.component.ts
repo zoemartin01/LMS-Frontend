@@ -21,7 +21,7 @@ export class RoomDeleteComponent implements OnInit {
     id: null,
     name: '',
     description: '',
-    maxConBookings: 1,
+    maxConcurrentBookings: 1,
     automaticRequestAcceptance: null,
     availableTimeslots: [],
     unavailableTimeslots: [],
