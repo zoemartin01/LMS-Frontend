@@ -45,7 +45,8 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to delete
    */
   public deleteRecording(recordingId: RecordingId): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.deleteRecording}`.replace(':id', recordingId!);
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.deleteRecording}`
+      .replace(':id', recordingId!);
     return this.httpClient.delete(apiURL);
   }
 
@@ -55,7 +56,8 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to download
    */
   public downloadRecording(recordingId: RecordingId): Observable<ArrayBuffer> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`.replace(':id', recordingId!);
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`
+      .replace(':id', recordingId!);
     if (recordingId === null) throw new Error('recordingId cannot be null');
 
     apiURL.replace(':id', recordingId);
@@ -68,7 +70,8 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to get data for
    */
   public getRecordingData(recordingId: RecordingId): Observable<Recording> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.getSingleRecording}`.replace(':id', recordingId!);
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.getSingleRecording}`
+      .replace(':id', recordingId!);
     return <Observable<Recording>>this.httpClient.get(apiURL);
   }
 

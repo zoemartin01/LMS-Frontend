@@ -100,7 +100,13 @@ export class LivecamOverviewComponent implements OnInit {
             link.href = data;
             link.download = `Recording-${recording.start?.format("YYYY-MM-DD_HH-mm")}.mp4`;
 
-            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            link.dispatchEvent(
+              new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+              })
+            );
 
             setTimeout(function () {
                 window.URL.revokeObjectURL(data);
