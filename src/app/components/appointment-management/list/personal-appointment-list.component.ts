@@ -5,6 +5,7 @@ import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -40,6 +41,19 @@ export class PersonalAppointmentListComponent implements OnInit {
    * Gets appointment data of all appointments for current user
    */
   public async getAllAppointmentsForCurrentUser(): Promise<void> {
+    this.appointmentService.getAllAppointmentsForCurrentUser().subscribe({
+      next: res => {
+        console.log(res);
+        this.appointments = res.map((appointment: Appointment) => {
+          appointment.start = moment(appointment.start);
+          appointment.end = moment(appointment.end);
+          return appointment;
+        });
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
