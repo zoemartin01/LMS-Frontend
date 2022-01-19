@@ -1,10 +1,10 @@
 import { RoomTimespan } from "./room-timespan";
 import { SeriesId } from "./aliases/series-id";
-import { UserId } from "./aliases/user-id";
+import { User } from "./user";
 import { ConfirmationStatus } from "./enums/confirmation-status";
 
 export interface Appointment extends RoomTimespan {
-  userId: UserId,
+  user: User,
   seriesId: SeriesId,
   confirmationStatus: ConfirmationStatus,
 }

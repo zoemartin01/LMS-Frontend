@@ -192,7 +192,7 @@ export class RoomService {
     //initialise array (timeslot, days, parallel bookings)
     let displayTimespans: RoomTimespan[][][] = [...Array((maxTimeslot - minTimeslot + 1))]
       .map(() => [...Array(7)]
-        .map(() => Array(room.maxConBookings)));
+        .map(() => Array(room.maxConcurrentBookings)));
 
     //set unavailable timespans due to different available timeslots
     //@todo handle case that there are multiple available timeslots per day
@@ -208,8 +208,7 @@ export class RoomService {
 
         displayTimespans[hour][day][0] = {
           id: null,
-          roomId: room.id,
-          roomName: room.name,
+          room,
           start: availableTimespan.start.subtract(timespanStart - minTimeslot, 'hours'),
           end: availableTimespan.start,
           type: RoomTimespanType.unavailable,
@@ -223,8 +222,7 @@ export class RoomService {
 
         displayTimespans[hour][day][0] = {
           id: null,
-          roomId: room.id,
-          roomName: room.name,
+          room,
           start: availableTimespan.end,
           end: availableTimespan.end.add(maxTimeslot - timespanEnd, 'hours'),
           type: RoomTimespanType.unavailable,
