@@ -5,6 +5,9 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import {error} from "@angular/compiler/src/util";
+import {Router} from "@angular/router";
+import {InventoryItemCreateComponent} from "../item-create/inventory-item-create.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -41,6 +44,11 @@ export class InventoryListComponent implements OnInit {
    * Gets all items with data
    */
   public async getInventory(): Promise<void> {
+    this.inventoryService.getInventoryItems().subscribe({
+      error: error => {
+        console.error('There was an error!', error);
+    }
+  })
   }
 
   /**

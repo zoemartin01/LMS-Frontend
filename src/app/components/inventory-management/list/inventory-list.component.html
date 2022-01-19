@@ -18,7 +18,7 @@
       <td>{{ inventoryItem.description }}</td>
       <td>{{ inventoryItem.quantity }}</td>
       <td class="d-flex justify-content-end">
-        <a routerLink="/inventory/item/{{ inventoryItem.id }}" type="button" class="btn btn-secondary mx-1" *ngIf="authService.isAdmin()">
+        <a routerLink="/inventory/item/{{ inventoryItem.id }}" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>
         <a routerLink="/inventory/item/{{ inventoryItem.id }}/edit" type="button" class="btn btn-primary mx-1" *ngIf="authService.isAdmin()">
