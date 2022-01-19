@@ -45,6 +45,9 @@ export class InventoryListComponent implements OnInit {
    */
   public async getInventory(): Promise<void> {
     this.inventoryService.getInventoryItems().subscribe({
+      next: res => {
+        this.inventory = res;
+      },
       error: error => {
         console.error('There was an error!', error);
     }
