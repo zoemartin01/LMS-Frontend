@@ -36,10 +36,10 @@ export class AppointmentService {
   /**
    * Retrieves all appointments for current user
    */
-  public getAllAppointmentsForCurrentUser(): Observable<any> {
+  public getAllAppointmentsForCurrentUser(): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}`;
 
-    return this.httpClient.get(apiURL);
+    return <Observable<Appointment[]>>this.httpClient.get(apiURL);
   }
 
   /**
