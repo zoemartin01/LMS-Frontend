@@ -45,8 +45,8 @@ export class GlobalSettingsComponent implements OnInit {
   public async getGlobalSettings(): Promise<void> {
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
-        this.maxRecordings = res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings');
-        this.autodeleteTimespan = res.filter((setting: GlobalSetting) => setting.key === 'recordings.autodeleteTimespan');
+        this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
+        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recordings.autodeleteTimespan')[0].value;
       },
       error: error => {
         console.error('There was an error!', error);
