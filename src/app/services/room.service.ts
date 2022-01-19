@@ -208,8 +208,7 @@ export class RoomService {
 
         displayTimespans[hour][day][0] = {
           id: null,
-          roomId: room.id,
-          roomName: room.name,
+          room: room,
           start: availableTimespan.start.subtract(timespanStart - minTimeslot, 'hours'),
           end: availableTimespan.start,
           type: RoomTimespanType.unavailable,
@@ -223,8 +222,7 @@ export class RoomService {
 
         displayTimespans[hour][day][0] = {
           id: null,
-          roomId: room.id,
-          roomName: room.name,
+          room: room,
           start: availableTimespan.end,
           end: availableTimespan.end.add(maxTimeslot - timespanEnd, 'hours'),
           type: RoomTimespanType.unavailable,
