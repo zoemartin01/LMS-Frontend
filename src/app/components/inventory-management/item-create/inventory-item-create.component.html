@@ -1,1 +1,38 @@
-<p>inventory-item-create works!</p>
+<div class="row">
+  <h1 class="display-2 text-center">New Order</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-center">
+  <div class="card col-md-5">
+    <div class="card-body">
+      <form (keyup.enter)="createInventoryItem(inventoryItemCreateForm)" #inventoryItemCreateForm="ngForm"
+            (ngSubmit)="createInventoryItem(inventoryItemCreateForm)">
+        <div class="form-group row my-2">
+          <label for="item" class="col-sm-3 col-form-label">Item</label>
+          <div class="col">
+            <input type="text" class="form-control" id="item" placeholder="Item">
+          </div>
+        </div>
+        <div class="form-group row my-2">
+          <label for="description" class="col-sm-3 col-form-label">Description</label>
+          <div class="col">
+            <input type="text" class="form-control" id="description" placeholder="Description">
+          </div>
+        </div>
+        <div class="form-group row my-2">
+          <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+          <div class="col">
+            <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col text-center">
+          <a routerLink="#" class="btn btn-primary" role="button">Create Item</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
