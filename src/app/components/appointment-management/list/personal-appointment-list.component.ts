@@ -43,7 +43,6 @@ export class PersonalAppointmentListComponent implements OnInit {
   public async getAllAppointmentsForCurrentUser(): Promise<void> {
     this.appointmentService.getAllAppointmentsForCurrentUser().subscribe({
       next: res => {
-        console.log(res);
         this.appointments = res.map((appointment: Appointment) => {
           appointment.start = moment(appointment.start);
           appointment.end = moment(appointment.end);
