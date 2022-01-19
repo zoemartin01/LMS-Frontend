@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { PersonalOrderListComponent } from './personal-order-list.component';
 
@@ -8,7 +10,13 @@ describe('PersonalOrderListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PersonalOrderListComponent ]
+      declarations: [
+        PersonalOrderListComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
   });

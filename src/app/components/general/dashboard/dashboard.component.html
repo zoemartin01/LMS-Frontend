@@ -10,9 +10,11 @@
       <div class="col text-center">
         <a routerLink="/appointments" class="btn btn-primary" role="button">My Appointments</a>
         <a routerLink="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
-        <a routerLink="/appointments/all" class="btn btn-secondary position-relative" role="button" *ngIf="authService.isAdmin()">
+        <a routerLink="/appointments/all" class="btn btn-secondary position-relative" role="button"
+           *ngIf="authService.isAdmin()">
           All Appointments
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.appointments !== 0">
             {{ unreadMessages.appointments }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -46,8 +48,11 @@
       <div class="col text-center">
         <a routerLink="/orders" class="btn btn-primary" role="button">My Orders</a>
         <a routerLink="/orders/request" class="btn btn-primary" role="button">New Order</a>
-        <a routerLink="/orders/all" class="btn btn-secondary" role="button" *ngIf="authService.isAdmin()">All Orders
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        <a routerLink="/orders/all" class="btn btn-secondary position-relative" role="button"
+           *ngIf="authService.isAdmin()">
+          All Orders
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.orders !== 0">
             {{ unreadMessages.orders }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -70,20 +75,22 @@
       <p class="card-text">You can manage users of this application.</p>
       <div class="col text-center">
           <a routerLink="/users" class="btn btn-secondary position-relative" role="button">Manage Users
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  *ngIf="unreadMessages.users !== 0">
               {{ unreadMessages.users }}
               <span class="visually-hidden">unread messages</span>
             </span></a>
       </div>
     </div>
   </div>
-  <div class="card">
+  <div class="card" *ngIf="showMessageBox">
     <div class="card-body">
       <h5 class="card-title">Message Box</h5>
       <p class="card-text">You get messages from this application in your message box.</p>
       <div class="col text-center">
         <a routerLink="/message-box" class="btn btn-primary position-relative" role="button">Show messages
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.sum !== 0">
             {{ unreadMessages.sum }}
             <span class="visually-hidden">unread messages</span>
           </span>

@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { GlobalSettingsComponent } from './global-settings.component';
 
@@ -8,7 +11,14 @@ describe('GlobalSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GlobalSettingsComponent ]
+      declarations: [
+        GlobalSettingsComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        FormsModule,
+      ],
     })
     .compileComponents();
   });

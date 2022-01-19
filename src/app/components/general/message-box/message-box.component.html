@@ -1,1 +1,35 @@
-<p>message-box works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">Message Box</h1>
+</div>
+
+<div class="row card-container">
+  <div class="card" *ngFor="let message of messages">
+    <div class="card-body">
+      <h5 class="card-title">{{ message.title }}</h5>
+      <p class="card-text">{{ message.content }}</p>
+      <div class="col text-center">
+        <a [routerLink]="message.linkUrl" class="btn btn-primary position-relative" role="button"
+           *ngIf="message.linkUrl !== null && message.linkText !== null">
+          {{ message.linkText }}
+        </a><br>
+        <button class="btn btn-secondary position-relative" *ngIf="!message.readStatus"
+                (click)="markMessageAsRead(message.id)">
+          <i class="bi bi-envelope-open-fill"></i>
+        </button>
+        <button class="btn btn-secondary position-relative" *ngIf="message.readStatus"
+                (click)="markMessageAsUnread(message.id)">
+          <i class="bi bi-envelope-fill"></i>
+        </button>
+        <button class="btn btn-danger position-relative" (click)="openAppointmentDeletionDialog(message.id)">
+          <i class="bi bi-trash-fill"></i>
+        </button>
+      </div>
+      <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+        <span class="visually-hidden">unread message</span>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="messages.length === 0" class="text-center">
+    no messages
+  </div>
+</div>

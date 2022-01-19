@@ -14,7 +14,6 @@ import { AuthService } from '../services/auth.service';
  * @class
  */
 export class AuthGuard implements CanActivate {
-
   /**
    * Constructor
    * @constructor
@@ -27,16 +26,14 @@ export class AuthGuard implements CanActivate {
   /**
    * Checks if user is logged in and otherwise redirects user to login page
    *
-   * @param {ActivatedRouteSnapshot} route route that activated the guard
+   * @param {ActivatedRouteSnapshot} next route that activated the guard
+   * @param {RouterStateSnapshot} state snapshot of the router state
    */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    if (!this.authService.isUserLoggedIn()) {
-      return this.router.parseUrl('/login');
-    }
-
-    return true;
+    return this.authService.isUserLoggedIn()
+      ? true
+      : this.router.parseUrl('/login');
   }
 }
