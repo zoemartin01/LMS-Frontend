@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from "@angular/forms";
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
+import {GlobalSetting} from "../../../types/global-setting";
 
 @Component({
   selector: 'app-global-settings',
@@ -18,8 +19,8 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public maxRecordings: number|null = null;
-  public autodeleteTimespan: number|null = null;
+  public maxRecordings: number | null = null;
+  public autodeleteTimespan: number | null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
   /**
@@ -35,18 +36,36 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
+    this.getWhitelistRetailers();
   }
 
   /**
    * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+    this.adminService.getGlobalSettings().subscribe({
+      next: res => {
+        this.maxRecordings = res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings');
+        this.autodeleteTimespan = res.filter((setting: GlobalSetting) => setting.key === 'recordings.autodeleteTimespan');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
    * Gets whitelist retailers
    */
   public async getWhitelistRetailers(): Promise<void> {
+    this.adminService.getWhitelistRetailers().subscribe({
+      next: res => {
+        this.whitelistRetailers = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**

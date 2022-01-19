@@ -1,1 +1,75 @@
-<p>global-settings works!</p>
+<!--
+<div class="card-body">
+  <form (keyup.enter)="editGlobalSettings(globalSettingsForm)" #globalSettingsForm="ngForm"
+        (ngSubmit)="editGlobalSettings(globalSettingsForm)">
+    <div class="form-group row my-2">
+      <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+      <div class="col">
+        <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
+      </div>
+    </div>
+        <div class="form-group row my-2">
+      <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+      <div class="col">
+        <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
+      </div>
+    </div>
+    <div class="form-group my-2 row">
+      <label for="link" class="col-sm-3 col-form-label">Purchase Link <i
+        class="bi bi-info-circle"></i></label>
+      <div class="col">
+        <input type="url" class="form-control" id="link" placeholder="Purchase Link"
+               (input)="checkUrlAgainstWhitelistedRetailers(link.value)" #link>
+        <div class="row" *ngIf="linkWarning">
+          <label role="alert" for="link" class="warning">That shop is not on the list of approved retailers.</label>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col text-center">
+      <a routerLink="#" class="btn btn-primary" role="button">Request Order</a>
+    </div>
+  </div>
+</div> -->
+
+<form action="maxRecordings = quantity">
+  <label for="quantity">Maximum Recordings</label>
+  <input type="number" id="quantity" name="quantity" placeholder="{{maxRecordings}}">
+  <input type="submit">
+</form>
+<form action="autodeleteTimespan = quantity">
+  <label for="quantity">Timespan before recording automatic deletion</label>
+  <input type="number" id="hours" name="quantity" placeholder="Hours">
+  <input type="number" id="days" name="quantity" placeholder="Days">
+  <input type="number" id="weeks" name="quantity" placeholder="Weeks">
+  <input type="submit">
+</form>
+<div class="row">
+  <h2 class="display-5">Whitelist Retailers</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-4">Name</th>
+      <th class="col-sm-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let whitelistRetailer of whitelistRetailers">
+      <td class="col-sm-4">{{ whitelistRetailer.name }}</td>
+      <td class="col-sm-2"></td>
+      <td class="col-sm-2">
+        <a (click)="openWhitelistRetailerView(whitelistRetailer.id)">
+          <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
+        </a>
+        <a (click)="openWhitelistRetailerEditForm(whitelistRetailer.id)">
+          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+        </a>
+        <a (click)="openWhitelistRetailerDeletionDialog(whitelistRetailer.id)">
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
