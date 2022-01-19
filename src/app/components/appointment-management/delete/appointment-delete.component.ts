@@ -4,8 +4,10 @@ import { ActivatedRoute } from "@angular/router";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
-import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-appointment-delete',
@@ -21,9 +23,23 @@ import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 export class AppointmentDeleteComponent implements OnInit {
   public appointment: Appointment = {
     id: null,
-    userId: null,
-    roomId: null,
-    roomName: '',
+    user: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      userRole: UserRole.unknown,
+      notificationChannel: NotificationChannel.unknown,
+    },
+    room: {
+      id: null,
+      name: '',
+      description: '',
+      maxConcurrentBookings: 1,
+      automaticRequestAcceptance: null,
+      availableTimeslots: [],
+      unavailableTimeslots: [],
+    },
     start: null,
     end: null,
     type: RoomTimespanType.appointment,

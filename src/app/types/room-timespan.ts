@@ -1,13 +1,12 @@
 import * as moment from "moment";
 
 import { TimespanId } from "./aliases/timespan-id";
-import { RoomId } from "./aliases/room-id";
+import { Room } from "./room";
 import { RoomTimespanType } from "./enums/timespan-type";
 
 export interface RoomTimespan {
   id: TimespanId,
-  roomId: RoomId,
-  roomName: string,
+  room: Room,
   start: moment.Moment|null,
   end: moment.Moment|null,
   type: RoomTimespanType,
