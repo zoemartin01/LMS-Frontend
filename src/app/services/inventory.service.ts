@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 import{ InventoryItem } from "../types/inventory-item";
 import { InventoryItemId } from "../types/aliases/inventory-item-id";
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +26,9 @@ export class InventoryService {
    * Retrieves all inventory items
    */
   public getInventoryItems(): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}`;
+
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -34,8 +37,12 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
   public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getSingleItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -44,8 +51,12 @@ export class InventoryService {
    * @param {InventoryItem} inventoryItem data of new inventory item
    */
   public createInventoryItem(inventoryItem: InventoryItem): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    if (inventoryItem === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
+
+    return this.httpClient.get(apiURL);
   }
 
   /**
@@ -55,8 +66,12 @@ export class InventoryService {
    * @param {object} changedData changed fields of inventory item
    */
   public changeInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.updateItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.patch(apiURL, changedData);
   }
 
   /**
@@ -65,7 +80,11 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
   public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.delete(apiURL);
   }
 }
