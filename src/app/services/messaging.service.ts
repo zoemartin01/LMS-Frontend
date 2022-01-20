@@ -3,7 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
+import { Message } from "../types/message";
 import { MessageId } from "../types/aliases/message-id";
+import { UnreadMessages } from "../types/unread-messages";
 
 @Injectable({
   providedIn: 'root'
@@ -15,26 +17,25 @@ import { MessageId } from "../types/aliases/message-id";
  * @class
  */
 export class MessagingService {
-
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all messages for current user
    */
-  public getMessages(): Observable<any> {
+  public getMessages(): Observable<Message[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserMessages}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Message[]>(apiURL);
   }
 
   /**
    * Retrieves the amounts of unread messages for current user
    */
-  public getUnreadMessagesAmounts(): Observable<any> {
+  public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserUnreadMessagesAmounts}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<UnreadMessages>(apiURL);
   }
 
   /**
@@ -42,11 +43,11 @@ export class MessagingService {
    *
    * @param {MessageId} messageId id of concerned message
    */
-  public deleteMessage(messageId: MessageId): Observable<any> {
+  public deleteMessage(messageId: MessageId): Observable<void> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.deleteMessage
       .replace(':id', messageId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -55,11 +56,11 @@ export class MessagingService {
    * @param {MessageId} messageId id of concerned message
    * @param {object} changedData   changed values as object
    */
-  public updateMessage(messageId: MessageId, changedData: object): Observable<any> {
+  public updateMessage(messageId: MessageId, changedData: object): Observable<Message> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.updateMessage
       .replace(':id', messageId)}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<Message>(apiURL, changedData);
   }
 
   /**
@@ -67,7 +68,7 @@ export class MessagingService {
    *
    * @param {MessageId} messageId id of concerned message
    */
-  public markMessageAsRead(messageId: MessageId): Observable<any> {
+  public markMessageAsRead(messageId: MessageId): Observable<Message> {
     return this.updateMessage(messageId, { readStatus: true });
   }
 
@@ -76,7 +77,7 @@ export class MessagingService {
    *
    * @param {MessageId} messageId id of concerned message
    */
-  public markMessageAsUnread(messageId: MessageId): Observable<any> {
+  public markMessageAsUnread(messageId: MessageId): Observable<Message> {
     return this.updateMessage(messageId, { readStatus: false });
   }
 }
