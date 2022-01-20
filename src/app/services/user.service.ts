@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, using} from "rxjs";
+import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 
 import {User} from "../types/user";
@@ -23,10 +23,10 @@ export class UserService {
   /**
    * Retrieves user details
    */
-  public getUserDetails(): Observable<any> {
+  public getUserDetails(): Observable<User> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.getCurrentUser}`;
 
-    return this.httpClient.get(apiURL);
+    return <Observable<User>>this.httpClient.get(apiURL);
   }
 
   /**
@@ -43,10 +43,10 @@ export class UserService {
    *
    * @param {object} changedData changed fields of user
    */
-  public editUserData(changedData: object): Observable<any> {
+  public editUserData(changedData: object): Observable<User> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.updateCurrentUser}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return <Observable<User>>this.httpClient.patch(apiURL, changedData);
   }
 
   /**
@@ -88,8 +88,8 @@ export class UserService {
   /**
    * Deletes user
    */
-  public deleteUser(): Observable<any> {
+  public deleteUser(): Observable<User> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_settings.deleteCurrentUser}`;
-    return this.httpClient.delete(apiURL);
+    return <Observable<User>>this.httpClient.delete(apiURL);
   }
 }
