@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
-import {GlobalSetting} from "../../../types/global-setting";
+import { GlobalSetting } from "../../../types/global-setting";
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 
 @Component({
   selector: 'app-global-settings',
@@ -19,8 +19,8 @@ import {GlobalSetting} from "../../../types/global-setting";
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public maxRecordings: number | null = null;
-  public autodeleteTimespan: number | null = null;
+  public maxRecordings: number|null = null;
+  public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
   /**
@@ -46,7 +46,8 @@ export class GlobalSettingsComponent implements OnInit {
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
         this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
-        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recordings.autodeleteTimespan')[0].value;
+        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
+          .value;
       },
       error: error => {
         console.error('There was an error!', error);
