@@ -74,7 +74,7 @@ export class AdminService {
    * Changes user data
    *
    * @param {object} changedData changed fields of user
-   * @param {UserId} userId if of user
+   * @param {UserId} userId id of user
    */
   public updateUser(userId: UserId, changedData: object): Observable<any> {
     if (userId === null) {
@@ -242,7 +242,7 @@ export class AdminService {
    * @param {UserId} userId id of pending user
    */
   public acceptUserRequest(userId: UserId): Observable<any> {
-    return this.updateUser(userId, { userRole: UserRole.visitor });
+    return this.updateUser(userId, { role: UserRole.visitor });
   }
 
   /**

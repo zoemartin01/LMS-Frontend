@@ -44,8 +44,9 @@ export class UserListComponent implements OnInit {
   public async getUsers(): Promise<void> {
     this.adminService.getUsers().subscribe({
       next: res => {
-        this.pendingUsers = res.filter((user: User) => user.userRole == UserRole.pending);
-        this.acceptedUsers = res.filter((user: User) => user.userRole != UserRole.pending);
+        this.pendingUsers = res.filter((user: User) => user.role == UserRole.pending);
+        this.acceptedUsers = res.filter((user: User) => user.role != UserRole.pending);
+        console.log(res, this.pendingUsers, this.acceptedUsers)
       },
       error: error => {
         console.error('There was an error!', error);
@@ -59,6 +60,14 @@ export class UserListComponent implements OnInit {
    * @param {userId} userId id of pending user
    */
   public async acceptPendingUser(userId: UserId): Promise<void> {
+    this.adminService.acceptUserRequest(userId).subscribe({
+      next: () => {
+        this.getUsers();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -67,7 +76,14 @@ export class UserListComponent implements OnInit {
    * @param {userId} userId id of pending user
    */
   public async denyPendingUser(userId: UserId): Promise<void> {
-  }
+    this.adminService.declineUserRequest(userId).subscribe({
+      next: () => {
+        this.getUsers();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });  }
 
   /**
    * Opens user view
