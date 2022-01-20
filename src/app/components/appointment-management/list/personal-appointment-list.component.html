@@ -27,7 +27,7 @@
     </thead>
     <tbody class="align-middle">
     <tr *ngFor="let appointment of appointments">
-      <td>{{ appointment.roomName }}</td>
+      <td>{{ appointment.room?.name }}</td>
       <td>{{ appointment.start?.format("DD.MM.YYYY") }}</td>
       <td>{{ appointment.start?.format("HH:mm") }} - {{ appointment.end?.format("HH:mm") }}</td>
       <td>{{ ['', 'pending', 'accepted', 'denied'][appointment.confirmationStatus] }}</td>
