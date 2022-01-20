@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-personal-appointment-list',
