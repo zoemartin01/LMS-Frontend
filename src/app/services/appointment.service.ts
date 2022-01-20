@@ -27,10 +27,10 @@ export class AppointmentService {
   /**
    * Retrieves all appointments
    */
-  public getAllAppointments(): Observable<any> {
+  public getAllAppointments(): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Appointment[]>(apiURL);
   }
 
   /**
@@ -39,7 +39,7 @@ export class AppointmentService {
   public getAllAppointmentsForCurrentUser(): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}`;
 
-    return <Observable<Appointment[]>>this.httpClient.get(apiURL);
+    return this.httpClient.get<Appointment[]>(apiURL);
   }
 
   /**
@@ -47,7 +47,7 @@ export class AppointmentService {
    *
    * @param {RoomId} roomId id of room to retrieve appointments
    */
-  public getAllAppointmentsForRoom(roomId: RoomId): Observable<any> {
+  public getAllAppointmentsForRoom(roomId: RoomId): Observable<Appointment[]> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -55,7 +55,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments
       .replace(':id', roomId)}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Appointment[]>(apiURL);
   }
 
   /**
@@ -63,7 +63,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId id of the appointment
    */
-  public getAppointmentData(appointmentId : TimespanId): Observable<any> {
+  public getAppointmentData(appointmentId : TimespanId): Observable<Appointment> {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
@@ -71,7 +71,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSingleAppointment
       .replace(':id', appointmentId)}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Appointment>(apiURL);
   }
 
   /**
@@ -79,7 +79,7 @@ export class AppointmentService {
    *
    * @param {SeriesId} seriesId id of the appointment
    */
-  public getAllAppointmentsForSeries(seriesId : SeriesId): Observable<any> {
+  public getAllAppointmentsForSeries(seriesId : SeriesId): Observable<Appointment[]> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
@@ -87,7 +87,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments
       .replace(':id', seriesId)}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Appointment[]>(apiURL);
   }
 
   /**
@@ -95,13 +95,13 @@ export class AppointmentService {
    *
    * @param {Appointment} appointment all data about the requested appointment
    */
-  public createAppointment(appointment: Appointment): Observable<any> {
+  public createAppointment(appointment: Appointment): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       appointment: appointment,
     };
 
-    return this.httpClient.post(apiURL, {headers: requestBody});
+    return this.httpClient.post<Appointment>(apiURL, {headers: requestBody});
   }
 
   /**
@@ -111,7 +111,8 @@ export class AppointmentService {
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(appointment: Appointment, difference: number, amount: number) {
+  public createAppointmentSeries(appointment: Appointment, difference: number, amount: number)
+    : Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
       appointment: appointment,
@@ -119,7 +120,7 @@ export class AppointmentService {
       amount: amount
     };
 
-    return this.httpClient.post(apiURL, {headers: requestBody});
+    return this.httpClient.post<Appointment[]>(apiURL, {headers: requestBody});
   }
 
   /**
@@ -128,7 +129,7 @@ export class AppointmentService {
    * @param {TimespanId} appointmentId id of the appointment to be edited
    * @param {object} changedData   changed values as object
    */
-  public editAppointment(appointmentId: TimespanId, changedData: object): Observable<any> {
+  public editAppointment(appointmentId: TimespanId, changedData: object): Observable<Appointment> {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
@@ -139,7 +140,7 @@ export class AppointmentService {
       changedData: changedData
     };
 
-    return this.httpClient.patch(apiURL, {headers: requestBody});
+    return this.httpClient.patch<Appointment>(apiURL, {headers: requestBody});
   }
 
   /**
@@ -148,7 +149,7 @@ export class AppointmentService {
    * @param {SeriesId} seriesId id of a series of appointment to be edited
    * @param {object} changedData   changed values as object
    */
-  public editAppointmentSeries(seriesId: SeriesId, changedData: object): Observable<any> {
+  public editAppointmentSeries(seriesId: SeriesId, changedData: object): Observable<Appointment[]> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
@@ -159,7 +160,7 @@ export class AppointmentService {
       changedData: changedData
     };
 
-    return this.httpClient.patch(apiURL, {headers: requestBody});
+    return this.httpClient.patch<Appointment[]>(apiURL, {headers: requestBody});
   }
 
   /**
@@ -167,7 +168,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId Id of an appointment
    */
-  public deleteAppointment(appointmentId: TimespanId): Observable<any> {
+  public deleteAppointment(appointmentId: TimespanId): Observable<void> {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
@@ -175,7 +176,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.deleteAppointment
       .replace(':id', appointmentId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -183,7 +184,7 @@ export class AppointmentService {
    *
    * @param {SeriesId} seriesId Id of an appointment
    */
-  public deleteAppointmentSeries(seriesId: SeriesId): Observable<any> {
+  public deleteAppointmentSeries(seriesId: SeriesId): Observable<void> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
@@ -191,7 +192,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.deleteAppointmentSeries
       .replace(':id', seriesId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -199,7 +200,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId id of appointment
    */
-  public acceptAppointmentRequest(appointmentId: TimespanId): Observable<any> {
+  public acceptAppointmentRequest(appointmentId: TimespanId): Observable<Appointment> {
     return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
@@ -208,7 +209,7 @@ export class AppointmentService {
    *
    * @param {TimespanId} appointmentId id of appointment
    */
-  public declineAppointmentRequest(appointmentId: TimespanId): Observable<any> {
+  public declineAppointmentRequest(appointmentId: TimespanId): Observable<Appointment> {
     return this.editAppointment(appointmentId, { confirmationStatus: ConfirmationStatus.denied });
   }
 
@@ -217,7 +218,7 @@ export class AppointmentService {
    *
    * @param {SeriesId} seriesId id of series of appointments
    */
-  public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
+  public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<Appointment[]> {
     return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
   }
 
@@ -226,7 +227,7 @@ export class AppointmentService {
    *
    * @param {SeriesId} seriesId id of series of appointments
    */
-  public declineAppointmentSeriesRequest(seriesId: SeriesId): Observable<any> {
+  public declineAppointmentSeriesRequest(seriesId: SeriesId): Observable<Appointment[]> {
     return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
   }
 }
