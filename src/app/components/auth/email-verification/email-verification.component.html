@@ -1,1 +1,40 @@
-<p>email-verification works!</p>
+<div class="row">
+  <h1 class="display-2 text-center">Verify Email</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-center" *ngIf="showForm">
+  <div class="card col-md-4">
+    <div class="col-auto card-body">
+      <form (keyup.enter)="verifyEmail()" [formGroup]="verifyForm" (ngSubmit)="verifyEmail()">
+        <div class="form-group">
+          <label for="userId" class="my-1">User-ID</label>
+          <div class="input-group">
+            <input class="form-control" type="text" placeholder="User-ID"
+                   id="userId" required autocomplete="off" formControlName="userId">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="token" class="my-1">Token</label>
+          <input class="form-control" type="text" placeholder="Token"
+                 id="token" required autocomplete="off" formControlName="token">
+        </div>
+        <br>
+        <div class="alert alert-danger" role="alert" *ngIf="verifyEmailError">
+          <b>Email verification failed:</b><br>
+          {{ verifyEmailErrorMessage }}
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-primary" [disabled]="!verifyForm.valid"
+                    role="button">Verify Email</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row text-center my-1">
+    <p>Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>
