@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { NgForm, FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserService } from "../../../services/user.service";
@@ -12,12 +12,15 @@ import { UserService } from "../../../services/user.service";
 
 /**
  * Component for the email verification page
- *
- *
  */
 export class EmailVerificationComponent implements OnInit {
+  public verifyForm: FormGroup = this.formBuilder.group({
+    userId: '',
+    token: '',
+  });
   public showForm: boolean = false;
-
+  public verifyEmailError: boolean = false;
+  public verifyEmailErrorMessage: string = '';
 
   /**
    * Constructor
@@ -25,8 +28,13 @@ export class EmailVerificationComponent implements OnInit {
    * @param {UserService} userService service providing user functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {Router} router angular router
+   * @param {FormBuilder} formBuilder angular form builder
    */
-  constructor(private userService: UserService,  private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder) {
   }
 
   /**
@@ -34,33 +42,38 @@ export class EmailVerificationComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.showForm = (params['userId'] === undefined || params['token'] === undefined);
+      if (params['userId'] !== undefined && params['token'] !== undefined) {
+        this.verifyForm.controls['userId'].setValue(params['userId']);
+        this.verifyForm.controls['token'].setValue(params['token']);
 
-      if (!this.showForm) {
-        this.verifyEmail(params['userId'], params['token']);
+        this.verifyEmail();
+      } else {
+        this.showForm = true;
       }
     });
   }
 
   /**
    * Verifies user's email with provided data
-   *
-   * @param {NgForm} verifyForm submitted verification form
    */
-  public async handleVerificationForm(verifyForm: NgForm): Promise<void> {
-    if (verifyForm.valid) {
-      //@todo Mario: implement
-    }
-  }
+  public async verifyEmail(): Promise<void> {
+    this.showForm = false;
 
-  /**
-   * Verifies user's email with provided data
-   *
-   * @param {string} userId user's id
-   * @param {string} token  token to verify email
-   */
-  public async verifyEmail(userId: string, token: string): Promise<void> {
-    await this.userService.verifyEmail(userId, token);
-    await this.router.parseUrl('/login');
+    if (this.verifyForm.valid) {
+      this.userService.verifyEmail(
+        this.verifyForm.value.userId,
+        this.verifyForm.value.token
+      ).subscribe({
+        next: () => {
+          this.router.parseUrl('/login');
+        },
+        error: error => {
+          this.verifyEmailError = true;
+          this.verifyEmailErrorMessage = error;
+          this.showForm = true;
+          console.error('There was an error!', error);
+        }
+      });
+    }
   }
 }
