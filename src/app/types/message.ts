@@ -4,7 +4,7 @@ export interface Message {
   id: MessageId,
   title: string,
   content: string,
-  linkUrl: string|null,
-  linkText: string|null,
+  correspondingUrl: string|null,
+  correspondingUrlText: string|null,
   readStatus: boolean,
 }
