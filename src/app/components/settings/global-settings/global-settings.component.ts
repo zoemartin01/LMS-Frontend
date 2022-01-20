@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 
 import { AdminService } from "../../../services/admin.service";
 
+import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 
@@ -35,18 +36,37 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
+    this.getWhitelistRetailers();
   }
 
   /**
    * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+    this.adminService.getGlobalSettings().subscribe({
+      next: res => {
+        this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
+        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
+          .value;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
    * Gets whitelist retailers
    */
   public async getWhitelistRetailers(): Promise<void> {
+    this.adminService.getWhitelistRetailers().subscribe({
+      next: res => {
+        this.whitelistRetailers = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
