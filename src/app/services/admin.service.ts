@@ -4,6 +4,8 @@ import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
+import { GlobalSetting } from "../types/global-setting";
+import { User } from "../types/user";
 import { UserId } from "../types/aliases/user-id";
 import { UserRole } from "../types/enums/user-role";
 import { WhitelistRetailer } from "../types/whitelist-retailer";
@@ -27,10 +29,10 @@ export class AdminService {
   /**
    * Gets global settings
    */
-  public getGlobalSettings(): Observable<any> {
+  public getGlobalSettings(): Observable<GlobalSetting[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getGlobalSettings}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<GlobalSetting[]>(apiURL);
   }
 
   /**
@@ -38,7 +40,7 @@ export class AdminService {
    *
    * @param {UserId} userId id of user
    */
-  public getUser(userId: UserId): Observable<any> {
+  public getUser(userId: UserId): Observable<User> {
     if (userId === null) {
       throw ParseArgumentException;
     }
@@ -46,16 +48,16 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getSingleUser
       .replace(':id', userId)}}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<User>(apiURL);
   }
 
   /**
    * Gets users
    */
-  public getUsers(): Observable<any> {
+  public getUsers(): Observable<User[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllUsers}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<User[]>(apiURL);
   }
 
   /**
@@ -63,19 +65,19 @@ export class AdminService {
    *
    * @param {object} changedData changed fields of global settings
    */
-  public updateGlobalSettings(changedData: object): Observable<any> {
+  public updateGlobalSettings(changedData: object): Observable<GlobalSetting[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.updateGlobalSettings}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<GlobalSetting[]>(apiURL, changedData);
   }
 
   /**
    * Changes user data
    *
    * @param {object} changedData changed fields of user
-   * @param {UserId} userId if of user
+   * @param {UserId} userId id of user
    */
-  public updateUser(userId: UserId, changedData: object): Observable<any> {
+  public updateUser(userId: UserId, changedData: object): Observable<User> {
     if (userId === null) {
       throw ParseArgumentException;
     }
@@ -83,7 +85,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.updateUser
       .replace(':id', userId)}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<User>(apiURL, changedData);
   }
 
   /**
@@ -91,7 +93,7 @@ export class AdminService {
    *
    * @param {UserId} userId if of user
    */
-  public deleteUser(userId: UserId): Observable<any> {
+  public deleteUser(userId: UserId): Observable<void> {
     if (userId === null) {
       throw ParseArgumentException;
     }
@@ -99,7 +101,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.deleteUser
       .replace(':id', userId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -107,7 +109,7 @@ export class AdminService {
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+  public getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
     }
@@ -115,17 +117,17 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<WhitelistRetailer>(apiURL);
   }
 
   /**
    * Gets all whitelist retailers
    *
    */
-  public getWhitelistRetailers(): Observable<any> {
+  public getWhitelistRetailers(): Observable<WhitelistRetailer[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<WhitelistRetailer[]>(apiURL);
   }
 
   /**
@@ -133,10 +135,10 @@ export class AdminService {
    *
    * @param {WhitelistRetailer} whiteListRetailer data of new whitelist retailer
    */
-  public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<any> {
+  public createWhitelistRetailer(whiteListRetailer: WhitelistRetailer): Observable<WhitelistRetailer> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.createWhitelistRetailer}`;
 
-    return this.httpClient.post(apiURL, whiteListRetailer);
+    return this.httpClient.post<WhitelistRetailer>(apiURL, whiteListRetailer);
   }
 
   /**
@@ -145,7 +147,8 @@ export class AdminService {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    * @param {object} changedData changed fields of whitelist retailer
    */
-  public editWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId, changedData: object): Observable<any> {
+  public editWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId, changedData: object)
+    : Observable<WhitelistRetailer> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
     }
@@ -153,7 +156,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.updateWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<WhitelistRetailer>(apiURL, changedData);
   }
 
   /**
@@ -161,7 +164,7 @@ export class AdminService {
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<any> {
+  public deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<void> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
     }
@@ -169,7 +172,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.deleteWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -181,7 +184,7 @@ export class AdminService {
   public addDomainToWhitelistRetailer(
     whitelistRetailerId: WhitelistRetailerId,
     whitelistRetailerDomain: WhitelistRetailerDomain
-  ): Observable<any> {
+  ): Observable<WhitelistRetailerDomain> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
     }
@@ -189,7 +192,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.addDomainToWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.post(apiURL, whitelistRetailerDomain);
+    return this.httpClient.post<WhitelistRetailerDomain>(apiURL, whitelistRetailerDomain);
   }
 
   /**
@@ -204,7 +207,7 @@ export class AdminService {
     whitelistRetailerId: WhitelistRetailerId,
     whitelistRetailerDomainId: WhitelistRetailerDomainId,
     changedData: object
-  ): Observable<any> {
+  ): Observable<WhitelistRetailerDomain> {
     if (whitelistRetailerId === null || whitelistRetailerDomainId === null) {
       throw ParseArgumentException;
     }
@@ -212,7 +215,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.updateDomainOfWhitelistRetailer
       .replace(':id', whitelistRetailerId).replace(':domainId', whitelistRetailerDomainId)}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<WhitelistRetailerDomain>(apiURL, changedData);
   }
 
   /**
@@ -224,7 +227,7 @@ export class AdminService {
   public deleteDomainOfWhitelistRetailer(
     whitelistRetailerId: WhitelistRetailerId,
     whitelistRetailerDomainId: WhitelistRetailerDomainId
-  ): Observable<any> {
+  ): Observable<void> {
     if (whitelistRetailerId === null || whitelistRetailerDomainId === null) {
       throw ParseArgumentException;
     }
@@ -232,7 +235,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.deleteDomainOfWhitelistRetailer
       .replace(':id', whitelistRetailerId).replace(':domainId', whitelistRetailerDomainId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<void>(apiURL);
   }
 
   /**
@@ -241,7 +244,7 @@ export class AdminService {
    * @param {UserId} userId id of pending user
    */
   public acceptUserRequest(userId: UserId): Observable<any> {
-    return this.updateUser(userId, { userRole: UserRole.visitor });
+    return this.updateUser(userId, { role: UserRole.visitor });
   }
 
   /**
@@ -249,7 +252,7 @@ export class AdminService {
    *
    * @param {UserId} userId id of pending user
    */
-  public declineUserRequest(userId: UserId): Observable<any> {
+  public declineUserRequest(userId: UserId): Observable<void> {
     return this.deleteUser(userId);
   }
 
@@ -258,9 +261,9 @@ export class AdminService {
    *
    * @param {String} domain domain which is checked against whitelist
    */
-  public checkDomainAgainstWhitelist(domain: string): Observable<any> {
+  public checkDomainAgainstWhitelist(domain: string): Observable<boolean> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`;
 
-    return this.httpClient.post(apiURL, { domain });
+    return this.httpClient.post<boolean>(apiURL, { domain });
   }
 }

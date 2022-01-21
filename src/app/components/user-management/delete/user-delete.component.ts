@@ -24,7 +24,7 @@ export class UserDeleteComponent implements OnInit {
     firstName: "",
     lastName: "",
     email: "",
-    userRole: UserRole.unknown,
+    role: UserRole.unknown,
     notificationChannel: NotificationChannel.unknown,
   }
 
