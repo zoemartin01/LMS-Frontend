@@ -97,6 +97,15 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
+    this.appointmentService.acceptAppointmentRequest(appointmentId).subscribe({
+      next: () => {
+        this.getAppointments();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+    //Todo doesn't automatically put in accepted list :(
   }
 
   /**
@@ -105,5 +114,14 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
+    this.appointmentService.declineAppointmentRequest(appointmentId).subscribe({
+      next: () => {
+        this.getAppointments();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+    //Todo doesn't automatically put in declined list :(
   }
 }
