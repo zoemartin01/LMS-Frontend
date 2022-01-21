@@ -28,10 +28,10 @@ export class RoomService {
   /**
    * Gets data of all rooms
    */
-  public getRoomsData(): Observable<any> {
+  public getRoomsData(): Observable<Room[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Room[]>(apiURL);
   }
 
   /**
@@ -39,10 +39,10 @@ export class RoomService {
    *
    * @param {RoomId} roomId id of room
    */
-  public getRoomData(roomId: RoomId): Observable<any> {
+  public getRoomData(roomId: RoomId): Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<Room>(apiURL);
   }
 
   /**
@@ -50,13 +50,13 @@ export class RoomService {
    *
    * @param {Room} room data of new room
    */
-  public createRoom(room: Room): Observable<any> {
+  public createRoom(room: Room): Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
       room: room
     };
 
-    return this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<Room>(apiURL, requestBody);
   }
 
   /**
@@ -65,7 +65,7 @@ export class RoomService {
    * @param {RoomId} roomId      id of associated room
    * @param {object} changedData changed fields of room
    */
-  public editRoomData(roomId: RoomId, changedData: object): Observable<any> {
+  public editRoomData(roomId: RoomId, changedData: object): Observable<Room> {
     if(roomId === null) {
       throw ParseArgumentException;
     }
@@ -76,7 +76,7 @@ export class RoomService {
       changedData: changedData,
     };
 
-    return this.httpClient.patch(apiURL, requestBody);
+    return this.httpClient.patch<Room>(apiURL, requestBody);
   }
 
   /**
@@ -84,14 +84,14 @@ export class RoomService {
    *
    * @param {RoomId} roomId id of room
    */
-  public deleteRoom(roomId: RoomId): Observable<any> {
+  public deleteRoom(roomId: RoomId): Observable<Room> {
     if(roomId === null) {
       throw ParseArgumentException;
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteRoom.replace(':id', roomId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<Room>(apiURL);
   }
 
   /**
@@ -99,13 +99,13 @@ export class RoomService {
    *
    * @param {RoomTimespan} timeslot time
    */
-  public createAvailableTimeslot(timeslot: RoomTimespan) {
+  public createAvailableTimeslot(timeslot: RoomTimespan): Observable<RoomTimespan> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
     const requestBody = {
       timeslot: timeslot,
     };
 
-    return this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
   }
 
   /**
@@ -113,13 +113,13 @@ export class RoomService {
    *
    * @param {RoomTimespan} timeslot time
    */
-  public createUnavailableTimeslot(timeslot: RoomTimespan) {
+  public createUnavailableTimeslot(timeslot: RoomTimespan): Observable<RoomTimespan> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
     const requestBody = {
       timeslot: timeslot,
     };
 
-    return this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
   }
 
   /**
@@ -127,7 +127,7 @@ export class RoomService {
    *
    * @param {TimespanId} timespanId id of timeslot
    */
-  public deleteAvailableTimeslot(timespanId: TimespanId): Observable<any> {
+  public deleteAvailableTimeslot(timespanId: TimespanId): Observable<RoomTimespan> {
     if(timespanId === null) {
       throw ParseArgumentException;
     }
@@ -135,7 +135,7 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<RoomTimespan>(apiURL);
   }
 
   /**
@@ -143,7 +143,7 @@ export class RoomService {
    *
    * @param {TimespanId} timespanId id of timeslot
    */
-  public deleteUnavailableTimeslot(timespanId: TimespanId): Observable<any> {
+  public deleteUnavailableTimeslot(timespanId: TimespanId): Observable<RoomTimespan> {
     if(timespanId === null) {
       throw ParseArgumentException;
     }
@@ -151,7 +151,7 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<RoomTimespan>(apiURL);
   }
 
   /**
