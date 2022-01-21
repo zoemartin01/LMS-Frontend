@@ -4,12 +4,12 @@ import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
+import { UserId } from "../types/aliases/user-id";
+import { UserRole } from "../types/enums/user-role";
 import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
-import { UserId } from "../types/aliases/user-id";
-import { UserRole } from "../types/enums/user-role";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,6 @@ import { UserRole } from "../types/enums/user-role";
  * @class
  */
 export class AdminService {
-
   constructor(private httpClient: HttpClient) {
   }
 
