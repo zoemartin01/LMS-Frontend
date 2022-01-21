@@ -4,8 +4,6 @@ import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-room-list',
@@ -42,7 +40,7 @@ export class RoomListComponent implements OnInit {
   public async getRooms(): Promise<void> {
     this.roomService.getRoomsData().subscribe({
       next: res => {
-        this.rooms = res
+        this.rooms = res;
       },
       error: error => {
         console.error('There was an error!', error);

@@ -31,7 +31,7 @@ export class RoomService {
   public getRoomsData(): Observable<Room[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}`;
 
-    return <Observable<Room[]>>this.httpClient.get(apiURL);
+    return this.httpClient.get<Room[]>(apiURL);
   }
 
   /**
@@ -42,7 +42,7 @@ export class RoomService {
   public getRoomData(roomId: RoomId): Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
 
-    return <Observable<Room>>this.httpClient.get(apiURL);
+    return this.httpClient.get<Room>(apiURL);
   }
 
   /**
@@ -56,7 +56,7 @@ export class RoomService {
       room: room
     };
 
-    return <Observable<Room>>this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<Room>(apiURL, requestBody);
   }
 
   /**
@@ -76,7 +76,7 @@ export class RoomService {
       changedData: changedData,
     };
 
-    return <Observable<Room>>this.httpClient.patch(apiURL, requestBody);
+    return this.httpClient.patch<Room>(apiURL, requestBody);
   }
 
   /**
@@ -91,7 +91,7 @@ export class RoomService {
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteRoom.replace(':id', roomId)}`;
 
-    return <Observable<Room>>this.httpClient.delete(apiURL);
+    return this.httpClient.delete<Room>(apiURL);
   }
 
   /**
@@ -105,7 +105,7 @@ export class RoomService {
       timeslot: timeslot,
     };
 
-    return <Observable<RoomTimespan>>this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
   }
 
   /**
@@ -119,7 +119,7 @@ export class RoomService {
       timeslot: timeslot,
     };
 
-    return <Observable<RoomTimespan>>this.httpClient.post(apiURL, requestBody);
+    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
   }
 
   /**
@@ -135,7 +135,7 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
-    return <Observable<RoomTimespan>>this.httpClient.delete(apiURL);
+    return this.httpClient.delete<RoomTimespan>(apiURL);
   }
 
   /**
@@ -151,7 +151,7 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':timeslot_id', timespanId)}`;
 
-    return <Observable<RoomTimespan>>this.httpClient.delete(apiURL);
+    return this.httpClient.delete<RoomTimespan>(apiURL);
   }
 
   /**
