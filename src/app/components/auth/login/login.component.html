@@ -15,7 +15,7 @@
           <a class="nav-link" [class.active]="activeDirectory" (click)="activeDirectory = true">Active Directory</a>
         </li>
       </ul>
-      <form (keyup.enter)="login(loginForm)" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <form (keyup.enter)="login()" [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="form-group">
           <label for="email" class="my-1">E-Mail Address</label>
           <div class="input-group">
@@ -23,22 +23,13 @@
               <span class="input-group-text" id="inputGroupPrepend">@</span>
             </div>
             <input type="email" class="form-control" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
-                   id="email" required name="email" autocomplete="email" ngModel>
+                   id="email" required formControlName="email" autocomplete="email">
           </div>
         </div>
         <div class="form-group">
           <label for="password" class="my-1">Password</label>
-          <input type="password" class="form-control" placeholder="Password" id="password" required name="password"
-          ngModel>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col text-center">
-            <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-              <label class="form-check-label" for="remember_me">Remember Me</label>
-            </div>
-          </div>
+          <input type="password" class="form-control" placeholder="Password" id="password" required
+                 formControlName="password">
         </div>
         <br>
         <div class="alert alert-danger" role="alert" *ngIf="loginError">
