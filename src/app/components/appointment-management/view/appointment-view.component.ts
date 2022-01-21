@@ -9,6 +9,7 @@ import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-appointment-view',
@@ -48,13 +49,14 @@ export class AppointmentViewComponent implements OnInit {
     confirmationStatus: ConfirmationStatus.unknown,
   };
 
-  /**
+    /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  constructor(public appointmentService: AppointmentService, public authService: AuthService, private route: ActivatedRoute) {
   }
 
   /**

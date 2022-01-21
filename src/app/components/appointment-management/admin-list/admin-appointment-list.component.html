@@ -1,1 +1,117 @@
-<p>admin-appointment-list works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">All Appointments</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/appointments">My Appointments</a>
+  </li>
+  <li class="nav-item" *ngIf="authService.isAdmin()">
+    <a class="nav-link active" aria-current="page">All Appointments</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/room-overview">Room Overview</a>
+  </li>
+</ul>
+
+
+<div class="row">
+  <h2 class="display-5">Pending Appointment Requests</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Room</th>
+      <th class="col-sm-2">Date</th>
+      <th class="col-sm-2">Time</th>
+      <th class="col-sm-2">User</th>
+      <th class="col-sm-2"></th>
+      <th class="col-sm-1" style="align-self: right;"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let pendingAppointments of pendingAppointments">
+      <td class="col-sm-2">{{ pendingAppointments.room?.name }}</td>
+      <td class="col-sm-2">{{ pendingAppointments.start?.format("DD.MM.YYYY") }}</td>
+      <td class="col-sm-2">{{ pendingAppointments.start?.format("HH:mm") }} - {{ pendingAppointments.end?.format("HH:mm") }}</td>
+      <td class="col-sm-2">{{ pendingAppointments.user?.firstName }} {{pendingAppointments.user?.lastName}}</td>
+      <td></td>
+      <td class="d-flex justify-content-end">
+        <a (click)="acceptAppointmentRequest(pendingAppointments.id)" type="button" class="btn btn-success mx-1">
+          <i class="bi bi-check"></i>
+        </a>
+        <a (click)="declineAppointmentRequest(pendingAppointments.id)" type="button" class="btn btn-danger mx-1">
+          <i class="bi bi-x"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h2 class="display-5">All Accepted Appointments</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Room</th>
+      <th class="col-sm-2">Date</th>
+      <th class="col-sm-2">Time</th>
+      <th class="col-sm-2">User</th>
+      <th class="col-sm-2">Status</th>
+      <th class="col-sm-1" style="align-self: right;"></th>
+    </tr>
+    </thead>
+    <tbody class="align-middle">
+    <tr *ngFor="let acceptedAppointments of acceptedAppointments">
+      <td class="col-sm-2">{{ acceptedAppointments.room?.name }}</td>
+      <td class="col-sm-2">{{ acceptedAppointments.start?.format("DD.MM.YYYY") }}</td>
+      <td class="col-sm-2">{{ acceptedAppointments.start?.format("HH:mm") }} - {{ acceptedAppointments.end?.format("HH:mm") }}</td>
+      <td class="col-sm-2">{{ acceptedAppointments.user?.firstName }} {{ acceptedAppointments.user?.lastName }}</td>
+      <td class="col-sm-2">{{ ['', 'pending', 'accepted', 'denied'][acceptedAppointments.confirmationStatus] }}</td>
+      <td class="d-flex justify-content-end">
+        <a (click)="openAppointmentView(acceptedAppointments.id)" type="button" class="btn btn-secondary mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
+        <a (click)="openAppointmentEditForm(acceptedAppointments.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+        <a (click)="openAppointmentDeletionDialog(acceptedAppointments.id)" type="button" class="btn btn-danger mx-1">
+          <i class="bi bi-trash-fill"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="row">
+  <h2 class="display-5">All Denied Appointments</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Room</th>
+      <th class="col-sm-2">Date</th>
+      <th class="col-sm-2">Time</th>
+      <th class="col-sm-2">User</th>
+      <th class="col-sm-2">Status</th>
+      <th class="col-sm-1" style="align-self: right;"></th>
+    </tr>
+    </thead>
+    <tbody class="align-middle">
+    <tr *ngFor="let deniedAppointment of deniedAppointments">
+      <td class="col-sm-2">{{ deniedAppointment.room?.name }}</td>
+      <td class="col-sm-2">{{ deniedAppointment.start?.format("DD.MM.YYYY") }}</td>
+      <td class="col-sm-2">{{ deniedAppointment.start?.format("HH:mm") }} - {{ deniedAppointment.end?.format("HH:mm") }}</td>
+      <td class="col-sm-2">{{ deniedAppointment.user?.firstName }} {{ deniedAppointment.user?.lastName }}</td>
+      <td class="col-sm-2">{{ ['', 'pending', 'accepted', 'denied'][deniedAppointment.confirmationStatus] }}</td>
+      <td class="d-flex justify-content-end">
+        <a (click)="openAppointmentView(deniedAppointment.id)" type="button" class="btn btn-secondary mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
+        <a (click)="openAppointmentDeletionDialog(deniedAppointment.id)" type="button" class="btn btn-danger mx-1">
+          <i class="bi bi-trash-fill"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
