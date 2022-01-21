@@ -129,6 +129,14 @@ const routes: Routes = [
       title: 'Verify Email'
     }
   },
+  {
+    path: 'register/verify-email/:userId/:token',
+    component: EmailVerificationComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Verify Email'
+    }
+  },
 
   //Settings
   {

@@ -35,7 +35,7 @@ export class AppointmentEditComponent implements OnInit {
       firstName: '',
       lastName: '',
       email: '',
-      userRole: UserRole.unknown,
+      role: UserRole.unknown,
       notificationChannel: NotificationChannel.unknown,
     },
     room: {

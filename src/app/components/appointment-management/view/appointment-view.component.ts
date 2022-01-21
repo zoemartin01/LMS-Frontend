@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { AuthService } from "../../../services/auth.service";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
@@ -29,7 +30,7 @@ export class AppointmentViewComponent implements OnInit {
       firstName: '',
       lastName: '',
       email: '',
-      userRole: UserRole.unknown,
+      role: UserRole.unknown,
       notificationChannel: NotificationChannel.unknown,
     },
     room: {
@@ -52,9 +53,13 @@ export class AppointmentViewComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public authService: AuthService,
+    private route: ActivatedRoute) {
   }
 
   /**

@@ -38,11 +38,12 @@
       <th class="col-sm-2"></th>
     </tr>
     </thead>
+
     <tbody>
     <tr *ngFor="let acceptedUser of acceptedUsers">
       <td class="col-sm-4">{{ userService.getFullName(acceptedUser) }}</td>
       <td class="col-sm-4">{{ acceptedUser.email }}</td>
-      <td class="col-sm-4">{{ ['', 'Pending User', 'Visitor', 'Admin'][acceptedUser.userRole] }}</td>
+      <td class="col-sm-2">{{ ['', 'Pending User', 'Visitor', 'Admin'][acceptedUser.role] }}</td>
       <td class="col-sm-2">
         <a (click)="openUserView(acceptedUser.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
         <a (click)="openUserEditForm(acceptedUser.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
