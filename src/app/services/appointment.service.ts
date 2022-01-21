@@ -97,11 +97,8 @@ export class AppointmentService {
    */
   public createAppointment(appointment: Appointment): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
-    const requestBody = {
-      appointment: appointment,
-    };
 
-    return this.httpClient.post<Appointment>(apiURL, {headers: requestBody});
+    return this.httpClient.post<Appointment>(apiURL, appointment);
   }
 
   /**
@@ -120,7 +117,7 @@ export class AppointmentService {
       amount: amount
     };
 
-    return this.httpClient.post<Appointment[]>(apiURL, {headers: requestBody});
+    return this.httpClient.post<Appointment[]>(apiURL, requestBody);
   }
 
   /**
@@ -135,12 +132,8 @@ export class AppointmentService {
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointment
       .replace(':id', appointmentId)}`;
-    const requestBody = {
-      appointmentId: appointmentId,
-      changedData: changedData
-    };
 
-    return this.httpClient.patch<Appointment>(apiURL, {headers: requestBody});
+    return this.httpClient.patch<Appointment>(apiURL, changedData);
   }
 
   /**
@@ -155,12 +148,8 @@ export class AppointmentService {
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointmentSeries
       .replace(':id', seriesId)}`;
-    const requestBody = {
-      appointmentId: seriesId,
-      changedData: changedData
-    };
 
-    return this.httpClient.patch<Appointment[]>(apiURL, {headers: requestBody});
+    return this.httpClient.patch<Appointment[]>(apiURL, changedData);
   }
 
   /**
