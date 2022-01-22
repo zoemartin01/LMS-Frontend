@@ -51,6 +51,24 @@
   <input type="number" id="weeks" name="quantity" placeholder="Weeks">
   <input type="submit">
 </form> -->
+<form (keyup.enter)="editGlobalSettings(globalSettingsForm)" #globalSettingsForm="ngForm" (ngSubmit)="editGlobalSettings(globalSettingsForm)">
+  <div class="col-sm-3">
+    <label for="maxRecordings" class="my-1">Maximum Recordings</label>
+    <div class="input-group">
+      <input type="number" class="form-control" placeholder={{maxRecordings}} aria-describedby="inputGroupPrepend"
+             id="maxRecordings" ngModel>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <label for="timeToAutoDelete" class="my-1">Time before autodeletion of recordings</label>
+    <!--@TODO convert time  -->
+    <input type="number" class="form-control" placeholder={{autoDeleteTimespan}} id="timeToAutoDelete"
+           ngModel>
+  </div>
+  <div class="col">
+      <button class="btn btn-primary" [disabled]="!globalSettingsForm.valid" role="button">Submit</button>
+  </div>
+</form>
 <div class="row">
   <h2 class="display-5">Whitelist Retailers</h2>
   <table class="table table-striped">

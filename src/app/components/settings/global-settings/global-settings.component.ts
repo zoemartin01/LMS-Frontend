@@ -20,7 +20,7 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
  */
 export class GlobalSettingsComponent implements OnInit {
   public maxRecordings: number|null = null;
-  public autodeleteTimespan: number|null = null;
+  public autoDeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
 
   /**
@@ -46,7 +46,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
         this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
-        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
+        this.autoDeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
           .value;
       },
       error: error => {
