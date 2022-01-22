@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpErrorResponse } from "@angular/common/http";
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,9 +14,8 @@ import { UserService } from '../../../services/user.service';
 
 import { User } from '../../../types/user';
 import { UserId } from '../../../types/aliases/user-id';
-import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { UserRole } from "../../../types/enums/user-role";
-import { HttpErrorResponse } from "@angular/common/http";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Injectable()
 export class ActivatedRouteStub {
