@@ -24,7 +24,7 @@ describe('AuthService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 

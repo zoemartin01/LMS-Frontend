@@ -132,7 +132,7 @@ describe('EmailVerificationComponent', () => {
     expect(verifyEmailMethod).toHaveBeenCalledWith();
   });
 
-  it('should send api request and redirect to login on success', () => {
+  it('should send api request and redirect to login on success', (done: DoneFn) => {
     component.verifyForm.controls['userId'].setValue('59f1589d-197c-4f53-bfc1-4c57aae14c42');
     component.verifyForm.controls['token'].setValue('ixhgvplqq');
 
@@ -140,10 +140,11 @@ describe('EmailVerificationComponent', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
       expect(component.verifyEmailError).toBe(false);
       expect(component.showForm).toBe(false);
+      done();
     });
   });
 
-  it('should send api request and show error on failure', () => {
+  it('should send api request and show error on failure', (done: DoneFn) => {
     component.verifyForm.controls['userId'].setValue('59f1589d-197c-4f53-bfc1-4c57aae14c42');
     component.verifyForm.controls['token'].setValue('iXhgvPIqq');
 
@@ -151,10 +152,11 @@ describe('EmailVerificationComponent', () => {
       expect(component.verifyEmailError).toBe(true);
       expect(component.showForm).toBe(true);
       expect(router.navigateByUrl).not.toHaveBeenCalled();
+      done();
     });
   });
 
-  it('should show error when form is invalid', () => {
+  it('should show error when form is invalid', (done: DoneFn) => {
     component.verifyForm.controls['userId'].setValue('');
     component.verifyForm.controls['token'].setValue('');
 
@@ -163,6 +165,7 @@ describe('EmailVerificationComponent', () => {
       expect(component.verifyEmailErrorMessage).toBe('Invalid form values');
       expect(component.showForm).toBe(true);
       expect(router.navigateByUrl).not.toHaveBeenCalled();
+      done();
     });
   });
 });
