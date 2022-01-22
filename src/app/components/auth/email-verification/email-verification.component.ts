@@ -67,7 +67,7 @@ export class EmailVerificationComponent implements OnInit {
         this.verifyForm.value.token
       ).subscribe({
         next: () => {
-          this.router.parseUrl('/login');
+          this.router.navigateByUrl('/login');
         },
         error: error => {
           this.verifyEmailError = true;
@@ -76,6 +76,10 @@ export class EmailVerificationComponent implements OnInit {
           console.error('There was an error!', error);
         }
       });
+    } else {
+      this.verifyEmailError = true;
+      this.verifyEmailErrorMessage = 'Invalid form values';
+      this.showForm = true;
     }
   }
 }
