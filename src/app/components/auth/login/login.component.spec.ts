@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { LoginComponent } from './login.component';
@@ -15,9 +16,11 @@ describe('LoginComponent', () => {
         LoginComponent,
       ],
       imports: [
-        HttpClientModule,
-        RouterTestingModule,
+        BrowserModule,
         FormsModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
       ],
     })
     .compileComponents();
