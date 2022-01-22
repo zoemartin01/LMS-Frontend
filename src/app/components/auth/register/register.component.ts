@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { UserService } from "../../../services/user.service";
@@ -16,14 +16,29 @@ import { UserService } from "../../../services/user.service";
  *
  */
 export class RegisterComponent {
-  public registerForm: FormGroup = this.formBuilder.group({
-    firstname: '',
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    safetyInstructions: false,
-    hwlabRules: false,
+  public registerForm: FormGroup = new FormGroup({
+    firstname: new FormControl('', [
+      Validators.required,
+    ]),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+    ]),
+    password_confirmation: new FormControl('', [
+      Validators.required,
+    ]),
+    safetyInstructions: new FormControl('', [
+      Validators.required,
+    ]),
+    hwlabRules: new FormControl('', [
+      Validators.required,
+    ]),
   });
   registerError: boolean = false;
   registerErrorMessage: string = '';
@@ -34,12 +49,10 @@ export class RegisterComponent {
    * @constructor
    * @param {UserService} userService service providing user functionalities
    * @param {Router} router router providing navigation
-   * @param {FormBuilder} formBuilder angular form builder
    */
   constructor(
     private userService: UserService,
-    private router: Router,
-    private formBuilder: FormBuilder) {
+    private router: Router) {
   }
 
   /**

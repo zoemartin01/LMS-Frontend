@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { AuthService } from "../../../services/auth.service";
@@ -18,9 +18,14 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class LoginComponent {
-  public loginForm: FormGroup = this.formBuilder.group({
-    email: '',
-    password: '',
+  public loginForm: FormGroup = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+    ]),
   });
   loginError: boolean = false;
   loginErrorMessage: string = '';
@@ -31,12 +36,10 @@ export class LoginComponent {
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {Router} router router providing navigation
-   * @param {FormBuilder} formBuilder angular form builder
    */
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private formBuilder: FormBuilder) {
+    private router: Router) {
   }
 
   /**
