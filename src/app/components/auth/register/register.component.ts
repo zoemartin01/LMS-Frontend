@@ -33,11 +33,11 @@ export class RegisterComponent {
     password_confirmation: new FormControl('', [
       Validators.required,
     ]),
-    safetyInstructions: new FormControl('', [
-      Validators.required,
+    safetyInstructions: new FormControl(false, [
+      Validators.requiredTrue,
     ]),
-    hwlabRules: new FormControl('', [
-      Validators.required,
+    hwlabRules: new FormControl(false, [
+      Validators.requiredTrue,
     ]),
   });
   registerError: boolean = false;
