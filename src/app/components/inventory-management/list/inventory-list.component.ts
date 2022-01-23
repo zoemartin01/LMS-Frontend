@@ -8,6 +8,7 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 import {error} from "@angular/compiler/src/util";
 import {Router} from "@angular/router";
 import {InventoryItemCreateComponent} from "../item-create/inventory-item-create.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-inventory-list',
@@ -29,8 +30,9 @@ export class InventoryListComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public inventoryService: InventoryService, public authService: AuthService) {
+  constructor(public inventoryService: InventoryService, public authService: AuthService, private modalService: NgbModal) {
   }
 
   /**
@@ -58,6 +60,12 @@ export class InventoryListComponent implements OnInit {
    * Opens form to create item
    */
   public openInventoryItemCreationForm(): void {
+    const modal = this.modalService.open(InventoryItemCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

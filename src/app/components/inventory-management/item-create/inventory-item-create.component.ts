@@ -5,6 +5,7 @@ import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {InventoryItem} from "../../../types/inventory-item";
 import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
 import {Router} from "@angular/router";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-inventory-item-create',
@@ -41,8 +42,9 @@ export class InventoryItemCreateComponent {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {Router} router router providing navigation
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService, private router: Router) {
+  constructor(public inventoryService: InventoryService, private router: Router, public activeModal: NgbActiveModal) {
   }
 
   /**
