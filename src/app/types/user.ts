@@ -7,6 +7,6 @@ export interface User {
   firstName: string,
   lastName: string,
   email: string,
-  userRole: UserRole,
+  role: UserRole,
   notificationChannel: NotificationChannel,
 }

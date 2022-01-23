@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { AuthService } from "../../../services/auth.service";
@@ -18,6 +18,15 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class LoginComponent {
+  public loginForm: FormGroup = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+    ]),
+  });
   loginError: boolean = false;
   loginErrorMessage: string = '';
   activeDirectory: boolean = false;
@@ -28,17 +37,17 @@ export class LoginComponent {
    * @param {AuthService} authService service providing appointment functionalities
    * @param {Router} router router providing navigation
    */
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
   }
 
   /**
    * Logs in user with provided credentials
-   *
-   * @param {NgForm} authForm submitted login form
    */
-  public async login(authForm: NgForm): Promise<void> {
-    if (authForm.valid) {
-      this.authService.login(authForm.value.email, authForm.value.password, this.activeDirectory).subscribe({
+  public async login(): Promise<void> {
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value.email, this.loginForm.value.password, this.activeDirectory).subscribe({
         next: (res: { accessToken: string, refreshToken: string, userId: string, role: string }) => {
           this.authService.setAccessToken(res.accessToken);
           this.authService.setRefreshToken(res.refreshToken);

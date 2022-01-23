@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Router } from "@angular/router";
 import { Observable, switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from "../../environments/environment";
@@ -19,9 +18,8 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
    * Constructor
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
-   * @param {Router} router router providing navigation
    */
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
   }
 
   /**
