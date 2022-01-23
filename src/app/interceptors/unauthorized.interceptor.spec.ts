@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpErrorResponse, HttpEvent, HttpEventType, HttpRequest, HttpResponse } from "@angular/common/http";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { Observable } from "rxjs";
@@ -51,7 +51,7 @@ describe('UnauthorizedInterceptor', () => {
       imports: [
         HttpClientTestingModule,
       ],
-    })
+    });
 
     interceptor = TestBed.inject(UnauthorizedInterceptor);
     httpMock = TestBed.inject(HttpTestingController);
@@ -65,17 +65,12 @@ describe('UnauthorizedInterceptor', () => {
     expect(interceptor).toBeTruthy();
   });
 
-  it('should catch 401 and refresh token', function () {
+  it('should do nothing if no error happens', fakeAsync(() => {
+    let handleUnauthorizedMethod = spyOn<any>(interceptor,'handleUnauthorized');
+
     const next: any = {
-      handle: (request: HttpRequest<any>) => {
+      handle: () => {
         return new Observable((observer) => {
-          if (request.url === "/test" && request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ") {
-            observer.error(
-              new HttpErrorResponse({
-                status: 401,
-              })
-            );
-          }
           observer.complete();
         });
       }
@@ -83,13 +78,18 @@ describe('UnauthorizedInterceptor', () => {
 
     const testRequest = new HttpRequest('GET', '/test');
 
+    let isError = false;
     interceptor.intercept(testRequest, next).subscribe({
-      next: (event: HttpEvent<any>) => {
-      },
-      error: err => {
+      error: () => {
+        isError = true;
       }
     });
-  });
+
+    tick();
+
+    expect(handleUnauthorizedMethod).not.toHaveBeenCalled();
+    expect(isError).toBe(false);
+  }));
 
   it('catch error with other http status code than 401', function () {
     const next: any = {
@@ -111,20 +111,53 @@ describe('UnauthorizedInterceptor', () => {
 
     interceptor.intercept(testRequest, next).subscribe({
       next: (event: HttpEvent<any>) => {
-        expect(event.type).toBe(HttpEventType.Response);
-        let res = <HttpResponse<any>>event;
       },
       error: err => {
-
       }
     });
   });
 
-  it('should catch 401 and logout when refresh fails', function () {
+  it('catch error with other http status code than 401', fakeAsync(() => {
+    let handleUnauthorizedMethod = spyOn<any>(interceptor,'handleUnauthorized');
+
     const next: any = {
       handle: (request: HttpRequest<any>) => {
         return new Observable((observer) => {
-          if (request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ") {
+          if (request.url === "/test" && request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ") {
+            observer.error(
+              new HttpErrorResponse({
+                status: 400,
+              })
+            );
+          }
+          observer.complete();
+        });
+      }
+    };
+
+    const testRequest = new HttpRequest('GET', '/test');
+
+    let isError = false;
+    interceptor.intercept(testRequest, next).subscribe({
+      error: () => {
+        isError = true;
+      }
+    });
+
+    tick();
+
+    expect(handleUnauthorizedMethod).not.toHaveBeenCalled();
+    expect(isError).toBe(true);
+  }));
+
+  it('should catch 401 and logout when refresh fails', fakeAsync(() => {
+    localStorage.setItem('hasValue', 'true');
+
+    const next: any = {
+      handle: (request: HttpRequest<any>) => {
+        return new Observable((observer) => {
+          if (request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ"
+            && localStorage.getItem('hasValue') === 'true') {
             observer.error(
               new HttpErrorResponse({
                 status: 401,
@@ -138,18 +171,14 @@ describe('UnauthorizedInterceptor', () => {
 
     const testRequest = new HttpRequest('GET', `${environment.baseUrl}${environment.apiRoutes.auth.tokenRefresh}`);
 
-    interceptor.intercept(testRequest, next).subscribe({
-      next: (event: HttpEvent<any>) => {
-        expect(event.type).toBe(HttpEventType.Response);
-        let res = <HttpResponse<any>>event;
-      },
-      error: err => {
+    interceptor.intercept(testRequest, next).subscribe();
 
-      }
-    });
-  });
+    tick();
 
-  it('should catch 401 and then catch error on handling', function () {
+    expect(localStorage.getItem(environment.storageKeys.accessToken)).toBe(null);
+  }));
+
+  it('should catch 401 and then catch error on handling', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     const next: any = {
@@ -169,14 +198,15 @@ describe('UnauthorizedInterceptor', () => {
 
     const testRequest = new HttpRequest('GET', '/test');
 
+    let isError: boolean = false;
     interceptor.intercept(testRequest, next).subscribe({
-      next: (event: HttpEvent<any>) => {
-        expect(event.type).toBe(HttpEventType.Response);
-        let res = <HttpResponse<any>>event;
-      },
-      error: err => {
-
+      error: () => {
+        isError = true;
       }
     });
-  });
+
+    tick();
+
+    expect(isError).toBe(true);
+  }));
 });
