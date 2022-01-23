@@ -86,7 +86,7 @@ describe('EmailVerificationComponent', () => {
         { provide: UserService, useClass: MockUserService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: router },
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EmailVerificationComponent);
@@ -103,9 +103,9 @@ describe('EmailVerificationComponent', () => {
   it('should init without route parameters', () => {
     let verifyEmailMethod = spyOn(component,'verifyEmail');
 
-    expect(component.showForm).withContext('don\'t show form before init').toBe(false);
+    expect(component.showForm).withContext('don\'t show form before init').toBeFalse();
     component.ngOnInit();
-    expect(component.showForm).withContext('show form after init').toBe(true);
+    expect(component.showForm).withContext('show form after init').toBeTrue();
     expect(component.verifyForm.value).withContext('empty form').toEqual({
       userId: '',
       token: '',
@@ -121,9 +121,9 @@ describe('EmailVerificationComponent', () => {
 
     let verifyEmailMethod = spyOn(component,'verifyEmail');
 
-    expect(component.showForm).withContext('don\'t show form before init').toBe(false);
+    expect(component.showForm).withContext('don\'t show form before init').toBeFalse();
     component.ngOnInit();
-    expect(component.showForm).withContext('still don\'t show form after init').toBe(false);
+    expect(component.showForm).withContext('still don\'t show form after init').toBeFalse();
     expect(component.verifyForm.value).withContext('has form values').toEqual({
       userId: '59f1589d-197c-4f53-bfc1-4c57aae14c42',
       token: 'ixhgvplqq',
@@ -137,8 +137,8 @@ describe('EmailVerificationComponent', () => {
 
     component.verifyEmail().then(() => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
-      expect(component.verifyEmailError).toBe(false);
-      expect(component.showForm).toBe(false);
+      expect(component.verifyEmailError).toBeFalse();
+      expect(component.showForm).toBeFalse();
       done();
     });
   });
@@ -148,8 +148,8 @@ describe('EmailVerificationComponent', () => {
     component.verifyForm.controls['token'].setValue('iXhgvPIqq');
 
     component.verifyEmail().then(() => {
-      expect(component.verifyEmailError).toBe(true);
-      expect(component.showForm).toBe(true);
+      expect(component.verifyEmailError).toBeTrue();
+      expect(component.showForm).toBeTrue();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });
@@ -160,9 +160,9 @@ describe('EmailVerificationComponent', () => {
     component.verifyForm.controls['token'].setValue('');
 
     component.verifyEmail().then(() => {
-      expect(component.verifyEmailError).toBe(true);
+      expect(component.verifyEmailError).toBeTrue();
       expect(component.verifyEmailErrorMessage).toBe('Invalid form values');
-      expect(component.showForm).toBe(true);
+      expect(component.showForm).toBeTrue();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });
