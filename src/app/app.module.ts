@@ -3,7 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
@@ -127,6 +127,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
       useClass: UnauthorizedInterceptor,
       multi: true
     },
+    NgbActiveModal,
   ],
   bootstrap: [AppComponent]
 })
