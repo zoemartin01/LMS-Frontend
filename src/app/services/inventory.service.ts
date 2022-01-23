@@ -50,13 +50,13 @@ export class InventoryService {
    *
    * @param {InventoryItem} inventoryItem data of new inventory item
    */
-  public createInventoryItem(inventoryItem: InventoryItem): Observable<any> {
+  public createInventoryItem(inventoryItem: InventoryItem): Observable<InventoryItem> {
     if (inventoryItem === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 
   /**

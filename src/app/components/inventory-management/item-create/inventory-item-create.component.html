@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="display-2 text-center">New Order</h1>
+  <h1 class="display-2 text-center">New Inventory Item</h1>
 </div>
 
 <br>
@@ -7,32 +7,41 @@
 <div class="row justify-content-center">
   <div class="card col-md-5">
     <div class="card-body">
-      <form (keyup.enter)="createInventoryItem(inventoryItemCreateForm)" #inventoryItemCreateForm="ngForm"
-            (ngSubmit)="createInventoryItem(inventoryItemCreateForm)">
+      <form (keyup.enter)="createInventoryItem()" [formGroup]="createInventoryItemForm" (ngSubmit)="createInventoryItem()">
         <div class="form-group row my-2">
           <label for="item" class="col-sm-3 col-form-label">Item</label>
-          <div class="col">
-            <input type="text" class="form-control" id="item" placeholder="Item">
+          <div class="input-group">
+            <input type="itemName" class="form-control"  placeholder="Item"
+                   id="item" formControlName="itemName">
           </div>
         </div>
         <div class="form-group row my-2">
           <label for="description" class="col-sm-3 col-form-label">Description</label>
-          <div class="col">
-            <input type="text" class="form-control" id="description" placeholder="Description">
+          <div class="input-group">
+            <input type="itemName" class="form-control"  placeholder="Description"
+                   id="description" formControlName="description">
           </div>
         </div>
         <div class="form-group row my-2">
           <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
-          <div class="col">
-            <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
+          <div class="input-group">
+            <input type="quantity" class="form-control"  placeholder="Quantity" min="1"
+                   id="quantity" formControlName="quantity">
+          </div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="createInventoryItemError">
+          <b>Creation failed:</b><br>
+          {{ createInventoryItemErrorMessage }}
+        </div>
+
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-primary" [disabled]="!createInventoryItemForm.valid"
+                    role="button">Create</button>
           </div>
         </div>
       </form>
-      <div class="row">
-        <div class="col text-center">
-          <a routerLink="#" class="btn btn-primary" role="button">Create Item</a>
-        </div>
-      </div>
     </div>
   </div>
 </div>
