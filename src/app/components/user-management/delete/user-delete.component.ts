@@ -17,8 +17,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for the deletion of a user
- *
- *
  */
 export class UserDeleteComponent implements OnInit {
   public userDeleteForm: FormGroup = new FormGroup({
@@ -47,10 +45,9 @@ export class UserDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
     this.userDeleteForm.disable();
   }
 
