@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { UserEditComponent } from './user-edit.component';
 
@@ -15,9 +15,12 @@ describe('UserEditComponent', () => {
         UserEditComponent,
       ],
       imports: [
-        HttpClientModule,
-        RouterTestingModule,
         FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     }).compileComponents();
 

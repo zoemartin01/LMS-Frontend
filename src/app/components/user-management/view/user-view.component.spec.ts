@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { UserViewComponent } from './user-view.component';
 
@@ -14,8 +15,12 @@ describe('UserViewComponent', () => {
         UserViewComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
-        RouterTestingModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     }).compileComponents();
 

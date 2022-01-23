@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { MessageDeleteComponent } from './message-delete.component';
 
@@ -8,15 +11,21 @@ describe('MessageDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MessageDeleteComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [
+        MessageDeleteComponent,
+      ],
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(MessageDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
