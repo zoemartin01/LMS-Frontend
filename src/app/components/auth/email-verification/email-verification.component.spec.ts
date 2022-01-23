@@ -52,6 +52,8 @@ class MockUserService {
         email: 'alex@mustermensch.com',
         role: UserRole.visitor,
         notificationChannel: NotificationChannel.emailAndMessageBox,
+        emailVerification: true,
+        isActiveDirectory: false,
       }
 
       observer.next(user);

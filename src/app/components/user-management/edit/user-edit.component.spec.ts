@@ -19,14 +19,10 @@ describe('UserEditComponent', () => {
         RouterTestingModule,
         FormsModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserEditComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -33,6 +33,8 @@ class MockUserService {
         email,
         role: UserRole.pending,
         notificationChannel: NotificationChannel.emailOnly,
+        emailVerification: true,
+        isActiveDirectory: false,
       }
 
       observer.next(user);

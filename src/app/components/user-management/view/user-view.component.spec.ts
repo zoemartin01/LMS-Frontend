@@ -17,14 +17,10 @@ describe('UserViewComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
