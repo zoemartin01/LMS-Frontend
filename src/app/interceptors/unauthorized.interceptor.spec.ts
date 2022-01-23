@@ -91,14 +91,14 @@ describe('UnauthorizedInterceptor', () => {
     expect(isError).toBe(false);
   }));
 
-  it('catch error with other http status code than 401', function () {
+  it('should catch 401 and refresh token', fakeAsync(() => {
     const next: any = {
       handle: (request: HttpRequest<any>) => {
         return new Observable((observer) => {
-          if (request.url === "/test" && request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ") {
+          if (request.headers.get('Authorization') !== "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ") {
             observer.error(
               new HttpErrorResponse({
-                status: 400,
+                status: 401,
               })
             );
           }
@@ -109,13 +109,19 @@ describe('UnauthorizedInterceptor', () => {
 
     const testRequest = new HttpRequest('GET', '/test');
 
+    let isError: boolean = false;
     interceptor.intercept(testRequest, next).subscribe({
-      next: (event: HttpEvent<any>) => {
-      },
-      error: err => {
+      error: () => {
+        isError = true;
       }
     });
-  });
+
+    tick();
+
+    expect(isError).toBe(false);
+    expect(localStorage.getItem(environment.storageKeys.accessToken))
+      .toBe('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIyNzQwMDcwNzAsInVzZXJJZCI6IjlkNzk1NTJhLWVjYzQtNGI4NS1hZWI0LTk2ZDhkOGUxMTQxOCIsImlhdCI6MTY0Mjg1NTA3MH0.s2fqQ58-hNMitLRfTqFQCBAM1mlAneuWSrTdYsUl9RQ');
+  }));
 
   it('catch error with other http status code than 401', fakeAsync(() => {
     let handleUnauthorizedMethod = spyOn<any>(interceptor,'handleUnauthorized');

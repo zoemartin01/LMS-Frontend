@@ -87,8 +87,7 @@ describe('EmailVerificationComponent', () => {
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: router },
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EmailVerificationComponent);
     component = fixture.componentInstance;
