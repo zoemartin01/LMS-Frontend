@@ -33,11 +33,11 @@ export class RegisterComponent {
     password_confirmation: new FormControl('', [
       Validators.required,
     ]),
-    safetyInstructions: new FormControl('', [
-      Validators.required,
+    safetyInstructions: new FormControl(false, [
+      Validators.requiredTrue,
     ]),
-    hwlabRules: new FormControl('', [
-      Validators.required,
+    hwlabRules: new FormControl(false, [
+      Validators.requiredTrue,
     ]),
   });
   registerError: boolean = false;
@@ -65,7 +65,9 @@ export class RegisterComponent {
         this.registerForm.value.password
       ).subscribe({
         next: () => {
-          this.router.navigate(['/register/verify-email']);
+          this.registerError = false;
+          this.registerErrorMessage = '';
+          this.router.navigateByUrl('/register/verify-email');
         },
         error: error => {
           this.registerError = true;
@@ -73,6 +75,9 @@ export class RegisterComponent {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      this.registerError = true;
+      this.registerErrorMessage = 'Invalid form values';
     }
   }
 

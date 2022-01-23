@@ -54,7 +54,7 @@ export class LoginComponent {
           this.authService.setUserId(res.userId);
           this.authService.setUserRole(<UserRole><unknown>res.role ?? UserRole.unknown);
 
-          this.router.navigate(['/dashboard']);
+          this.router.navigateByUrl('/dashboard');
         },
         error: error => {
           this.loginError = true;
@@ -62,6 +62,9 @@ export class LoginComponent {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      this.loginError = true;
+      this.loginErrorMessage = 'Invalid form values';
     }
   }
 }
