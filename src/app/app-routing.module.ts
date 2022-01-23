@@ -204,33 +204,6 @@ const routes: Routes = [
       title: 'User List'
     }
   },
-  {
-    path: 'user/:id',
-    canActivate: [AuthGuard, AdminGuard],
-    component: UserViewComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'View User'
-    }
-  },
-  {
-    path: 'user/:id/edit',
-    canActivate: [AuthGuard, AdminGuard],
-    component: UserEditComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Edit User'
-    }
-  },
-  {
-    path: 'user/:id/delete',
-    canActivate: [AuthGuard],
-    component: UserDeleteComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Delete User'
-    }
-  },
 
   //Room Management
   {
