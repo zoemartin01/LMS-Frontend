@@ -82,7 +82,6 @@ describe('EmailVerificationComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        FormsModule,
         { provide: UserService, useClass: MockUserService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: router },

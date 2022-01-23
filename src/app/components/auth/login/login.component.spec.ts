@@ -70,7 +70,6 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        FormsModule,
         { provide: AuthService, useClass: MockAuthService },
         { provide: Router, useValue: router },
       ],

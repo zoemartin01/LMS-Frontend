@@ -59,7 +59,6 @@ describe('RegisterComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        FormsModule,
         { provide: UserService, useClass: MockUserService },
         { provide: Router, useValue: router },
       ],
