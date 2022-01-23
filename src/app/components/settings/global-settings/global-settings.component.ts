@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { GlobalSetting } from "../../../types/global-setting";
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import {GlobalSetting} from "../../../types/global-setting";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
 
 @Component({
   selector: 'app-global-settings',
@@ -19,9 +19,15 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public maxRecordings: number|null = null;
-  public autoDeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
+  public globalSettingsForm: FormGroup = new FormGroup({
+    "user.max_recordings": new FormControl(1, [
+      // Validators.required,
+    ]),
+    autoDeleteTimespan: new FormControl(500, [
+      // Validators.required,
+    ]),
+  });
 
   /**
    * Constructor
@@ -45,14 +51,15 @@ export class GlobalSettingsComponent implements OnInit {
   public async getGlobalSettings(): Promise<void> {
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
-        this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
-        this.autoDeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
-          .value;
+        this.globalSettingsForm.controls['user.max_recordings'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
+        this.globalSettingsForm.controls['recording.auto_delete'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
+          .value / 1000 / 60 / 60 / 24);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
+
   }
 
   /**
@@ -70,11 +77,32 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Changes data of user
+   * Changes data of global settings
    *
-   * @param {NgForm} globalSettingsEditForm form to edit user
    */
-  public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
+  public async editGlobalSettings(): Promise<void> {
+    console.log("yey");
+    if (this.globalSettingsForm.valid) {
+      let changedFields: object[] = [];
+      for (let key of Object.keys(this.globalSettingsForm.controls)) {
+        console.log(this.globalSettingsForm.controls[key]);
+        changedFields.push({
+          key,
+          value: this.globalSettingsForm.controls[key].value,
+        });
+      }
+      this.adminService.updateGlobalSettings(changedFields).subscribe({
+        next: res => {
+          this.globalSettingsForm.controls['user.max_recordings'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
+          this.globalSettingsForm.controls['recording.auto_delete'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
+            .value / 1000 / 60 / 60 / 24);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
+    }
+
   }
 
   /**
