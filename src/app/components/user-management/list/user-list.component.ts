@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
 import { UserService } from "../../../services/user.service";
+
+import { UserDeleteComponent } from "../delete/user-delete.component";
+import { UserEditComponent } from "../edit/user-edit.component";
+import { UserViewComponent } from "../view/user-view.component";
 
 import { User } from "../../../types/user";
 import { UserId } from "../../../types/aliases/user-id";
@@ -27,8 +32,9 @@ export class UserListComponent implements OnInit {
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public userService: UserService) {
+  constructor(public adminService: AdminService, public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -51,7 +57,7 @@ export class UserListComponent implements OnInit {
       error: error => {
         console.error('There was an error!', error);
       }
-    })
+    });
   }
 
   /**
@@ -91,6 +97,13 @@ export class UserListComponent implements OnInit {
    * @param {userId} userId id of user to view
    */
   public openUserView(userId: UserId): void {
+    const modal = this.modalService.open(UserViewComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUsers();
+      }
+    });
   }
 
   /**
@@ -99,6 +112,13 @@ export class UserListComponent implements OnInit {
    * @param {userId} userId id of user to edit
    */
   public openUserEditForm(userId: UserId): void {
+    const modal = this.modalService.open(UserEditComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUsers();
+      }
+    });
   }
 
   /**
@@ -107,5 +127,12 @@ export class UserListComponent implements OnInit {
    * @param {userId} userId id of user to delete
    */
   public openUserDeletionDialog(userId: UserId): void {
+    const modal = this.modalService.open(UserDeleteComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUsers();
+      }
+    });
   }
 }

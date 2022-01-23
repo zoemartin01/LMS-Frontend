@@ -9,4 +9,6 @@ export interface User {
   email: string,
   role: UserRole,
   notificationChannel: NotificationChannel,
+  emailVerification: boolean,
+  isActiveDirectory: boolean,
 }
