@@ -7,20 +7,20 @@
 <div class="row justify-content-center">
   <div class="card col-md-4">
     <div class="col-auto card-body">
-      <form (keyup.enter)="register(registerForm)" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <form (keyup.enter)="register()" [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group row">
           <div class="col">
             <label for="firstname" class="my-1">First Name</label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="First Name" aria-describedby="inputGroupPrepend"
-                     id="firstname" required name="firstname" autocomplete="given-name" ngModel>
+              <input type="text" class="form-control" placeholder="First Name" id="firstname"
+                     formControlName="firstname" autocomplete="given-name">
             </div>
           </div>
           <div class="col">
             <label for="name" class="my-1">Last Name</label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Last Name" aria-describedby="inputGroupPrepend"
-                     id="name" required name="name" autocomplete="family-name" ngModel>
+              <input type="text" class="form-control" placeholder="Last Name" id="name" formControlName="name"
+                     autocomplete="family-name">
             </div>
           </div>
         </div>
@@ -31,20 +31,19 @@
               <span class="input-group-text" id="inputGroupPrepend">@</span>
             </div>
             <input class="form-control" type="email" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
-                   id="email" required name="email" autocomplete="email" ngModel>
+                   id="email" formControlName="email" autocomplete="email">
           </div>
         </div>
         <div class="form-group">
           <label for="password" class="my-1">Password</label>
-          <input class="form-control" type="password" placeholder="Password"
-                 id="password" required name="password" autocomplete="password" ngModel
-                 (change)="checkPasswordConfirmation(registerForm)">
+          <input class="form-control" type="password" placeholder="Password" id="password"
+                 formControlName="password" autocomplete="password" (change)="checkPasswordConfirmation()">
         </div>
         <div class="form-group">
           <label for="password_confirmation" class="my-1">Password Confirmation</label>
-          <input class="form-control" type="password" placeholder="Password Confirmation"
-                 id="password_confirmation" required name="password_confirmation" autocomplete="password" ngModel
-                 (change)="checkPasswordConfirmation(registerForm)">
+          <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
+                 formControlName="password_confirmation" autocomplete="password"
+                 (change)="checkPasswordConfirmation()">
           <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails">
             <b>Registration failed:</b><br>
             {{ registerErrorMessage }}
@@ -54,15 +53,14 @@
         <div class="row">
           <div class="form-group">
             <label class="form-check-label" for="safetyInstructions">
-              <input type="checkbox" class="form-check-input" id="safetyInstructions" required
-                     name="safetyInstructions" ngModel>
+              <input type="checkbox" class="form-check-input" id="safetyInstructions"
+                     formControlName="safetyInstructions">
               I have read and agree to the <a routerLink="/safety-instructions">Safety Introductions of Hardware Lab</a>
             </label>
           </div>
           <div class="form-group">
             <label class="form-check-label" for="hwlabRules">
-              <input type="checkbox" class="form-check-input" id="hwlabRules" required
-                     name="hwlabRules" ngModel>
+              <input type="checkbox" class="form-check-input" id="hwlabRules" formControlName="hwlabRules">
               I have read and agree to the <a routerLink="/hwlab-rules">Rules of Hardware Lab</a>
             </label>
           </div>
