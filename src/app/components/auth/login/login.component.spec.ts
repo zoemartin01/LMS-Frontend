@@ -5,13 +5,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from "../../../../environments/environment";
 
 import { LoginComponent } from './login.component';
 
 import { AuthService } from '../../../services/auth.service';
 
 import { UserRole } from "../../../types/enums/user-role";
-import { environment } from "../../../../environments/environment";
 
 class MockAuthService {
   public login(email: string, password: string, isActiveDirectory: boolean) {
