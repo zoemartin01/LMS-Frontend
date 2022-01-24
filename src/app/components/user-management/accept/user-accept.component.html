@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <h4 class="modal-title">Accept User</h4>
+</div>
+<div class="modal-body">
+  <p>Are you sure that you want to accept this user?</p>
+
+  <form [formGroup]="userAcceptForm">
+    <span class="badge bg-primary" *ngIf="user.isActiveDirectory">Active Directory</span>
+    <span class="badge bg-warning" *ngIf="!user.emailVerification">Email not verified</span>
+    <div class="form-group row">
+      <div class="col">
+        <label for="firstname" class="my-1">First Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="First Name" id="firstname"
+                 formControlName="firstname" autocomplete="given-name">
+        </div>
+      </div>
+      <div class="col">
+        <label for="name" class="my-1">Last Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Last Name" id="name" formControlName="name"
+                 autocomplete="family-name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email" class="my-1">E-Mail Address</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">@</span>
+        </div>
+        <input class="form-control" type="email" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
+               id="email" formControlName="email" autocomplete="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="role" class="my-1">User Role</label>
+      <select class="form-select" id="role" formControlName="role">
+        <option value="2">Visitor</option>
+        <option value="3">Admin</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="notificationChannel" class="my-1">Notification Channel</label>
+      <select class="form-select" id="notificationChannel" formControlName="notificationChannel">
+        <option value="1">none</option>
+        <option value="2">email only</option>
+        <option value="3">message box only</option>
+        <option value="4">email & message box</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="acceptUser()">Accept User</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>

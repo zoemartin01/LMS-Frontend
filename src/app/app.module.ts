@@ -56,6 +56,8 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { UserAcceptComponent } from './components/user-management/accept/user-accept.component';
+import { UserDeclineComponent } from './components/user-management/decline/user-decline.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +109,8 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
+    UserAcceptComponent,
+    UserDeclineComponent,
   ],
   imports: [
     AppRoutingModule,
