@@ -24,7 +24,7 @@ export class GlobalSettingsComponent implements OnInit {
     "user.max_recordings": new FormControl(1, [
       // Validators.required,
     ]),
-    autoDeleteTimespan: new FormControl(500, [
+    "recording.auto_delete": new FormControl(500, [
       // Validators.required,
     ]),
   });
@@ -53,7 +53,7 @@ export class GlobalSettingsComponent implements OnInit {
       next: res => {
         this.globalSettingsForm.controls['user.max_recordings'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
         this.globalSettingsForm.controls['recording.auto_delete'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
-          .value / 1000 / 60 / 60 / 24);
+          .value);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -95,7 +95,7 @@ export class GlobalSettingsComponent implements OnInit {
         next: res => {
           this.globalSettingsForm.controls['user.max_recordings'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
           this.globalSettingsForm.controls['recording.auto_delete'].setValue(+res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
-            .value / 1000 / 60 / 60 / 24);
+            .value);
         },
         error: error => {
           console.error('There was an error!', error);

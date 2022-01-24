@@ -3,7 +3,7 @@
 </div>
 
 <br>
-<form class="form-inline col-sm-11 mx-auto py-3" [formGroup]="globalSettingsForm">
+<form class="form-inline col-sm-6 mx-auto py-3" [formGroup]="globalSettingsForm">
   <div class="form-group">
     <div class="input-group justify-content-center">
       <div class="col-sm-5 form-group">
@@ -11,13 +11,18 @@
         <div class="input-group">
           <input type="number" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
         </div>
+        <label for="recordingAutoDelete" class="my-1">Time before recordings are deleted</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="recordingAutoDelete" formControlName="recording.auto_delete">
+        </div>
       </div>
     </div>
+
   </div>
 </form>
-<div class="modal-footer">
+<div class="modal-footer justify-content-center">
   <button type="button" class="btn btn-danger" (click)="editGlobalSettings()">Submit</button>
-  <!-- <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button> -->
+  <button type="button" class="btn btn-secondary" (click)="getGlobalSettings()">Abort</button>
 </div>
 
 <!--<form (keyup.enter)="editGlobalSettings(globalSettingsForm)" #globalSettingsForm="ngForm"
