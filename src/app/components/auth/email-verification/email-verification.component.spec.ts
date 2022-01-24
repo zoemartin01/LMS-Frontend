@@ -97,7 +97,7 @@ describe('EmailVerificationComponent', () => {
     router.navigateByUrl.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create email verification component', () => {
     expect(component).toBeTruthy();
   });
 

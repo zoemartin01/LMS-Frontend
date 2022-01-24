@@ -81,7 +81,7 @@ describe('LoginComponent', () => {
     router.navigateByUrl.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create login component', () => {
     expect(component).toBeTruthy();
   });
 

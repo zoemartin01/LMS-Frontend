@@ -24,7 +24,6 @@ describe('RoomCalendarViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomCalendarViewComponent);
     component = fixture.componentInstance;
-    //fixture.detectChanges();
   });
 
   it('should create', () => {

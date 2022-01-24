@@ -51,7 +51,7 @@ describe('MessageDeleteComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create message delete component', () => {
     expect(component).toBeTruthy();
   });
 

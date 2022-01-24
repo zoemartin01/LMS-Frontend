@@ -72,7 +72,7 @@ describe('RegisterComponent', () => {
     router.navigateByUrl.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
   });
 

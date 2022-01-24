@@ -24,7 +24,6 @@ describe('LivecamDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LivecamDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
