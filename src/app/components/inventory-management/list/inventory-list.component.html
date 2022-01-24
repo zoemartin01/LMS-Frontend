@@ -11,25 +11,33 @@
 <div class="row">
   <table class="table table-striped">
     <thead class="thead-dark">
-    <tr>
-      <th class="col">Item</th>
-      <th class="col">Description</th>
-      <th class="col">Quantity</th>
-      <th class="col-md-2"></th>
-    </tr>
+      <tr>
+        <th class="col">Item</th>
+        <th class="col">Description</th>
+        <th class="col">Quantity</th>
+        <th class="col-md-2"></th>
+      </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let inventoryItem of inventory">
-      <td>{{ inventoryItem.name }}</td>
-      <td>{{ inventoryItem.description }}</td>
-      <td>{{ inventoryItem.quantity }}</td>
-      <td class="col-sm-3">
-        <a (click)="openInventoryItemViewForm(inventoryItem.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
-        <a (click)="openInventoryItemEditForm(inventoryItem.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
-        <a (click)="openItemDeletionDialog(inventoryItem.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
-        <a (click)="openInventoryItemEditForm(inventoryItem.id)"><button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button></a>
-      </td>
-    </tr>
+      <tr *ngFor="let inventoryItem of inventory">
+        <td>{{ inventoryItem.name }}</td>
+        <td>{{ inventoryItem.description }}</td>
+        <td>{{ inventoryItem.quantity }}</td>
+        <td class="col-sm-3">
+          <a (click)="openInventoryItemViewForm(inventoryItem.id)">
+            <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
+          </a>
+          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+            <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+          </a>
+          <a (click)="openItemDeletionDialog(inventoryItem.id)">
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+          </a>
+          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+            <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
+          </a>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
