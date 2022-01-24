@@ -5,8 +5,6 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
-import {error} from "@angular/compiler/src/util";
-import {Router} from "@angular/router";
 import {InventoryItemCreateComponent} from "../item-create/inventory-item-create.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {InventoryItemViewComponent} from "../item-view/inventory-item-view.component";
@@ -63,6 +61,10 @@ export class InventoryListComponent implements OnInit {
   public openInventoryItemCreationForm(): void {
     const modal = this.modalService.open(InventoryItemCreateComponent);
     modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openInventoryItemViewForm(result.split(' ')[1]);
+      }
+
       if (result !== 'aborted') {
         this.getInventory();
       }

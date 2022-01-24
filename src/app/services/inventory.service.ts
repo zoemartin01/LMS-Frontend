@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import{ InventoryItem } from "../types/inventory-item";
 import { InventoryItemId } from "../types/aliases/inventory-item-id";
-import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,11 @@ export class InventoryService {
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
 
-    return this.httpClient.get<InventoryItem>(apiURL);
+    return this.httpClient.post<InventoryItem>(apiURL, {
+      name: inventoryItem.name,
+      description: inventoryItem.description,
+      quantity: inventoryItem.quantity,
+    });
   }
 
   /**

@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-  <form (keyup.enter)="createInventoryItem()" [formGroup]="createInventoryItemForm" (ngSubmit)="createInventoryItem()">
+  <form (keyup.enter)="createInventoryItem()" [formGroup]="createInventoryItemForm">
     <div class="form-group row">
       <label for="item" class="col-sm-3 col-form-label">Item</label>
       <div class="input-group">
@@ -34,6 +34,6 @@
 
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" [disabled]="!createInventoryItemForm.valid"
-          role="button">Create</button>
+          (click)="createInventoryItem()">Create</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
+import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 
 import { InventoryService } from "../../../services/inventory.service";
+
 import { InventoryItem } from "../../../types/inventory-item";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {InventoryItemEditComponent} from "../item-edit/inventory-item-edit.component";
-import {InventoryItemDeleteComponent} from "../item-delete/inventory-item-delete.component";
 
 @Component({
   selector: 'app-inventory-item-view',
@@ -38,13 +39,11 @@ export class InventoryItemViewComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public inventoryService: InventoryService,
-    private route: ActivatedRoute,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal) {
     this.inventoryItemViewForm.disable();
@@ -54,9 +53,7 @@ export class InventoryItemViewComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.getInventoryItemData();
-    });
+    this.getInventoryItemData();
   }
 
   /**
@@ -66,7 +63,6 @@ export class InventoryItemViewComponent implements OnInit {
     this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
       next: res => {
         this.inventoryItem = res;
-        console.log(res);
 
         this.inventoryItemViewForm.controls['name'].setValue(res.name);
         this.inventoryItemViewForm.controls['description'].setValue(res.description);
