@@ -1,32 +1,33 @@
-import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
-import { HttpClientModule, HttpErrorResponse } from "@angular/common/http";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Router } from "@angular/router";
+import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from 'rxjs';
 
 import { MessageBoxComponent } from './message-box.component';
 
 import { MessagingService } from "../../../services/messaging.service";
+import { UserService } from "../../../services/user.service";
 
+import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
-import {Message} from "../../../types/message";
-import {UnreadMessages} from "../../../types/unread-messages";
-import {Router} from "@angular/router";
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {UserService} from "../../../services/user.service";
+import { UnreadMessages } from "../../../types/unread-messages";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockMessagingService {
   getMessages(): Observable<Message[]> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 500,
-            statusText: 'Unknown Error.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Unknown Error.',
+            }
+          }
+        });
       }
 
       const messages: Message[] = [
@@ -55,12 +56,13 @@ class MockMessagingService {
   public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 500,
-            statusText: 'Unknown Error.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Unknown Error.',
+            }
+          }
+        });
       }
 
       const unreadMessages: UnreadMessages = {
@@ -77,12 +79,13 @@ class MockMessagingService {
   public updateMessage(messageId: MessageId, changedData: { readStatus: boolean }): Observable<Message> {
     return new Observable((observer) => {
       if (messageId === '312d8319-c253-4ee4-8771-a4a8d4a2f411') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 400,
-            statusText: 'Message not found.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Message not found.',
+            }
+          }
+        });
       }
 
       const messages: Message = {
@@ -111,12 +114,13 @@ class MockUserService {
   getUserDetails(): Observable<User> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 404,
-            statusText: 'User not found.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'User not found.',
+            }
+          }
+        });
       }
 
       const user: User = {
@@ -136,14 +140,12 @@ class MockUserService {
 }
 
 class MockModalService {
-  open(): MockModal {
-    return new MockModal();
-  }
-}
-
-class MockModal {
-  public componentInstance: { message: Message|null } = { message:  null };
-  public result: Promise<string> = new Promise<string>(resolve =>  resolve('aborted'));
+  open(): { componentInstance: { message: Message|null }, result: Promise<string> } {
+    return {
+      componentInstance: { message:  null },
+      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+    };
+  };
 }
 
 describe('MessageBoxComponent - calls of updatePage', () => {
@@ -164,13 +166,14 @@ describe('MessageBoxComponent - calls of updatePage', () => {
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        NgbModule,
       ],
       providers: [
         NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
-        { provide: NgbModal, useClass: MockModal },
         { provide: Router, useValue: router },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -272,7 +275,6 @@ describe('MessageBoxComponent - calls of getters', () => {
     navigateByUrl: jasmine.createSpy('navigateByUrl')
   };
   let consoleError: jasmine.Spy<any>;
-  let updatePageMethod: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -288,7 +290,7 @@ describe('MessageBoxComponent - calls of getters', () => {
         NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
-        { provide: MockModalService, useClass: MockModal },
+        { provide: NgbModal, useClass: MockModalService },
         { provide: Router, useValue: router },
       ],
     }).compileComponents();
@@ -315,8 +317,9 @@ describe('MessageBoxComponent - calls of getters', () => {
     expect(getMessagesMethod).toHaveBeenCalled();
   });
 
-  //@todo implement test
-  it('should show error message on get messages error', () => {
+  it('should update messages when message is deleted', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'deleted');
+
     let getMessagesMethod = spyOn(component, 'getMessages');
 
     component.openMessageDeletionDialog({
@@ -328,8 +331,33 @@ describe('MessageBoxComponent - calls of getters', () => {
       readStatus: false,
     });
 
-    //expect(getMessagesMethod).toHaveBeenCalled();
-  });
+    tick();
+
+    expect(getMessagesMethod).toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should not update messages when message deletion is aborted', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'aborted');
+
+    let getMessagesMethod = spyOn(component, 'getMessages');
+
+    component.openMessageDeletionDialog({
+      id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
+      title: 'Verify Email to confirm account',
+      content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+      correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrlText: 'Verify Email',
+      readStatus: false,
+    });
+
+    tick();
+
+    expect(getMessagesMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
 });
 
 describe('MessageBoxComponent - http functions', () => {
@@ -339,7 +367,6 @@ describe('MessageBoxComponent - http functions', () => {
     navigateByUrl: jasmine.createSpy('navigateByUrl')
   };
   let consoleError: jasmine.Spy<any>;
-  let updatePageMethod: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -355,7 +382,7 @@ describe('MessageBoxComponent - http functions', () => {
         NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
-        { provide: NgbModal, useClass: MockModal },
+        { provide: NgbModal, useClass: MockModalService },
         { provide: Router, useValue: router },
       ],
     }).compileComponents();

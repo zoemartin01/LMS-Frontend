@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { MessageDeleteComponent } from "./delete/message-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { MessagingService } from "../../../services/messaging.service";
@@ -9,8 +12,6 @@ import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {MessageDeleteComponent} from "./delete/message-delete.component";
 
 @Component({
   selector: 'app-message-box',

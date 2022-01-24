@@ -14,6 +14,8 @@ import { Message } from "../../../../types/message";
 
 /**
  * Component for the deletion of a message
+ * @typedef {Component} MessageDeleteComponent
+ * @class
  */
 export class MessageDeleteComponent implements OnInit {
   public messageDeleteForm: FormGroup = new FormGroup({
@@ -39,6 +41,9 @@ export class MessageDeleteComponent implements OnInit {
     this.messageDeleteForm.disable();
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.messageDeleteForm.controls['title'].setValue(this.message.title);
     this.messageDeleteForm.controls['content'].setValue(this.message.content);
