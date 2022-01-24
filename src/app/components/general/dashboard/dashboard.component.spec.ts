@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Observable } from 'rxjs';
 
 import { DashboardComponent } from './dashboard.component';
@@ -10,8 +12,6 @@ import { UnreadMessages } from "../../../types/unread-messages";
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-
-import { RouterTestingModule } from '@angular/router/testing';
 
 class MockMessagingService {
   public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
@@ -72,13 +72,13 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let consoleError: jasmine.Spy<any>;
 
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
       ],
       imports: [
+        HttpClientTestingModule,
         RouterTestingModule,
       ],
       providers: [
