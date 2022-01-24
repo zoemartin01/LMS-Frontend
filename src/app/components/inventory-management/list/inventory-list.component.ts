@@ -9,6 +9,7 @@ import {error} from "@angular/compiler/src/util";
 import {Router} from "@angular/router";
 import {InventoryItemCreateComponent} from "../item-create/inventory-item-create.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {InventoryItemViewComponent} from "../item-view/inventory-item-view.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -81,7 +82,14 @@ export class InventoryListComponent implements OnInit {
    *
    * @param {InventoryItemId} inventoryItemId id of item to view
    */
-  public openInventoryItemView(inventoryItemId: InventoryItemId): void {
+  public openInventoryItemViewForm(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemViewComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

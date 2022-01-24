@@ -36,13 +36,13 @@ export class InventoryService {
    *
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
-  public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<any> {
+  public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<InventoryItem> {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getSingleItem.replace(':id', inventoryItemId)}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 
   /**
