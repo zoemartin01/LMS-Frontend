@@ -60,6 +60,7 @@ export class MessageBoxComponent implements OnInit {
         if (notificationChannel !== NotificationChannel.emailAndMessageBox
           && notificationChannel !== NotificationChannel.messageBoxOnly) {
           this.router.navigateByUrl('/dashboard');
+          return;
         }
 
         this.updatePage();
@@ -74,7 +75,7 @@ export class MessageBoxComponent implements OnInit {
    * Updates page
    * @private
    */
-  private updatePage() {
+  public updatePage() {
     this.getUnreadMessagesAmounts();
     this.getMessages();
   }

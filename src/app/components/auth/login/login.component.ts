@@ -52,7 +52,7 @@ export class LoginComponent {
           this.authService.setAccessToken(res.accessToken);
           this.authService.setRefreshToken(res.refreshToken);
           this.authService.setUserId(res.userId);
-          this.authService.setUserRole(<UserRole><unknown>res.role ?? UserRole.unknown);
+          this.authService.setUserRole(<UserRole><unknown>res.role);
 
           this.router.navigateByUrl('/dashboard');
         },

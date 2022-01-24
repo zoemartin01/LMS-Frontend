@@ -1,12 +1,159 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
+import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
+import { HttpClientModule, HttpErrorResponse } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from 'rxjs';
 
 import { MessageBoxComponent } from './message-box.component';
 
-describe('MessageBoxComponent', () => {
+import { MessagingService } from "../../../services/messaging.service";
+
+import { MessageId } from "../../../types/aliases/message-id";
+import {Message} from "../../../types/message";
+import {UnreadMessages} from "../../../types/unread-messages";
+import {Router} from "@angular/router";
+import {User} from "../../../types/user";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {UserService} from "../../../services/user.service";
+
+class MockMessagingService {
+  getMessages(): Observable<Message[]> {
+    return new Observable((observer) => {
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error(
+          new HttpErrorResponse({
+            status: 500,
+            statusText: 'Unknown Error.',
+          })
+        );
+      }
+
+      const messages: Message[] = [
+        {
+          id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
+          title: 'Verify Email to confirm account',
+          content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+          correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrlText: 'Verify Email',
+          readStatus: false,
+        },
+        {
+          id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
+          title: 'Verify Email to confirm account',
+          content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+          correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrlText: 'Verify Email',
+          readStatus: false,
+        },
+      ];
+
+      observer.next(messages);
+    });
+  }
+
+  public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
+    return new Observable((observer) => {
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error(
+          new HttpErrorResponse({
+            status: 500,
+            statusText: 'Unknown Error.',
+          })
+        );
+      }
+
+      const unreadMessages: UnreadMessages = {
+        sum: 12,
+        appointments: 3,
+        orders: 1,
+        users: 5,
+      };
+
+      observer.next(unreadMessages);
+    });
+  }
+
+  public updateMessage(messageId: MessageId, changedData: { readStatus: boolean }): Observable<Message> {
+    return new Observable((observer) => {
+      if (messageId === '312d8319-c253-4ee4-8771-a4a8d4a2f411') {
+        observer.error(
+          new HttpErrorResponse({
+            status: 400,
+            statusText: 'Message not found.',
+          })
+        );
+      }
+
+      const messages: Message = {
+        id: messageId,
+        title: 'Verify Email to confirm account',
+        content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+        correspondingUrlText: 'Verify Email',
+        readStatus: changedData.readStatus,
+      };
+
+      observer.next(messages);
+    });
+  }
+
+  markMessageAsRead(messageId: MessageId): Observable<Message> {
+    return this.updateMessage(messageId, { readStatus: true });
+  }
+
+  markMessageAsUnread(messageId: MessageId): Observable<Message> {
+    return this.updateMessage(messageId, { readStatus: false });
+  }
+}
+
+class MockUserService {
+  getUserDetails(): Observable<User> {
+    return new Observable((observer) => {
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error(
+          new HttpErrorResponse({
+            status: 404,
+            statusText: 'User not found.',
+          })
+        );
+      }
+
+      const user: User = {
+        id: '59f1589d-197c-4f53-bfc1-4c57aae14c42',
+        firstName: 'Alex',
+        lastName: 'Mustermensch',
+        email: 'alex@mustermensch.com',
+        role: UserRole.visitor,
+        notificationChannel: <NotificationChannel><any>(+(localStorage.getItem('testNotificationChannel') ?? 0)),
+        emailVerification: true,
+        isActiveDirectory: false,
+      }
+
+      observer.next(user);
+    });
+  }
+}
+
+class MockModalService {
+  open(): MockModal {
+    return new MockModal();
+  }
+}
+
+class MockModal {
+  public componentInstance: { message: Message|null } = { message:  null };
+  public result: Promise<string> = new Promise<string>(resolve =>  resolve('aborted'));
+}
+
+describe('MessageBoxComponent - calls of updatePage', () => {
   let component: MessageBoxComponent;
   let fixture: ComponentFixture<MessageBoxComponent>;
+  let router = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl')
+  };
+  let consoleError: jasmine.Spy<any>;
+  let updatePageMethod: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,24 +161,277 @@ describe('MessageBoxComponent', () => {
         MessageBoxComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
-        RouterTestingModule,
+        ReactiveFormsModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        NgbActiveModal,
+        { provide: MessagingService, useClass: MockMessagingService },
+        { provide: UserService, useClass: MockUserService },
+        { provide: NgbModal, useClass: MockModal },
+        { provide: Router, useValue: router },
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(MessageBoxComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    consoleError = spyOn(console, 'error');
+    updatePageMethod = spyOn(component, 'updatePage');
+
+    router.navigateByUrl.calls.reset();
+    consoleError.calls.reset();
+    updatePageMethod.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create message box component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
+  it('should init page with notification channel email and message box', () => {
+    localStorage.setItem('testNotificationChannel', NotificationChannel.emailAndMessageBox.toString());
+
+    component.ngOnInit();
+
+    expect(updatePageMethod).toHaveBeenCalled();
+    expect(router.navigateByUrl).not.toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('should init page with notification channel message box only', () => {
+    localStorage.setItem('testNotificationChannel', NotificationChannel.messageBoxOnly.toString());
+
+    component.ngOnInit();
+
+    expect(updatePageMethod).toHaveBeenCalled();
+    expect(router.navigateByUrl).not.toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('should try to init page with notification channel email only and get redirected to dashboard', () => {
+    localStorage.setItem('testNotificationChannel', NotificationChannel.emailOnly.toString());
+
+    component.ngOnInit();
+
+    expect(updatePageMethod).not.toHaveBeenCalled();
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('should try to init page with notification channel none and get redirected to dashboard', () => {
+    localStorage.setItem('testNotificationChannel', NotificationChannel.none.toString());
+
+    component.ngOnInit();
+
+    expect(updatePageMethod).not.toHaveBeenCalled();
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('should show error message on init error', () => {
+    localStorage.setItem('throwError', 'true');
+
+    component.ngOnInit();
+
+    expect(consoleError).toHaveBeenCalled();
+    expect(updatePageMethod).not.toHaveBeenCalled();
+    expect(router.navigateByUrl).not.toHaveBeenCalledWith('/dashboard');
+
+    localStorage.setItem('throwError', 'false');
+  });
+
+  it('should mark message as read', () => {
+    component.markMessageAsRead('b16a9b6a-aa07-41a6-ab5a-c972c2894458');
+
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(updatePageMethod).toHaveBeenCalled();
+  });
+
+  it('should show error message on mark message as read error', () => {
+    component.markMessageAsRead('312d8319-c253-4ee4-8771-a4a8d4a2f411');
+
+    expect(consoleError).toHaveBeenCalled();
+    expect(updatePageMethod).not.toHaveBeenCalled();
+  });
+
+  it('should mark message as unread', () => {
+    component.markMessageAsUnread('b16a9b6a-aa07-41a6-ab5a-c972c2894458');
+
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(updatePageMethod).toHaveBeenCalled();
+  });
+
+  it('should show error message on mark message as unread error', () => {
+    component.markMessageAsUnread('312d8319-c253-4ee4-8771-a4a8d4a2f411');
+
+    expect(consoleError).toHaveBeenCalled();
+    expect(updatePageMethod).not.toHaveBeenCalled();
+  });
+});
+
+describe('MessageBoxComponent - calls of getters', () => {
+  let component: MessageBoxComponent;
+  let fixture: ComponentFixture<MessageBoxComponent>;
+  let router = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl')
+  };
+  let consoleError: jasmine.Spy<any>;
+  let updatePageMethod: jasmine.Spy<any>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        MessageBoxComponent,
+      ],
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
+        { provide: MessagingService, useClass: MockMessagingService },
+        { provide: UserService, useClass: MockUserService },
+        { provide: MockModalService, useClass: MockModal },
+        { provide: Router, useValue: router },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(MessageBoxComponent);
+    component = fixture.componentInstance;
+    consoleError = spyOn(console, 'error');
+
+    router.navigateByUrl.calls.reset();
+    consoleError.calls.reset();
+  });
+
+  it('should create message box component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get unread messages amounts and messages on page update', () => {
+    let getUnreadMessagesAmountsMethod = spyOn(component, 'getUnreadMessagesAmounts');
+    let getMessagesMethod = spyOn(component, 'getMessages');
+
+    component.updatePage();
+
+    expect(getUnreadMessagesAmountsMethod).toHaveBeenCalled();
+    expect(getMessagesMethod).toHaveBeenCalled();
+  });
+
+  //@todo implement test
+  it('should show error message on get messages error', () => {
+    let getMessagesMethod = spyOn(component, 'getMessages');
+
+    component.openMessageDeletionDialog({
+      id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
+      title: 'Verify Email to confirm account',
+      content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+      correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrlText: 'Verify Email',
+      readStatus: false,
+    });
+
+    //expect(getMessagesMethod).toHaveBeenCalled();
+  });
+});
+
+describe('MessageBoxComponent - http functions', () => {
+  let component: MessageBoxComponent;
+  let fixture: ComponentFixture<MessageBoxComponent>;
+  let router = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl')
+  };
+  let consoleError: jasmine.Spy<any>;
+  let updatePageMethod: jasmine.Spy<any>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        MessageBoxComponent,
+      ],
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
+        { provide: MessagingService, useClass: MockMessagingService },
+        { provide: UserService, useClass: MockUserService },
+        { provide: NgbModal, useClass: MockModal },
+        { provide: Router, useValue: router },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(MessageBoxComponent);
+    component = fixture.componentInstance;
+    consoleError = spyOn(console, 'error');
+
+    router.navigateByUrl.calls.reset();
+    consoleError.calls.reset();
+  });
+
+  it('should create message box component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should get unread messages amounts', () => {
+    expect(component.unreadMessages).toEqual({
+      sum: 0,
+      appointments: 0,
+      orders: 0,
+      users: 0,
+    });
+
+    component.getUnreadMessagesAmounts();
+
+    expect(component.unreadMessages).toEqual({
+      sum: 12,
+      appointments: 3,
+      orders: 1,
+      users: 5,
+    });
+  });
+
+  it('should show error message on get unread messages amounts error', () => {
+    localStorage.setItem('throwError', 'true');
+
+    component.getUnreadMessagesAmounts();
+
+    expect(consoleError).toHaveBeenCalled();
+
+    localStorage.setItem('throwError', 'false');
+  });
+
+  it('should get messages', () => {
+    expect(component.messages).toEqual([]);
+
+    component.getMessages();
+
+    expect(component.messages).toEqual([
+      {
+        id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
+        title: 'Verify Email to confirm account',
+        content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+        correspondingUrlText: 'Verify Email',
+        readStatus: false,
+      },
+      {
+        id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
+        title: 'Verify Email to confirm account',
+        content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+        correspondingUrlText: 'Verify Email',
+        readStatus: false,
+      },
+    ]);
+  });
+
+  it('should show error message on get messages error', () => {
+    localStorage.setItem('throwError', 'true');
+
+    component.getMessages();
+
+    expect(consoleError).toHaveBeenCalled();
+
+    localStorage.setItem('throwError', 'false');
   });
 });
