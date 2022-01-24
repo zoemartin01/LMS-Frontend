@@ -34,6 +34,7 @@ import { LivecamOverviewComponent } from './components/livecam/overview/livecam-
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -58,7 +59,6 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
-import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +86,7 @@ import { MessageDeleteComponent } from './components/general/message-box/delete/
     LivecamScheduleComponent,
     LoginComponent,
     MessageBoxComponent,
+    MessageDeleteComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
@@ -110,7 +111,6 @@ import { MessageDeleteComponent } from './components/general/message-box/delete/
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
-    MessageDeleteComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { UserDeleteComponent } from './user-delete.component';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 describe('UserDeleteComponent', () => {
   let component: UserDeleteComponent;
