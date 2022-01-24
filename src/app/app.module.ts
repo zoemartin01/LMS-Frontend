@@ -3,6 +3,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AutosizeModule } from 'ngx-autosize';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -56,6 +58,7 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
 
 @NgModule({
   declarations: [
@@ -107,9 +110,11 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
+    MessageDeleteComponent,
   ],
   imports: [
     AppRoutingModule,
+    AutosizeModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { MessageDeleteComponent } from "./delete/message-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { MessagingService } from "../../../services/messaging.service";
@@ -37,12 +40,14 @@ export class MessageBoxComponent implements OnInit {
    * @param {UserService} userService service providing user functionalities
    * @param {AuthService} authService service providing authentication functionalities
    * @param {Router} router router providing navigation
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public messagingService: MessagingService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
   }
 
@@ -53,9 +58,10 @@ export class MessageBoxComponent implements OnInit {
     this.userService.getUserDetails().subscribe({
       next: (res) => {
         const notificationChannel = res.notificationChannel;
-        if (notificationChannel === NotificationChannel.emailAndMessageBox
-          || notificationChannel === NotificationChannel.messageBoxOnly) {
+        if (notificationChannel !== NotificationChannel.emailAndMessageBox
+          && notificationChannel !== NotificationChannel.messageBoxOnly) {
           this.router.navigateByUrl('/dashboard');
+          return;
         }
 
         this.updatePage();
@@ -70,7 +76,7 @@ export class MessageBoxComponent implements OnInit {
    * Updates page
    * @private
    */
-  private updatePage() {
+  public updatePage() {
     this.getUnreadMessagesAmounts();
     this.getMessages();
   }
@@ -106,10 +112,16 @@ export class MessageBoxComponent implements OnInit {
   /**
    * Opens message deletion dialog
    *
-   * @param {MessageId} messageId id of message to be deleted
+   * @param {Message} message message to be deleted
    */
-  public async openAppointmentDeletionDialog(messageId: MessageId): Promise<void> {
-    //@todo Adrian: implement deletion dialog
+  public async openMessageDeletionDialog(message: Message): Promise<void> {
+    const modal = this.modalService.open(MessageDeleteComponent);
+    modal.componentInstance.message = message;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getMessages();
+      }
+    });
   }
 
   /**

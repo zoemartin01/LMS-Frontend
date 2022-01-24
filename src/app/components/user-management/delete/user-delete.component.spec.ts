@@ -3,6 +3,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { UserDeleteComponent } from './user-delete.component';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 describe('UserDeleteComponent', () => {
   let component: UserDeleteComponent;
@@ -17,17 +18,17 @@ describe('UserDeleteComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        NgbActiveModal,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
+

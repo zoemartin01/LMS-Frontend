@@ -24,7 +24,6 @@ describe('RoomDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

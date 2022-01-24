@@ -26,7 +26,6 @@ describe('OrderEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderEditComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

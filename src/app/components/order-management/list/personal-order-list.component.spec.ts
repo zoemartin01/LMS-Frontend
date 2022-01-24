@@ -24,7 +24,6 @@ describe('PersonalOrderListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonalOrderListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

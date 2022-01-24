@@ -71,7 +71,7 @@ export class RegisterComponent {
         },
         error: error => {
           this.registerError = true;
-          this.registerErrorMessage = error;
+          this.registerErrorMessage = error.error.message;
           console.error('There was an error!', error);
         }
       })

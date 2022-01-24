@@ -26,7 +26,6 @@ describe('GlobalSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GlobalSettingsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
