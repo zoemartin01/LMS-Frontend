@@ -58,7 +58,7 @@ export class LoginComponent {
         },
         error: error => {
           this.loginError = true;
-          this.loginErrorMessage = error;
+          this.loginErrorMessage = error.error.message;
           console.error('There was an error!', error);
         }
       })

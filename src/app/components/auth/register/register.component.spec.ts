@@ -18,12 +18,13 @@ class MockUserService {
   register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
     return new Observable((observer) => {
       if (email === 'known@example.com') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 409,
-            statusText: 'User with this email already exists.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'User with this email already exists.',
+            }
+          }
+        });
       }
 
       const user: User = {

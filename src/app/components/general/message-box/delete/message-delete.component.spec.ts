@@ -14,12 +14,13 @@ class MockMessagingService {
   deleteMessage(messageId: MessageId): Observable<void> {
     return new Observable((observer) => {
       if (messageId === '312d8319-c253-4ee4-8771-a4a8d4a2f411') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 400,
-            statusText: 'Message not found.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Message not found.',
+            }
+          }
+        });
       }
 
       observer.next();

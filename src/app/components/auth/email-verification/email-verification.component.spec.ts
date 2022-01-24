@@ -37,12 +37,13 @@ class MockUserService {
   verifyEmail(userId: UserId, token: string): Observable<User> {
     return new Observable((observer) => {
       if (userId !== '59f1589d-197c-4f53-bfc1-4c57aae14c42' || token !== 'ixhgvplqq') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 400,
-            statusText: 'Token doesn\'t match.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Token doesn\'t match.',
+            }
+          }
+        });
       }
 
       const user: User = {

@@ -17,12 +17,13 @@ class MockAuthService {
   public login(email: string, password: string, isActiveDirectory: boolean) {
     return new Observable((observer) => {
       if (email !== 'alex@mustermensch.com' || password !== 'bestPasswordEver!') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 400,
-            statusText: 'Invalid email or password.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'Invalid email or password.',
+            }
+          }
+        });
       }
 
       observer.next({
