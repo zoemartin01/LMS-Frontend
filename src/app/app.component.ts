@@ -5,6 +5,7 @@ import { AuthService } from "./services/auth.service";
 import { MessagingService } from "./services/messaging.service";
 import { UserService } from "./services/user.service";
 
+import { User } from "./types/user";
 import { UnreadMessages } from "./types/unread-messages";
 import { NotificationChannel } from "./types/enums/notification-channel";
 
@@ -37,11 +38,10 @@ export class AppComponent implements OnInit {
    * @param {Router} router router providing navigation
    */
   constructor(
-      public authService: AuthService,
-      public messagingService: MessagingService,
-      private userService: UserService,
-      private router: Router
-    ) {
+    public authService: AuthService,
+    public messagingService: MessagingService,
+    private userService: UserService,
+    private router: Router) {
   }
 
   /**
@@ -50,18 +50,24 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
       this.getUnreadMessagesAmounts();
-
-      this.userService.getUserDetails().subscribe({
-        next: (res) => {
-          const notificationChannel = res.notificationChannel;
-          this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
-            || notificationChannel === NotificationChannel.messageBoxOnly);
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      })
+      this.getUserDetails();
     }
+  }
+
+  /**
+   * Retrieves details for current user
+   */
+  public async getUserDetails(): Promise<void>{
+    this.userService.getUserDetails().subscribe({
+      next: (res: User) => {
+        const notificationChannel: NotificationChannel = res.notificationChannel;
+        this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
+          || notificationChannel === NotificationChannel.messageBoxOnly);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -69,7 +75,7 @@ export class AppComponent implements OnInit {
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
     this.messagingService.getUnreadMessagesAmounts().subscribe({
-      next: res => {
+      next: (res: UnreadMessages) => {
         this.unreadMessages = res;
       },
       error: error => {
@@ -85,11 +91,13 @@ export class AppComponent implements OnInit {
     this.authService.logout().subscribe({
       next: () => {
         localStorage.clear();
-
-        this.router.navigate(['/']);
+        this.router.navigateByUrl('/');
       },
       error: error => {
         console.error('There was an error!', error);
+
+        localStorage.clear();
+        this.router.navigateByUrl('/');
       }
     });
   }

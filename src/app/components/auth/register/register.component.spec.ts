@@ -18,12 +18,13 @@ class MockUserService {
   register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
     return new Observable((observer) => {
       if (email === 'known@example.com') {
-        observer.error(
-          new HttpErrorResponse({
-            status: 409,
-            statusText: 'User with this email already exists.',
-          })
-        );
+        observer.error({
+          error: {
+            error: {
+              message: 'User with this email already exists.',
+            }
+          }
+        });
       }
 
       const user: User = {
@@ -33,6 +34,8 @@ class MockUserService {
         email,
         role: UserRole.pending,
         notificationChannel: NotificationChannel.emailOnly,
+        emailVerification: true,
+        isActiveDirectory: false,
       }
 
       observer.next(user);
@@ -70,7 +73,7 @@ describe('RegisterComponent', () => {
     router.navigateByUrl.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
   });
 

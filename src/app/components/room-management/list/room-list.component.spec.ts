@@ -24,7 +24,6 @@ describe('RoomListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

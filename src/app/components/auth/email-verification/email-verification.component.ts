@@ -71,7 +71,7 @@ export class EmailVerificationComponent implements OnInit {
         },
         error: error => {
           this.verifyEmailError = true;
-          this.verifyEmailErrorMessage = error;
+          this.verifyEmailErrorMessage = error.error.message;
           this.showForm = true;
           console.error('There was an error!', error);
         }

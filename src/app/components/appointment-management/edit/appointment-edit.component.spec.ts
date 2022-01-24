@@ -24,7 +24,6 @@ describe('AppointmentEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppointmentEditComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

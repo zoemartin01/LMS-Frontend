@@ -53,7 +53,7 @@ export class UserEditComponent implements OnInit {
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService : AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public adminService : AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**

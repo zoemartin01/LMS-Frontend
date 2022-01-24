@@ -16,7 +16,6 @@ import { UserId } from "../types/aliases/user-id";
  * @class
  */
 export class AuthService {
-
   constructor(private httpClient: HttpClient) {
   }
 
