@@ -24,7 +24,6 @@ describe('AdminAppointmentListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminAppointmentListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

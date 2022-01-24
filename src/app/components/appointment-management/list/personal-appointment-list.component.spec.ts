@@ -24,7 +24,6 @@ describe('PersonalAppointmentListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonalAppointmentListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

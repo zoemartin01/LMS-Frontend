@@ -22,7 +22,7 @@ describe('MessagingService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should be created', () => {
+  it('should create messaging service', () => {
     expect(service).toBeTruthy();
   });
 

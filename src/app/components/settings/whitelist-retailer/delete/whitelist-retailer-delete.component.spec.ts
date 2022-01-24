@@ -24,7 +24,6 @@ describe('WhitelistRetailerDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
