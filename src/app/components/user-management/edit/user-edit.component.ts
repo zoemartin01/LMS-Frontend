@@ -67,18 +67,22 @@ export class UserEditComponent implements OnInit {
   public async getUserData(): Promise<void> {
     this.adminService.getUser(this.user.id).subscribe({
       next: res => {
-        this.user = res;
-
-        this.userEditForm.controls['firstName'].setValue(res.firstName);
-        this.userEditForm.controls['lastName'].setValue(res.lastName);
-        this.userEditForm.controls['email'].setValue(res.email);
-        this.userEditForm.controls['role'].setValue(res.role);
-        this.userEditForm.controls['notificationChannel'].setValue(res.notificationChannel);
+        this.updateUserEditForm(res);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
+  }
+
+  private updateUserEditForm(res: User) {
+    this.user = res;
+
+    this.userEditForm.controls['firstName'].setValue(res.firstName);
+    this.userEditForm.controls['lastName'].setValue(res.lastName);
+    this.userEditForm.controls['email'].setValue(res.email);
+    this.userEditForm.controls['role'].setValue(res.role);
+    this.userEditForm.controls['notificationChannel'].setValue(res.notificationChannel);
   }
 
   /**
@@ -94,8 +98,8 @@ export class UserEditComponent implements OnInit {
       }
     ).subscribe({
 
-      next: () => {
-        this.adminService.getUsers();
+      next: res => {
+        this.updateUserEditForm(res);
       },
       error: error => {
         console.error('There was an error!', error);
