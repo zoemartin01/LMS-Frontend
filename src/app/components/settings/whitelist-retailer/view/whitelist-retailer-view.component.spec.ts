@@ -24,7 +24,6 @@ describe('ViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

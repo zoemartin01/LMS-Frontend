@@ -24,7 +24,6 @@ describe('OverviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LivecamOverviewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

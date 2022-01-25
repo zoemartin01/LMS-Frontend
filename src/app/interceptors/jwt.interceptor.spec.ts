@@ -22,7 +22,7 @@ describe('JwtInterceptor', () => {
     interceptor = TestBed.inject(JwtInterceptor);
   });
 
-  it('should create', () => {
+  it('should create jwt interceptor', () => {
     expect(interceptor).toBeTruthy();
   });
 

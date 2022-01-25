@@ -26,7 +26,6 @@ describe('InventoryItemEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InventoryItemEditComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

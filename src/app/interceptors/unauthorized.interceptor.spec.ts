@@ -61,7 +61,7 @@ describe('UnauthorizedInterceptor', () => {
     localStorage.setItem(environment.storageKeys.accessToken, accessToken);
   });
 
-  it('should be created', () => {
+  it('should create unauthorized interceptor', () => {
     expect(interceptor).toBeTruthy();
   });
 

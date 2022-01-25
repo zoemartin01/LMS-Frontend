@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 
 import { AdminService } from "../../../services/admin.service";
 
@@ -19,9 +19,15 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public maxRecordings: number|null = null;
-  public autodeleteTimespan: number|null = null;
   public whitelistRetailers: WhitelistRetailer[] = [];
+  public globalSettingsForm: FormGroup = new FormGroup({
+    "user.max_recordings": new FormControl('', [
+      // Validators.required,
+    ]),
+    "recording.auto_delete": new FormControl('', [
+      // Validators.required,
+    ]),
+  });
 
   /**
    * Constructor
@@ -45,14 +51,23 @@ export class GlobalSettingsComponent implements OnInit {
   public async getGlobalSettings(): Promise<void> {
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
-        this.maxRecordings = +res.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value;
-        this.autodeleteTimespan = +res.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0]
-          .value;
+        this.updateGlobalSettingsForm(res);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
+  }
+
+  private updateGlobalSettingsForm(globalSettings: GlobalSetting[]) {
+    this.globalSettingsForm.controls['user.max_recordings'].setValue(
+      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value
+    );
+    this.globalSettingsForm.controls['recording.auto_delete'].setValue(
+      (
+        +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
+      )/86400000
+    );
   }
 
   /**
@@ -70,11 +85,27 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * Changes data of user
-   *
-   * @param {NgForm} globalSettingsEditForm form to edit user
+   * Changes data of global settings
    */
-  public async editGlobalSettings(globalSettingsEditForm: NgForm): Promise<void> {
+  public async editGlobalSettings(): Promise<void> {
+    if (this.globalSettingsForm.valid) {
+      let changedFields: object[] = [];
+      for (let key of Object.keys(this.globalSettingsForm.controls)) {
+        changedFields.push({
+          key,
+          value: this.globalSettingsForm.controls[key].value,
+        });
+      }
+
+      this.adminService.updateGlobalSettings(changedFields).subscribe({
+        next: res => {
+          this.updateGlobalSettingsForm(res);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
+    }
   }
 
   /**
@@ -86,7 +117,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer view
    *
-   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerView(whitelistRetailerId: WhitelistRetailerId): void {
   }
@@ -94,7 +125,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer edit form
    *
-   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
   }
@@ -102,7 +133,7 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Opens whitelist retailer deletion dialog
    *
-   * @param {whitelistRetailerId} whitelistRetailerId id of whitelist retailer
+   * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
   }

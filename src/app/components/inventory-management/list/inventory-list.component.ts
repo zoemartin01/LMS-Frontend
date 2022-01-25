@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { InventoryItemCreateComponent } from "../item-create/inventory-item-create.component";
+import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
@@ -26,8 +30,9 @@ export class InventoryListComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public inventoryService: InventoryService, public authService: AuthService) {
+  constructor(public inventoryService: InventoryService, public authService: AuthService, private modalService: NgbModal) {
   }
 
   /**
@@ -41,12 +46,30 @@ export class InventoryListComponent implements OnInit {
    * Gets all items with data
    */
   public async getInventory(): Promise<void> {
+    this.inventoryService.getInventoryItems().subscribe({
+      next: res => {
+        this.inventory = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+    }
+  })
   }
 
   /**
    * Opens form to create item
    */
   public openInventoryItemCreationForm(): void {
+    const modal = this.modalService.open(InventoryItemCreateComponent);
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openInventoryItemViewForm(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
@@ -62,7 +85,14 @@ export class InventoryListComponent implements OnInit {
    *
    * @param {InventoryItemId} inventoryItemId id of item to view
    */
-  public openInventoryItemView(inventoryItemId: InventoryItemId): void {
+  public openInventoryItemViewForm(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemViewComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

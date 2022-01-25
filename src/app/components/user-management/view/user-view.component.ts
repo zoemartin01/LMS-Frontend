@@ -55,11 +55,7 @@ export class UserViewComponent implements OnInit {
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(
-    public adminService: AdminService,
-    private route: ActivatedRoute,
-    public activeModal: NgbActiveModal,
-    private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
     this.userViewForm.disable();
   }
 

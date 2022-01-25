@@ -3,6 +3,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AutosizeModule } from 'ngx-autosize';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -32,6 +34,7 @@ import { LivecamOverviewComponent } from './components/livecam/overview/livecam-
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -85,6 +88,7 @@ import { UserDeclineComponent } from './components/user-management/decline/user-
     LivecamScheduleComponent,
     LoginComponent,
     MessageBoxComponent,
+    MessageDeleteComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
@@ -114,6 +118,7 @@ import { UserDeclineComponent } from './components/user-management/decline/user-
   ],
   imports: [
     AppRoutingModule,
+    AutosizeModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
