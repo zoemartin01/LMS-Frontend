@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
@@ -20,8 +19,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  */
 export class UserDeleteComponent implements OnInit {
   public userDeleteForm: FormGroup = new FormGroup({
-    firstname: new FormControl(''),
-    name: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
     email: new FormControl('', [
       Validators.email,
     ]),
@@ -66,8 +65,8 @@ export class UserDeleteComponent implements OnInit {
       next: res => {
         this.user = res;
 
-        this.userDeleteForm.controls['firstname'].setValue(res.firstName);
-        this.userDeleteForm.controls['name'].setValue(res.lastName);
+        this.userDeleteForm.controls['firstName'].setValue(res.firstName);
+        this.userDeleteForm.controls['lastName'].setValue(res.lastName);
         this.userDeleteForm.controls['email'].setValue(res.email);
         this.userDeleteForm.controls['role'].setValue(res.role);
         this.userDeleteForm.controls['notificationChannel'].setValue(res.notificationChannel);
@@ -82,7 +81,14 @@ export class UserDeleteComponent implements OnInit {
    * Deletes user
    */
   public async deleteUser(): Promise<void> {
-    //@todo delete user
+    this.adminService.deleteUser(this.user.id).subscribe({
+      next: () => {
+        this.adminService.getUsers();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
     this.activeModal.close('deleted');
   }
 }
