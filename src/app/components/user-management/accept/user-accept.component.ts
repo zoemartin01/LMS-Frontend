@@ -20,11 +20,8 @@ export class UserAcceptComponent implements OnInit {
     email: new FormControl('', [
       Validators.email,
     ]),
-    password: new FormControl(''),
-    password_confirmation: new FormControl(''),
-    role: new FormControl(''),
-    notificationChannel: new FormControl(''),
   });
+
   public user: User = {
     id: null,
     firstName: "",
@@ -65,8 +62,6 @@ export class UserAcceptComponent implements OnInit {
         this.userAcceptForm.controls['firstname'].setValue(res.firstName);
         this.userAcceptForm.controls['name'].setValue(res.lastName);
         this.userAcceptForm.controls['email'].setValue(res.email);
-        this.userAcceptForm.controls['role'].setValue(res.role);
-        this.userAcceptForm.controls['notificationChannel'].setValue(res.notificationChannel);
       },
       error: error => {
         console.error('There was an error!', error);

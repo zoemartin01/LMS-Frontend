@@ -19,11 +19,8 @@ export class UserDeclineComponent implements OnInit {
     email: new FormControl('', [
       Validators.email,
     ]),
-    password: new FormControl(''),
-    password_confirmation: new FormControl(''),
-    role: new FormControl(''),
-    notificationChannel: new FormControl(''),
   });
+
   public user: User = {
     id: null,
     firstName: "",
@@ -64,8 +61,6 @@ export class UserDeclineComponent implements OnInit {
         this.userDeclineForm.controls['firstname'].setValue(res.firstName);
         this.userDeclineForm.controls['name'].setValue(res.lastName);
         this.userDeclineForm.controls['email'].setValue(res.email);
-        this.userDeclineForm.controls['role'].setValue(res.role);
-        this.userDeclineForm.controls['notificationChannel'].setValue(res.notificationChannel);
       },
       error: error => {
         console.error('There was an error!', error);
