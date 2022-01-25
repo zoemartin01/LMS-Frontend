@@ -1,25 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {AdminService} from "../../../services/admin.service";
-import {ActivatedRoute} from "@angular/router";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-accept',
   templateUrl: './user-accept.component.html',
   styleUrls: ['./user-accept.component.scss']
 })
-export class UserAcceptComponent implements OnInit {
 
+/**
+ * @todo JSDoc Mario
+ */
+export class UserAcceptComponent implements OnInit {
   public userAcceptForm: FormGroup = new FormGroup({
     firstname: new FormControl(''),
     name: new FormControl(''),
-    email: new FormControl('', [
-      Validators.email,
-    ]),
+    email: new FormControl(''),
   });
 
   public user: User = {
@@ -75,11 +78,11 @@ export class UserAcceptComponent implements OnInit {
   public async acceptUser(): Promise<void> {
     this.adminService.acceptUserRequest(this.user.id).subscribe({
       next: () => {
-        this.adminService.getUsers();
+        this.activeModal.close('accepted');
       },
       error: error => {
         console.error('There was an error!', error);
       }
-    });    this.activeModal.close('deleted');
+    });
   }
 }

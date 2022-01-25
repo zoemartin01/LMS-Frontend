@@ -1,24 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {AdminService} from "../../../services/admin.service";
-import {ActivatedRoute} from "@angular/router";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-decline',
   templateUrl: './user-decline.component.html',
   styleUrls: ['./user-decline.component.scss']
 })
+
+/**
+ * @todo JSDoc Mario
+ */
 export class UserDeclineComponent implements OnInit {
   public userDeclineForm: FormGroup = new FormGroup({
     firstname: new FormControl(''),
     name: new FormControl(''),
-    email: new FormControl('', [
-      Validators.email,
-    ]),
+    email: new FormControl(''),
   });
 
   public user: User = {
@@ -74,12 +78,11 @@ export class UserDeclineComponent implements OnInit {
   public async declineUser(): Promise<void> {
     this.adminService.declineUserRequest(this.user.id).subscribe({
       next: () => {
-        this.adminService.getUsers();
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
       }
     });
-    this.activeModal.close('deleted');
   }
 }

@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-delete',
@@ -21,9 +21,7 @@ export class UserDeleteComponent implements OnInit {
   public userDeleteForm: FormGroup = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    email: new FormControl('', [
-      Validators.email,
-    ]),
+    email: new FormControl(''),
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
     role: new FormControl(''),
@@ -83,13 +81,11 @@ export class UserDeleteComponent implements OnInit {
   public async deleteUser(): Promise<void> {
     this.adminService.deleteUser(this.user.id).subscribe({
       next: () => {
-        this.adminService.getUsers();
+        this.activeModal.close('deleted');
       },
       error: error => {
         console.error('There was an error!', error);
       }
     });
-    this.activeModal.close('deleted');
-    //@TODO close user view popup
   }
 }

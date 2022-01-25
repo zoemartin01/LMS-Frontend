@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
@@ -9,7 +10,6 @@ import { UserEditComponent } from "../edit/user-edit.component";
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-user-view',
@@ -104,6 +104,11 @@ export class UserViewComponent implements OnInit {
     const modal = this.modalService.open(UserDeleteComponent);
     modal.componentInstance.user.id = this.user.id;
     modal.result.then((result) => {
+      if (result === 'deleted') {
+        this.activeModal.close('dirty');
+        return;
+      }
+
       if (result !== 'aborted') {
         this.getUserData();
         this.dirty = true;

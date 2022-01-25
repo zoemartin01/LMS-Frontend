@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
-import {UserService} from "../../../services/user.service";
+import { AdminService } from "../../../services/admin.service";
+import { UserService } from "../../../services/user.service";
 
-import {UserDeleteComponent} from "../delete/user-delete.component";
-import {UserEditComponent} from "../edit/user-edit.component";
-import {UserViewComponent} from "../view/user-view.component";
+import { UserAcceptComponent } from "../accept/user-accept.component";
+import { UserDeclineComponent } from "../decline/user-decline.component";
+import { UserDeleteComponent } from "../delete/user-delete.component";
+import { UserEditComponent } from "../edit/user-edit.component";
+import { UserViewComponent } from "../view/user-view.component";
 
-import {User} from "../../../types/user";
-import {UserId} from "../../../types/aliases/user-id";
-import {UserRole} from "../../../types/enums/user-role";
-import {UserAcceptComponent} from "../accept/user-accept.component";
-import {UserDeclineComponent} from "../decline/user-decline.component";
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-list',
@@ -63,6 +63,36 @@ export class UserListComponent implements OnInit {
   }
 
   /**
+   * Opens user accept confirmation dialog
+   *
+   * @param {userId} userId id of user to accept
+   */
+  public openUserAcceptDialog(userId: UserId): void {
+    const modal = this.modalService.open(UserAcceptComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUsers();
+      }
+    });
+  }
+
+  /**
+   * Opens user decline confirmation dialog
+   *
+   * @param {userId} userId id of pending user
+   */
+  public async openUserDeclineUser(userId: UserId): Promise<void> {
+    const modal = this.modalService.open(UserDeclineComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUsers();
+      }
+    });
+  }
+
+  /**
    * Opens user view
    *
    * @param {userId} userId id of user to view
@@ -99,36 +129,6 @@ export class UserListComponent implements OnInit {
    */
   public openUserDeletionDialog(userId: UserId): void {
     const modal = this.modalService.open(UserDeleteComponent);
-    modal.componentInstance.user.id = userId;
-    modal.result.then((result) => {
-      if (result !== 'aborted') {
-        this.getUsers();
-      }
-    });
-  }
-
-  /**
-   * Opens user accept confirmation dialog
-   *
-   * @param {userId} userId id of user to accept
-   */
-  public openUserAcceptDialog(userId: UserId): void {
-    const modal = this.modalService.open(UserAcceptComponent);
-    modal.componentInstance.user.id = userId;
-    modal.result.then((result) => {
-      if (result !== 'aborted') {
-        this.getUsers();
-      }
-    });
-  }
-
-  /**
-   * Opens user decline confirmation dialog
-   *
-   * @param {userId} userId id of pending user
-   */
-  public async openUserDeclineUser(userId: UserId): Promise<void> {
-    const modal = this.modalService.open(UserDeclineComponent);
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {

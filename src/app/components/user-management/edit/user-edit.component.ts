@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-edit',
@@ -75,14 +75,14 @@ export class UserEditComponent implements OnInit {
     })
   }
 
-  private updateUserEditForm(res: User) {
-    this.user = res;
+  private updateUserEditForm(user: User) {
+    this.user = user;
 
-    this.userEditForm.controls['firstName'].setValue(res.firstName);
-    this.userEditForm.controls['lastName'].setValue(res.lastName);
-    this.userEditForm.controls['email'].setValue(res.email);
-    this.userEditForm.controls['role'].setValue(res.role);
-    this.userEditForm.controls['notificationChannel'].setValue(res.notificationChannel);
+    this.userEditForm.controls['firstName'].setValue(user.firstName);
+    this.userEditForm.controls['lastName'].setValue(user.lastName);
+    this.userEditForm.controls['email'].setValue(user.email);
+    this.userEditForm.controls['role'].setValue(user.role);
+    this.userEditForm.controls['notificationChannel'].setValue(user.notificationChannel);
   }
 
   /**
@@ -97,15 +97,12 @@ export class UserEditComponent implements OnInit {
         notificationChannel: this.userEditForm.controls['notificationChannel'].value
       }
     ).subscribe({
-
-      next: res => {
-        this.updateUserEditForm(res);
-        this.adminService.getUsers();
+      next: () => {
+        this.activeModal.close('edited');
       },
       error: error => {
         console.error('There was an error!', error);
       }
     });
-    this.activeModal.close('deleted');
   }
 }
