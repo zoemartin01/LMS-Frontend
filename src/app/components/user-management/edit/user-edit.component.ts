@@ -100,6 +100,7 @@ export class UserEditComponent implements OnInit {
 
       next: res => {
         this.updateUserEditForm(res);
+        this.adminService.getUsers();
       },
       error: error => {
         console.error('There was an error!', error);
