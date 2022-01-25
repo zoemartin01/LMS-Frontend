@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,8 +21,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  */
 export class UserEditComponent implements OnInit {
   public userEditForm: FormGroup = new FormGroup({
-    firstname: new FormControl(''),
-    name: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
     email: new FormControl('', [
       Validators.email,
     ]),
@@ -50,10 +49,9 @@ export class UserEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService : AdminService, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -69,13 +67,7 @@ export class UserEditComponent implements OnInit {
   public async getUserData(): Promise<void> {
     this.adminService.getUser(this.user.id).subscribe({
       next: res => {
-        this.user = res;
-
-        this.userEditForm.controls['firstname'].setValue(res.firstName);
-        this.userEditForm.controls['name'].setValue(res.lastName);
-        this.userEditForm.controls['email'].setValue(res.email);
-        this.userEditForm.controls['role'].setValue(res.role);
-        this.userEditForm.controls['notificationChannel'].setValue(res.notificationChannel);
+        this.updateUserEditForm(res);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -83,11 +75,34 @@ export class UserEditComponent implements OnInit {
     })
   }
 
+  private updateUserEditForm(user: User) {
+    this.user = user;
+
+    this.userEditForm.controls['firstName'].setValue(user.firstName);
+    this.userEditForm.controls['lastName'].setValue(user.lastName);
+    this.userEditForm.controls['email'].setValue(user.email);
+    this.userEditForm.controls['role'].setValue(user.role);
+    this.userEditForm.controls['notificationChannel'].setValue(user.notificationChannel);
+  }
+
   /**
    * Changes data of user
    */
   public async editUserData(): Promise<void> {
-    //@todo handle edit
-    this.activeModal.close('edited');
+    this.adminService.updateUser(this.user.id, {
+        firstName: this.userEditForm.controls['firstName'].value,
+        lastName: this.userEditForm.controls['lastName'].value,
+        email: this.userEditForm.controls['email'].value,
+        role: this.userEditForm.controls['role'].value,
+        notificationChannel: this.userEditForm.controls['notificationChannel'].value
+      }
+    ).subscribe({
+      next: () => {
+        this.activeModal.close('edited');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }

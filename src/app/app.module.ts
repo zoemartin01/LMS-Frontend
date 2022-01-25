@@ -50,6 +50,8 @@ import { RoomListComponent } from './components/room-management/list/room-list.c
 import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { UserAcceptComponent } from './components/user-management/accept/user-accept.component';
+import { UserDeclineComponent } from './components/user-management/decline/user-decline.component';
 import { UserDeleteComponent } from './components/user-management/delete/user-delete.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
@@ -102,6 +104,8 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     RoomTimeslotsComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    UserAcceptComponent,
+    UserDeclineComponent,
     UserDeleteComponent,
     UserEditComponent,
     UserListComponent,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../services/admin.service";
 
@@ -9,24 +10,21 @@ import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
-  selector: 'app-delete',
-  templateUrl: './user-delete.component.html',
-  styleUrls: ['./user-delete.component.scss']
+  selector: 'app-accept',
+  templateUrl: './user-accept.component.html',
+  styleUrls: ['./user-accept.component.scss']
 })
 
 /**
- * Component for the deletion of a user
+ * @todo JSDoc Mario
  */
-export class UserDeleteComponent implements OnInit {
-  public userDeleteForm: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+export class UserAcceptComponent implements OnInit {
+  public userAcceptForm: FormGroup = new FormGroup({
+    firstname: new FormControl(''),
+    name: new FormControl(''),
     email: new FormControl(''),
-    password: new FormControl(''),
-    password_confirmation: new FormControl(''),
-    role: new FormControl(''),
-    notificationChannel: new FormControl(''),
   });
+
   public user: User = {
     id: null,
     firstName: "",
@@ -42,10 +40,11 @@ export class UserDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
-    this.userDeleteForm.disable();
+  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+    this.userAcceptForm.disable();
   }
 
   /**
@@ -63,11 +62,9 @@ export class UserDeleteComponent implements OnInit {
       next: res => {
         this.user = res;
 
-        this.userDeleteForm.controls['firstName'].setValue(res.firstName);
-        this.userDeleteForm.controls['lastName'].setValue(res.lastName);
-        this.userDeleteForm.controls['email'].setValue(res.email);
-        this.userDeleteForm.controls['role'].setValue(res.role);
-        this.userDeleteForm.controls['notificationChannel'].setValue(res.notificationChannel);
+        this.userAcceptForm.controls['firstname'].setValue(res.firstName);
+        this.userAcceptForm.controls['name'].setValue(res.lastName);
+        this.userAcceptForm.controls['email'].setValue(res.email);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -76,12 +73,12 @@ export class UserDeleteComponent implements OnInit {
   }
 
   /**
-   * Deletes user
+   * Accepts user
    */
-  public async deleteUser(): Promise<void> {
-    this.adminService.deleteUser(this.user.id).subscribe({
+  public async acceptUser(): Promise<void> {
+    this.adminService.acceptUserRequest(this.user.id).subscribe({
       next: () => {
-        this.activeModal.close('deleted');
+        this.activeModal.close('accepted');
       },
       error: error => {
         console.error('There was an error!', error);

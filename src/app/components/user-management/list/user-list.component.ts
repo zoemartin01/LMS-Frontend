@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from "../../../services/admin.service";
 import { UserService } from "../../../services/user.service";
 
+import { UserAcceptComponent } from "../accept/user-accept.component";
+import { UserDeclineComponent } from "../decline/user-decline.component";
 import { UserDeleteComponent } from "../delete/user-delete.component";
 import { UserEditComponent } from "../edit/user-edit.component";
 import { UserViewComponent } from "../view/user-view.component";
@@ -50,8 +52,8 @@ export class UserListComponent implements OnInit {
   public async getUsers(): Promise<void> {
     this.adminService.getUsers().subscribe({
       next: res => {
-        this.pendingUsers = res.filter((user: User) => user.role == UserRole.pending);
-        this.acceptedUsers = res.filter((user: User) => user.role != UserRole.pending);
+        this.pendingUsers = res.filter((user: User) => user.role == UserRole.pending && user.emailVerification);
+        this.acceptedUsers = res.filter((user: User) => user.role != UserRole.pending && user.emailVerification);
         console.log(res, this.pendingUsers, this.acceptedUsers)
       },
       error: error => {
@@ -61,35 +63,34 @@ export class UserListComponent implements OnInit {
   }
 
   /**
-   * Accepts pending user
+   * Opens user accept confirmation dialog
    *
-   * @param {userId} userId id of pending user
+   * @param {userId} userId id of user to accept
    */
-  public async acceptPendingUser(userId: UserId): Promise<void> {
-    this.adminService.acceptUserRequest(userId).subscribe({
-      next: () => {
+  public openUserAcceptDialog(userId: UserId): void {
+    const modal = this.modalService.open(UserAcceptComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
         this.getUsers();
-      },
-      error: error => {
-        console.error('There was an error!', error);
       }
     });
   }
 
   /**
-   * Denies pending user
+   * Opens user decline confirmation dialog
    *
    * @param {userId} userId id of pending user
    */
-  public async denyPendingUser(userId: UserId): Promise<void> {
-    this.adminService.declineUserRequest(userId).subscribe({
-      next: () => {
+  public async openUserDeclineUser(userId: UserId): Promise<void> {
+    const modal = this.modalService.open(UserDeclineComponent);
+    modal.componentInstance.user.id = userId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
         this.getUsers();
-      },
-      error: error => {
-        console.error('There was an error!', error);
       }
-    });  }
+    });
+  }
 
   /**
    * Opens user view
