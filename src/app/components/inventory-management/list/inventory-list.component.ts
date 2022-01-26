@@ -9,6 +9,7 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import {InventoryItemEditComponent} from "../item-edit/inventory-item-edit.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -101,6 +102,13 @@ export class InventoryListComponent implements OnInit {
    * @param {InventoryItemId} inventoryItemId id of item to edit
    */
   public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemEditComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

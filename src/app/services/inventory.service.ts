@@ -69,13 +69,13 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of associated inventory item
    * @param {object} changedData changed fields of inventory item
    */
-  public changeInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
+  public editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.updateItem.replace(':id', inventoryItemId)}`;
 
-    return this.httpClient.patch(apiURL, changedData);
+    return this.httpClient.patch<InventoryItem>(apiURL, changedData);
   }
 
   /**

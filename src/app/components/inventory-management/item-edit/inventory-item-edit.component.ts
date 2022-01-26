@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import {FormControl, FormGroup, NgForm} from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-inventory-item-edit',
@@ -19,6 +20,12 @@ import { InventoryItem } from "../../../types/inventory-item";
  *
  */
 export class InventoryItemEditComponent implements OnInit {
+  public inventoryItemEditForm: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+    quantity: new FormControl(null),
+  })
+
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
@@ -30,25 +37,39 @@ export class InventoryItemEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {NgbActiveModal} activeModal modal containing this component
    * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public inventoryService: InventoryService,  private route: ActivatedRoute) {
+  constructor(public inventoryService: InventoryService,  public activeModal: NgbActiveModal, private route: ActivatedRoute) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.inventoryItem.id = params['id'];
-      this.getInventoryItemData();
-    });
+    this.getInventoryItemData();
   }
 
   /**
    * Gets all data of inventory item
    */
   public async getInventoryItemData() : Promise<void> {
+    this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
+      next: res => {
+        this.updateInventoryItemEditForm(res);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
+  }
+
+  private updateInventoryItemEditForm(inventoryItem: InventoryItem) {
+    this.inventoryItem = inventoryItem;
+
+    this.inventoryItemEditForm.controls['name'].setValue(inventoryItem.name);
+    this.inventoryItemEditForm.controls['description'].setValue(inventoryItem.description);
+    this.inventoryItemEditForm.controls['quantity'].setValue(inventoryItem.quantity);
   }
 
   /**
@@ -56,6 +77,19 @@ export class InventoryItemEditComponent implements OnInit {
    *
    * @param {NgForm} inventoryItemEditForm submitted edit form
    */
-  public async editInventoryItemData(inventoryItemEditForm: NgForm): Promise<void> {
+  public async editInventoryItemData(): Promise<void> {
+    this.inventoryService.editInventoryItem(this.inventoryItem.id, {
+        name: this.inventoryItemEditForm.controls['name'].value,
+        description: this.inventoryItemEditForm.controls['description'].value,
+        quantity: this.inventoryItemEditForm.controls['quantity'].value,
+      }
+    ).subscribe({
+      next: () => {
+        this.activeModal.close('edited');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }
