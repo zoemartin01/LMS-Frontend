@@ -86,10 +86,14 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   private async updateCalendar() {
     this.getRoomData().then(() => {
-      this.getAppointmentsForRoom(this.room.id).then(() => {
-        let result = this.roomService.getTimespansAsCalendar(this.room, this.appointments);
-        this.displayTimespans = result.displayTimespans;
-        this.minTimeslot = result.minTimeslot;
+      this.roomService.getRoomCalendar(this.room.id).subscribe({
+        next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
+          this.displayTimespans = res.calendar;
+          this.minTimeslot = res.minTimeslot;
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
       });
     });
   }
