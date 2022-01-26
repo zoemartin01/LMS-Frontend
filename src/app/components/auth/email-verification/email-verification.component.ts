@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserService } from "../../../services/user.service";
@@ -14,9 +14,13 @@ import { UserService } from "../../../services/user.service";
  * Component for the email verification page
  */
 export class EmailVerificationComponent implements OnInit {
-  public verifyForm: FormGroup = this.formBuilder.group({
-    userId: '',
-    token: '',
+  public verifyForm: FormGroup = new FormGroup({
+    userId: new FormControl('', [
+      Validators.required,
+    ]),
+    token: new FormControl('', [
+      Validators.required,
+    ]),
   });
   public showForm: boolean = false;
   public verifyEmailError: boolean = false;
@@ -28,13 +32,11 @@ export class EmailVerificationComponent implements OnInit {
    * @param {UserService} userService service providing user functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {Router} router angular router
-   * @param {FormBuilder} formBuilder angular form builder
    */
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder) {
+    private router: Router) {
   }
 
   /**
@@ -65,15 +67,19 @@ export class EmailVerificationComponent implements OnInit {
         this.verifyForm.value.token
       ).subscribe({
         next: () => {
-          this.router.parseUrl('/login');
+          this.router.navigateByUrl('/login');
         },
         error: error => {
           this.verifyEmailError = true;
-          this.verifyEmailErrorMessage = error;
+          this.verifyEmailErrorMessage = error.error.message;
           this.showForm = true;
           console.error('There was an error!', error);
         }
       });
+    } else {
+      this.verifyEmailError = true;
+      this.verifyEmailErrorMessage = 'Invalid form values';
+      this.showForm = true;
     }
   }
 }

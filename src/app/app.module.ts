@@ -3,7 +3,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { AutosizeModule } from 'ngx-autosize';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
@@ -32,6 +34,7 @@ import { LivecamOverviewComponent } from './components/livecam/overview/livecam-
 import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-schedule.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -47,6 +50,8 @@ import { RoomListComponent } from './components/room-management/list/room-list.c
 import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { UserAcceptComponent } from './components/user-management/accept/user-accept.component';
+import { UserDeclineComponent } from './components/user-management/decline/user-decline.component';
 import { UserDeleteComponent } from './components/user-management/delete/user-delete.component';
 import { UserEditComponent } from './components/user-management/edit/user-edit.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
@@ -83,6 +88,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     LivecamScheduleComponent,
     LoginComponent,
     MessageBoxComponent,
+    MessageDeleteComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
@@ -98,6 +104,8 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     RoomTimeslotsComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    UserAcceptComponent,
+    UserDeclineComponent,
     UserDeleteComponent,
     UserEditComponent,
     UserListComponent,
@@ -110,6 +118,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
   ],
   imports: [
     AppRoutingModule,
+    AutosizeModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -127,6 +136,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
       useClass: UnauthorizedInterceptor,
       multi: true
     },
+    NgbActiveModal,
   ],
   bootstrap: [AppComponent]
 })

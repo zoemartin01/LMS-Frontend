@@ -1,13 +1,54 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { RegisterComponent } from './register.component';
+
+import { UserService } from '../../../services/user.service';
+
+import { User } from '../../../types/user';
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+
+class MockUserService {
+  register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
+    return new Observable((observer) => {
+      if (email === 'known@example.com') {
+        observer.error({
+          error: {
+            error: {
+              message: 'User with this email already exists.',
+            }
+          }
+        });
+      }
+
+      const user: User = {
+        id: '59f1589d-197c-4f53-bfc1-4c57aae14c42',
+        firstName,
+        lastName,
+        email,
+        role: UserRole.pending,
+        notificationChannel: NotificationChannel.emailOnly,
+        emailVerification: true,
+        isActiveDirectory: false,
+      }
+
+      observer.next(user);
+    });
+  }
+}
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
+  let router = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl')
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,21 +56,113 @@ describe('RegisterComponent', () => {
         RegisterComponent,
       ],
       imports: [
-        HttpClientModule,
-        RouterTestingModule,
+        BrowserModule,
         FormsModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        { provide: UserService, useClass: MockUserService },
+        { provide: Router, useValue: router },
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    router.navigateByUrl.calls.reset();
   });
 
-  it('should create', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should register user with their data', (done: DoneFn) => {
+    component.registerForm.controls['firstname'].setValue('Alex');
+    component.registerForm.controls['name'].setValue('Mustermensch');
+    component.registerForm.controls['email'].setValue('alex@mustermensch.com');
+    component.registerForm.controls['password'].setValue('bestPasswordEver!');
+    component.registerForm.controls['password_confirmation'].setValue('bestPasswordEver!');
+    component.registerForm.controls['safetyInstructions'].setValue(true);
+    component.registerForm.controls['hwlabRules'].setValue(true);
+
+    expect(component.registerForm.valid).toBeTrue();
+
+    component.register().then(() => {
+      expect(component.registerError).toBeFalse();
+      expect(component.registerErrorMessage).toBe('');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/register/verify-email');
+      done();
+    });
+  });
+
+  it('should handle registration error', (done: DoneFn) => {
+    component.registerForm.controls['firstname'].setValue('Known');
+    component.registerForm.controls['name'].setValue('User');
+    component.registerForm.controls['email'].setValue('known@example.com');
+    component.registerForm.controls['password'].setValue('superPassword!');
+    component.registerForm.controls['password_confirmation'].setValue('superPassword!');
+    component.registerForm.controls['safetyInstructions'].setValue(true);
+    component.registerForm.controls['hwlabRules'].setValue(true);
+
+    expect(component.registerForm.valid).toBeTrue();
+
+    component.register().then(() => {
+      expect(component.registerError).toBeTrue();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should show error when form is invalid', (done: DoneFn) => {
+    component.registerForm.controls['firstname'].setValue('');
+    component.registerForm.controls['name'].setValue('');
+    component.registerForm.controls['email'].setValue('');
+    component.registerForm.controls['password'].setValue('');
+    component.registerForm.controls['password_confirmation'].setValue('');
+    component.registerForm.controls['safetyInstructions'].setValue(false);
+    component.registerForm.controls['hwlabRules'].setValue(false);
+
+    expect(component.registerForm.valid).toBeFalse();
+
+    component.register().then(() => {
+      expect(component.registerError).toBeTrue();
+      expect(component.registerErrorMessage).toBe('Invalid form values');
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should confirm password', () => {
+    expect(component.passwordConfirmationFails).toBeFalse();
+
+    component.registerForm.controls['password'].setValue('superPassword!');
+    component.registerForm.controls['password_confirmation'].setValue('superPassword!');
+
+    component.checkPasswordConfirmation();
+
+    expect(component.passwordConfirmationFails).toBeFalse();
+  });
+
+  it('should not show password confirmation failure because password confirmation field is empty', () => {
+    expect(component.passwordConfirmationFails).toBeFalse();
+
+    component.registerForm.controls['password'].setValue('superPassword!');
+    component.registerForm.controls['password_confirmation'].setValue('');
+
+    component.checkPasswordConfirmation();
+
+    expect(component.passwordConfirmationFails).toBeFalse();
+  });
+
+  it('should show password confirmation failure because password and password conformation fields don\'t match', () => {
+    expect(component.passwordConfirmationFails).toBeFalse();
+
+    component.registerForm.controls['password'].setValue('superPassword!');
+    component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
+
+    component.checkPasswordConfirmation();
+
+    expect(component.passwordConfirmationFails).toBeTrue();
   });
 });

@@ -24,7 +24,6 @@ describe('OrderViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

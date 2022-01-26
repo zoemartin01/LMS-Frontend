@@ -20,11 +20,12 @@
                 (click)="markMessageAsUnread(message.id)">
           <i class="bi bi-envelope-fill"></i>
         </button>
-        <button class="btn btn-danger position-relative" (click)="openAppointmentDeletionDialog(message.id)">
+        <button class="btn btn-danger position-relative" (click)="openMessageDeletionDialog(message)">
           <i class="bi bi-trash-fill"></i>
         </button>
       </div>
-      <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+      <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"
+            *ngIf="!message.readStatus">
         <span class="visually-hidden">unread message</span>
       </span>
     </div>

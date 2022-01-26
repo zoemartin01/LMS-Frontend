@@ -22,6 +22,10 @@ describe('MessagingService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
+  it('should create messaging service', () => {
+    expect(service).toBeTruthy();
+  });
+
   it('should get all messages for current user', () => {
     service.getMessages().subscribe(
       res => {

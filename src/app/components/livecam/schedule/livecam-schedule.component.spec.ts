@@ -26,7 +26,6 @@ describe('ScheduleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LivecamScheduleComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

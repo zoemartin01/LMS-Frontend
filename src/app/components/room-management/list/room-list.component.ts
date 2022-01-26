@@ -38,6 +38,14 @@ export class RoomListComponent implements OnInit {
    * Gets all rooms with data
    */
   public async getRooms(): Promise<void> {
+    this.roomService.getRoomsData().subscribe({
+      next: res => {
+        this.rooms = res;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**

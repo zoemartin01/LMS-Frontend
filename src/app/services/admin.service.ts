@@ -46,7 +46,7 @@ export class AdminService {
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getSingleUser
-      .replace(':id', userId)}}`;
+      .replace(':id', userId)}`;
 
     return this.httpClient.get<User>(apiURL);
   }
