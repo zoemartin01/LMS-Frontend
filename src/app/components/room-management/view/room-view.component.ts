@@ -24,7 +24,7 @@ export class RoomViewComponent implements OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     maxConcurrentBookings: new FormControl(''),
-    automaticRequestAcceptance: new FormControl(''),
+    autoAcceptBookings: new FormControl(''),
     availableTimeslots: new FormControl(''),
     unavailableTimeslots: new FormControl(''),
   });
@@ -65,6 +65,8 @@ export class RoomViewComponent implements OnInit {
     this.roomService.getRoomData(this.room.id).subscribe({
       next: res => {
         this.room = res;
+
+        console.log(res.autoAcceptBookings)
 
         this.roomViewForm.controls['name'].setValue(res.name);
         this.roomViewForm.controls['description'].setValue(res.description);
@@ -111,4 +113,6 @@ export class RoomViewComponent implements OnInit {
       }
     });
   }
+
+  //TODO calender
 }
