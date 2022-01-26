@@ -1,1 +1,40 @@
-<p>whitelist-retailer-edit works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Edit Whitelist Retailer</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="retailerEditForm" (keyup.enter)="editWhitelistRetailerData()" (ngSubmit)="editWhitelistRetailerData()">
+    <div class="form-group row">
+      <div class="col">
+        <label for="name" class="my-1">Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name"
+                 formControlName="name">
+        </div>
+      </div>
+    </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th class="col">Domains</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let whitelistRetailerDomain of whitelistRetailer.domains">
+        <td class="col-sm-8 ">{{ whitelistRetailerDomain.domain }}</td>
+        <a class="col-sm-2" (click)="openWhitelistRetailerDomainEditForm()">
+          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+        </a>
+        <a class="col-sm-2" (click)="openWhitelistRetailerDomainDeletionDialog()">
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+        </a>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="editWhitelistRetailerData()">Save</button>
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+    </div>
+  </form>
+</div>
