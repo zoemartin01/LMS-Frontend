@@ -1,7 +1,6 @@
 import { RecordingId } from "./aliases/recording-id";
-import { UserId } from "./aliases/user-id";
-import { VideoResolution } from "./enums/video-resolution";
 import { User } from "./user";
+import { VideoResolution } from "./enums/video-resolution";
 
 export interface Recording {
     id: RecordingId,

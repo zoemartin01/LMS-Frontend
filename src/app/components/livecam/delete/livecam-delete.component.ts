@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+
+import { LivecamOverviewComponent } from '../overview/livecam-overview.component';
+
+import { LivecamService } from 'src/app/services/livecam.service';
 
 import { Recording } from 'src/app/types/recording';
 import { VideoResolution } from '../../../types/enums/video-resolution';
-
-import { LivecamService } from 'src/app/services/livecam.service';
-import { FormControl, FormGroup } from '@angular/forms';
-import * as moment from 'moment';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { LivecamOverviewComponent } from '../overview/livecam-overview.component';
 
 @Component({
   selector: 'app-livecam-delete',
@@ -48,6 +49,7 @@ export class LivecamDeleteComponent implements OnInit {
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbActiveModal} activeModal service providing modal functionalities
    */
   constructor(
     public livecamService: LivecamService,

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-import { VideoResolution } from 'src/app/types/enums/video-resolution';
 
 import { LivecamService } from '../../../services/livecam.service';
+
+import { VideoResolution } from 'src/app/types/enums/video-resolution';
 
 @Component({
   selector: 'app-livecam-schedule',
@@ -14,8 +15,6 @@ import { LivecamService } from '../../../services/livecam.service';
 
 /**
  * Component for the scheduling of a livecam recording
- *
- *
  */
 export class LivecamScheduleComponent {
   public recordingScheduleForm: FormGroup = new FormGroup({
@@ -43,6 +42,7 @@ export class LivecamScheduleComponent {
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(public livecamService: LivecamService, public activeModal: NgbActiveModal) {
   }
@@ -57,13 +57,13 @@ export class LivecamScheduleComponent {
       const resolution = this.recordingScheduleForm.value.resolution;
       const bitrate_unit = this.recordingScheduleForm.value.bitrate_unit;
       let bitrate = this.recordingScheduleForm.value.bitrate;
-  
+
       if (bitrate_unit === 'kbps') {
         bitrate = bitrate * 1000;
       } else if (bitrate_unit === 'mbps') {
         bitrate = bitrate * 1000 * 1000;
       }
-  
+
       this.livecamService.scheduleRecording(start, end, resolution, bitrate).subscribe({
         next: () => {
           this.activeModal.close('created');

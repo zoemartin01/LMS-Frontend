@@ -1,17 +1,16 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
+
+import { LivecamDeleteComponent } from '../delete/livecam-delete.component';
+import { LivecamScheduleComponent } from '../schedule/livecam-schedule.component';
 
 import { LivecamService } from '../../../services/livecam.service';
+import { UserService } from 'src/app/services/user.service';
 
 import { Recording } from 'src/app/types/recording';
 import { RecordingId } from 'src/app/types/aliases/recording-id';
-import * as moment from 'moment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LivecamDeleteComponent } from '../delete/livecam-delete.component';
-import { LivecamScheduleComponent } from '../schedule/livecam-schedule.component';
-import { UserService } from 'src/app/services/user.service';
-const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
-
-
 
 @Component({
   selector: 'app-livecam-overview',
@@ -29,18 +28,21 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public scheduledRecordings: Recording[] = [];
   public moment = moment;
 
-  @ViewChild('camera') streamingcanvas: ElementRef<HTMLCanvasElement> = {} as ElementRef; 
+  @ViewChild('camera') streamingcanvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
 
   /**
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public livecamService: LivecamService,
     public userService: UserService,
     private modalService: NgbModal
-  ) {}
+  ) {
+  }
 
   /**
    * Inits page
@@ -81,7 +83,6 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     this.livecamService.getAllScheduledRecordings().subscribe({
       next: (res) => {
         this.scheduledRecordings = res.map((recording: Recording) => {
-          console.log(recording.user)
           recording.start = moment(recording.start);
           recording.end = moment(recording.end);
           return recording;
@@ -96,7 +97,8 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   /**
    * Gets live stream feed
    */
-  public async getLiveStreamFeed(): Promise<void> {}
+  public async getLiveStreamFeed(): Promise<void> {
+  }
 
   /**
    * Downloads a recording
