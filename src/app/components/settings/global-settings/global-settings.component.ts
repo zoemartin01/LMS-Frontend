@@ -6,6 +6,9 @@ import { AdminService } from "../../../services/admin.service";
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
+import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
 
 @Component({
   selector: 'app-global-settings',
@@ -33,8 +36,9 @@ export class GlobalSettingsComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService) {
+  constructor(public adminService: AdminService, private modalService: NgbModal) {
   }
 
   /**
@@ -120,6 +124,13 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerView(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerViewComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
@@ -128,6 +139,13 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerEditComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
