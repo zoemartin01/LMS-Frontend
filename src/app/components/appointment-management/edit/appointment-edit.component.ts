@@ -45,7 +45,7 @@ export class AppointmentEditComponent implements OnInit {
       name: '',
       description: '',
       maxConcurrentBookings: 1,
-      automaticRequestAcceptance: null,
+      autoAcceptBookings: null,
       availableTimeslots: [],
       unavailableTimeslots: [],
     },
@@ -60,7 +60,7 @@ export class AppointmentEditComponent implements OnInit {
     name: '',
     description: '',
     maxConcurrentBookings: 1,
-    automaticRequestAcceptance: null,
+    autoAcceptBookings: null,
     availableTimeslots: [],
     unavailableTimeslots: [],
   };
