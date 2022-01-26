@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
+import {UserService} from "../../../services/user.service";
+import {RoomViewComponent} from "../view/room-view.component";
+import {RoomEditComponent} from "../edit/room-edit.component";
+import {RoomDeleteComponent} from "../delete/room-delete.component";
 
 @Component({
   selector: 'app-room-list',
@@ -23,8 +28,10 @@ export class RoomListComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public roomService: RoomService) {
+  constructor(public roomService: RoomService, public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -60,6 +67,13 @@ export class RoomListComponent implements OnInit {
    * @param {RoomId} roomId id of room to view
    */
   public openRoomView(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomViewComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
@@ -68,6 +82,13 @@ export class RoomListComponent implements OnInit {
    * @param {RoomId} roomId id of room to edit
    */
   public openRoomEditForm(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomEditComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
@@ -76,5 +97,12 @@ export class RoomListComponent implements OnInit {
    * @param {roomId} roomId id of room to delete
    */
   public openRoomDeletionDialog(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomDeleteComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 }
