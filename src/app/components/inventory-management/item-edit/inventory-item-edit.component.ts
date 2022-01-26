@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import { FormControl, FormGroup, NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-inventory-item-edit',

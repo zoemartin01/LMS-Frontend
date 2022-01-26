@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemCreateComponent } from "../item-create/inventory-item-create.component";
+import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
+import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
 
 import { AuthService } from "../../../services/auth.service";
@@ -9,9 +11,6 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
-import {InventoryItemEditComponent} from "../item-edit/inventory-item-edit.component";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
-import {InventoryItemDeleteComponent} from "../item-delete/inventory-item-delete.component";
 
 @Component({
   selector: 'app-inventory-list',
