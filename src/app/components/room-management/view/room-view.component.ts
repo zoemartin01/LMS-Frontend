@@ -33,7 +33,7 @@ export class RoomViewComponent implements OnInit {
     name: '',
     description: '',
     maxConcurrentBookings: 1,
-    automaticRequestAcceptance: null,
+    autoAcceptBookings: null,
     availableTimeslots: [],
     unavailableTimeslots: [],
   };
@@ -48,16 +48,14 @@ export class RoomViewComponent implements OnInit {
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(public roomService: RoomService, private route: ActivatedRoute,public activeModal: NgbActiveModal, private modalService: NgbModal) {
+    this.roomViewForm.disable();
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.room.id = params['id'];
       this.getRoomData();
-    });
   }
 
   /**
@@ -71,7 +69,7 @@ export class RoomViewComponent implements OnInit {
         this.roomViewForm.controls['name'].setValue(res.name);
         this.roomViewForm.controls['description'].setValue(res.description);
         this.roomViewForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
-        this.roomViewForm.controls['automaticRequestAcceptance'].setValue(res.automaticRequestAcceptance);
+        this.roomViewForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
         this.roomViewForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
         this.roomViewForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
         //TODO in backend this.roomViewForm.controls['appointments'].setValue(res.appointments);
