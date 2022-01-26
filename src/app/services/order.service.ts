@@ -5,10 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { Order } from "../types/order";
 import { OrderId } from "../types/aliases/order-id";
 import {environment} from "../../environments/environment";
-import {User} from "../types/user";
-import {Appointment} from "../types/appointment";
 import {ParseArgumentException} from "@angular/cli/models/parser";
-import {ConfirmationStatus} from "../types/enums/confirmation-status";
 import {OrderStatus} from "../types/enums/order-status";
 
 @Injectable({
@@ -49,7 +46,7 @@ export class OrderService {
    *
    * @param {OrderId} orderId id of order
    */
-  public getOrderData(orderId: OrderId): Observable<any> {
+  public getOrderData(orderId: OrderId): Observable<Order> {
     if (orderId === null) {
       throw ParseArgumentException;
     }
@@ -65,7 +62,7 @@ export class OrderService {
    *
    * @param {Order} order data of new order
    */
-  public requestOrder(order: Order): Observable<any> {
+  public requestOrder(order: Order): Observable<Order> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.createOrder}`;
 
     return this.httpClient.post<Order>(apiURL, order);
@@ -77,7 +74,7 @@ export class OrderService {
    * @param {OrderId} orderId    id of associated order
    * @param {object} changedData changed fields of order
    */
-  public updateOrderData(orderId: OrderId, changedData: object): Observable<any> {
+  public updateOrderData(orderId: OrderId, changedData: object): Observable<Order> {
     if (orderId === null) {
       throw ParseArgumentException;
     }
@@ -92,7 +89,7 @@ export class OrderService {
    *
    * @param {OrderId} orderId id of order
    */
-  public acceptOrderRequest(orderId: OrderId): Observable<any> {
+  public acceptOrderRequest(orderId: OrderId): Observable<Order> {
     return this.updateOrderData(orderId, { orderStatus: OrderStatus.ordered });
   }
 
@@ -101,7 +98,7 @@ export class OrderService {
    *
    * @param {OrderId} orderId id of order
    */
-  public declineOrderRequest(orderId: OrderId): Observable<any> {
+  public declineOrderRequest(orderId: OrderId): Observable<Order> {
     return this.updateOrderData(orderId, { orderStatus: OrderStatus.denied });
   }
 
