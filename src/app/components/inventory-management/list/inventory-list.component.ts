@@ -10,6 +10,8 @@ import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 import {InventoryItemEditComponent} from "../item-edit/inventory-item-edit.component";
+import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
+import {InventoryItemDeleteComponent} from "../item-delete/inventory-item-delete.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -117,5 +119,12 @@ export class InventoryListComponent implements OnInit {
    * @param {InventoryItemId} inventoryItemId id of item to delete
    */
   public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemDeleteComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 }

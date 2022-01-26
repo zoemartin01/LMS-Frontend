@@ -83,12 +83,12 @@ export class InventoryService {
    *
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
-  public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<any> {
+  public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<InventoryItem> {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
 
-    return this.httpClient.delete(apiURL);
+    return this.httpClient.delete<InventoryItem>(apiURL);
   }
 }

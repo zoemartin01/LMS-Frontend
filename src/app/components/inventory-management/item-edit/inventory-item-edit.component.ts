@@ -24,7 +24,7 @@ export class InventoryItemEditComponent implements OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     quantity: new FormControl(null),
-  })
+  });
 
   public inventoryItem: InventoryItem = {
     id: null,
