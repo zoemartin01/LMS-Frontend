@@ -40,8 +40,11 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public getRoomData(roomId: RoomId): Observable<Room> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
 
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom.replace(':id', roomId)}`;
     return this.httpClient.get<Room>(apiURL);
   }
 
