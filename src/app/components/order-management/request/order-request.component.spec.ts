@@ -26,7 +26,6 @@ describe('OrderRequestComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderRequestComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

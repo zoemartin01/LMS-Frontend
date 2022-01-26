@@ -34,8 +34,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
         return this.handleUnauthorized(request, next);
       }
 
-      const error = (err && err.error && err.error.message) || err.statusText;
-      return throwError(error);
+      return throwError(err);
     }));
   }
 
@@ -62,8 +61,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
         }));
       }),
       catchError(err => {
-        const error = (err && err.error && err.error.message) || err.statusText;
-        return throwError(() => new Error(error));
+        return throwError(() => new Error(err));
       })
     );
   }

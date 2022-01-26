@@ -3,35 +3,41 @@
 </div>
 
 <div class="row">
+  <div class="col text-left">
+    <a (click)="openInventoryItemCreationForm()" class="btn btn-primary" role="button">+ Create Item</a>
+  </div>
+</div>
+
+<div class="row">
   <table class="table table-striped">
     <thead class="thead-dark">
-    <tr>
-      <th class="col">Item</th>
-      <th class="col">Description</th>
-      <th class="col">Quantity</th>
-      <th class="col-md-2"></th>
-    </tr>
+      <tr>
+        <th class="col">Item</th>
+        <th class="col">Description</th>
+        <th class="col">Quantity</th>
+        <th class="col-md-2"></th>
+      </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let inventoryItem of inventory">
-      <td>{{ inventoryItem.name }}</td>
-      <td>{{ inventoryItem.description }}</td>
-      <td>{{ inventoryItem.quantity }}</td>
-      <td class="d-flex justify-content-end">
-        <a routerLink="/inventory/item/{{ inventoryItem.id }}" type="button" class="btn btn-secondary mx-1" *ngIf="authService.isAdmin()">
-          <i class="bi bi-eye-fill"></i>
-        </a>
-        <a routerLink="/inventory/item/{{ inventoryItem.id }}/edit" type="button" class="btn btn-primary mx-1" *ngIf="authService.isAdmin()">
-          <i class="bi bi-pencil-fill"></i>
-        </a>
-        <a routerLink="/inventory/item/{{ inventoryItem.id }}/delete" type="button" class="btn btn-danger mx-1" *ngIf="authService.isAdmin()">
-          <i class="bi bi-trash-fill"></i>
-        </a>
-        <a routerLink="/orders/request" type="button" class="btn btn-success mx-1">
-          <i class="bi bi-cart-plus-fill"></i>
-        </a>
-      </td>
-    </tr>
+      <tr *ngFor="let inventoryItem of inventory">
+        <td>{{ inventoryItem.name }}</td>
+        <td>{{ inventoryItem.description }}</td>
+        <td>{{ inventoryItem.quantity }}</td>
+        <td class="col-sm-3">
+          <a (click)="openInventoryItemViewForm(inventoryItem.id)">
+            <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
+          </a>
+          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+            <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+          </a>
+          <a (click)="openItemDeletionDialog(inventoryItem.id)">
+            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+          </a>
+          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+            <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
+          </a>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

@@ -5,6 +5,7 @@ import { AuthService } from "../../../services/auth.service";
 import { MessagingService } from "../../../services/messaging.service";
 import { UserService } from "../../../services/user.service";
 
+import { User } from "../../../types/user";
 import { UnreadMessages } from "../../../types/unread-messages";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 
@@ -16,8 +17,8 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for the dashboard page
- *
- *
+ * @typedef {Component} DashboardComponent
+ * @class
  */
 export class DashboardComponent implements OnInit {
   public unreadMessages: UnreadMessages = {
@@ -40,8 +41,7 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     public messagingService: MessagingService,
     private userService: UserService,
-    private router: Router
-  ) {
+    private router: Router) {
   }
 
   /**
@@ -49,17 +49,23 @@ export class DashboardComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getUnreadMessagesAmounts();
+    this.getUserDetails();
+  }
 
+  /**
+   * Retrieves details for current user
+   */
+  public async getUserDetails(): Promise<void>{
     this.userService.getUserDetails().subscribe({
-      next: (res) => {
-        const notificationChannel = res.notificationChannel;
+      next: (res: User) => {
+        const notificationChannel: NotificationChannel = res.notificationChannel;
         this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
           || notificationChannel === NotificationChannel.messageBoxOnly);
       },
       error: error => {
         console.error('There was an error!', error);
       }
-    })
+    });
   }
 
   /**
@@ -67,7 +73,7 @@ export class DashboardComponent implements OnInit {
    */
   public async getUnreadMessagesAmounts(): Promise<void>{
     this.messagingService.getUnreadMessagesAmounts().subscribe({
-      next: res => {
+      next: (res: UnreadMessages) => {
         this.unreadMessages = res;
       },
       error: error => {

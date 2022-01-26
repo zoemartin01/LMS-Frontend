@@ -19,8 +19,8 @@
       <td class="col-sm-4">{{ pendingUser.email }}</td>
       <td class="col-sm-2"></td>
       <td class="col-sm-2">
-        <a (click)="acceptPendingUser(pendingUser.id)" type="button" class="btn btn-success mx-1"><i class="bi bi-check"></i></a>
-        <a (click)="denyPendingUser(pendingUser.id)" type="button" class="btn btn-danger mx-1"><i class="bi bi-x"></i></a>
+        <a (click)="openUserAcceptDialog(pendingUser.id)" type="button" class="btn btn-success mx-1"><i class="bi bi-check"></i></a>
+        <a (click)="openUserDeclineUser(pendingUser.id)" type="button" class="btn btn-danger mx-1"><i class="bi bi-x"></i></a>
       </td>
     </tr>
     </tbody>

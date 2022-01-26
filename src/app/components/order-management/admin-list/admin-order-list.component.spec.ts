@@ -24,7 +24,6 @@ describe('AdminOrderListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminOrderListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
