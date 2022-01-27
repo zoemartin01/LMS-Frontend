@@ -159,10 +159,15 @@ export class RoomService {
    *
    * @param {RoomId} roomId id of room for which the calendar should be shown
    */
-  public getRoomCalendar(roomId: RoomId): Observable<{ calendar: RoomTimespan[][][], minTimeslot: number }> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar}`;
+  public getRoomCalendar(roomId: RoomId): Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
+    if(roomId === null) {
+      throw ParseArgumentException;
+    }
 
-    return this.httpClient.get<{ calendar: RoomTimespan[][][], minTimeslot: number }>(apiURL);
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
+      .replace(':id', roomId)}`;
+
+    return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
 
   }
 

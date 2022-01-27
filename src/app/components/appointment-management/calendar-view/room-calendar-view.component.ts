@@ -20,8 +20,6 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 
 /**
  * Component for the room calendar view page, to view all appointments and thus free slots of one room
- *
- *
  */
 export class RoomCalendarViewComponent implements OnInit {
   public room: Room = {
@@ -35,7 +33,7 @@ export class RoomCalendarViewComponent implements OnInit {
   };
   public rooms: Room[] = [];
   public appointments: Appointment[] = [];
-  public displayTimespans: RoomTimespan[][][] = [];
+  public calendar: RoomTimespan[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(10).keys());
   public now: moment.Moment = moment();
@@ -63,13 +61,39 @@ export class RoomCalendarViewComponent implements OnInit {
       this.room.id = params['id'];
       this.updateCalendar();
       this.getRooms();
+    })
+
+
+    $(function(){
+      const weeklyDatePicker = $("#weeklyDatePicker");
+
+      weeklyDatePicker.datepicker({
+        format: 'dd.mm.yyyy'
+      });
+
+      weeklyDatePicker.on('changeDate', function () {
+        weeklyDatePicker.datepicker('hide');
+        const value = weeklyDatePicker.val();
+        const firstDate = moment(value, "DD.MM.YYYY").day(0).format("DD.MM.YYYY");
+        const lastDate =  moment(value, "DD.MM.YYYY").day(6).format("DD.MM.YYYY");
+        weeklyDatePicker.val(firstDate + " - " + lastDate);
+      });
     });
   }
 
   /**
    * Gets all data of room
    */
-  public async getRoomData() : Promise<void> {
+  public async getRoomData() {
+    this.roomService.getRoomData(this.room.id).subscribe({
+      next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
+        this.calendar = res.calendar;
+        this.minTimeslot = res.minTimeslot;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -85,16 +109,14 @@ export class RoomCalendarViewComponent implements OnInit {
    * @private
    */
   private async updateCalendar() {
-    this.getRoomData().then(() => {
-      this.roomService.getRoomCalendar(this.room.id).subscribe({
-        next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
-          this.displayTimespans = res.calendar;
-          this.minTimeslot = res.minTimeslot;
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      });
+    this.roomService.getRoomCalendar(this.room.id).subscribe({
+      next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
+        this.calendar = res.calendar;
+        this.minTimeslot = res.minTimeslot;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
     });
   }
 
