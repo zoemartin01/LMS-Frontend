@@ -9,6 +9,7 @@ import {UserService} from "../../../services/user.service";
 import {RoomViewComponent} from "../view/room-view.component";
 import {RoomEditComponent} from "../edit/room-edit.component";
 import {RoomDeleteComponent} from "../delete/room-delete.component";
+import {RoomCreateComponent} from "../create/room-create.component";
 
 @Component({
   selector: 'app-room-list',
@@ -59,6 +60,12 @@ export class RoomListComponent implements OnInit {
    * Opens room create form
    */
   public openRoomCreationForm(): void {
+    const modal = this.modalService.open(RoomCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
