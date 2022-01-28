@@ -1,52 +1,44 @@
 <div class="row">
-  <h1 class="display-2 text-center">Room Edit</h1>
+  <h1 class="display-2 text-center">Room Create</h1>
+</div>
+<div class="modal-body">
+  <form (keyup.enter)="createRoom()" [formGroup]="roomCreateForm" (ngSubmit)="createRoom()">
+    <div class="form-group row">
+      <div class="col">
+        <label for="name" class="my-1">Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Name" id="name"
+                 formControlName="name" autocomplete="name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="my-1">Description</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Description" aria-describedby="inputGroupPrepend"
+               id="description" formControlName="description" autocomplete="description">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="maxConcurrentBookings" class="my-1">Maximum Concurrent Bookings</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="number" placeholder="MaxConcurrentBookings" aria-describedby="inputGroupPrepend"
+               id="maxConcurrentBookings" formControlName="maxConcurrentBookings" autocomplete="maxConcurrentBookings">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="autoAcceptBookings"
+               [checked]="roomCreateForm.controls['autoAcceptBookings'].value">
+        <label class="form-check-label" for="autoAcceptBookings">Automatic Accept Bookings</label>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="createRoom()">Save</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
 
-<br>
-<!--
-<div class="row justify-content-center">
-  <div class="card col-lg-1">
-    <div class="col-auto card-body">
-      <form (keyup.enter)="createRoom()" #createForm="ngForm" (ngSubmit)="createForm()">
-        <div class="form-group">
-          <label for="email" class="my-1">E-Mail Address</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupPrepend">@</span>
-            </div>
-            <input type="email" class="form-control" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
-                   id="email" required name="email" autocomplete="email" ngModel>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="my-1">Password</label>
-          <input type="password" class="form-control" placeholder="Password" id="password" required name="password"
-                 ngModel>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col text-center">
-            <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-              <label class="form-check-label" for="remember_me">Remember Me</label>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="alert alert-danger" role="alert" *ngIf="loginError">
-          <b>Login failed:</b><br>
-          {{ loginErrorMessage }}
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!loginForm.valid" role="button">Log in</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="row text-center my-1">
-    <p>Don't have an account yet? <a routerLink="/register">Register now</a></p>
-  </div>
-</div>
--->
