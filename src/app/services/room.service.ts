@@ -51,12 +51,22 @@ export class RoomService {
   /**
    * Creates room with data
    *
-   * @param {Room} room data of new room
+   * @param name
+   * @param description
+   * @param maxConcurrentBookings
+   * @param autoAcceptBookings
+   * @param availableTimeslots
+   * @param unavailableTimeslots
    */
-  public createRoom(room: Room): Observable<Room> {
+  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean, availableTimeslots: RoomTimespan[], unavailableTimeslots: RoomTimespan[]): Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
-      room: room
+      name: name,
+      description: description,
+      maxConcurrentBookings: maxConcurrentBookings,
+      autoAcceptBookings: autoAcceptBookings,
+      availableTimeslots: availableTimeslots,
+      unavailableTimeslots: unavailableTimeslots
     };
 
     return this.httpClient.post<Room>(apiURL, requestBody);
@@ -109,6 +119,7 @@ export class RoomService {
     };
 
     return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
+    //TODO not timeslot param but parameters of timeslot
   }
 
   /**
