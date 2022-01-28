@@ -25,13 +25,8 @@ import {NotificationChannel} from "../../../types/enums/notification-channel";
 export class InventoryOrderComponent implements OnInit {
   public order: Order = {
     id: null,
-    itemName: '',
-    item: {
-      id: null,
-      name: '',
-      description: '',
-      quantity: null,
-    },
+    itemName: null,
+    item: null,
     quantity: null,
     url: '',
     user: {

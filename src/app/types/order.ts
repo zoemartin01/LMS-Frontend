@@ -5,8 +5,8 @@ import {InventoryItem} from "./inventory-item";
 
 export interface Order {
   id: OrderId,
-  item: InventoryItem,
-  itemName: string,
+  item: InventoryItem | null,
+  itemName: string | null,
   quantity: number | null,
   url: string,
   user: User,
