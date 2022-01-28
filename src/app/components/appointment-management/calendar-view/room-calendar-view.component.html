@@ -21,7 +21,7 @@
 <div class="form-inline col-sm-11 mx-auto py-3">
   <div class="form-group">
     <div class="input-group justify-content-center">
-      <div class="col-sm-4 form-group">
+      <div class="col-sm-4 form-group kit-rounded">
         <label for="room" class="control-label">Room</label>
         <div class="input-group">
           <select class="form-select" (change)="changeRoom(roomSelect.value)" #roomSelect id="room">
@@ -32,21 +32,21 @@
           </select>
         </div>
       </div>
-      <div class="form-group col-sm-6 col-sm-offset-2 row">
+      <div class="form-group col-sm-6 col-sm-offset-2 row kit-rounded">
         <label for="week" class="control-label">Week</label>
         <div class="input-group">
           <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.subtract(7, 'days'))">
-            &laquo;
+            <i class="bi bi-chevron-left"></i>
           </button>
           <input class="form-control" type="text" id="week" #weekInput [value]="weekText">
           <input class="display-none" type="text" [positionTarget]="weekInput" placement="bottom"
                  [(ngModel)]="weekField" ngbDatepicker #d="ngbDatepicker"
-                 (change)="handleDatepickerChange()">
+                 (dateSelect)="handleDatepickerChange()">
           <button class="btn btn-primary" (click)="d.toggle()" type="button">
             <i class="bi bi-calendar-week-fill"></i>
           </button>
           <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.add(7, 'days'))">
-            &raquo;
+            <i class="bi bi-chevron-right"></i>
           </button>
         </div>
       </div>

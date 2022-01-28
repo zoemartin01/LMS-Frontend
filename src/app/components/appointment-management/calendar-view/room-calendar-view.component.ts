@@ -77,42 +77,23 @@ export class RoomCalendarViewComponent implements OnInit {
     });
 
     this.setWeek(moment());
-
-      /*weeklyDatePicker.datepicker({
-        autoclose: true,
-        forceParse: false,
-        container: '#week-picker-wrapper',
-      }).on("changeDate", function(e) {
-        this.setWeek(e.date);
-      });
-      $('.week-prev').on('click', function() {
-        var prev = new Date(start_date.getTime());
-        prev.setDate(prev.getDate() - 1);
-        this.setWeek(prev);
-      });
-      $('.week-next').on('click', function() {
-        var next = new Date(end_date.getTime());
-        next.setDate(next.getDate() + 1);
-        this.setWeek(next);
-      });*/
   }
 
   public setWeek(date: moment.Moment) {
-    console.log(date);
-    this.week = date.day(1);
+    this.week = moment(date.subtract((date.day() + 6) % 7, 'days'));
 
-    this.weekText = `${this.week.format("DD.MM.YYYY")} - ${this.week.add(6, 'days')
+    this.weekText = `${this.week.format("DD.MM.YYYY")} - ${moment(this.week).add(6, 'days')
       .format("DD.MM.YYYY")}`;
 
     this.weekField.day = +this.week.format("D");
     this.weekField.month = +this.week.format("M");
     this.weekField.year = +this.week.format("YYYY");
+
+    this.updateCalendar();
   }
 
   public handleDatepickerChange() {
-    console.log("HIHO");
-    console.log(this.weekField);
-    //this.setWeek();
+    this.setWeek(moment(`${this.weekField.year}-${this.weekField.month}-${this.weekField.day}`));
   }
 
   /**
@@ -120,15 +101,17 @@ export class RoomCalendarViewComponent implements OnInit {
    * @private
    */
   private async updateCalendar() {
-    this.roomService.getRoomCalendar(this.room.id).subscribe({
-      next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
-        this.calendar = res.calendar;
-        this.minTimeslot = res.minTimeslot;
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    });
+    if (this.room.id) {
+      this.roomService.getRoomCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
+        next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
+          this.calendar = res.calendar;
+          this.minTimeslot = res.minTimeslot;
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
+    }
   }
 
   /**
