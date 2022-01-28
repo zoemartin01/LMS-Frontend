@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { OrderId } from "../../../types/aliases/order-id";
+import {Order} from "../../../types/order";
+import {OrderId} from "../../../types/aliases/order-id";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UserService} from "../../../services/user.service";
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -17,14 +21,18 @@ import { OrderId } from "../../../types/aliases/order-id";
  *
  */
 export class AdminOrderListComponent implements OnInit {
-  public orders: Order[] = [];
+  public pendingOrders: Order[] = [];
+  public acceptedOrders: Order[] = [];
+  public declinedOrders: Order[] = [];
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public orderService: OrderService) {
+  constructor(public orderService: OrderService, public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -38,6 +46,16 @@ export class AdminOrderListComponent implements OnInit {
    * Gets all orders with data
    */
   public async getInventory(): Promise<void> {
+    this.orderService.getAllOrders().subscribe({
+      next: res => {
+        this.pendingOrders = res.filter((order: Order) => +order.status === OrderStatus.pending);
+        this.acceptedOrders = res.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
+        this.declinedOrders = res.filter((order: Order) => +order.status === OrderStatus.declined);
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      }
+    })
   }
 
   /**
@@ -75,7 +93,7 @@ export class AdminOrderListComponent implements OnInit {
    *
    * @param {OrderId} orderId id of order
    */
-  public async acceptOrderRequest(orderId: OrderId): Promise<void> {
+  public async openOrderAcceptDialog(orderId: OrderId): Promise<void> {
   }
 
   /**
@@ -83,6 +101,14 @@ export class AdminOrderListComponent implements OnInit {
    *
    * @param {OrderId} orderId id of order
    */
-  public async declineOrderRequest(orderId: OrderId): Promise<void> {
+  public async openOrderDeclineDialog(orderId: OrderId): Promise<void> {
   }
+
+  public getItemName(order: Order) {
+    if (order === null) {
+      throw ParseArgumentException;
+    }
+    return ((order.item === null) ? order.itemName : order.item.name);
+  }
+
 }
