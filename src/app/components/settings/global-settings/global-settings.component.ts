@@ -10,6 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
 import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
 import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
 
 @Component({
   selector: 'app-global-settings',
@@ -113,10 +114,16 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-  /**
+   /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
+    const modal = this.modalService.open(WhitelistRetailerCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
