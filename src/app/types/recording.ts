@@ -1,10 +1,10 @@
 import { RecordingId } from "./aliases/recording-id";
-import { UserId } from "./aliases/user-id";
+import { User } from "./user";
 import { VideoResolution } from "./enums/video-resolution";
 
 export interface Recording {
     id: RecordingId,
-    userId: UserId,
+    user: User|null,
     start: moment.Moment|null,
     end: moment.Moment|null,
     resolution: VideoResolution,
