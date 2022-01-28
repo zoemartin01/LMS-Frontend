@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
-import { AdminService } from "../../../../services/admin.service";
+import {AdminService} from "../../../../services/admin.service";
+import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {WhitelistRetailerDomainDeleteComponent} from "../domain-delete/whitelist-retailer-domain-delete.component";
+import {WhitelistRetailerDomainCreateComponent} from "../domain-create/whitelist-retailer-domain-create.component";
 
 @Component({
   selector: 'app-whitelist-retailer-create',
@@ -15,20 +19,82 @@ import { AdminService } from "../../../../services/admin.service";
  *
  */
 export class WhitelistRetailerCreateComponent {
+  public whitelistRetailer: WhitelistRetailer = {
+    id: null,
+    name: '',
+    domains: [],
+  }
+  public retailerCreateForm: FormGroup = new FormGroup({
+    name: new FormControl(''),
+  });
+
+  public domains: string[] = [];
+  public dirty: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
   /**
-   * Creates whitelist retailer with data
-   *
-   * @param {NgForm} whitelistRetailerForm submitted create form
+   * Inits page
    */
-  public async createWhitelistRetailer(whitelistRetailerForm: NgForm): Promise<void> {
+  ngOnInit(): void {
+  }
+
+
+  /**
+   * Edits domain of whitelist retailer
+   */
+  public async createWhitelistRetailer(): Promise<void> {
+    this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
+      next: () => {
+        this.activeModal.close('created');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  openWhitelistRetailerDomainCreationForm() {
+    const modal = this.modalService.open(WhitelistRetailerDomainCreateComponent);
+
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.domains.push(result);
+        this.dirty= true;
+      }
+    });
+  }
+
+  openWhitelistRetailerDomainEditForm(whitelistRetailerDomainId : string) {
+    const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
+    modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
+
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        //this.getWhitelistRetailerData();
+        this.dirty= true;
+      }
+    });
+  }
+
+  openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomainId : string) {
+    const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
+    modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
+    modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
+
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        //this.getWhitelistRetailerData();
+        this.dirty= true;
+      }
+    });
   }
 }
