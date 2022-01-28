@@ -9,6 +9,7 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
 import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
 
 @Component({
   selector: 'app-global-settings',
@@ -154,5 +155,12 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerDeleteComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 }
