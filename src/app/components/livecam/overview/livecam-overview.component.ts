@@ -1,16 +1,21 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+
+import { Recording } from 'src/app/types/recording';
+import { RecordingId } from 'src/app/types/aliases/recording-id';
 import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
 
 import { LivecamDeleteComponent } from '../delete/livecam-delete.component';
 import { LivecamScheduleComponent } from '../schedule/livecam-schedule.component';
-
-import { LivecamService } from '../../../services/livecam.service';
 import { UserService } from 'src/app/services/user.service';
-
-import { Recording } from 'src/app/types/recording';
-import { RecordingId } from 'src/app/types/aliases/recording-id';
+import { LivecamService } from '../../../services/livecam.service';
 
 @Component({
   selector: 'app-livecam-overview',
@@ -28,7 +33,8 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public scheduledRecordings: Recording[] = [];
   public moment = moment;
 
-  @ViewChild('camera') streamingcanvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
+  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> =
+    {} as ElementRef;
 
   /**
    * Constructor
@@ -53,9 +59,13 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    new JSMpeg.Player('ws://192.168.0.103:9999', {
-        canvas: this.streamingcanvas.nativeElement
-      })
+    this.livecamService.getLiveStreamFeed().subscribe({
+      next: (data) => {
+        new JSMpeg.Player(data.url, {
+          canvas: this.streaming_canvas.nativeElement,
+        });
+      },
+    });
   }
 
   /**
