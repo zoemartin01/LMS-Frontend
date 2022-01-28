@@ -57,12 +57,14 @@ import { UserEditComponent } from './components/user-management/edit/user-edit.c
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 import { UserViewComponent } from './components/user-management/view/user-view.component';
-import { WhitelistRetailerCreateComponent } from './components/settings/whitelist-retailer/create/whitelist-retailer-create.component';
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
+import { WhitelistRetailerCreateComponent } from './components/settings/whitelist-retailer/create/whitelist-retailer-create.component';
+
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
+import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 
 @NgModule({
   declarations: [
@@ -113,12 +115,13 @@ import { WhitelistRetailerDomainDeleteComponent } from './components/settings/wh
     UserListComponent,
     UserSettingsComponent,
     UserViewComponent,
-    WhitelistRetailerCreateComponent,
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
+    WhitelistRetailerCreateComponent,
     WhitelistRetailerViewComponent,
     WhitelistRetailerDomainEditComponent,
     WhitelistRetailerDomainDeleteComponent,
+    WhitelistRetailerDomainCreateComponent,
   ],
   imports: [
     AppRoutingModule,
