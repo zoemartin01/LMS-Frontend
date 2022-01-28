@@ -5,7 +5,10 @@ import { ActivatedRoute } from "@angular/router";
 import { AdminService } from "../../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {WhitelistRetailerDomainEditComponent} from "../domain-edit/whitelist-retailer-domain-edit.component";
+import {WhitelistRetailerDomainDeleteComponent} from "../domain-delete/whitelist-retailer-domain-delete.component";
+import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
 
 @Component({
   selector: 'app-edit',
@@ -36,9 +39,10 @@ export class WhitelistRetailerEditComponent implements OnInit {
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
   /**
@@ -81,11 +85,29 @@ export class WhitelistRetailerEditComponent implements OnInit {
     });
   }
 
-  openWhitelistRetailerDomainEditForm() {
+  openWhitelistRetailerDomainEditForm(whitelistRetailerDomainId : WhitelistRetailerDomainId) {
+    const modal = this.modalService.open(WhitelistRetailerDomainEditComponent);
+    modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
+    modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
 
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailerData();
+        this.dirty= true;
+      }
+    });
   }
 
-  openWhitelistRetailerDomainDeletionDialog() {
+  openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomainId : WhitelistRetailerDomainId) {
+    const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
+    modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
+    modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
 
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailerData();
+        this.dirty= true;
+      }
+    });
   }
 }
