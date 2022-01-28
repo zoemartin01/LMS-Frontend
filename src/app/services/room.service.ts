@@ -9,7 +9,7 @@ import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Appointment } from "../types/appointment";
-import { RoomTimespanType } from "../types/enums/timespan-type";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -158,14 +158,18 @@ export class RoomService {
    * Get data of room to easily display room calendar
    *
    * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {string|null} date date contained in week the calendar should be shown
    */
-  public getRoomCalendar(roomId: RoomId): Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
+  public getRoomCalendar(roomId: RoomId, date: number|null = null)
+    : Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
     if(roomId === null) {
       throw ParseArgumentException;
     }
 
+    const dateString = date === null ? '' : `?date=${date}`;
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
-      .replace(':id', roomId)}`;
+      .replace(':id', roomId)}${dateString}`;
 
     return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
 
