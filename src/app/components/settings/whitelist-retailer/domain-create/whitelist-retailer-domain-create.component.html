@@ -1,9 +1,8 @@
 <div class="modal-header">
-  <h4 class="modal-title">Add Domain</h4>
+  <h4 class="modal-title">Create Domain</h4>
 </div>
 <div class="modal-body">
-
-  <form [formGroup]="domainDeleteForm">
+  <form [formGroup]="domainCreateForm">
     <div class="form-group row">
       <div class="col">
         <label for="domain" class="my-1">Domain</label>
@@ -16,6 +15,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="deleteDomainOfWhitelistRetailer()">Delete Domain</button>
+  <button type="button" class="btn btn-danger" (click)="addDomainToWhitelistRetailer()">Save</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

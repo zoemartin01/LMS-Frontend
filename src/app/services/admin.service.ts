@@ -179,11 +179,11 @@ export class AdminService {
    * Adds domain to whitelist retailer
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
-   * @param {WhitelistRetailerDomain} whitelistRetailerDomain new whitelist retailer domain
+   * @param {String} whitelistRetailerDomain new whitelist retailer domain
    */
   public addDomainToWhitelistRetailer(
     whitelistRetailerId: WhitelistRetailerId,
-    whitelistRetailerDomain: WhitelistRetailerDomain
+    whitelistRetailerDomain: String,
   ): Observable<WhitelistRetailerDomain> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
@@ -192,7 +192,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.addDomainToWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.post<WhitelistRetailerDomain>(apiURL, whitelistRetailerDomain);
+    return this.httpClient.post<WhitelistRetailerDomain>(apiURL, {domain: whitelistRetailerDomain});
   }
 
   /**

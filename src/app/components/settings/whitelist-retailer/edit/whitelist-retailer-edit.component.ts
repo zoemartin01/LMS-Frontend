@@ -9,6 +9,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {WhitelistRetailerDomainEditComponent} from "../domain-edit/whitelist-retailer-domain-edit.component";
 import {WhitelistRetailerDomainDeleteComponent} from "../domain-delete/whitelist-retailer-domain-delete.component";
 import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
+import {WhitelistRetailerDomainCreateComponent} from "../domain-create/whitelist-retailer-domain-create.component";
 
 @Component({
   selector: 'app-edit',
@@ -102,6 +103,19 @@ export class WhitelistRetailerEditComponent implements OnInit {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
     modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
+
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailerData();
+        this.dirty= true;
+      }
+    });
+  }
+
+
+  openWhitelistRetailerDomainCreationForm() {
+    const modal = this.modalService.open(WhitelistRetailerDomainCreateComponent);
+    modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
 
     modal.result.then((result) => {
       if (result !== 'aborted') {
