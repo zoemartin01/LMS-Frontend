@@ -21,12 +21,18 @@ import {RoomDeleteComponent} from "../delete/room-delete.component";
  */
 export class RoomViewComponent implements OnInit {
   public roomViewForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(''),
-    autoAcceptBookings: new FormControl(''),
-    availableTimeslots: new FormControl(''),
-    unavailableTimeslots: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    description: new FormControl('', Validators.required),
+    maxConcurrentBookings: new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Validators.pattern('[0-9]*')
+    ]),
+    autoAcceptBookings: new FormControl('', Validators.required),
+    //availableTimeslots: new FormControl(''),
+    //unavailableTimeslots: new FormControl(''),
   });
   public room: Room = {
     id: null,
@@ -72,8 +78,8 @@ export class RoomViewComponent implements OnInit {
         this.roomViewForm.controls['description'].setValue(res.description);
         this.roomViewForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
         this.roomViewForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
-        this.roomViewForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
-        this.roomViewForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
+        //this.roomViewForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
+        //this.roomViewForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
         //TODO in backend this.roomViewForm.controls['appointments'].setValue(res.appointments);
       },
       error: error => {
