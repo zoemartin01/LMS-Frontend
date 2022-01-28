@@ -21,12 +21,12 @@ import { OrderStatus } from "../../../types/enums/order-status";
 export class OrderEditComponent implements OnInit {
   public order: Order = {
     id: null,
-    item: '',
+    itemName: '',
+    item: null,
     quantity: null,
-    purchaseUrl: '',
-    userId: null,
-    userFullName: '',
-    orderStatus: OrderStatus.unknown,
+    url: '',
+    user: null,
+    status: OrderStatus.unknown,
   }
 
   /**
