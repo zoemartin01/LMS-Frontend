@@ -29,6 +29,7 @@ export class LivecamScheduleComponent {
     resolution: new FormControl(VideoResolution.V1080),
     bitrate: new FormControl('', [
       Validators.required,
+      Validators.min(1),
     ]),
     bitrate_unit: new FormControl('mbps', [
       Validators.required,
