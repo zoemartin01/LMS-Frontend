@@ -71,9 +71,6 @@ export class RoomViewComponent implements OnInit {
     this.roomService.getRoomData(this.room.id).subscribe({
       next: res => {
         this.room = res;
-
-        console.log(res.autoAcceptBookings)
-
         this.roomViewForm.controls['name'].setValue(res.name);
         this.roomViewForm.controls['description'].setValue(res.description);
         this.roomViewForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
