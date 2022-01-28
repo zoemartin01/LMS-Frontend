@@ -62,10 +62,14 @@ export class OrderService {
    *
    * @param {Order} order data of new order
    */
-  public requestOrder(order: Order): Observable<Order> {
+  public requestOrder(itemName: string, quantity: number, url: string): Observable<Order> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.createOrder}`;
-
-    return this.httpClient.post<Order>(apiURL, order);
+    const requestBody = {
+      itemName: itemName,
+      quantity: quantity,
+      url: url,
+    }
+    return this.httpClient.post<Order>(apiURL, requestBody);
   }
 
   /**
