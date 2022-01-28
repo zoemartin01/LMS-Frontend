@@ -16,7 +16,6 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 /**
  * Component for the room edit popup
  *
- *
  */
 export class RoomEditComponent implements OnInit {
   public roomEditForm: FormGroup = new FormGroup({
@@ -90,14 +89,9 @@ export class RoomEditComponent implements OnInit {
    * Changes data of room
    */
   public async editRoomData(): Promise<void> {
-    this.roomService.editRoomData(this.room.id, {
-      name: this.roomEditForm.controls['name'].value,
-      description: this.roomEditForm.controls['description'].value,
-      maxConcurrentBookings: this.roomEditForm.controls['maxConcurrentBookings'].value,
-      autoAcceptBookings: this.roomEditForm.controls['autoAcceptBookings'].value,
-     // availableTimeslots: this.roomEditForm.controls['availableTimeslots'].value,
-      //unavailableTimeslots: this.roomEditForm.controls['unavailableTimeslots'].value
-      }
+    this.roomService.editRoomData(this.room.id,
+      this.getDirtyValues(this.roomEditForm)
+      //Todo test if works
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
@@ -106,5 +100,29 @@ export class RoomEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
+  }
+
+
+  /**
+   * Gets all values of a form that are marked with a dirty bit
+   *
+   * @param form ngForm
+   */
+  public getDirtyValues(form: any) {
+    let dirtyValues: { [key: string]: any} = {};
+
+    Object.keys(form.controls)
+      .forEach(key => {
+        let currentControl = form.controls[key];
+
+        if (currentControl.dirty) {
+          if (currentControl.controls)
+            dirtyValues[key] = this.getDirtyValues(currentControl);
+          else
+            dirtyValues[key] = currentControl.value;
+        }
+      });
+
+    return dirtyValues;
   }
 }
