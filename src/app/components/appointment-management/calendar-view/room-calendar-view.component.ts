@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import * as moment from "moment";
 
-import { AuthService } from "../../../services/auth.service";
-import { AppointmentService } from "../../../services/appointment.service";
-import { RoomService } from "../../../services/room.service";
+import {AuthService} from "../../../services/auth.service";
+import {AppointmentService} from "../../../services/appointment.service";
+import {RoomService} from "../../../services/room.service";
 
-import { Appointment } from "../../../types/appointment";
-import { Room } from "../../../types/room";
-import { RoomId } from "../../../types/aliases/room-id";
-import { RoomTimespan } from "../../../types/room-timespan";
-import { TimespanId } from "../../../types/aliases/timespan-id";
+import {Appointment} from "../../../types/appointment";
+import {Room} from "../../../types/room";
+import {TimespanId} from "../../../types/aliases/timespan-id";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -22,6 +23,9 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
  * Component for the room calendar view page, to view all appointments and thus free slots of one room
  */
 export class RoomCalendarViewComponent implements OnInit {
+  public roomSelectForm: FormGroup = new FormGroup({
+    roomSelector: new FormControl(''),
+  });
   public room: Room = {
     id: null,
     name: '',
@@ -33,10 +37,17 @@ export class RoomCalendarViewComponent implements OnInit {
   };
   public rooms: Room[] = [];
   public appointments: Appointment[] = [];
-  public calendar: RoomTimespan[][][] = [];
+  public calendar: (Appointment|string|null)[][][] = [];
   public minTimeslot: number = 0;
-  public columnKeys = Array.from(Array(10).keys());
-  public now: moment.Moment = moment();
+  public columnKeys = Array.from(Array(1).keys());
+  public week: moment.Moment = moment();
+  public action: string = '';
+  public weekText: string = '';
+  public weekField: NgbDateStruct = new class implements NgbDateStruct {
+    day = 1;
+    month = 1;
+    year = 1990;
+  };
 
   /**
    * Constructor
@@ -57,51 +68,51 @@ export class RoomCalendarViewComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.getRooms();
     this.route.params.subscribe(params => {
-      this.room.id = params['id'];
-      this.updateCalendar();
-      this.getRooms();
-    })
-
-
-    $(function(){
-      const weeklyDatePicker = $("#weeklyDatePicker");
-
-      weeklyDatePicker.datepicker({
-        format: 'dd.mm.yyyy'
-      });
-
-      weeklyDatePicker.on('changeDate', function () {
-        weeklyDatePicker.datepicker('hide');
-        const value = weeklyDatePicker.val();
-        const firstDate = moment(value, "DD.MM.YYYY").day(0).format("DD.MM.YYYY");
-        const lastDate =  moment(value, "DD.MM.YYYY").day(6).format("DD.MM.YYYY");
-        weeklyDatePicker.val(firstDate + " - " + lastDate);
-      });
-    });
-  }
-
-  /**
-   * Gets all data of room
-   */
-  public async getRoomData() {
-    this.roomService.getRoomData(this.room.id).subscribe({
-      next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
-        this.calendar = res.calendar;
-        this.minTimeslot = res.minTimeslot;
-      },
-      error: error => {
-        console.error('There was an error!', error);
+      if (params['id'] !== undefined) {
+        this.room.id = params['id'];
+        this.updateCalendar();
       }
     });
+
+    this.setWeek(moment());
+
+      /*weeklyDatePicker.datepicker({
+        autoclose: true,
+        forceParse: false,
+        container: '#week-picker-wrapper',
+      }).on("changeDate", function(e) {
+        this.setWeek(e.date);
+      });
+      $('.week-prev').on('click', function() {
+        var prev = new Date(start_date.getTime());
+        prev.setDate(prev.getDate() - 1);
+        this.setWeek(prev);
+      });
+      $('.week-next').on('click', function() {
+        var next = new Date(end_date.getTime());
+        next.setDate(next.getDate() + 1);
+        this.setWeek(next);
+      });*/
   }
 
-  /**
-   * Gets appointment data of all appointments of one room
-   *
-   * @param {RoomId} roomId id of room
-   */
-  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
+  public setWeek(date: moment.Moment) {
+    console.log(date);
+    this.week = date.day(1);
+
+    this.weekText = `${this.week.format("DD.MM.YYYY")} - ${this.week.add(6, 'days')
+      .format("DD.MM.YYYY")}`;
+
+    this.weekField.day = +this.week.format("D");
+    this.weekField.month = +this.week.format("M");
+    this.weekField.year = +this.week.format("YYYY");
+  }
+
+  public handleDatepickerChange() {
+    console.log("HIHO");
+    console.log(this.weekField);
+    //this.setWeek();
   }
 
   /**
@@ -110,7 +121,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   private async updateCalendar() {
     this.roomService.getRoomCalendar(this.room.id).subscribe({
-      next: (res: { calendar: RoomTimespan[][][], minTimeslot: number }) => {
+      next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
         this.calendar = res.calendar;
         this.minTimeslot = res.minTimeslot;
       },
@@ -124,12 +135,59 @@ export class RoomCalendarViewComponent implements OnInit {
    * Gets all rooms
    */
   public getRooms(): void {
+    this.roomService.getRoomsData().subscribe({
+      next: (rooms: Room[]) => {
+        this.rooms = rooms;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public changeRoom(roomId: string): void {
+    this.room.id = roomId;
+    this.updateCalendar();
+  }
+
+  public isAppointment(object: Appointment|string|null): boolean {
+    return !(object === null || typeof object === 'string');
+  }
+
+  public isConfirmed(object: Appointment|string|null): boolean {
+    return (<Appointment>object).confirmationStatus === ConfirmationStatus.accepted;
+  }
+
+  public parseAppointment(object: Appointment|string|null): Appointment {
+    return <Appointment>object;
+  }
+
+  public getAppointmentId(object: Appointment|string|null): TimespanId {
+    return (<Appointment>object).id;
+  }
+
+  public getRowspan(object: Appointment|string|null): number {
+    const appointment = <Appointment>object;
+    return moment(appointment.end).diff(moment(appointment.start), 'hours') + 1;
   }
 
   /**
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+    this.action = 'create';
+  }
+
+  /**
+   * Opens appointment edit form
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
+    this.action = 'view';
   }
 
   /**
@@ -138,6 +196,7 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
+    this.action = 'edit';
   }
 
   /**
