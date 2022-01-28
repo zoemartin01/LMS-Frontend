@@ -38,6 +38,9 @@ export class LivecamScheduleComponent {
   public moment = moment;
   public endMin = moment();
 
+  public scheduleError: boolean = false;
+  public scheduleErrorMessage: string = '';
+
   /**
    * Constructor
    * @constructor
@@ -66,9 +69,29 @@ export class LivecamScheduleComponent {
 
       this.livecamService.scheduleRecording(start, end, resolution, bitrate).subscribe({
         next: () => {
-          this.activeModal.close('created');
+          this.activeModal.close('scheduled');
+        },
+        error: error => {
+          if (error.error.message) {
+            this.scheduleError = true;
+            this.scheduleErrorMessage = error.error.message;
+          } else {
+            this.scheduleError = true;
+            this.scheduleErrorMessage = 'Invalid Input:';
+
+            error.error.forEach((field: any) => {
+              const constraints = field.constraints;
+              Object.keys(constraints).forEach((key: any) => {
+                this.scheduleErrorMessage += `<br> - ${constraints[key]}`
+              });
+            });
+          }
+          console.error(error);
         }
       });
+    } else {
+      this.scheduleError = true;
+      this.scheduleErrorMessage = 'Invalid form values';
     }
   }
 

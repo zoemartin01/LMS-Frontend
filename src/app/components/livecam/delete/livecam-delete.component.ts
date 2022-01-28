@@ -102,7 +102,10 @@ export class LivecamDeleteComponent implements OnInit {
   public async deleteRecording(): Promise<void> {
     this.livecamService.deleteRecording(this.recording.id).subscribe({
       next: () => {
-        this.activeModal.close();
+        this.activeModal.close('deleted');
+      },
+      error: error => {
+        console.error('There was an error!', error);
       }
     });
   }
