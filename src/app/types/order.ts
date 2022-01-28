@@ -5,10 +5,10 @@ import {InventoryItem} from "./inventory-item";
 
 export interface Order {
   id: OrderId,
-  item: InventoryItem | null,
+  item: InventoryItem,
   itemName: string,
   quantity: number | null,
   url: string,
-  user: User | null,
+  user: User,
   status: OrderStatus,
 }

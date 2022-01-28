@@ -6,6 +6,8 @@ import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-edit',
@@ -22,10 +24,24 @@ export class OrderEditComponent implements OnInit {
   public order: Order = {
     id: null,
     itemName: '',
-    item: null,
+    item: {
+      id: null,
+      name: '',
+      description: '',
+      quantity: null,
+    },
     quantity: null,
     url: '',
-    user: null,
+    user: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: UserRole.unknown,
+      notificationChannel: NotificationChannel.unknown,
+      emailVerification: true,
+      isActiveDirectory: false,
+    },
     status: OrderStatus.unknown,
   }
 
