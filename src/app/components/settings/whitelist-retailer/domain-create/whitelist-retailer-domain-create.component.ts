@@ -54,6 +54,11 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
 
   public async addDomainToWhitelistRetailer(): Promise<void> {
     if (this.domainCreateForm.valid) {
+      if (this.whitelistRetailer.id === null) {
+        this.activeModal.close(this.domainCreateForm.value.domain);
+        return;
+      }
+
       this.adminService.addDomainToWhitelistRetailer(this.whitelistRetailer.id, this.domainCreateForm.value.domain).subscribe({
         next: (domain: WhitelistRetailerDomain) => {
           if (domain.id !== null) {
