@@ -52,7 +52,6 @@ export class RoomEditComponent implements OnInit {
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
-   * @param activeModal
    */
   constructor(public roomService: RoomService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
   }
