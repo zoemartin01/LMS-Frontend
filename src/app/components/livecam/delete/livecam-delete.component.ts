@@ -10,6 +10,8 @@ import { LivecamService } from 'src/app/services/livecam.service';
 
 import { Recording } from 'src/app/types/recording';
 import { VideoResolution } from '../../../types/enums/video-resolution';
+import { UserRole } from 'src/app/types/enums/user-role';
+import { NotificationChannel } from 'src/app/types/enums/notification-channel';
 
 @Component({
   selector: 'app-livecam-delete',
@@ -25,7 +27,16 @@ import { VideoResolution } from '../../../types/enums/video-resolution';
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {
     id: null,
-    user: null,
+    user: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: UserRole.unknown,
+      notificationChannel: NotificationChannel.unknown,
+      emailVerification: true,
+      isActiveDirectory: false,
+    },
     start: null,
     end: null,
     resolution: VideoResolution.unknown,
@@ -73,7 +84,7 @@ export class LivecamDeleteComponent implements OnInit {
         this.recording.start = moment(this.recording.start);
         this.recording.end = moment(this.recording.end);
 
-        this.recordingDeleteForm.controls['user_name'].setValue(`${this.recording.user?.firstName} ${this.recording.user?.lastName}`);
+        this.recordingDeleteForm.controls['user_name'].setValue(`${this.recording.user.firstName} ${this.recording.user.lastName}`);
         this.recordingDeleteForm.controls['start'].setValue(this.recording.start.format('YYYY-MM-DDTHH:mm'));
         this.recordingDeleteForm.controls['end'].setValue(this.recording.end.format('YYYY-MM-DDTHH:mm'));
         this.recordingDeleteForm.controls['resolution'].setValue(this.recording.resolution);
