@@ -55,18 +55,17 @@ export class RoomService {
    * @param description
    * @param maxConcurrentBookings
    * @param autoAcceptBookings
-   * @param availableTimeslots
-   * @param unavailableTimeslots
    */
-  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean, availableTimeslots: RoomTimespan[], unavailableTimeslots: RoomTimespan[]): Observable<Room> {
+  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean): Observable<Room> {
+    //TODO  , availableTimeslots: RoomTimespan[], unavailableTimeslots: RoomTimespan[]
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
       name: name,
       description: description,
       maxConcurrentBookings: maxConcurrentBookings,
       autoAcceptBookings: autoAcceptBookings,
-      availableTimeslots: availableTimeslots,
-      unavailableTimeslots: unavailableTimeslots
+      // availableTimeslots: availableTimeslots,
+      // unavailableTimeslots: unavailableTimeslots
     };
 
     return this.httpClient.post<Room>(apiURL, requestBody);

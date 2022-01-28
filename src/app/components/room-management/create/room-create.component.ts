@@ -21,12 +21,11 @@ export class RoomCreateComponent {
       Validators.required
     ]),
     description: new FormControl('', Validators.required),
-    maxConcurrentBookings: new FormControl('', [
+    maxConcurrentBookings: new FormControl(1, [
       Validators.required,
       Validators.min(1),
-      Validators.pattern('[0-9]*')
     ]),
-    autoAcceptBookings: new FormControl('', Validators.required),
+    autoAcceptBookings: new FormControl(false, Validators.required),
     /*
     availableTimeslots: new FormControl(''),
     unavailableTimeslots: new FormControl(''),
@@ -53,16 +52,18 @@ export class RoomCreateComponent {
       const description = this.roomCreateForm.value.description;
       const maxConcurrentBookings = this.roomCreateForm.value.maxConcurrentBookings;
       const autoAcceptBookings = this.roomCreateForm.value.autoAcceptBookings;
-      const availableTimeslots = this.roomCreateForm.value.availableTimeslots;
-      const unavailableTimeslots = this.roomCreateForm.value.unavailableTimeslots;
-
-      this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings, availableTimeslots, unavailableTimeslots).subscribe({
+      //const availableTimeslots = this.roomCreateForm.value.availableTimeslots;
+      //const unavailableTimeslots = this.roomCreateForm.value.unavailableTimeslots;
+      this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings).subscribe({
+        //TODO  , availableTimeslots, unavailableTimeslots
         next: () => {
           this.activeModal.close('created');
         }, error: error => {
           console.error('There was an error!', error);
         }
       });
+    } else {
+      console.log('Invalid form data')
     }
   }
 }

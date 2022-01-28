@@ -25,14 +25,16 @@ export class RoomViewComponent implements OnInit {
       Validators.required
     ]),
     description: new FormControl('', Validators.required),
-    maxConcurrentBookings: new FormControl('', [
+    maxConcurrentBookings: new FormControl(1, [
       Validators.required,
       Validators.min(1),
-      Validators.pattern('[0-9]*')
     ]),
     autoAcceptBookings: new FormControl(false, Validators.required),
-    //availableTimeslots: new FormControl(''),
-    //unavailableTimeslots: new FormControl(''),
+    /*
+    availableTimeslots: new FormControl(''),
+    unavailableTimeslots: new FormControl(''),
+    TODO tabelle
+     */
   });
   public room: Room = {
     id: null,

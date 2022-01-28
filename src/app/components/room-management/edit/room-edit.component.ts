@@ -24,12 +24,11 @@ export class RoomEditComponent implements OnInit {
       Validators.required
     ]),
     description: new FormControl('', Validators.required),
-    maxConcurrentBookings: new FormControl('', [
+    maxConcurrentBookings: new FormControl(1, [
       Validators.required,
       Validators.min(1),
-      Validators.pattern('[0-9]*')
     ]),
-    autoAcceptBookings: new FormControl('', Validators.required),
+    autoAcceptBookings: new FormControl(false, Validators.required),
     /*
     availableTimeslots: new FormControl(''),
     unavailableTimeslots: new FormControl(''),
