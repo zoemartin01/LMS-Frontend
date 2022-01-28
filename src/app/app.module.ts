@@ -61,6 +61,7 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [
     {
