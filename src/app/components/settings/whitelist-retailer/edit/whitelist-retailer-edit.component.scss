@@ -1,0 +1,8 @@
+table {
+  table-layout: fixed;
+}
+
+td {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
