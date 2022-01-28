@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { RoomService } from "../../../services/room.service";
@@ -20,10 +20,16 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
  */
 export class RoomEditComponent implements OnInit {
   public roomEditForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(''),
-    autoAcceptBookings: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    description: new FormControl('', Validators.required),
+    maxConcurrentBookings: new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Validators.pattern('[0-9]*')
+    ]),
+    autoAcceptBookings: new FormControl('', Validators.required),
     /*
     availableTimeslots: new FormControl(''),
     unavailableTimeslots: new FormControl(''),
@@ -56,7 +62,6 @@ export class RoomEditComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.room.id = params['id'];
       this.getRoomData();
     });
   }
@@ -69,15 +74,13 @@ export class RoomEditComponent implements OnInit {
       next: res => {
         this.room = res;
 
-        console.log(res.autoAcceptBookings)
-
         this.roomEditForm.controls['name'].setValue(res.name);
         this.roomEditForm.controls['description'].setValue(res.description);
         this.roomEditForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
         this.roomEditForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
-        this.roomEditForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
-        this.roomEditForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
-        //TODO in backend this.roomViewForm.controls['appointments'].setValue(res.appointments);
+        //this.roomEditForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
+        //this.roomEditForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
+        //TODO in backend this.roomEditForm.controls['appointments'].setValue(res.appointments);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -94,8 +97,8 @@ export class RoomEditComponent implements OnInit {
       description: this.roomEditForm.controls['description'].value,
       maxConcurrentBookings: this.roomEditForm.controls['maxConcurrentBookings'].value,
       autoAcceptBookings: this.roomEditForm.controls['autoAcceptBookings'].value,
-      availableTimeslots: this.roomEditForm.controls['availableTimeslots'].value,
-      unavailableTimeslots: this.roomEditForm.controls['unavailableTimeslots'].value
+     // availableTimeslots: this.roomEditForm.controls['availableTimeslots'].value,
+      //unavailableTimeslots: this.roomEditForm.controls['unavailableTimeslots'].value
       }
     ).subscribe({
       next: () => {
