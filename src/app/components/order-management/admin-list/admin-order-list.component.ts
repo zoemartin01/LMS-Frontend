@@ -8,6 +8,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrderStatus} from "../../../types/enums/order-status";
 import {UserService} from "../../../services/user.service";
 import {ParseArgumentException} from "@angular/cli/models/parser";
+import {InventoryItemCreateComponent} from "../../inventory-management/item-create/inventory-item-create.component";
+import {OrderRequestComponent} from "../request/order-request.component";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -62,6 +64,16 @@ export class AdminOrderListComponent implements OnInit {
    * Opens form to create order
    */
   public openOrderCreationForm(): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openOrderView(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
