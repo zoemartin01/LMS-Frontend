@@ -45,13 +45,6 @@ export class WhitelistRetailerCreateComponent {
   }
 
   /**
-   * Inits page
-   */
-  ngOnInit(): void {
-  }
-
-
-  /**
    * Creates whitelist retailer
    */
   public async createWhitelistRetailer(): Promise<void> {
