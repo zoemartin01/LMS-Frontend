@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemCreateComponent } from "../item-create/inventory-item-create.component";
+import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
+import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
 
 import { AuthService } from "../../../services/auth.service";
@@ -101,6 +103,13 @@ export class InventoryListComponent implements OnInit {
    * @param {InventoryItemId} inventoryItemId id of item to edit
    */
   public openInventoryItemEditForm(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemEditComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
@@ -109,5 +118,12 @@ export class InventoryListComponent implements OnInit {
    * @param {InventoryItemId} inventoryItemId id of item to delete
    */
   public openItemDeletionDialog(inventoryItemId: InventoryItemId): void {
+    const modal = this.modalService.open(InventoryItemDeleteComponent);
+    modal.componentInstance.inventoryItem.id = inventoryItemId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 }

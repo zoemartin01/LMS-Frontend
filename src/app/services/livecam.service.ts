@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 import { Recording } from '../types/recording';
 import { RecordingId } from '../types/aliases/recording-id';
+import { VideoResolution } from '../types/enums/video-resolution';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +28,13 @@ export class LivecamService {
    *
    * @param {Recording} recording data of the recording to schedule
    */
-  public scheduleRecording(recording: Recording): Observable<any> {
+  public scheduleRecording(start: moment.Moment, end: moment.Moment, resolution: VideoResolution, bitrate: number): Observable<any> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.createSchedule}`;
     const requestBody = {
-      userId: recording.userId,
-      start: recording.start!.toISOString(),
-      end: recording.end!.toISOString(),
-      resolution: recording.resolution,
-      bitrate: recording.bitrate,
+      start: start.toISOString(),
+      end: end.toISOString(),
+      resolution: resolution,
+      bitrate: bitrate,
     };
 
     return this.httpClient.post(apiURL, requestBody);
