@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import { AdminService } from "../../../services/admin.service";
 
@@ -27,10 +27,10 @@ export class GlobalSettingsComponent implements OnInit {
   public whitelistRetailers: WhitelistRetailer[] = [];
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-      // Validators.required,
+       Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-      // Validators.required,
+       Validators.required,
     ]),
   });
 

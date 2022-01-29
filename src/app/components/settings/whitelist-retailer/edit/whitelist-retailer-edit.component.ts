@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { AdminService } from "../../../../services/admin.service";
@@ -24,7 +24,9 @@ import {WhitelistRetailerDomainCreateComponent} from "../domain-create/whitelist
  */
 export class WhitelistRetailerEditComponent implements OnInit {
   public retailerEditForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
   });
 
 

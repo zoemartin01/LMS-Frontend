@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
 import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
 import {AdminService} from "../../../../services/admin.service";
@@ -12,7 +12,9 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class WhitelistRetailerDomainCreateComponent implements OnInit {
   public domainCreateForm: FormGroup = new FormGroup({
-    domain: new FormControl(''),
+    domain: new FormControl('', [
+      Validators.required,
+    ]),
   });
 
   public whitelistRetailer: WhitelistRetailer = {

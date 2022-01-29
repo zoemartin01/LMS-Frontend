@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {AdminService} from "../../../../services/admin.service";
 import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
@@ -26,7 +26,9 @@ export class WhitelistRetailerCreateComponent {
     domains: [],
   }
   public retailerCreateForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
   });
 
   public domains: string[] = [];
