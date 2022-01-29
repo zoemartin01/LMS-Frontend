@@ -61,7 +61,7 @@ export class WhitelistRetailerDeleteComponent implements OnInit {
   }
 
   /**
-   * Deletes domain of whitelist retailer
+   * Deletes whitelist retailer
    */
   public async deleteWhitelistRetailer(): Promise<void> {
     this.adminService.deleteWhitelistRetailer(this.whitelistRetailer.id).subscribe({

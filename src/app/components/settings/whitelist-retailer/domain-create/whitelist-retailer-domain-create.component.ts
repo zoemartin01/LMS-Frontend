@@ -10,6 +10,9 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './whitelist-retailer-domain-create.component.html',
   styleUrls: ['./whitelist-retailer-domain-create.component.scss']
 })
+/**
+ * Component for creating a domain of a whitelist retailer
+ */
 export class WhitelistRetailerDomainCreateComponent implements OnInit {
   public domainCreateForm: FormGroup = new FormGroup({
     domain: new FormControl('', [
@@ -56,6 +59,9 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
     }
   }
 
+  /**
+   * Creates new domain
+   */
   public async addDomainToWhitelistRetailer(): Promise<void> {
     if (this.domainCreateForm.valid) {
       if (this.whitelistRetailer.id === null) {

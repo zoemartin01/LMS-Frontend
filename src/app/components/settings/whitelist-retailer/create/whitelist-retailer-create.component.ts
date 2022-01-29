@@ -15,7 +15,7 @@ import {WhitelistRetailerDomainEditComponent} from "../domain-edit/whitelist-ret
 })
 
 /**
- * Component whitelist retailer creation popup
+ * Component for whitelist retailer creation popup
  *
  *
  */
@@ -52,7 +52,7 @@ export class WhitelistRetailerCreateComponent {
 
 
   /**
-   * Edits domain of whitelist retailer
+   * Creates whitelist retailer
    */
   public async createWhitelistRetailer(): Promise<void> {
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
@@ -65,6 +65,9 @@ export class WhitelistRetailerCreateComponent {
     });
   }
 
+  /**
+   * Opens form to create a domain
+   */
   openWhitelistRetailerDomainCreationForm() {
     const modal = this.modalService.open(WhitelistRetailerDomainCreateComponent);
 
@@ -76,6 +79,10 @@ export class WhitelistRetailerCreateComponent {
     });
   }
 
+  /**
+   * Opens form to edit a domain
+   * @param whitelistRetailerDomain {string} domain to edit
+   */
   openWhitelistRetailerDomainEditForm(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainEditComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;
@@ -88,6 +95,10 @@ export class WhitelistRetailerCreateComponent {
     });
   }
 
+  /**
+   * Opens dialog to delete a domain
+   * @param whitelistRetailerDomain domain to delete
+   */
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;

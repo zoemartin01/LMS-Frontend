@@ -88,6 +88,10 @@ export class WhitelistRetailerEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens form to edit a domain of whitelist retailer
+   * @param whitelistRetailerDomainId {WhitelistRetailerDomainId} id of domain to edit
+   */
   openWhitelistRetailerDomainEditForm(whitelistRetailerDomainId : WhitelistRetailerDomainId) {
     const modal = this.modalService.open(WhitelistRetailerDomainEditComponent);
     modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
@@ -101,6 +105,10 @@ export class WhitelistRetailerEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens form to delete a domain of whitelist retailer
+   * @param whitelistRetailerDomainId {WhitelistRetailerDomainId} id of domain to delete
+   */
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomainId : WhitelistRetailerDomainId) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
@@ -114,7 +122,9 @@ export class WhitelistRetailerEditComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Opens form to create a domain
+   */
   openWhitelistRetailerDomainCreationForm() {
     const modal = this.modalService.open(WhitelistRetailerDomainCreateComponent);
     modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
