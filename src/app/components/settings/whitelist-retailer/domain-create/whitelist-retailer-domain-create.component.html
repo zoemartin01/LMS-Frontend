@@ -15,6 +15,8 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="addDomainToWhitelistRetailer()">Save</button>
+  <button type="button" class="btn btn-danger" [disabled]="!domainCreateForm.valid"
+          (click)="addDomainToWhitelistRetailer()">Save
+  </button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

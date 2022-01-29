@@ -44,7 +44,9 @@
         <a (click)="openWhitelistRetailerDomainCreationForm()
 " class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Add Domain</a>
       </div>
-      <button type="button" class="btn btn-primary" (click)="editWhitelistRetailerData()">Save</button>
+      <button type="button" class="btn btn-primary" [disabled]="!retailerEditForm.valid"
+              (click)="editWhitelistRetailerData()">Save
+      </button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
     </div>
   </form>
