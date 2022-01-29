@@ -52,6 +52,7 @@ export class WhitelistRetailerCreateComponent {
    * Edits domain of whitelist retailer
    */
   public async createWhitelistRetailer(): Promise<void> {
+    console.log(this.domains);
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
       next: () => {
         this.activeModal.close('created');
@@ -85,15 +86,16 @@ export class WhitelistRetailerCreateComponent {
     });
   }
 
-  openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomainId : string) {
+  openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain : string) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
-    modal.componentInstance.whitelistRetailer.id = this.whitelistRetailer.id;
-    modal.componentInstance.whitelistRetailerDomain.id = whitelistRetailerDomainId;
+    modal.componentInstance.domain = whitelistRetailerDomain;
 
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        //this.getWhitelistRetailerData();
-        this.dirty= true;
+        const index = this.domains.indexOf(whitelistRetailerDomain, 0);
+        if (index > -1) {
+          this.domains.splice(index, 1);
+        }        this.dirty= true;
       }
     });
   }

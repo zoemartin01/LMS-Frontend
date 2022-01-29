@@ -133,13 +133,14 @@ export class AdminService {
   /**
    * Creates whitelist retailer with data
    *
-   * @param {String[]} whitelistRetailerDomains new whitelist retailer domains
+   * @param {String[]} domains new whitelist retailer domains
    * @param {String} name new name of whitelist retailer
    */
-  public createWhitelistRetailer(whitelistRetailerDomains: String[], name: String): Observable<WhitelistRetailer> {
+  public createWhitelistRetailer(domains: String[], name: String): Observable<WhitelistRetailer> {
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.createWhitelistRetailer}`;
 
-    return this.httpClient.post<WhitelistRetailer>(apiURL, {whitelistRetailerDomains, name});
+    return this.httpClient.post<WhitelistRetailer>(apiURL, {domains, name});
   }
 
   /**

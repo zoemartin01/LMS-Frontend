@@ -29,6 +29,8 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
     domain: '',
   }
 
+  public domain : string = '';
+
 
   /**
    * Constructor
@@ -37,7 +39,7 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService : AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
     this.domainDeleteForm.disable();
 
   }
@@ -52,7 +54,12 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
   /**
    * Gets whitelist retailer data
    */
-  public async getWhitelistRetailerData(): Promise<void>{
+  public async getWhitelistRetailerData(): Promise<void> {
+    if (this.whitelistRetailer.id === null) {
+      console.log(this.domain);
+      this.domainDeleteForm.controls['domain'].setValue(this.domain);
+      return;
+    }
     this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
       next: res => {
         this.whitelistRetailer = res;
@@ -68,6 +75,10 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * Deletes domain of whitelist retailer
    */
   public async deleteDomainOfWhitelistRetailer(): Promise<void> {
+    if (this.whitelistRetailer.id === null) {
+      this.activeModal.close('deleted');
+      return;
+    }
     this.adminService.deleteDomainOfWhitelistRetailer(this.whitelistRetailer.id, this.whitelistRetailerDomain.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
