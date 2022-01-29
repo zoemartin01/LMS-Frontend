@@ -42,14 +42,16 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void> {
-    this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
-      next: res => {
-        this.whitelistRetailer = res;
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+    if (this.whitelistRetailer.id !== null) {
+      this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
+        next: res => {
+          this.whitelistRetailer = res;
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
+    }
   }
 
   public async addDomainToWhitelistRetailer(): Promise<void> {

@@ -29,6 +29,7 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
     domain: '',
   }
 
+  public domain : string = '';
 
   /**
    * Constructor
@@ -51,6 +52,10 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void> {
+    if (this.whitelistRetailer.id === null) {
+      this.domainEditForm.controls['domain'].setValue(this.domain);
+      return;
+    }
     this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
       next: res => {
         this.whitelistRetailer = res;
@@ -66,6 +71,10 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    * Edits domain of whitelist retailer
    */
   public async editDomainOfWhitelistRetailer(): Promise<void> {
+    if (this.whitelistRetailer.id === null) {
+      this.activeModal.close(this.domainEditForm.controls['domain'].value);
+      return;
+    }
     this.adminService.editDomainOfWhitelistRetailer(this.whitelistRetailer.id, this.whitelistRetailerDomain.id, {
         domain: this.domainEditForm.controls['domain'].value
       }

@@ -56,7 +56,6 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    */
   public async getWhitelistRetailerData(): Promise<void> {
     if (this.whitelistRetailer.id === null) {
-      console.log(this.domain);
       this.domainDeleteForm.controls['domain'].setValue(this.domain);
       return;
     }
