@@ -72,7 +72,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.globalSettingsForm.controls['recording.auto_delete'].setValue(
       (
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
-      )/86400000
+      ) // /86400000
     );
   }
 
