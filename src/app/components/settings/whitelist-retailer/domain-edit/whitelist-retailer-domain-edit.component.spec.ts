@@ -1,35 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { RoomViewComponent } from './room-view.component';
+import { WhitelistRetailerDomainEditComponent } from './whitelist-retailer-domain-edit.component';
 
-describe('RoomViewComponent', () => {
-  let component: RoomViewComponent;
-  let fixture: ComponentFixture<RoomViewComponent>;
+describe('WhitelistRetailerDomainEditComponent', () => {
+  let component: WhitelistRetailerDomainEditComponent;
+  let fixture: ComponentFixture<WhitelistRetailerDomainEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        RoomViewComponent,
+        WhitelistRetailerDomainEditComponent,
       ],
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
       ],
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoomViewComponent);
+    fixture = TestBed.createComponent(WhitelistRetailerDomainEditComponent);
     component = fixture.componentInstance;
   });
 

@@ -40,7 +40,12 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public getRoomData(roomId: RoomId): Observable<Room> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom
+      .replace(':id', roomId)}`;
 
     return this.httpClient.get<Room>(apiURL);
   }
@@ -48,12 +53,21 @@ export class RoomService {
   /**
    * Creates room with data
    *
-   * @param {Room} room data of new room
+   * @todo Sarah: fix JSDoc
+   *
+   * @param name
+   * @param description
+   * @param maxConcurrentBookings
+   * @param autoAcceptBookings
    */
-  public createRoom(room: Room): Observable<Room> {
+  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean)
+    : Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
-      room: room
+      name: name,
+      description: description,
+      maxConcurrentBookings: maxConcurrentBookings,
+      autoAcceptBookings: autoAcceptBookings,
     };
 
     return this.httpClient.post<Room>(apiURL, requestBody);
@@ -71,12 +85,8 @@ export class RoomService {
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.updateRoom.replace(':id', roomId)}`;
-    const requestBody = {
-      roomId: roomId,
-      changedData: changedData,
-    };
 
-    return this.httpClient.patch<Room>(apiURL, requestBody);
+    return this.httpClient.patch<Room>(apiURL, changedData);
   }
 
   /**
@@ -106,6 +116,7 @@ export class RoomService {
     };
 
     return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
+    //TODO not timeslot param but parameters of timeslot
   }
 
   /**

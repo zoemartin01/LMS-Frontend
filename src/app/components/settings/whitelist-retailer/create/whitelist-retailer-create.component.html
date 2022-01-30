@@ -1,1 +1,51 @@
-<p>whitelist-retailer-create works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Create Whitelist Retailer</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="retailerCreateForm" (keyup.enter)="createWhitelistRetailer()"
+        (ngSubmit)="createWhitelistRetailer()">
+    <div class="form-group row">
+      <div class="col">
+        <label for="name" class="my-1">Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name"
+                 formControlName="name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th class="col">Domains</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let whitelistRetailerDomain of domains">
+          <td class="col-sm-8 ">{{ whitelistRetailerDomain }}</td>
+          <td class="col-sm-2 ">
+            <a class="col-sm-2" (click)="openWhitelistRetailerDomainEditForm(whitelistRetailerDomain)">
+              <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+            </a>
+          </td>
+          <td class="col-sm-2 ">
+            <a class="col-sm-2" (click)="openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain)">
+              <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <div class="col text-left">
+        <a (click)="openWhitelistRetailerDomainCreationForm()
+" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Add Domain</a>
+      </div>
+      <button type="button" class="btn btn-primary" [disabled]="!retailerCreateForm.valid"
+              (click)="createWhitelistRetailer()">Save
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+    </div>
+  </form>
+</div>

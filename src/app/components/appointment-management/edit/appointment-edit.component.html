@@ -28,8 +28,8 @@
   </div>
 </div>
 
-
-<!-- <div class="modal" id="edit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+<div class="modal" id="edit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -42,13 +42,34 @@
             <label for="weekday" class="my-1">Weekday</label>
             <div class="input-group">
               <select class="form-select" id="weekday" name="weekday">
-                <option value="1" [selected]="appointment.start !== null && +appointment.start.format('e') === 1">Monday</option>
-                <option value="2" [selected]="appointment.start !== null && +appointment.start.format('e') === 2">Tuesday</option>
-                <option value="3" [selected]="appointment.start !== null && +appointment.start.format('e') === 3">Wednesday</option>
-                <option value="4" [selected]="appointment.start !== null && +appointment.start.format('e') === 4">Thursday</option>
-                <option value="5" [selected]="appointment.start !== null && +appointment.start.format('e') === 5">Friday</option>
-                <option value="6" [selected]="appointment.start !== null && +appointment.start.format('e') === 6">Saturday</option>
-                <option value="0" [selected]="appointment.start !== null && +appointment.start.format('e') === 0">Sunday</option>
+                <option value="1"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 1">
+                  Monday
+                </option>
+                <option value="2"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 2">
+                  Tuesday
+                </option>
+                <option value="3"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 3">
+                  Wednesday
+                </option>
+                <option value="4"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 4">
+                  Thursday
+                </option>
+                <option value="5"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 5">
+                  Friday
+                </option>
+                <option value="6"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 6">
+                  Saturday
+                </option>
+                <option value="0"
+                        [selected]="appointment.start !== null && +appointment.start.format('e') === 0">
+                  Sunday
+                </option>
               </select>
             </div>
           </div>
@@ -56,8 +77,10 @@
             <label for="startTime" class="my-1">Start time</label>
             <div class="input-group">
               <select class="form-select" id="startTime" name="startTime">
-                <option [value]="i" [selected]="appointment.start !== null && +appointment.start.format('HH') === i"
-                        *ngFor="let i of startTimeSlots">{{ i }}:00</option>
+                <option [value]="i" *ngFor="let i of startTimeSlots"
+                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
+                  {{ i }}:00
+                </option>
               </select>
             </div>
           </div>
@@ -65,8 +88,10 @@
             <label for="endTime" class="my-1">End time</label>
             <div class="input-group">
               <select class="form-select" id="endTime" name="endTime">
-                <option [value]="i" [selected]="appointment.start !== null && +appointment.start.format('HH') === i"
-                        *ngFor="let i of endTimeSlots">{{ i }}:00</option>
+                <option [value]="i" *ngFor="let i of endTimeSlots"
+                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
+                  {{ i }}:00
+                </option>
               </select>
             </div>
           </div>
@@ -91,4 +116,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
