@@ -62,6 +62,9 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
+import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
+import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +119,9 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
+    WhitelistRetailerDomainCreateComponent,
+    WhitelistRetailerDomainDeleteComponent,
+    WhitelistRetailerDomainEditComponent,
   ],
   imports: [
     AppRoutingModule,

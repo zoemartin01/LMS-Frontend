@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
 import { AdminService } from "../../../services/admin.service";
 
@@ -22,10 +28,10 @@ export class GlobalSettingsComponent implements OnInit {
   public whitelistRetailers: WhitelistRetailer[] = [];
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-      // Validators.required,
+       Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-      // Validators.required,
+       Validators.required,
     ]),
   });
 
@@ -33,8 +39,9 @@ export class GlobalSettingsComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService) {
+  constructor(public adminService: AdminService, private modalService: NgbModal) {
   }
 
   /**
@@ -66,7 +73,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.globalSettingsForm.controls['recording.auto_delete'].setValue(
       (
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
-      )/86400000
+      ) / 86400000
     );
   }
 
@@ -108,10 +115,16 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-  /**
+   /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
+    const modal = this.modalService.open(WhitelistRetailerCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
@@ -120,6 +133,13 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerView(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerViewComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
@@ -128,6 +148,13 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerEditForm(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerEditComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 
   /**
@@ -136,5 +163,12 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
   public openWhitelistRetailerDeletionDialog(whitelistRetailerId: WhitelistRetailerId): void {
+    const modal = this.modalService.open(WhitelistRetailerDeleteComponent);
+    modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getWhitelistRetailers();
+      }
+    });
   }
 }

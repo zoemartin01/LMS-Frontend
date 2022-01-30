@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Domain</h4>
+</div>
+<div class="modal-body">
+
+  <form [formGroup]="domainDeleteForm">
+    <div class="form-group row">
+      <div class="col">
+        <label for="name" class="my-1">Retailer Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        <label for="domain" class="my-1">Domain</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="domain" formControlName="domain">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="deleteDomainOfWhitelistRetailer()">Delete Domain</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>
