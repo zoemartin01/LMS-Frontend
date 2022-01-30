@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { WhitelistRetailerDomainCreateComponent } from './whitelist-retailer-domain-create.component';
 
@@ -8,7 +12,18 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WhitelistRetailerDomainCreateComponent ]
+      declarations: [
+        WhitelistRetailerDomainCreateComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        FormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
+      ],
     })
     .compileComponents();
   });
@@ -16,7 +31,6 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerDomainCreateComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
