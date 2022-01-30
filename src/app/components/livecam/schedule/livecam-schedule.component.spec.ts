@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { LivecamScheduleComponent } from './livecam-schedule.component';
-import { VideoResolution } from 'src/app/types/enums/video-resolution';
-import { Observable } from 'rxjs';
-import { Recording } from 'src/app/types/recording';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LivecamService } from 'src/app/services/livecam.service';
-import { Router } from '@angular/router';
-import * as moment from 'moment';
-import { UserRole } from 'src/app/types/enums/user-role';
-import { User } from 'src/app/types/user';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
+
+import { LivecamScheduleComponent } from './livecam-schedule.component';
+
+import { LivecamService } from 'src/app/services/livecam.service';
+
+import { Recording } from 'src/app/types/recording';
+import { VideoResolution } from 'src/app/types/enums/video-resolution';
+import { User } from 'src/app/types/user';
+import { UserRole } from 'src/app/types/enums/user-role';
 
 class MockLivecamService {
   public scheduleRecording(

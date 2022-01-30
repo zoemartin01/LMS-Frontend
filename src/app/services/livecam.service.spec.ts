@@ -1,14 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import {} from 'jasmine';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 import { LivecamService } from './livecam.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import * as moment from 'moment';
+
 import { VideoResolution } from '../types/enums/video-resolution';
-import { environment } from 'src/environments/environment';
 
 describe('LivecamService', () => {
   let service: LivecamService;

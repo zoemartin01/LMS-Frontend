@@ -1,21 +1,16 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-
-import { Recording } from 'src/app/types/recording';
-import { RecordingId } from 'src/app/types/aliases/recording-id';
-import * as moment from 'moment';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
 
 import { LivecamDeleteComponent } from '../delete/livecam-delete.component';
 import { LivecamScheduleComponent } from '../schedule/livecam-schedule.component';
-import { UserService } from 'src/app/services/user.service';
+
 import { LivecamService } from '../../../services/livecam.service';
+import { UserService } from 'src/app/services/user.service';
+
+import { Recording } from 'src/app/types/recording';
+import { RecordingId } from 'src/app/types/aliases/recording-id';
 
 @Component({
   selector: 'app-livecam-overview',
@@ -33,8 +28,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public scheduledRecordings: Recording[] = [];
   public moment = moment;
 
-  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> =
-    {} as ElementRef;
+  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
 
   /**
    * Constructor

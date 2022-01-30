@@ -62,9 +62,7 @@ export class LivecamDeleteComponent implements OnInit {
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal service providing modal functionalities
    */
-  constructor(
-    public livecamService: LivecamService, public activeModal: NgbActiveModal
-  ) {
+  constructor(public livecamService: LivecamService, public activeModal: NgbActiveModal) {
     this.recordingDeleteForm.disable();
   }
 
