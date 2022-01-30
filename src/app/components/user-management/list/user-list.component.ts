@@ -54,7 +54,6 @@ export class UserListComponent implements OnInit {
       next: res => {
         this.pendingUsers = res.filter((user: User) => user.role == UserRole.pending && user.emailVerification);
         this.acceptedUsers = res.filter((user: User) => user.role != UserRole.pending && user.emailVerification);
-        console.log(res, this.pendingUsers, this.acceptedUsers)
       },
       error: error => {
         console.error('There was an error!', error);

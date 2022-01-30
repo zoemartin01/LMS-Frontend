@@ -62,7 +62,6 @@ export class WhitelistRetailerViewComponent implements OnInit {
   public async getWhitelistRetailerData(): Promise<void> {
     this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
       next: res => {
-        console.log(res);
         this.whitelistRetailer = res;
         this.retailerViewForm.controls['name'].setValue(res.name);
       },
