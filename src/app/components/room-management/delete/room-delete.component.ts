@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-room-delete',
@@ -29,11 +28,6 @@ export class RoomDeleteComponent implements OnInit {
       Validators.min(1),
     ]),
     autoAcceptBookings: new FormControl(false, Validators.required),
-    /*
-    availableTimeslots: new FormControl(''),
-    unavailableTimeslots: new FormControl(''),
-    TODO tabelle
-     */
   });
   public room: Room = {
     id: null,
@@ -49,10 +43,9 @@ export class RoomDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public roomService: RoomService, public activeModal: NgbActiveModal) {
     this.roomDeleteForm.disable();
   }
 
@@ -60,9 +53,7 @@ export class RoomDeleteComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.getRoomData();
-    });
+    this.getRoomData();
   }
 
   /**
@@ -90,9 +81,6 @@ export class RoomDeleteComponent implements OnInit {
         this.roomDeleteForm.controls['description'].setValue(res.description);
         this.roomDeleteForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
         this.roomDeleteForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
-        //this.roomEditForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
-        //this.roomEditForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
-        //TODO in backend this.roomEditForm.controls['appointments'].setValue(res.appointments);
       },
       error: error => {
         console.error('There was an error!', error);

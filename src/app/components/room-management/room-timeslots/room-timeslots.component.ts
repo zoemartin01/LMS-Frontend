@@ -53,7 +53,6 @@ export class RoomTimeslotsComponent implements OnInit {
    */
   public async getRoomData(): Promise<void> {
     //use this.room.id here and set this.room
-
   }
 
   /**

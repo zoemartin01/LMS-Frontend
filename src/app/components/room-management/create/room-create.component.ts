@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-room-create',
@@ -26,11 +26,6 @@ export class RoomCreateComponent {
       Validators.min(1),
     ]),
     autoAcceptBookings: new FormControl(false, Validators.required),
-    /*
-    availableTimeslots: new FormControl(''),
-    unavailableTimeslots: new FormControl(''),
-    TODO tabelle
-     */
   });
 
   /**
@@ -46,16 +41,12 @@ export class RoomCreateComponent {
    * Creates room with data
    */
   public async createRoom(): Promise<void> {
-
     if (this.roomCreateForm.valid) {
       const name = this.roomCreateForm.value.name;
       const description = this.roomCreateForm.value.description;
       const maxConcurrentBookings = this.roomCreateForm.value.maxConcurrentBookings;
       const autoAcceptBookings = this.roomCreateForm.value.autoAcceptBookings;
-      //const availableTimeslots = this.roomCreateForm.value.availableTimeslots;
-      //const unavailableTimeslots = this.roomCreateForm.value.unavailableTimeslots;
       this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings).subscribe({
-        //TODO  , availableTimeslots, unavailableTimeslots
         next: () => {
           this.activeModal.close('created');
         }, error: error => {

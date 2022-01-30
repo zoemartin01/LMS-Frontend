@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { RoomCreateComponent } from "../create/room-create.component";
+import { RoomDeleteComponent } from "../delete/room-delete.component";
+import { RoomEditComponent } from "../edit/room-edit.component";
+import { RoomViewComponent } from "../view/room-view.component";
+
 import { RoomService } from "../../../services/room.service";
+import { UserService } from "../../../services/user.service";
 
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
-import {UserService} from "../../../services/user.service";
-import {RoomViewComponent} from "../view/room-view.component";
-import {RoomEditComponent} from "../edit/room-edit.component";
-import {RoomDeleteComponent} from "../delete/room-delete.component";
-import {RoomCreateComponent} from "../create/room-create.component";
 
 @Component({
   selector: 'app-room-list',

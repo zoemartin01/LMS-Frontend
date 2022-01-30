@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-
 import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { RoomDeleteComponent } from "../delete/room-delete.component";
+import { RoomEditComponent } from "../edit/room-edit.component";
 
 import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RoomEditComponent} from "../edit/room-edit.component";
-import {RoomDeleteComponent} from "../delete/room-delete.component";
 
 @Component({
   selector: 'app-room-view',
@@ -30,11 +30,6 @@ export class RoomViewComponent implements OnInit {
       Validators.min(1),
     ]),
     autoAcceptBookings: new FormControl(false, Validators.required),
-    /*
-    availableTimeslots: new FormControl(''),
-    unavailableTimeslots: new FormControl(''),
-    TODO tabelle
-     */
   });
   public room: Room = {
     id: null,
@@ -52,10 +47,15 @@ export class RoomViewComponent implements OnInit {
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
-   * @param @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public roomService: RoomService, private route: ActivatedRoute,public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(
+    public roomService: RoomService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal
+  ) {
     this.roomViewForm.disable();
   }
 
@@ -63,7 +63,7 @@ export class RoomViewComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-      this.getRoomData();
+    this.getRoomData();
   }
 
   /**
@@ -77,9 +77,6 @@ export class RoomViewComponent implements OnInit {
         this.roomViewForm.controls['description'].setValue(res.description);
         this.roomViewForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
         this.roomViewForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
-        //this.roomViewForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
-        //this.roomViewForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
-        //TODO in backend this.roomViewForm.controls['appointments'].setValue(res.appointments);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -118,6 +115,4 @@ export class RoomViewComponent implements OnInit {
       }
     });
   }
-
-  //TODO calender
 }

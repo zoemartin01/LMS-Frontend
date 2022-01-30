@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
 
 import { Room } from "../../../types/room";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-room-edit',
@@ -28,11 +27,6 @@ export class RoomEditComponent implements OnInit {
       Validators.min(1),
     ]),
     autoAcceptBookings: new FormControl(false, Validators.required),
-    /*
-    availableTimeslots: new FormControl(''),
-    unavailableTimeslots: new FormControl(''),
-    TODO tabelle
-     */
   });
   public room: Room = {
     id: null,
@@ -48,19 +42,16 @@ export class RoomEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public roomService: RoomService, public activeModal: NgbActiveModal) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.getRoomData();
-    });
+    this.getRoomData();
   }
 
   /**
@@ -75,9 +66,6 @@ export class RoomEditComponent implements OnInit {
         this.roomEditForm.controls['description'].setValue(res.description);
         this.roomEditForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
         this.roomEditForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
-        //this.roomEditForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
-        //this.roomEditForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
-        //TODO in backend this.roomEditForm.controls['appointments'].setValue(res.appointments);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -109,13 +97,12 @@ export class RoomEditComponent implements OnInit {
     });
   }
 
-
   /**
    * Gets all values of a form that are marked with a dirty bit
    *
-   * @param form ngForm
+   * @param {FormGroup} form form
    */
-  public getDirtyValues(form: any) {
+  public getDirtyValues(form: FormGroup) {
     let dirtyValues: { [key: string]: any} = {};
 
     Object.keys(form.controls)
@@ -123,8 +110,8 @@ export class RoomEditComponent implements OnInit {
         let currentControl = form.controls[key];
 
         if (currentControl.dirty) {
-          if (currentControl.controls)
-            dirtyValues[key] = this.getDirtyValues(currentControl);
+          if ((<FormGroup>currentControl).controls)
+            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
           else
             dirtyValues[key] = currentControl.value;
         }
