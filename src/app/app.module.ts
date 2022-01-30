@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AutosizeModule } from 'ngx-autosize';
+import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -122,6 +123,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    MarkdownModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
   ],

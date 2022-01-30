@@ -45,7 +45,7 @@ export class AppointmentEditComponent implements OnInit {
       name: '',
       description: '',
       maxConcurrentBookings: 1,
-      automaticRequestAcceptance: null,
+      autoAcceptBookings: null,
       availableTimeslots: [],
       unavailableTimeslots: [],
     },
@@ -54,15 +54,6 @@ export class AppointmentEditComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
-  };
-  public room: Room = {
-    id: null,
-    name: '',
-    description: '',
-    maxConcurrentBookings: 1,
-    automaticRequestAcceptance: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
   public rooms: Room[] = [];
   public appointments: Appointment[] = [];
@@ -94,7 +85,6 @@ export class AppointmentEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.appointment.id = params['id'];
-      this.room.id = params['room_id'];
       this.updateCalendar();
       this.getAppointmentData();
       this.getRooms();
@@ -121,8 +111,8 @@ export class AppointmentEditComponent implements OnInit {
    */
   private async updateCalendar() {
     this.getRoomData().then(() => {
-      this.getAppointmentsForRoom(this.room.id).then(() => {
-        let result = this.roomService.getTimespansAsCalendar(this.room, this.appointments);
+      this.getAppointmentsForRoom(this.appointment.room.id).then(() => {
+        let result = this.roomService.getTimespansAsCalendar(this.appointment.room, this.appointments);
         this.displayTimespans = result.displayTimespans;
         this.minTimeslot = result.minTimeslot;
       });
