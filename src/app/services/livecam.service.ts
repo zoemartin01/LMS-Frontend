@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 
@@ -28,7 +28,7 @@ export class LivecamService {
    *
    * @param {Recording} recording data of the recording to schedule
    */
-  public scheduleRecording(start: moment.Moment, end: moment.Moment, resolution: VideoResolution, bitrate: number): Observable<any> {
+  public scheduleRecording(start: moment.Moment, end: moment.Moment, resolution: VideoResolution, bitrate: number): Observable<Recording> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.createSchedule}`;
     const requestBody = {
       start: start.toISOString(),
@@ -37,7 +37,7 @@ export class LivecamService {
       bitrate: bitrate,
     };
 
-    return this.httpClient.post(apiURL, requestBody);
+    return <Observable<Recording>>this.httpClient.post(apiURL, requestBody);
   }
 
   /**
@@ -45,10 +45,10 @@ export class LivecamService {
    *
    * @param {RecordingId} recordingId id of the recording to delete
    */
-  public deleteRecording(recordingId: RecordingId): Observable<any> {
+  public deleteRecording(recordingId: RecordingId): Observable<{}> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.deleteRecording}`
       .replace(':id', recordingId!);
-    return this.httpClient.delete(apiURL);
+    return <Observable<{}>>this.httpClient.delete(apiURL);
   }
 
   /**
@@ -95,8 +95,8 @@ export class LivecamService {
   /**
    * Gets the live stream feed
    */
-  public getLiveStreamFeed(): Observable<any> {
+  public getLiveStreamFeed(): Observable<{url: string}> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.streamFeed}`;
-    return this.httpClient.get(apiURL);
+    return <Observable<{url: string}>>this.httpClient.get(apiURL);
   }
 }
