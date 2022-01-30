@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
 import { Order } from "../types/order";
 import { OrderId } from "../types/aliases/order-id";
-import {environment} from "../../environments/environment";
-import {ParseArgumentException} from "@angular/cli/models/parser";
-import {OrderStatus} from "../types/enums/order-status";
+import { OrderStatus } from "../types/enums/order-status";
 
 @Injectable({
   providedIn: 'root'
@@ -64,11 +64,13 @@ export class OrderService {
    */
   public requestOrder(itemName: string, quantity: number, url: string): Observable<Order> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.createOrder}`;
+
     const requestBody = {
       itemName: itemName,
       quantity: quantity,
       url: url,
     }
+
     return this.httpClient.post<Order>(apiURL, requestBody);
   }
 
@@ -82,6 +84,7 @@ export class OrderService {
     if (orderId === null) {
       throw ParseArgumentException;
     }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.updateOrder
       .replace(':id', orderId)}`;
 

@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../services/admin.service";
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
-import {ParseArgumentException} from "@angular/cli/models/parser";
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {InventoryItem} from "../../../types/inventory-item";
-import {User} from "../../../types/user";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+
+import { InventoryItem } from "../../../types/inventory-item";
+import { Order } from "../../../types/order";
 
 @Component({
   selector: 'app-order-request',
@@ -49,8 +46,12 @@ export class OrderRequestComponent implements OnInit {
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, public adminService: AdminService, public inventoryService: InventoryService,
-              public activeModal: NgbActiveModal) {
+  constructor(
+    public orderService: OrderService,
+    public adminService: AdminService,
+    public inventoryService: InventoryService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**

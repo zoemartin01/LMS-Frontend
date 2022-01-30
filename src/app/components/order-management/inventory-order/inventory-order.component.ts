@@ -7,9 +7,9 @@ import { OrderService } from "../../../services/order.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-inventory-order',
