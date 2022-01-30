@@ -86,12 +86,19 @@ export class RoomEditComponent implements OnInit {
   }
 
   /**
+   * Toggles state of autoAcceptBookings
+   */
+  public toggleAutoAcceptBookings() {
+    this.roomEditForm.controls['autoAcceptBookings'].setValue(!this.roomEditForm.controls['autoAcceptBookings'].value);
+    this.roomEditForm.controls['autoAcceptBookings'].markAsDirty();
+  }
+
+  /**
    * Changes data of room
    */
   public async editRoomData(): Promise<void> {
     this.roomService.editRoomData(this.room.id,
       this.getDirtyValues(this.roomEditForm)
-      //Todo test if works
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');

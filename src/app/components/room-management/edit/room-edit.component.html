@@ -31,7 +31,7 @@
     <div class="form-group">
       <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" role="switch" id="autoAcceptBookings"
-               [checked]="roomEditForm.controls['autoAcceptBookings'].value">
+               [checked]="roomEditForm.controls['autoAcceptBookings'].value" (change)="toggleAutoAcceptBookings()">
         <label class="form-check-label" for="autoAcceptBookings">Automatic Accept Bookings</label>
       </div>
     </div>
