@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemEditComponent } from './inventory-item-edit.component';
 
@@ -16,8 +17,12 @@ describe('InventoryItemEditComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        ReactiveFormsModule,
         RouterTestingModule,
         FormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     })
     .compileComponents();
