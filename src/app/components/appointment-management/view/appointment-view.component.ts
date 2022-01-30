@@ -40,7 +40,7 @@ export class AppointmentViewComponent implements OnInit {
       name: '',
       description: '',
       maxConcurrentBookings: 1,
-      automaticRequestAcceptance: null,
+      autoAcceptBookings: null,
       availableTimeslots: [],
       unavailableTimeslots: [],
     },

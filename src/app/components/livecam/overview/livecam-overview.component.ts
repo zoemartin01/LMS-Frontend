@@ -28,7 +28,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public scheduledRecordings: Recording[] = [];
   public moment = moment;
 
-  @ViewChild('camera') streamingcanvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
+  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
 
   /**
    * Constructor
@@ -53,9 +53,13 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    new JSMpeg.Player('ws://192.168.0.103:9999', {
-        canvas: this.streamingcanvas.nativeElement
-      })
+    this.livecamService.getLiveStreamFeed().subscribe({
+      next: (data) => {
+        new JSMpeg.Player(data.url, {
+          canvas: this.streaming_canvas.nativeElement,
+        });
+      },
+    });
   }
 
   /**

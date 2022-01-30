@@ -3,19 +3,24 @@
 </div>
 
 <div class="row">
+  <div class="col text-left">
+    <a (click)="openRoomCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create New Room</a>
+  </div>
+</div>
+
+<div class="row">
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
       <th class="col-sm-2">Name</th>
       <th class="col-sm-4">Description</th>
-      <th class="col-sm-2"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let room of rooms">
       <td class="col-sm-2">{{ room.name }}</td>
       <td class="col-sm-4">{{ room.description }}</td>
-      <td class="col-sm-2">
+      <td class="col-sm-1">
         <a (click)="openRoomView(room.id)">
           <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
         </a>
