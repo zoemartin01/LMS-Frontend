@@ -3,6 +3,7 @@
 </div>
 
 <br>
+
 <div class="row justify-content-center">
   <div class="card col-md-3">
     <div class="col-auto card-body">
@@ -30,7 +31,7 @@
             <button type="button" class="btn btn-primary" [disabled]="!globalSettingsForm.valid"
                     (click)="editGlobalSettings()">Submit
             </button>
-            <button type="button" class="btn btn-secondary" (click)="getGlobalSettings()">Abort</button>
+            <button type="button" class="btn btn-secondary" (click)="getGlobalSettings()">Reset</button>
           </div>
         </div>
       </form>
@@ -42,8 +43,9 @@
   <h2 class="display-5">Whitelist Retailers</h2>
   <div class="row">
     <div class="col text-left">
-      <a (click)="openWhitelistRetailerCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i>
-        Create Retailer</a>
+      <a (click)="openWhitelistRetailerCreationForm()" class="btn btn-primary" role="button">
+        <i class="bi-plus-lg"></i> Create Retailer
+      </a>
     </div>
   </div>
   <table class="table table-striped">

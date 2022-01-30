@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
-import {AdminService} from "../../../../services/admin.service";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 @Component({
   selector: 'app-domain-create',
   templateUrl: './whitelist-retailer-domain-create.component.html',
   styleUrls: ['./whitelist-retailer-domain-create.component.scss']
 })
+
 /**
  * Component for creating a domain of a whitelist retailer
  */
@@ -19,7 +22,6 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
       Validators.required,
     ]),
   });
-
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
@@ -68,8 +70,11 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
         this.activeModal.close(this.domainCreateForm.value.domain);
         return;
       }
-
-      this.adminService.addDomainToWhitelistRetailer(this.whitelistRetailer.id, this.domainCreateForm.value.domain).subscribe({
+      //@todo Mario: fix edit (throws 404)
+      this.adminService.addDomainToWhitelistRetailer(
+        this.whitelistRetailer.id,
+        this.domainCreateForm.value.domain
+      ).subscribe({
         next: (domain: WhitelistRetailerDomain) => {
           if (domain.id !== null) {
             this.activeModal.close(`created ${domain.id}`);

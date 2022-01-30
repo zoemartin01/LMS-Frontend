@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Create Domain</h4>
+  <h4 class="modal-title">Add Domain</h4>
 </div>
 <div class="modal-body">
   <form [formGroup]="domainCreateForm">
@@ -7,15 +7,14 @@
       <div class="col">
         <label for="domain" class="my-1">Domain</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="domain"
-                 formControlName="domain">
+          <input type="text" class="form-control" id="domain" formControlName="domain">
         </div>
       </div>
     </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" [disabled]="!domainCreateForm.valid"
+  <button type="button" class="btn btn-primary" [disabled]="!domainCreateForm.valid"
           (click)="addDomainToWhitelistRetailer()">Save
   </button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>

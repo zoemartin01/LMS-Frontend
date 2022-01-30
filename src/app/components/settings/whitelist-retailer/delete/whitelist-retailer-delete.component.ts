@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { AdminService } from "../../../../services/admin.service";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-delete',
@@ -19,7 +21,6 @@ export class WhitelistRetailerDeleteComponent implements OnInit {
   public retailerDeleteForm: FormGroup = new FormGroup({
     name: new FormControl(''),
   });
-
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',

@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
 import { AdminService } from "../../../services/admin.service";
 
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
-import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
-import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
-import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
 
 @Component({
   selector: 'app-global-settings',
@@ -72,7 +73,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.globalSettingsForm.controls['recording.auto_delete'].setValue(
       (
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
-      ) // /86400000
+      ) / 86400000
     );
   }
 

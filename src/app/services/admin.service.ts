@@ -140,7 +140,7 @@ export class AdminService {
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.createWhitelistRetailer}`;
 
-    return this.httpClient.post<WhitelistRetailer>(apiURL, {domains, name});
+    return this.httpClient.post<WhitelistRetailer>(apiURL, { domains, name });
   }
 
   /**
@@ -194,7 +194,7 @@ export class AdminService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.addDomainToWhitelistRetailer
       .replace(':id', whitelistRetailerId)}`;
 
-    return this.httpClient.post<WhitelistRetailerDomain>(apiURL, {domain: whitelistRetailerDomain});
+    return this.httpClient.post<WhitelistRetailerDomain>(apiURL, { domain: whitelistRetailerDomain });
   }
 
   /**

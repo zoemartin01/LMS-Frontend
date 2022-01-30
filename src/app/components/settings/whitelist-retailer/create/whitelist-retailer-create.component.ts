@@ -1,12 +1,14 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {AdminService} from "../../../../services/admin.service";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {WhitelistRetailerDomainDeleteComponent} from "../domain-delete/whitelist-retailer-domain-delete.component";
-import {WhitelistRetailerDomainCreateComponent} from "../domain-create/whitelist-retailer-domain-create.component";
-import {WhitelistRetailerDomainEditComponent} from "../domain-edit/whitelist-retailer-domain-edit.component";
+import { WhitelistRetailerDomainCreateComponent } from "../domain-create/whitelist-retailer-domain-create.component";
+import { WhitelistRetailerDomainDeleteComponent } from "../domain-delete/whitelist-retailer-domain-delete.component";
+import { WhitelistRetailerDomainEditComponent } from "../domain-edit/whitelist-retailer-domain-edit.component";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-whitelist-retailer-create',
@@ -30,7 +32,6 @@ export class WhitelistRetailerCreateComponent {
       Validators.required,
     ]),
   });
-
   public domains: string[] = [];
   public dirty: boolean = false;
 
@@ -48,6 +49,7 @@ export class WhitelistRetailerCreateComponent {
    * Creates whitelist retailer
    */
   public async createWhitelistRetailer(): Promise<void> {
+    //@todo Mario: adding domains fails
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
       next: () => {
         this.activeModal.close('created');
@@ -63,7 +65,6 @@ export class WhitelistRetailerCreateComponent {
    */
   openWhitelistRetailerDomainCreationForm() {
     const modal = this.modalService.open(WhitelistRetailerDomainCreateComponent);
-
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.domains.push(result);
@@ -79,7 +80,6 @@ export class WhitelistRetailerCreateComponent {
   openWhitelistRetailerDomainEditForm(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainEditComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;
-
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.domains[this.domains.indexOf(whitelistRetailerDomain, 0)] = result;
@@ -95,7 +95,6 @@ export class WhitelistRetailerCreateComponent {
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;
-
     modal.result.then((result) => {
       if (result !== 'aborted') {
         const index = this.domains.indexOf(whitelistRetailerDomain, 0);

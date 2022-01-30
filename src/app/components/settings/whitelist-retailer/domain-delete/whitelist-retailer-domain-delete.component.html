@@ -6,10 +6,13 @@
   <form [formGroup]="domainDeleteForm">
     <div class="form-group row">
       <div class="col">
+        <label for="name" class="my-1">Retailer Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
         <label for="domain" class="my-1">Domain</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="domain"
-                 formControlName="domain">
+          <input type="text" class="form-control" id="domain" formControlName="domain">
         </div>
       </div>
     </div>

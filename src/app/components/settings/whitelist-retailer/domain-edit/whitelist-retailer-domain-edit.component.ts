@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
-import {AdminService} from "../../../../services/admin.service";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 @Component({
   selector: 'app-domain-edit',
   templateUrl: './whitelist-retailer-domain-edit.component.html',
   styleUrls: ['./whitelist-retailer-domain-edit.component.scss']
 })
+
 /**
  * Component for editing of a whitelist retailer domain
  */
@@ -19,18 +22,15 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       Validators.required,
     ]),
   });
-
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
     domains: [],
   }
-
   public whitelistRetailerDomain: WhitelistRetailerDomain = {
     id: null,
     domain: '',
   }
-
   public domain : string = '';
 
   /**
@@ -77,7 +77,11 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       this.activeModal.close(this.domainEditForm.controls['domain'].value);
       return;
     }
-    this.adminService.editDomainOfWhitelistRetailer(this.whitelistRetailer.id, this.whitelistRetailerDomain.id, {
+    //@todo Mario: fix edit (throws 404)
+    this.adminService.editDomainOfWhitelistRetailer(
+      this.whitelistRetailer.id,
+      this.whitelistRetailerDomain.id,
+      {
         domain: this.domainEditForm.controls['domain'].value
       }
     ).subscribe({

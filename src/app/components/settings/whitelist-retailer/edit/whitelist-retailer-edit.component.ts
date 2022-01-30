@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerDomainCreateComponent } from "../domain-create/whitelist-retailer-domain-create.component";
+import { WhitelistRetailerDomainDeleteComponent } from "../domain-delete/whitelist-retailer-domain-delete.component";
+import { WhitelistRetailerDomainEditComponent } from "../domain-edit/whitelist-retailer-domain-edit.component";
 
 import { AdminService } from "../../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {WhitelistRetailerDomainEditComponent} from "../domain-edit/whitelist-retailer-domain-edit.component";
-import {WhitelistRetailerDomainDeleteComponent} from "../domain-delete/whitelist-retailer-domain-delete.component";
-import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
-import {WhitelistRetailerDomainCreateComponent} from "../domain-create/whitelist-retailer-domain-create.component";
+import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
 
 @Component({
   selector: 'app-edit',
@@ -28,8 +29,6 @@ export class WhitelistRetailerEditComponent implements OnInit {
       Validators.required,
     ]),
   });
-
-
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
@@ -45,14 +44,19 @@ export class WhitelistRetailerEditComponent implements OnInit {
    * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-      this.getWhitelistRetailerData();
+    this.getWhitelistRetailerData();
   }
 
   /**

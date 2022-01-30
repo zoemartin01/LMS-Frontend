@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {AdminService} from "../../../../services/admin.service";
+import { WhitelistRetailerDeleteComponent } from "../delete/whitelist-retailer-delete.component";
+import { WhitelistRetailerEditComponent } from "../edit/whitelist-retailer-edit.component";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {WhitelistRetailerEditComponent} from "../edit/whitelist-retailer-edit.component";
-import {WhitelistRetailerDeleteComponent} from "../delete/whitelist-retailer-delete.component";
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 @Component({
   selector: 'app-view',
@@ -24,8 +25,6 @@ export class WhitelistRetailerViewComponent implements OnInit {
   public retailerViewForm: FormGroup = new FormGroup({
     name: new FormControl(''),
   });
-
-
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
@@ -41,7 +40,12 @@ export class WhitelistRetailerViewComponent implements OnInit {
    * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal
+  ) {
     this.retailerViewForm.disable();
   }
 
@@ -58,6 +62,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
   public async getWhitelistRetailerData(): Promise<void> {
     this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
       next: res => {
+        console.log(res);
         this.whitelistRetailer = res;
         this.retailerViewForm.controls['name'].setValue(res.name);
       },
