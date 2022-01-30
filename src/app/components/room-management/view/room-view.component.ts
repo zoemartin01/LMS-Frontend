@@ -76,7 +76,7 @@ export class RoomViewComponent implements OnInit {
         this.roomViewForm.controls['name'].setValue(res.name);
         this.roomViewForm.controls['description'].setValue(res.description);
         this.roomViewForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
-        this.roomViewForm.controls['autoAcceptBookings'].setValue(true);
+        this.roomViewForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
         //this.roomViewForm.controls['availableTimeslots'].setValue(res.availableTimeslots);
         //this.roomViewForm.controls['unavailableTimeslots'].setValue(res.unavailableTimeslots);
         //TODO in backend this.roomViewForm.controls['appointments'].setValue(res.appointments);
