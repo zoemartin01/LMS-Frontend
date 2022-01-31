@@ -21,7 +21,7 @@ import { Order } from "../../../types/order";
  *
  */
 export class OrderRequestComponent implements OnInit {
-  public existingItems: InventoryItem[] = []
+  public existingItems: InventoryItem[] = [];
   public requestOrderForm: FormGroup = new FormGroup({
     itemName: new FormControl('', [
       Validators.required,

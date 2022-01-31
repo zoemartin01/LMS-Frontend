@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, NgForm} from "@angular/forms";
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { UserRole } from "../../../types/enums/user-role";
+import {Order} from "../../../types/order";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UserRole} from "../../../types/enums/user-role";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {InventoryService} from "../../../services/inventory.service";
+import {InventoryItem} from "../../../types/inventory-item";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-edit',
@@ -21,6 +24,15 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class OrderEditComponent implements OnInit {
+  public existingItems: InventoryItem[] = [];
+
+  public orderEditForm: FormGroup = new FormGroup({
+    itemName: new FormControl(''),
+    quantity: new FormControl(null),
+    url: new FormControl(''),
+    status: new FormControl(0),
+  });
+
   public order: Order = {
     id: null,
     itemName: null,
@@ -44,18 +56,42 @@ export class OrderEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
-   * @param {ActivatedRoute} route route that activated this component
+   * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, private route: ActivatedRoute) {
+  constructor(public orderService: OrderService,
+              public inventoryService: InventoryService,
+              public authService: AuthService,
+              public activeModal: NgbActiveModal) {
+    if (!(this.authService.isAdmin())) {
+      this.orderEditForm.controls['status'].disable();
+    }
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.order.id = params['id'];
-      this.getOrderData();
+    this.getOrderData();
+    if (!this.authService.isAdmin() && this.order.status !== OrderStatus.pending) {
+      this.orderEditForm.disable();
+    } else {
+      this.getAllInventoryItems();
+    }
+  }
+
+  /**
+   * Gets all inventory items
+   */
+  public async getAllInventoryItems(): Promise<void> {
+    this.inventoryService.getInventoryItems().subscribe({
+      next: res => {
+        this.existingItems = res;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      }
     });
   }
 
@@ -63,6 +99,26 @@ export class OrderEditComponent implements OnInit {
    * Gets all data of order
    */
   public async getOrderData(): Promise<void> {
+    this.orderService.getOrderData(this.order.id).subscribe({
+      next: res => {
+        this.updateOrderEditForm(res);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  private updateOrderEditForm(order: Order) {
+    this.order = order;
+    if (order.item !== null) {
+      this.orderEditForm.controls['itemName'].setValue(order.item.name);
+    } else {
+      this.orderEditForm.controls['itemName'].setValue(order.itemName);
+    }
+    this.orderEditForm.controls['quantity'].setValue(order.quantity);
+    this.orderEditForm.controls['url'].setValue(order.url);
+    this.orderEditForm.controls['status'].setValue(order.status);
   }
 
   /**
@@ -70,6 +126,19 @@ export class OrderEditComponent implements OnInit {
    *
    * @param {NgForm} orderEditForm submitted edit form
    */
-  public async editOrder(orderEditForm: NgForm): Promise<void> {
+  public async editOrder(): Promise<void> {
+    this.orderService.updateOrderData(this.order.id, {
+      itemName: this.orderEditForm.controls['itemName'].value,
+      quantity: this.orderEditForm.controls['quantity'].value,
+      url: this.orderEditForm.controls['url'].value,
+      orderStatus: this.orderEditForm.controls['orderStatus'].value,
+    }).subscribe({
+      next: () => {
+        this.activeModal.close('edited');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }
