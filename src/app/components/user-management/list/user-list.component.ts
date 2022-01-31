@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AdminService } from "../../../services/admin.service";
-import { UserService } from "../../../services/user.service";
+import {AdminService} from "../../../services/admin.service";
+import {UserService} from "../../../services/user.service";
 
-import { UserAcceptComponent } from "../accept/user-accept.component";
-import { UserDeclineComponent } from "../decline/user-decline.component";
-import { UserDeleteComponent } from "../delete/user-delete.component";
-import { UserEditComponent } from "../edit/user-edit.component";
-import { UserViewComponent } from "../view/user-view.component";
+import {UserAcceptComponent} from "../accept/user-accept.component";
+import {UserDeclineComponent} from "../decline/user-decline.component";
+import {UserDeleteComponent} from "../delete/user-delete.component";
+import {UserEditComponent} from "../edit/user-edit.component";
+import {UserViewComponent} from "../view/user-view.component";
 
-import { User } from "../../../types/user";
-import { UserId } from "../../../types/aliases/user-id";
-import { UserRole } from "../../../types/enums/user-role";
+import {User} from "../../../types/user";
+import {UserId} from "../../../types/aliases/user-id";
+import {UserRole} from "../../../types/enums/user-role";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-user-list',
@@ -34,9 +35,10 @@ export class UserListComponent implements OnInit {
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {UserService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public userService: UserService, private modalService: NgbModal) {
+  constructor(public userService: UserService, public adminService: AdminService, public authService: AuthService, private modalService: NgbModal) {
   }
 
   /**
@@ -60,6 +62,18 @@ export class UserListComponent implements OnInit {
       }
     });
   }
+  // :(((((((
+/*  public async isCurrentUser(userId: UserId): Promise<boolean> {
+    console.log("hey");
+    console.log(userId);
+    console.log(this.authService.getUserId());
+
+    if (this.authService.getUserId() == userId) {
+      console.log("yey");
+      return true;
+    }
+    return false;
+  }*/
 
   /**
    * Opens user accept confirmation dialog

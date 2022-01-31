@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
-import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
-import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
-import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
+import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { GlobalSetting } from "../../../types/global-setting";
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import {GlobalSetting} from "../../../types/global-setting";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
 
 @Component({
   selector: 'app-global-settings',
@@ -28,11 +28,15 @@ export class GlobalSettingsComponent implements OnInit {
   public whitelistRetailers: WhitelistRetailer[] = [];
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
+    "static.homepage": new FormControl(''),
+    "static.safety_instructions": new FormControl(''),
+    "static.lab_rules": new FormControl(''),
+
   });
 
   /**
@@ -115,7 +119,7 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-   /**
+  /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
@@ -171,4 +175,19 @@ export class GlobalSettingsComponent implements OnInit {
       }
     });
   }
+
+  fileName = '';
+ // private fs = require('fs');
+  onFileSelected(event: any) {
+    console.log("yeey");
+
+    const file: File = event.target.files[0];
+    console.log(file.name);
+    console.log(file);
+    /* this.fs.readFile(file.name, function (err: any, data: any) {
+
+       console.log("Asynchronous read: " + data.toString());
+     }); */
+  }
 }
+
