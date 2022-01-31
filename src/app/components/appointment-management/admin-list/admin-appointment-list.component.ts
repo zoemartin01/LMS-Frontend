@@ -8,6 +8,12 @@ import { UserService } from "../../../services/user.service";
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import {AppointmentViewComponent} from "../view/appointment-view.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserEditComponent} from "../../user-management/edit/user-edit.component";
+import {AppointmentEditComponent} from "../edit/appointment-edit.component";
+import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
+import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -32,11 +38,12 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {AuthService} authService service providing authentication functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public appointmentService: AppointmentService,
     public authService: AuthService,
-    public userService: UserService) {
+    public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -83,6 +90,13 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentView(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentViewComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
@@ -91,6 +105,13 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentEditComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
@@ -99,6 +120,13 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**

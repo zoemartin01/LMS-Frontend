@@ -6,6 +6,9 @@ import { AppointmentService } from "../../../services/appointment.service";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
+import {AppointmentViewComponent} from "../view/appointment-view.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -26,8 +29,9 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public appointmentService: AppointmentService, public authService: AuthService) {
+  constructor(public appointmentService: AppointmentService, public authService: AuthService, private modalService: NgbModal) {
   }
 
   /**
@@ -67,6 +71,13 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentView(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentViewComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
@@ -75,5 +86,18 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
+  }
+
+  private getAppointments() {
+    //TODO implement
+    //private or public
+    //needed for view, delete
   }
 }
