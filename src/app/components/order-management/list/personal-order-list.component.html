@@ -1,1 +1,100 @@
-<p>personal-order-list works!</p>
+<div class="row">
+  <h1 class="display-3 text-center">Orders</h1>
+</div>
+
+<div class="row">
+  <div class="col text-left">
+    <a (click)="openOrderCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Request Order</a>
+  </div>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Pending Order Requests</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Item</th>
+      <th class="col-sm-2">Quantity</th>
+      <th class="col-sm-2">Purchase Url</th>
+      <th class="col-sm-2">User Name</th>
+      <th class="col-sm-2"></th>
+      <th class="col-sm-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let pendingOrder of pendingOrders">
+      <td class="col-sm-2">{{ getItemName(pendingOrder) }}</td>
+      <td class="col-sm-2">{{ pendingOrder.quantity}}</td>
+      <td class="col-sm-2">{{ pendingOrder.url}}</td>
+      <td class="col-sm-2">{{ userService.getFullName(pendingOrder.user)}}</td>
+      <td class="col-sm-2"></td>
+      <td class="col-sm-2">
+        <a (click)="openOrderView(pendingOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
+        <a (click)="openOrderEditForm(pendingOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+        <a (click)="openOrderDeletionDialog(pendingOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Accepted Orders</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Item</th>
+      <th class="col-sm-2">Quantity</th>
+      <th class="col-sm-2">Purchase Url</th>
+      <th class="col-sm-2">User Name</th>
+      <th class="col-sm-2">Order Status</th>
+      <th class="col-sm-2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let acceptedOrder of acceptedOrders">
+      <td class="col-sm-2">{{ getItemName(acceptedOrder) }}</td>
+      <td class="col-sm-2">{{ acceptedOrder.quantity}}</td>
+      <td class="col-sm-2">{{ acceptedOrder.url}}</td>
+      <td class="col-sm-2">{{ userService.getFullName(acceptedOrder.user)}}</td>
+      <td class="col-sm-2">{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
+      <td class="col-sm-2">
+        <a (click)="openOrderView(acceptedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
+        <a *ngIf="this.authService.isAdmin()" (click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+        <a *ngIf="this.authService.isAdmin()" (click)="openOrderDeletionDialog(acceptedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Declined Orders</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th class="col-sm-2">Item</th>
+      <th class="col-sm-2">Quantity</th>
+      <th class="col-sm-2">Purchase Url</th>
+      <th class="col-sm-2">User Name</th>
+      <th class="col-sm-2">Order Status</th>
+      <th class="col-sm-2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let declinedOrder of declinedOrders">
+      <td class="col-sm-2">{{ getItemName(declinedOrder) }}</td>
+      <td class="col-sm-2">{{ declinedOrder.quantity}}</td>
+      <td class="col-sm-2">{{ declinedOrder.url}}</td>
+      <td class="col-sm-2">{{ userService.getFullName(declinedOrder.user)}}</td>
+      <td class="col-sm-2">
+      <td class="col-sm-2">
+        <a (click)="openOrderView(declinedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
+        <a *ngIf="this.authService.isAdmin()" (click)="openOrderDeletionDialog(declinedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
