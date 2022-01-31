@@ -9,6 +9,7 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 import {AppointmentViewComponent} from "../view/appointment-view.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
+import {AppointmentCreateComponent} from "../create/appointment-create.component";
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -63,6 +64,12 @@ export class PersonalAppointmentListComponent implements OnInit {
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+    const modal = this.modalService.open(AppointmentCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**

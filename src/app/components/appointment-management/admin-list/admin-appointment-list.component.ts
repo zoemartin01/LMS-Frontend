@@ -14,6 +14,8 @@ import {UserEditComponent} from "../../user-management/edit/user-edit.component"
 import {AppointmentEditComponent} from "../edit/appointment-edit.component";
 import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
 import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
+import {RoomCreateComponent} from "../../room-management/create/room-create.component";
+import {AppointmentCreateComponent} from "../create/appointment-create.component";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -82,6 +84,12 @@ export class AdminAppointmentListComponent implements OnInit {
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+    const modal = this.modalService.open(AppointmentCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
