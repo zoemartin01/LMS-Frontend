@@ -67,7 +67,7 @@ export class PersonalAppointmentListComponent implements OnInit {
     const modal = this.modalService.open(AppointmentCreateComponent);
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getAppointments();
+        this.getAllAppointmentsForCurrentUser();
       }
     });
   }
@@ -82,7 +82,7 @@ export class PersonalAppointmentListComponent implements OnInit {
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getAppointments();
+        this.getAllAppointmentsForCurrentUser();
       }
     });
   }
@@ -97,14 +97,8 @@ export class PersonalAppointmentListComponent implements OnInit {
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getAppointments();
+        this.getAllAppointmentsForCurrentUser();
       }
     });
-  }
-
-  private getAppointments() {
-    //TODO implement
-    //private or public
-    //needed for view, delete
   }
 }

@@ -113,6 +113,6 @@
     <app-appointment-edit *ngIf="action === 'edit'" [appointmentId]="currentAppointmentId"
                           (updateCalendar)="updateCalendar()"></app-appointment-edit>
     <app-appointment-create *ngIf="action === 'create'" (updateCalendar)="updateCalendar()"
-                            [start]="appointmentCreationStart"></app-appointment-create>
+                            [start]="appointmentCreationStart" [room]="room"></app-appointment-create>
   </div>
 </div>

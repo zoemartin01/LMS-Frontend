@@ -9,6 +9,8 @@ import { TimespanId } from "../types/aliases/timespan-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
+import {Room} from "../types/room";
+import {Moment} from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -93,26 +95,40 @@ export class AppointmentService {
   /**
    * Creates a new appointment request
    *
-   * @param {Appointment} appointment all data about the requested appointment
+   * @param room room of the appointment to take place in
+   * @param confirmationStatus default pending
+   * @param start start of the appointment
+   * @param end end of the appointment
    */
-  public createAppointment(appointment: Appointment): Observable<Appointment> {
+  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment,): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
-
-    return this.httpClient.post<Appointment>(apiURL, appointment);
+    const requestBody = {
+      room: room,
+      confirmationStatus: confirmationStatus,
+      start: start,
+      end: end,
+    };
+    return this.httpClient.post<Appointment>(apiURL, requestBody);
   }
 
   /**
    * Creates a new appointment request for a series of appointments
    *
-   * @param {Appointment} appointment the starting appointment of the series
+   * @param room room of the appointment to take place in
+   * @param confirmationStatus default pending
+   * @param start start of the appointment
+   * @param end end of the appointment
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(appointment: Appointment, difference: number, amount: number)
+  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, difference: number, amount: number)
     : Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
-      appointment: appointment,
+      room: room,
+      confirmationStatus: confirmationStatus,
+      start: start,
+      end: end,
       difference: difference,
       amount: amount
     };
