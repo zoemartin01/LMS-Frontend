@@ -34,6 +34,10 @@
         </div>
         <br>
         <div class="row">
+          <div class="col text-left">
+            <a (click)="openUserDeletionDialog()"
+               class=" btn btn-danger" role="button"> Delete Account</a>
+          </div>
           <div class="col text-center">
             <button type="button" class="btn btn-primary" [disabled]="!userSettingsForm.valid"
                     (click)="editUserSettings()">Submit
@@ -45,3 +49,4 @@
     </div>
   </div>
 </div>
+

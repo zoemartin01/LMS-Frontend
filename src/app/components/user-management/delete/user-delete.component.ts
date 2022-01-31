@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { User } from "../../../types/user";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {User} from "../../../types/user";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-delete',
@@ -42,9 +43,10 @@ export class UserDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UserService} userService service providing user functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public userService : UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
     this.userDeleteForm.disable();
   }
 
@@ -59,27 +61,40 @@ export class UserDeleteComponent implements OnInit {
    * Gets user data
    */
   public async getUserData(): Promise<void> {
-    this.adminService.getUser(this.user.id).subscribe({
-      next: res => {
-        this.user = res;
+    if (this.user.id != null) {
+      this.adminService.getUser(this.user.id).subscribe({
+        next: res => {
+          this.user = res;
 
-        this.userDeleteForm.controls['firstName'].setValue(res.firstName);
-        this.userDeleteForm.controls['lastName'].setValue(res.lastName);
-        this.userDeleteForm.controls['email'].setValue(res.email);
-        this.userDeleteForm.controls['role'].setValue(res.role);
-        this.userDeleteForm.controls['notificationChannel'].setValue(res.notificationChannel);
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+          this.userDeleteForm.controls['firstName'].setValue(res.firstName);
+          this.userDeleteForm.controls['lastName'].setValue(res.lastName);
+          this.userDeleteForm.controls['email'].setValue(res.email);
+          this.userDeleteForm.controls['role'].setValue(res.role);
+          this.userDeleteForm.controls['notificationChannel'].setValue(res.notificationChannel);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
+    }
   }
 
   /**
    * Deletes user
    */
   public async deleteUser(): Promise<void> {
-    this.adminService.deleteUser(this.user.id).subscribe({
+    if (this.user.id != null) {
+      this.adminService.deleteUser(this.user.id).subscribe({
+        next: () => {
+          this.activeModal.close('deleted');
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
+      return;
+    }
+    this.userService.deleteUser().subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },

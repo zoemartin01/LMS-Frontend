@@ -6,7 +6,8 @@ import {User} from "../../../types/user";
 import {UserRole} from "../../../types/enums/user-role";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
 
 @Component({
   selector: 'app-user-settings',
@@ -44,8 +45,9 @@ export class UserSettingsComponent implements OnInit {
    * @constructor
    * @param {UserService} userService service providing user functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public userService: UserService, public activeModal: NgbActiveModal) {
+  constructor(public userService: UserService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
   /**
@@ -76,6 +78,12 @@ export class UserSettingsComponent implements OnInit {
    * Opens user deletion confirmation dialog
    */
   public openUserDeletionDialog(): void {
+    const modal = this.modalService.open(UserDeleteComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getUserData();
+      }
+    });
   }
 
   /**
