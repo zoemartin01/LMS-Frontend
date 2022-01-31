@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
-import {AuthService} from "../../../services/auth.service";
-import {AppointmentService} from "../../../services/appointment.service";
-import {RoomService} from "../../../services/room.service";
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
-import {Appointment} from "../../../types/appointment";
-import {Room} from "../../../types/room";
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {FormControl, FormGroup} from "@angular/forms";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+import { AppointmentService } from "../../../services/appointment.service";
+import { AuthService } from "../../../services/auth.service";
+import { RoomService } from "../../../services/room.service";
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -23,9 +24,6 @@ import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
  * Component for the room calendar view page, to view all appointments and thus free slots of one room
  */
 export class RoomCalendarViewComponent implements OnInit {
-  public roomSelectForm: FormGroup = new FormGroup({
-    roomSelector: new FormControl(''),
-  });
   public room: Room = {
     id: null,
     name: '',
@@ -36,12 +34,13 @@ export class RoomCalendarViewComponent implements OnInit {
     unavailableTimeslots: [],
   };
   public rooms: Room[] = [];
-  public appointments: Appointment[] = [];
   public calendar: (Appointment|string|null)[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(1).keys());
   public week: moment.Moment = moment();
   public action: string = '';
+  public currentAppointmentId: string = '';
+  public appointmentCreationStart: moment.Moment|null = null;
   public weekText: string = '';
   public weekField: NgbDateStruct = new class implements NgbDateStruct {
     day = 1;
@@ -56,12 +55,14 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public appointmentService: AppointmentService,
     public authService: AuthService,
     public roomService: RoomService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private modalService: NgbModal) {
   }
 
   /**
@@ -79,8 +80,13 @@ export class RoomCalendarViewComponent implements OnInit {
     this.setWeek(moment());
   }
 
+  /**
+   *
+   * @param date
+   */
   public setWeek(date: moment.Moment) {
-    this.week = moment(date.subtract((date.day() + 6) % 7, 'days'));
+    this.week = moment(date.subtract((date.day() + 6) % 7, 'days').minutes(0).seconds(0)
+      .milliseconds(0));
 
     this.weekText = `${this.week.format("DD.MM.YYYY")} - ${moment(this.week).add(6, 'days')
       .format("DD.MM.YYYY")}`;
@@ -92,6 +98,9 @@ export class RoomCalendarViewComponent implements OnInit {
     this.updateCalendar();
   }
 
+  /**
+   *
+   */
   public handleDatepickerChange() {
     this.setWeek(moment(`${this.weekField.year}-${this.weekField.month}-${this.weekField.day}`));
   }
@@ -100,7 +109,7 @@ export class RoomCalendarViewComponent implements OnInit {
    * Updates array to display appointments using the appointment
    * @private
    */
-  private async updateCalendar() {
+  public async updateCalendar() {
     if (this.room.id) {
       this.roomService.getRoomCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
         next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
@@ -136,32 +145,62 @@ export class RoomCalendarViewComponent implements OnInit {
     this.updateCalendar();
   }
 
+  /**
+   * Checks if object is an appointment
+   *
+   * @param {Appointment|string|null} object object
+   */
   public isAppointment(object: Appointment|string|null): boolean {
     return !(object === null || typeof object === 'string');
   }
 
+  /**
+   * Checks if appointment was confirmed
+   *
+   * @param {Appointment|string|null} object appointment
+   */
   public isConfirmed(object: Appointment|string|null): boolean {
     return (<Appointment>object).confirmationStatus === ConfirmationStatus.accepted;
   }
 
+  /**
+   * Returns object typed as appointment
+   *
+   * @param {Appointment|string|null} object appointment
+   */
   public parseAppointment(object: Appointment|string|null): Appointment {
     return <Appointment>object;
   }
 
+  /**
+   * Returns id of specified appointment
+   *
+   * @param {Appointment|string|null} object appointment
+   */
   public getAppointmentId(object: Appointment|string|null): TimespanId {
     return (<Appointment>object).id;
   }
 
+  /**
+   * Returns row span for specified appointment
+   *
+   * @param {Appointment|string|null} object appointment
+   */
   public getRowspan(object: Appointment|string|null): number {
     const appointment = <Appointment>object;
     return moment(appointment.end).diff(moment(appointment.start), 'hours') + 1;
   }
 
   /**
-   * Opens appointment creation form
+   * Opens appointment creation form with provided data
+   *
+   * @param {number} day day of week
+   * @param {number} slot slot in the calendar
    */
-  public openAppointmentCreationForm(): void {
+  public openAppointmentCreationForm(day: number, slot: number): void {
     this.action = 'create';
+    this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
+      .hours(slot + this.minTimeslot));
   }
 
   /**
@@ -171,6 +210,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public openAppointmentView(appointmentId: TimespanId): void {
     this.action = 'view';
+    this.currentAppointmentId = <string>appointmentId;
   }
 
   /**
@@ -180,6 +220,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
     this.action = 'edit';
+    this.currentAppointmentId = <string>appointmentId;
   }
 
   /**
@@ -188,6 +229,15 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+    this.action = '';
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.updateCalendar();
+      }
+    });
+
   }
 
   /**
@@ -196,6 +246,14 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
+    this.action = '';
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.updateCalendar();
+      }
+    });
   }
 
   /**
@@ -204,5 +262,13 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
+    this.action = '';
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.updateCalendar();
+      }
+    });
   }
 }

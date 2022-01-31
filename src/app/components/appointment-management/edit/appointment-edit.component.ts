@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
@@ -24,6 +24,8 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class AppointmentEditComponent implements OnInit {
+  @Input() appointmentId: string = '';
+  @Output() updateCalendar = new EventEmitter<void>();
   public appointmentEditForm: FormGroup = new FormGroup({
 
   });
@@ -91,5 +93,7 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of appointment
    */
   public async editAppointment(): Promise<void> {
+
+    this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 }
