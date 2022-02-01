@@ -1,31 +1,21 @@
-<div class="row">
-  <h1 class="display-3 text-center">Room Overview</h1>
-</div>
-
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/appointments">My Appointments</a>
-  </li>
-  <li class="nav-item" *ngIf="authService.isAdmin()">
-    <a class="nav-link" routerLink="/appointments/all">All Appointments</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page">Room Overview</a>
-  </li>
-</ul>
-
-<form class="form-inline col-sm-11 mx-auto py-3">
-  <div class="form-group">
-    <div class="input-group justify-content-center">
-      <div class="col-sm-5 form-group">
-        <div class="input-group">
-          <select class="form-select">
-            <option disabled>Select Room</option>
-            <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms"
-                    [selected]="oneRoom.id === appointment.room.id">
-              {{ oneRoom.name }}
-            </option>
-          </select>
+<div class="row justify-content-center">
+  <div class="card">
+    <div class="col-auto card-body">
+      <form (keyup.enter)="editAppointment()" [formGroup]="appointmentEditForm" (ngSubmit)="editAppointment()">
+        <div class="form-group">
+          <label for="email" class="my-1">E-Mail Address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+            </div>
+            <input type="email" class="form-control" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
+                   id="email" formControlName="email" autocomplete="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="my-1">Password</label>
+          <input type="password" class="form-control" placeholder="Password" id="password"
+                 formControlName="password">
         </div>
       </div>
       <div class="col-sm-1 form-group">
