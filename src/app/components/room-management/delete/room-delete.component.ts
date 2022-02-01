@@ -35,8 +35,6 @@ export class RoomDeleteComponent implements OnInit {
     description: '',
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
 
   /**

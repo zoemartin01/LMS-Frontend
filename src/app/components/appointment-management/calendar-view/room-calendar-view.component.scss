@@ -17,3 +17,23 @@
   margin: 6px !important;
   border-radius: 0.25rem !important;
 }
+
+.calendar-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-wrapper .sidebar {
+  margin-top: 10px;
+  width: 350px;
+}
+
+.calendar-wrapper  .calendar {
+  width: calc(100% - 400px);
+}
+
+.calendar {
+  width: 100%;
+}

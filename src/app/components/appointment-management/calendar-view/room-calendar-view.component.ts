@@ -5,6 +5,7 @@ import * as moment from "moment";
 
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
+import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
 import { AuthService } from "../../../services/auth.service";
 import { RoomService } from "../../../services/room.service";
@@ -30,8 +31,6 @@ export class RoomCalendarViewComponent implements OnInit {
     description: '',
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
   public rooms: Room[] = [];
   public calendar: (Appointment|string|null)[][][] = [];
@@ -51,17 +50,15 @@ export class RoomCalendarViewComponent implements OnInit {
   /**
    * Constructor
    * @constructor
-   * @param {AppointmentService} appointmentService service providing appointment functionalities
-   * @param {AuthService} authService service providing authentication functionalities
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
-    public appointmentService: AppointmentService,
-    public authService: AuthService,
     public roomService: RoomService,
     private route: ActivatedRoute,
+    public authService: AuthService,
     private modalService: NgbModal) {
   }
 
@@ -81,11 +78,11 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   *
-   * @param date
+   * Sets current week for calendar
+   * @param {moment.Moment} date date in a week
    */
-  public setWeek(date: moment.Moment) {
-    this.week = moment(date.subtract((date.day() + 6) % 7, 'days').minutes(0).seconds(0)
+  public setWeek(date: moment.Moment): void {
+    this.week = moment(date.subtract((date.day() + 6) % 7, 'days').hours(0).minutes(0).seconds(0)
       .milliseconds(0));
 
     this.weekText = `${this.week.format("DD.MM.YYYY")} - ${moment(this.week).add(6, 'days')
@@ -99,17 +96,16 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   *
+   * Handles change of datepicker
    */
-  public handleDatepickerChange() {
+  public handleDatepickerChange(): void {
     this.setWeek(moment(`${this.weekField.year}-${this.weekField.month}-${this.weekField.day}`));
   }
 
   /**
    * Updates array to display appointments using the appointment
-   * @private
    */
-  public async updateCalendar() {
+  public async updateCalendar(): Promise<void> {
     if (this.room.id) {
       this.roomService.getRoomCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
         next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
@@ -121,6 +117,20 @@ export class RoomCalendarViewComponent implements OnInit {
         }
       });
     }
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public async getRooms(): Promise<void> {
+    this.roomService.getRoomsData().subscribe({
+      next: (rooms: Room[]) => {
+        this.rooms = rooms;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -204,7 +214,7 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Opens appointment edit form
+   * Opens appointment view
    *
    * @param {TimespanId} appointmentId id of appointment
    */
