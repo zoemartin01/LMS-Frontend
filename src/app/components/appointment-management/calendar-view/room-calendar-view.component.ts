@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import * as moment from "moment";
 
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+
 import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
 import { RoomService } from "../../../services/room.service";
@@ -41,16 +43,16 @@ export class RoomCalendarViewComponent implements OnInit {
   /**
    * Constructor
    * @constructor
-   * @param {AppointmentService} appointmentService service providing appointment functionalities
-   * @param {AuthService} authService service providing authentication functionalities
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
-    public appointmentService: AppointmentService,
-    public authService: AuthService,
     public roomService: RoomService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    public authService: AuthService,
+    private modalService: NgbModal) {
   }
 
   /**
@@ -65,30 +67,58 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
-   * Gets all data of room
+   * Sets current week for calendar
+   * @param {moment.Moment} date date in a week
    */
-  public async getRoomData() : Promise<void> {
+  public setWeek(date: moment.Moment): void {
+    this.week = moment(date.subtract((date.day() + 6) % 7, 'days').hours(0).minutes(0).seconds(0)
+      .milliseconds(0));
+
+    this.weekText = `${this.week.format("DD.MM.YYYY")} - ${moment(this.week).add(6, 'days')
+      .format("DD.MM.YYYY")}`;
+
+    this.weekField.day = +this.week.format("D");
+    this.weekField.month = +this.week.format("M");
+    this.weekField.year = +this.week.format("YYYY");
+
+    this.updateCalendar();
   }
 
   /**
-   * Gets appointment data of all appointments of one room
-   *
-   * @param {RoomId} roomId id of room
+   * Handles change of datepicker
    */
-  public async getAppointmentsForRoom(roomId: RoomId): Promise<void> {
+  public handleDatepickerChange(): void {
+    this.setWeek(moment(`${this.weekField.year}-${this.weekField.month}-${this.weekField.day}`));
   }
 
   /**
    * Updates array to display appointments using the appointment
-   * @private
    */
-  private async updateCalendar() {
-    this.getRoomData().then(() => {
-      this.getAppointmentsForRoom(this.room.id).then(() => {
-        let result = this.roomService.getTimespansAsCalendar(this.room, this.appointments);
-        this.displayTimespans = result.displayTimespans;
-        this.minTimeslot = result.minTimeslot;
+  public async updateCalendar(): Promise<void> {
+    if (this.room.id) {
+      this.roomService.getRoomCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
+        next: (res: { calendar: (Appointment|string|null)[][][], minTimeslot: number }) => {
+          this.calendar = res.calendar;
+          this.minTimeslot = res.minTimeslot;
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
       });
+    }
+  }
+
+  /**
+   * Gets all rooms
+   */
+  public async getRooms(): Promise<void> {
+    this.roomService.getRoomsData().subscribe({
+      next: (rooms: Room[]) => {
+        this.rooms = rooms;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
     });
   }
 
@@ -101,7 +131,20 @@ export class RoomCalendarViewComponent implements OnInit {
   /**
    * Opens appointment creation form
    */
-  public openAppointmentCreationForm(): void {
+  public openAppointmentCreationForm(day: number, slot: number): void {
+    this.action = 'create';
+    this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
+      .hours(slot + this.minTimeslot));
+  }
+
+  /**
+   * Opens appointment view
+   *
+   * @param {TimespanId} appointmentId id of appointment
+   */
+  public openAppointmentView(appointmentId: TimespanId): void {
+    this.action = 'view';
+    this.currentAppointmentId = <string>appointmentId;
   }
 
   /**
