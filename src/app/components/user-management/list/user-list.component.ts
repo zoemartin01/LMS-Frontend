@@ -62,6 +62,7 @@ export class UserListComponent implements OnInit {
       }
     });
   }
+  // @TODO Adrian disable button if isCurrent User (isCurrentUser() should work but integration in html didn't
   // :(((((((
 /*  public async isCurrentUser(userId: UserId): Promise<boolean> {
     console.log("hey");

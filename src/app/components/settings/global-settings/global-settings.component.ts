@@ -176,6 +176,7 @@ export class GlobalSettingsComponent implements OnInit {
     });
   }
 
+  //@TODO Adrian get string out of file
   fileName = '';
  // private fs = require('fs');
   onFileSelected(event: any) {
