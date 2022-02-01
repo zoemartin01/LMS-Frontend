@@ -1,35 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { OrderRequestComponent } from './order-request.component';
+import { WhitelistRetailerDomainDeleteComponent } from './whitelist-retailer-domain-delete.component';
 
-describe('OrderRequestComponent', () => {
-  let component: OrderRequestComponent;
-  let fixture: ComponentFixture<OrderRequestComponent>;
+describe('WhitelistRetailerDomainDeleteComponent', () => {
+  let component: WhitelistRetailerDomainDeleteComponent;
+  let fixture: ComponentFixture<WhitelistRetailerDomainDeleteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        OrderRequestComponent,
+        WhitelistRetailerDomainDeleteComponent,
       ],
       imports: [
         HttpClientModule,
-        ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderRequestComponent);
+    fixture = TestBed.createComponent(WhitelistRetailerDomainDeleteComponent);
     component = fixture.componentInstance;
   });
 

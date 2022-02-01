@@ -93,6 +93,7 @@ export class UserViewComponent implements OnInit {
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getUserData();
+        this.dirty= true;
       }
     });
   }

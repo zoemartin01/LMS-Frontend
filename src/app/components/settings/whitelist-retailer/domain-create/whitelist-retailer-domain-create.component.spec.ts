@@ -4,16 +4,16 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { OrderRequestComponent } from './order-request.component';
+import { WhitelistRetailerDomainCreateComponent } from './whitelist-retailer-domain-create.component';
 
-describe('OrderRequestComponent', () => {
-  let component: OrderRequestComponent;
-  let fixture: ComponentFixture<OrderRequestComponent>;
+describe('WhitelistRetailerDomainCreateComponent', () => {
+  let component: WhitelistRetailerDomainCreateComponent;
+  let fixture: ComponentFixture<WhitelistRetailerDomainCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        OrderRequestComponent,
+        WhitelistRetailerDomainCreateComponent,
       ],
       imports: [
         HttpClientModule,
@@ -29,7 +29,7 @@ describe('OrderRequestComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderRequestComponent);
+    fixture = TestBed.createComponent(WhitelistRetailerDomainCreateComponent);
     component = fixture.componentInstance;
   });
 
