@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { OrderEditComponent } from "../edit/order-edit.component";
+import { OrderRequestComponent } from "../request/order-request.component";
+
+import { AuthService } from "../../../services/auth.service";
 import { OrderService } from "../../../services/order.service";
+import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import {OrderRequestComponent} from "../request/order-request.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {OrderEditComponent} from "../edit/order-edit.component";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {ParseArgumentException} from "@angular/cli/models/parser";
-import {UserService} from "../../../services/user.service";
-import {AuthService} from "../../../services/auth.service";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -36,7 +37,12 @@ export class PersonalOrderListComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public orderService: OrderService, public userService: UserService, public authService: AuthService, private modalService: NgbModal) {
+  constructor(
+    public orderService: OrderService,
+    public userService: UserService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**

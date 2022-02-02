@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {OrderService} from "../../../services/order.service";
+import { AuthService } from "../../../services/auth.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {InventoryService} from "../../../services/inventory.service";
-import {InventoryItem} from "../../../types/inventory-item";
-import {AuthService} from "../../../services/auth.service";
+import { InventoryItem } from "../../../types/inventory-item";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-edit',
@@ -25,14 +25,12 @@ import {AuthService} from "../../../services/auth.service";
  */
 export class OrderEditComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
-
   public orderEditForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
     quantity: new FormControl(null),
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,
@@ -60,10 +58,12 @@ export class OrderEditComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService,
-              public inventoryService: InventoryService,
-              public authService: AuthService,
-              public activeModal: NgbActiveModal) {
+  constructor(
+    public orderService: OrderService,
+    public inventoryService: InventoryService,
+    public authService: AuthService,
+    public activeModal: NgbActiveModal
+  ) {
     if (!(this.authService.isAdmin())) {
       this.orderEditForm.controls['status'].disable();
     }

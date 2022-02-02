@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";
 
 import { OrderService } from "../../../services/order.service";
@@ -10,8 +11,6 @@ import { UserService } from "../../../services/user.service";
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
 import { OrderStatus } from "../../../types/enums/order-status";
-import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
-import {OrderEditComponent} from "../edit/order-edit.component";
 
 @Component({
   selector: 'app-admin-order-list',
