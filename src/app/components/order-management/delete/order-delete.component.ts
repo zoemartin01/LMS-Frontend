@@ -45,7 +45,7 @@ export class OrderDeleteComponent implements OnInit {
       isActiveDirectory: false,
     },
     status: OrderStatus.unknown,
-  }
+  };
 
   /**
    * Constructor

@@ -6,6 +6,7 @@ import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";
 import { OrderViewComponent } from "../view/order-view.component";
 import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderDeclineComponent } from "../order-decline/order-decline.component";
 
 import { OrderService } from "../../../services/order.service";
 import { UserService } from "../../../services/user.service";
@@ -138,6 +139,13 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public async openOrderDeclineDialog(orderId: OrderId): Promise<void> {
+    const modal = this.modalService.open(OrderDeclineComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   public getItemName(order: Order) {
