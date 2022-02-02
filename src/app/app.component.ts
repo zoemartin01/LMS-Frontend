@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { interval, startWith, switchMap } from "rxjs";
 
 import { AuthService } from "./services/auth.service";
 import { MessagingService } from "./services/messaging.service";
@@ -50,6 +51,16 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
       this.getUnreadMessagesAmounts();
+
+      //polling unread messages amount
+      setInterval(() => {
+        if (!this.authService.isUserLoggedIn()) {
+          clearInterval();
+        }
+
+        this.getUnreadMessagesAmounts();
+      }, 5000);
+
       this.getUserDetails();
     }
   }
