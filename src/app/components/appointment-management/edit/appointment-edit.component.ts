@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import * as moment from "moment";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormGroup} from "@angular/forms";
 
-import { AppointmentService } from "../../../services/appointment.service";
-import { RoomService } from "../../../services/room.service";
+import {AppointmentService} from "../../../services/appointment.service";
+import {RoomService} from "../../../services/room.service";
 
-import { Appointment } from "../../../types/appointment";
-import { Room } from "../../../types/room";
-import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { RoomTimespanType } from "../../../types/enums/timespan-type";
-import { UserRole } from "../../../types/enums/user-role";
+import {Appointment} from "../../../types/appointment";
+import {Room} from "../../../types/room";
+import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {RoomTimespanType} from "../../../types/enums/timespan-type";
+import {UserRole} from "../../../types/enums/user-role";
+import {TimeslotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -53,6 +53,7 @@ export class AppointmentEditComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
+    timeSlotRecurrence: TimeslotRecurrence.unknown
   };
   public rooms: Room[] = [];
   public startTimeSlots = Array.from(Array(5).keys());//@todo set dinamically

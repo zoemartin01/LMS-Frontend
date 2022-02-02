@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
-import { AppointmentService } from "../../../services/appointment.service";
-import { AuthService } from "../../../services/auth.service";
+import {AppointmentService} from "../../../services/appointment.service";
+import {AuthService} from "../../../services/auth.service";
 
-import { Appointment } from "../../../types/appointment";
-import { TimespanId } from "../../../types/aliases/timespan-id";
-import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { RoomTimespanType } from "../../../types/enums/timespan-type";
-import { UserRole } from "../../../types/enums/user-role";
+import {Appointment} from "../../../types/appointment";
+import {TimespanId} from "../../../types/aliases/timespan-id";
+import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {RoomTimespanType} from "../../../types/enums/timespan-type";
+import {UserRole} from "../../../types/enums/user-role";
+import {TimeslotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-view',
@@ -49,6 +50,7 @@ export class AppointmentViewComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
+    timeSlotRecurrence: TimeslotRecurrence.unknown
   };
 
   /**
