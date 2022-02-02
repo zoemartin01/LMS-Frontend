@@ -14,4 +14,3 @@ RUN ng b
 FROM nginx:mainline-alpine
 
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
-EXPOSE 443
