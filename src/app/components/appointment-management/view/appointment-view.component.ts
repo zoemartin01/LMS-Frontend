@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { AppointmentService } from "../../../services/appointment.service";
@@ -43,8 +43,6 @@ export class AppointmentViewComponent implements OnInit {
       description: '',
       maxConcurrentBookings: 1,
       autoAcceptBookings: null,
-      availableTimeslots: [],
-      unavailableTimeslots: [],
     },
     start: null,
     end: null,

@@ -9,7 +9,6 @@ import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Appointment } from "../types/appointment";
-import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'

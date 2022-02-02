@@ -25,8 +25,6 @@ export class AppointmentCreateComponent {
     description: '',
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
   @Output() updateCalendar = new EventEmitter<void>();
 
