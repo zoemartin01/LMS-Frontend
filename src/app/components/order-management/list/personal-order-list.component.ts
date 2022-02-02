@@ -12,6 +12,7 @@ import {ParseArgumentException} from "@angular/cli/models/parser";
 import {UserService} from "../../../services/user.service";
 import {AuthService} from "../../../services/auth.service";
 import {OrderViewComponent} from "../view/order-view.component";
+import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -100,6 +101,13 @@ export class PersonalOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of the order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderDeleteComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getOrders();
+      }
+    });
   }
 
   /**

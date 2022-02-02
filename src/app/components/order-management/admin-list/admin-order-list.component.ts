@@ -13,6 +13,7 @@ import { OrderStatus } from "../../../types/enums/order-status";
 import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
 import {OrderEditComponent} from "../edit/order-edit.component";
 import {OrderViewComponent} from "../view/order-view.component";
+import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -100,6 +101,13 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderDeleteComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
