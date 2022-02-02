@@ -6,8 +6,6 @@ import * as moment from "moment";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
-import { AppointmentService } from "../../../services/appointment.service";
-import { AuthService } from "../../../services/auth.service";
 import { RoomService } from "../../../services/room.service";
 
 import { Appointment } from "../../../types/appointment";
@@ -123,20 +121,6 @@ export class RoomCalendarViewComponent implements OnInit {
    * Gets all rooms
    */
   public async getRooms(): Promise<void> {
-    this.roomService.getRoomsData().subscribe({
-      next: (rooms: Room[]) => {
-        this.rooms = rooms;
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    });
-  }
-
-  /**
-   * Gets all rooms
-   */
-  public getRooms(): void {
     this.roomService.getRoomsData().subscribe({
       next: (rooms: Room[]) => {
         this.rooms = rooms;

@@ -1,17 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Injectable } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { BehaviorSubject, Observable } from "rxjs";
+import * as moment from "moment";
 
 import { RoomCalendarViewComponent } from './room-calendar-view.component';
-import { Injectable } from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
-import {ActivatedRoute } from "@angular/router";
-import {RoomService} from "../../../services/room.service";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import * as moment from "moment";
-import {Appointment} from "../../../types/appointment";
-import {Room} from "../../../types/room";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
+import { RoomService } from "../../../services/room.service";
+
+import { Appointment } from "../../../types/appointment";
+import { Room } from "../../../types/room";
 
 @Injectable()
 export class ActivatedRouteStub {
