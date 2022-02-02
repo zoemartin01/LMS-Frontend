@@ -1,1 +1,78 @@
-<p>appointment-view works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">View Appointment</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="appointmentViewForm">
+    <div class="form-group row">
+      <div class="col">
+        <label for="user" class="my-1">User</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="User" id="user"
+                 formControlName="user" autocomplete="user">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="room" class="my-1">Room</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Room" aria-describedby="inputGroupPrepend"
+               id="room" formControlName="room" autocomplete="room">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="date" class="my-1">Date</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Date" aria-describedby="inputGroupPrepend"
+               id="date" formControlName="date" autocomplete="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startHour" class="my-1">Start</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Start" aria-describedby="inputGroupPrepend"
+               id="startHour" formControlName="startHour" autocomplete="startHour">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="endHour" class="my-1">End</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="End" aria-describedby="inputGroupPrepend"
+               id="endHour" formControlName="endHour" autocomplete="endHour">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmationStatus" class="my-1">Confirmation Status</label>
+      <select class="form-select" id="confirmationStatus" formControlName="confirmationStatus">
+        <option value="1">pending</option>
+        <option value="2">accepted</option>
+        <option value="3">denied</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="timeSlotRecurrence" class="my-1">Recurrence</label>
+      <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
+        <option value="1">single</option>
+        <option value="2">daily</option>
+        <option value="3">weekly</option>
+        <option value="3">monthly</option>
+        <option value="3">yearly</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <a (click)="openAppointmentDeletionDialog(appointmentId)">
+    <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+  </a>
+  <a (click)="openAppointmentDeletionDialog(appointmentId)">
+    <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+  </a>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')">
+    Close
+  </button>
+</div>
