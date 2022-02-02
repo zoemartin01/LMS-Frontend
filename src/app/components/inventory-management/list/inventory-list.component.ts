@@ -11,6 +11,7 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import {OrderRequestComponent} from "../../order-management/request/order-request.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -77,9 +78,21 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create order
    *
-   * @param {InventoryItemId} inventoryItemId id of item to order
+   * @param {string} inventoryItemName name of item to order
    */
-  public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
+  public openOrderCreationForm(inventoryItemName: string): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.componentInstance.requestOrderForm.controls['itemName'].setValue(inventoryItemName);
+    modal.componentInstance.requestOrderForm.controls['itemName'].disable();
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openInventoryItemViewForm(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

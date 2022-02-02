@@ -33,7 +33,7 @@
           <a *ngIf="authService.isAdmin()" (click)="openItemDeletionDialog(inventoryItem.id)">
             <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
           </a>
-          <a (click)="openOrderCreationForm(inventoryItem.id)">
+          <a (click)="openOrderCreationForm(inventoryItem.name)">
             <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
           </a>
         </td>
