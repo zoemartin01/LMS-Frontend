@@ -12,6 +12,7 @@ import { OrderId } from "../../../types/aliases/order-id";
 import { OrderStatus } from "../../../types/enums/order-status";
 import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
 import {OrderEditComponent} from "../edit/order-edit.component";
+import {OrderViewComponent} from "../view/order-view.component";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -107,6 +108,13 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public openOrderView(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderViewComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**

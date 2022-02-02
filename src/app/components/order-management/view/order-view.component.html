@@ -1,1 +1,37 @@
-<p>order-view works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Edit Order</h4>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="orderViewForm">
+    <div class="form-group">
+      <label for="itemName" class="my-1">Item Name</label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Item Name" id="itemName" formControlName="itemName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantity" class="my-1">Quantity</label>
+      <div class="input-group">
+        <input type="number" class="form-control" placeholder="Quantity" id="quantity" formControlName="quantity"
+               autocomplete="quantity">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="url" class="my-1">URL</label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="URL" id="url" formControlName="url" autocomplete="url">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status" class="my-1">Order Status</label>
+      <select class="form-select" id="status" formControlName="status">
+        <option value="1">pending</option>
+        <option value="2">declined</option>
+        <option value="3">ordered</option>
+        <option value="4">inventoried</option>
+        <option value="5">sent back</option>
+      </select>
+    </div>
+  </form>
+</div>
