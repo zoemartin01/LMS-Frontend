@@ -176,19 +176,19 @@ export class GlobalSettingsComponent implements OnInit {
     });
   }
 
-  //@TODO Adrian get string out of file
-  fileName = '';
- // private fs = require('fs');
+  /**
+   *
+   * @param event
+   */
   onFileSelected(event: any) {
-    console.log("yeey");
-
     const file: File = event.target.files[0];
-    console.log(file.name);
-    console.log(file);
-    /* this.fs.readFile(file.name, function (err: any, data: any) {
-
-       console.log("Asynchronous read: " + data.toString());
-     }); */
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      const fileContents = fileReader.result;
+      console.log(file.name, fileContents);
+      //@todo Mario add logic here to save file content in database
+    };
+    fileReader.readAsText(file);
   }
 }
 

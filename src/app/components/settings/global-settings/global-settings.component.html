@@ -25,17 +25,11 @@
             </div>
           </div>
         </div>
-        <!-- <input type="file" class="file-input"
-               (change)="onFileSelected($event)" #fileUpload>
-
+        <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
         <div class="file-upload">
-
-          {{fileName || "No file uploaded yet."}}
-
-          <button mat-mini-fab color="primary" class="upload-btn"
-                  (click)="fileUpload.click()">
-          </button>
-        </div> -->
+          {{ "FILENAME" ?? "No file uploaded yet." }}
+          <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()"></button>
+        </div>
         <div class="form-group">
           <label for="homePage" class="my-1">Home Page</label>
           <div class="input-group">
