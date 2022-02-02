@@ -62,19 +62,6 @@ export class UserListComponent implements OnInit {
       }
     });
   }
-  // @TODO Adrian disable button if isCurrent User (isCurrentUser() should work but integration in html didn't
-  // :(((((((
-/*  public async isCurrentUser(userId: UserId): Promise<boolean> {
-    console.log("hey");
-    console.log(userId);
-    console.log(this.authService.getUserId());
-
-    if (this.authService.getUserId() == userId) {
-      console.log("yey");
-      return true;
-    }
-    return false;
-  }*/
 
   /**
    * Opens user accept confirmation dialog
