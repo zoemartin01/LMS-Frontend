@@ -34,8 +34,6 @@ export class RoomEditComponent implements OnInit {
     description: '',
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
 
   /**

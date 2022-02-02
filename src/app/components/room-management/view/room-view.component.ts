@@ -37,8 +37,6 @@ export class RoomViewComponent implements OnInit {
     description: '',
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
   };
   public dirty: boolean = true;
 
