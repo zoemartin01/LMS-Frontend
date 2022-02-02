@@ -14,96 +14,105 @@
   </li>
 </ul>
 
-<form class="form-inline col-sm-11 mx-auto py-3">
-  <div class="form-group">
-    <div class="input-group justify-content-center">
-      <div class="col-sm-5 form-group">
-        <div class="input-group">
-          <select class="form-select">
-            <option disabled>Select Room</option>
-            <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
-              {{ oneRoom.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="col-sm-1 form-group">
-      </div>
-      <div class="col-sm-5 form-group">
-        <div class="input-group" id="DateField">
-          <input type="text" class="form-control" id="weeklyDatePicker" placeholder="Select Week"
-                 value="{{ now.format('DD.MM.YYYY') }} - {{ now.add(6, 'days').format('DD.MM.YYYY') }}">
+<div [class]="action === '' ? ''  : 'calendar-wrapper'">
+  <div class="calendar">
+    <div class="form-inline col-sm-11 mx-auto py-3">
+      <div class="form-group">
+        <div class="input-group justify-content-center">
+          <div class="col-sm-4 form-group kit-rounded">
+            <label for="room" class="control-label">Room</label>
+            <div class="input-group">
+              <select class="form-select" (change)="changeRoom(roomSelect.value)" #roomSelect id="room">
+                <option disabled [selected]="room.id === null">Select Room</option>
+                <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
+                  {{ oneRoom.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-sm-6 col-sm-offset-2 row kit-rounded">
+            <label for="week" class="control-label">Week</label>
+            <div class="input-group">
+              <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.subtract(7, 'days'))">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <input class="form-control" type="text" id="week" #weekInput [value]="weekText">
+              <input class="display-none" type="text" [positionTarget]="weekInput" placement="bottom"
+                     [(ngModel)]="weekField" ngbDatepicker #d="ngbDatepicker"
+                     (dateSelect)="handleDatepickerChange()">
+              <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                <i class="bi bi-calendar-week-fill"></i>
+              </button>
+              <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.add(7, 'days'))">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <table class="table table-bordered cal-table">
+        <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Monday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Tuesday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Wednesday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Thursday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Friday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Saturday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">Sunday</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let timespans of calendar; index as i">
+          <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
+          <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
+          <ng-container *ngFor="let column of columnKeys">
+          <td class="cal-green pointer" *ngIf="timespans[day][column] === 'available'"
+              [attr.colspan]="room.maxConcurrentBookings" (click)="openAppointmentCreationForm(day, i)">
+            <i class="bi bi-plus-lg"></i>
+          </td>
+          <td class="cal-grey" *ngIf="timespans[day][column] === 'unavailable'"
+              [attr.colspan]="room.maxConcurrentBookings"></td>
+          <td class="cal-red" [attr.rowspan]="getRowspan(timespans[day][column])"
+              *ngIf="isAppointment(timespans[day][column]) && isConfirmed(timespans[day][column])">
+            <a (click)="openAppointmentEditForm(getAppointmentId(timespans[day][column]))"
+               *ngIf="authService.isAdmin()">
+              <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+            </a>
+            <a (click)="openAppointmentDeletionDialog(getAppointmentId(timespans[day][column]))"
+               *ngIf="authService.isAdmin()
+               || authService.getUserId() === parseAppointment(timespans[day][column]).user.id">
+              <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+            </a>
+          </td>
+          <td class="cal-orange" [attr.rowspan]="getRowspan(timespans[day][column])"
+              *ngIf="isAppointment(timespans[day][column]) && !isConfirmed(timespans[day][column])">
+            <a (click)="acceptAppointmentRequest(getAppointmentId(timespans[day][column]))" *ngIf="authService.isAdmin()"
+               type="button" class="btn btn-success mx-1">
+              <i class="bi bi-check"></i>
+            </a>
+            <a (click)="declineAppointmentRequest(getAppointmentId(timespans[day][column]))" *ngIf="authService.isAdmin()"
+               type="button" class="btn btn-danger mx-1">
+              <i class="bi bi-x"></i>
+            </a>
+          </td>
+          </ng-container>
+          </ng-container>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</form>
 
-<div class="row">
-  <table class="table table-bordered cal-table">
-    <thead class="thead-dark">
-    <tr>
-      <th></th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Monday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Tuesday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Wednesday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Thursday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Friday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Saturday</th>
-      <th [attr.colspan]="room.maxConcurrentBookings">Sunday</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let timespans of displayTimespans; index as i">
-      <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
-      <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
-      <ng-container *ngFor="let column of columnKeys">
-      <td class="cal-grey" *ngIf="timespans[day][column].type === 3"></td>
-      <td class="cal-green" *ngIf="!timespans[day][column]"></td>
-      <td class="cal-red" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
-          *ngIf="timespans[day][column].type === 1
-          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 2">
-        <a (click)="openAppointmentEditForm(timespans[day][column].id)"
-           *ngIf="authService.isAdmin()
-           || authService.getUserId() === roomService.timespanToAppointment(timespans[day][column]).user.id">
-          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-        </a>
-        <a (click)="openAppointmentDeletionDialog(timespans[day][column].id)"
-           *ngIf="authService.isAdmin()
-           || authService.getUserId() === roomService.timespanToAppointment(timespans[day][column]).user.id">
-          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-        </a>
-      </td>
-      <td class="cal-orange" [attr.rowspan]="timespans[day][column].end?.diff(timespans[day][column].start, 'hours')"
-          *ngIf="timespans[day][column].type === 1
-          && roomService.timespanToAppointment(timespans[day][column]).confirmationStatus === 1">
-        <a (click)="acceptAppointmentRequest(timespans[day][column].id)" *ngIf="authService.isAdmin()"
-           type="button" class="btn btn-success mx-1">
-          <i class="bi bi-check"></i>
-        </a>
-        <a (click)="declineAppointmentRequest(timespans[day][column].id)" *ngIf="authService.isAdmin()"
-           type="button" class="btn btn-danger mx-1">
-          <i class="bi bi-x"></i>
-        </a>
-      </td>
-      </ng-container>
-      </ng-container>
-    </tr>
-    </tbody>
-  </table>
+  <div class="sidebar">
+    <app-appointment-view *ngIf="action === 'view'" [appointmentId]="currentAppointmentId"></app-appointment-view>
+    <app-appointment-edit *ngIf="action === 'edit'" [appointmentId]="currentAppointmentId"
+                          (updateCalendar)="updateCalendar()"></app-appointment-edit>
+    <app-appointment-create *ngIf="action === 'create'" (updateCalendar)="updateCalendar()"
+                            [start]="appointmentCreationStart"></app-appointment-create>
+  </div>
 </div>
-<script>
-  $(document).ready(function(){
-    $("#weeklyDatePicker").datepicker({
-      format: 'dd.mm.yyyy'
-    });
-
-    $('#weeklyDatePicker').on('changeDate', function (e) {
-      $("#weeklyDatePicker").datepicker('hide');
-      var value = $("#weeklyDatePicker").val();
-      var firstDate = moment(value, "DD.MM.YYYY").day(0).format("DD.MM.YYYY");
-      var lastDate =  moment(value, "DD.MM.YYYY").day(6).format("DD.MM.YYYY");
-      $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
-    });
-  });
-</script>
