@@ -22,6 +22,7 @@
       <th class="col">Date</th>
       <th class="col">Time</th>
       <th class="col">Recurrence</th>
+      <th class="col">Last Date</th>
       <th class="col">Status</th>
       <th class="col-sm-1" style="align-self: right;"></th>
     </tr>
@@ -31,7 +32,8 @@
       <td>{{ appointment.room?.name }}</td>
       <td>{{ appointment.start?.format("DD.MM.YYYY") }}</td>
       <td>{{ appointment.start?.format("HH:mm") }} - {{ appointment.end?.format("HH:mm") }}</td>
-      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][appointment.timeSlotRecurrence]}}</td>
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][appointment.timeSlotRecurrence]}}</td>   <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(deniedAppointment.seriesId) | async }}</td>
+      <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(appointment.seriesId) | async }}</td>
       <td>{{ ['', 'pending', 'accepted', 'denied'][appointment.confirmationStatus] }}</td>
       <td class="d-flex justify-content-end">
         <a (click)="openAppointmentView(appointment.id)" type="button" class="btn btn-secondary mx-1">

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {AppointmentService} from "../../../services/appointment.service";
 import {RoomService} from "../../../services/room.service";
@@ -11,6 +11,7 @@ import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {UserRole} from "../../../types/enums/user-role";
 import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -21,13 +22,17 @@ import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 /**
  * Component for the appointment edit page
  *
- *
  */
 export class AppointmentEditComponent implements OnInit {
   @Input() appointmentId: string = '';
   @Output() updateCalendar = new EventEmitter<void>();
   public appointmentEditForm: FormGroup = new FormGroup({
-
+    user: new FormControl('', Validators.required),
+    room: new FormControl('', Validators.required),
+    startHour: new FormControl('', Validators.required),
+    endHour: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
+    timeSlotRecurrence: new FormControl('', Validators.required),
   });
   public appointment: Appointment = {
     id: null,
@@ -80,6 +85,25 @@ export class AppointmentEditComponent implements OnInit {
    * Gets all data for one appointment
    */
   public getAppointmentData(): void {
+    this.appointmentService.getAppointmentData(this.appointment.id).subscribe({
+      next: res => {
+        this.appointment = res;
+
+        this.appointment.start = moment(this.appointment.start);
+        this.appointment.end = moment(this.appointment.end);
+
+        this.appointmentEditForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
+        this.appointmentEditForm.controls['room'].setValue(res.room.name);
+        this.appointmentEditForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
+        this.appointmentEditForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
+        this.appointmentEditForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
+        this.appointmentEditForm.controls['confirmationStatus'].setValue(res.confirmationStatus);
+        this.appointmentEditForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**

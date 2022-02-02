@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
-import { Observable } from "rxjs";
+import {firstValueFrom, last, Observable} from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
@@ -12,6 +12,7 @@ import { SeriesId } from "../types/aliases/series-id";
 import {Room} from "../types/room";
 import {Moment} from "moment";
 import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +81,7 @@ export class AppointmentService {
   /**
    * Retrieves all data of the appointments for one series
    *
-   * @param {SeriesId} seriesId id of the appointment
+   * @param {SeriesId} seriesId id of the appointment series
    */
   public getAllAppointmentsForSeries(seriesId : SeriesId): Observable<Appointment[]> {
     if (seriesId === null) {
@@ -91,6 +92,21 @@ export class AppointmentService {
       .replace(':id', seriesId)}`;
 
     return this.httpClient.get<Appointment[]>(apiURL);
+  }
+
+  /**
+   * Helper method to get the last date of an appointment of a series
+   *
+   * @param seriesId id of the appointment series
+   */
+  public async getLastDateForSeries(seriesId : SeriesId) {
+    if(seriesId != null) {
+      const appointments = await firstValueFrom(this.getAllAppointmentsForSeries(seriesId));
+      const lastAppointment = appointments[appointments.length - 1]
+      return lastAppointment.start?.format("DD.MM.YYYY");
+    } else {
+      return '';
+    }
   }
 
   /**
