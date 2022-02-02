@@ -12,8 +12,12 @@ import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {UserRole} from "../../../types/enums/user-role";
 import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
+import {RoomEditComponent} from "../../room-management/edit/room-edit.component";
+import {AppointmentEditComponent} from "../edit/appointment-edit.component";
+import {RoomDeleteComponent} from "../../room-management/delete/room-delete.component";
+import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
 
 @Component({
   selector: 'app-appointment-view',
@@ -72,12 +76,14 @@ export class AppointmentViewComponent implements OnInit {
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbModal} modalService service providing modal functionalities
    * @param {ActivatedRoute} route route that activated this component
    */
   constructor(
     public appointmentService: AppointmentService,
     public authService: AuthService,
     public activeModal: NgbActiveModal,
+    private modalService: NgbModal,
     private route: ActivatedRoute) {
     this.appointmentViewForm.disable();
   }
@@ -118,21 +124,36 @@ export class AppointmentViewComponent implements OnInit {
 
   /**
    * Opens appointment edit form
-   *
-   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentEditForm(appointmentId: TimespanId): void {
+  public openAppointmentEditForm(): void {
+    const modal = this.modalService.open(AppointmentEditComponent);
+    modal.componentInstance.appointment.id = this.appointment.id;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointmentData();
+      }
+    });
 
     this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 
   /**
    * Opens appointment deletion dialog
-   *
-   * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+  public openAppointmentDeletionDialog(): void {
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = this.appointment.id;
+    modal.result.then((result) => {
+      if (result === 'deleted') {
+        this.activeModal.close('dirty');
+        return;
+      }
 
+      if (result !== 'aborted') {
+        this.getAppointmentData();
+        this.dirty = true;
+      }
+    });
     this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 }
