@@ -131,7 +131,7 @@ export class OrderEditComponent implements OnInit {
       itemName: this.orderEditForm.controls['itemName'].value,
       quantity: this.orderEditForm.controls['quantity'].value,
       url: this.orderEditForm.controls['url'].value,
-      orderStatus: this.orderEditForm.controls['orderStatus'].value,
+      status: this.orderEditForm.controls['status'].value,
     }).subscribe({
       next: () => {
         this.activeModal.close('edited');

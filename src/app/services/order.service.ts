@@ -97,7 +97,7 @@ export class OrderService {
    * @param {OrderId} orderId id of order
    */
   public acceptOrderRequest(orderId: OrderId): Observable<Order> {
-    return this.updateOrderData(orderId, { orderStatus: OrderStatus.ordered });
+    return this.updateOrderData(orderId, { status: OrderStatus.ordered });
   }
 
   /**
@@ -106,7 +106,7 @@ export class OrderService {
    * @param {OrderId} orderId id of order
    */
   public declineOrderRequest(orderId: OrderId): Observable<Order> {
-    return this.updateOrderData(orderId, { orderStatus: OrderStatus.declined });
+    return this.updateOrderData(orderId, { status: OrderStatus.declined });
   }
 
   /**
