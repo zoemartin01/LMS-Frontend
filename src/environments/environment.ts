@@ -61,6 +61,7 @@ export const environment = {
     rooms: {
       getAllRooms: '/rooms',
       getSingleRoom: '/rooms/:id',
+      getRoomCalendar: '/rooms/:id/calendar',
 
       createRoom: '/rooms',
       updateRoom: '/rooms/:id',
