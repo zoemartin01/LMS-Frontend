@@ -1,4 +1,4 @@
-export enum TimeslotRecurrence {
+export enum TimeSlotRecurrence {
   unknown = 0,
   single = 1,
   daily = 2,

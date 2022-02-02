@@ -10,7 +10,7 @@ import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {UserRole} from "../../../types/enums/user-role";
-import {TimeslotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -53,7 +53,7 @@ export class AppointmentEditComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
-    timeSlotRecurrence: TimeslotRecurrence.unknown
+    timeSlotRecurrence: TimeSlotRecurrence.unknown
   };
   public rooms: Room[] = [];
   public startTimeSlots = Array.from(Array(5).keys());//@todo set dinamically

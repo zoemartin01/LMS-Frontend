@@ -11,6 +11,7 @@ import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
 import {Room} from "../types/room";
 import {Moment} from "moment";
+import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
 
 @Injectable({
   providedIn: 'root'
@@ -99,14 +100,16 @@ export class AppointmentService {
    * @param confirmationStatus default pending
    * @param start start of the appointment
    * @param end end of the appointment
+   * @param timeSlotRecurrence recurrence of the appointment
    */
-  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment,): Observable<Appointment> {
+  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       room: room,
       confirmationStatus: confirmationStatus,
       start: start,
       end: end,
+      timeSlotRecurrence: timeSlotRecurrence
     };
     return this.httpClient.post<Appointment>(apiURL, requestBody);
   }
@@ -118,10 +121,11 @@ export class AppointmentService {
    * @param confirmationStatus default pending
    * @param start start of the appointment
    * @param end end of the appointment
+   * @param timeSlotRecurrence recurrence of the appointment
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, difference: number, amount: number)
+  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence, difference: number, amount: number)
     : Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
@@ -129,6 +133,7 @@ export class AppointmentService {
       confirmationStatus: confirmationStatus,
       start: start,
       end: end,
+      timeSlotRecurrence: timeSlotRecurrence,
       difference: difference,
       amount: amount
     };

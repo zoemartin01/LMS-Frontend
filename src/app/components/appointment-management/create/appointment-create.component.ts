@@ -5,6 +5,8 @@ import { AppointmentService } from "../../../services/appointment.service";
 import * as moment from "moment";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Room} from "../../../types/room";
+import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-create',
@@ -56,12 +58,13 @@ export class AppointmentCreateComponent {
     if (this.appointmentCreateForm.valid) {
       const room = this.room;
       const difference = this.appointmentCreateForm.value.difference; //Todo no difference!!
-      const confirmationStatus = 1; //todo no magic numbers
+      const confirmationStatus = ConfirmationStatus.pending;
       const start = this.appointmentCreateForm.value.start;
       const end = this.appointmentCreateForm.value.end;
       const amount = this.appointmentCreateForm.value.amount;
       if(this.appointmentCreateForm.value.isSeries) {
-        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, difference, amount).subscribe({
+        const recurrence = TimeSlotRecurrence.unknown; //TODO
+        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, difference, amount).subscribe({
           next: () => {
             this.activeModal.close('created');
           }, error: error => {
@@ -69,7 +72,8 @@ export class AppointmentCreateComponent {
           }
         });
       } else {
-        this.appointmentService.createAppointment(room, confirmationStatus, start, end).subscribe({
+        const recurrence = TimeSlotRecurrence.unknown; //TODO
+        this.appointmentService.createAppointment(room, confirmationStatus, start, end, recurrence).subscribe({
           next: () => {
             this.activeModal.close('created');
           }, error: error => {
