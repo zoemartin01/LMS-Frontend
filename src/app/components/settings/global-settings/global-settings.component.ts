@@ -79,6 +79,15 @@ export class GlobalSettingsComponent implements OnInit {
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
       ) / 86400000
     );
+    this.globalSettingsForm.controls['static.homepage'].setValue(
+      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.homepage')[0].value
+    );
+    this.globalSettingsForm.controls['static.safety_instructions'].setValue(
+      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.safety_instructions')[0].value
+    );
+    this.globalSettingsForm.controls['static.lab_rules'].setValue(
+      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.lab_rules')[0].value
+    );
   }
 
   /**
@@ -102,10 +111,17 @@ export class GlobalSettingsComponent implements OnInit {
     if (this.globalSettingsForm.valid) {
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        changedFields.push({
-          key,
-          value: this.globalSettingsForm.controls[key].value,
-        });
+        if (key == 'recording.auto_delete') {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value * 86400000,
+          });
+        } else {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value,
+          });
+        }
       }
 
       this.adminService.updateGlobalSettings(changedFields).subscribe({
@@ -177,16 +193,18 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   *
-   * @param event
+   * Updates content of static page
+   * @param {any} event file selection event that triggered this method
+   * @param {string} staticPageName name of the static page to update
    */
-  onFileSelected(event: any) {
+  onFileSelected(event: any, staticPageName : string) {
     const file: File = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const fileContents = fileReader.result;
-      console.log(file.name, fileContents);
-      //@todo Mario add logic here to save file content in database
+      this.globalSettingsForm.controls[staticPageName].setValue(
+        fileContents
+      );
     };
     fileReader.readAsText(file);
   }
