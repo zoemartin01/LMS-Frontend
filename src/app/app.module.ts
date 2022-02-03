@@ -8,6 +8,8 @@ import { AutosizeModule } from 'ngx-autosize';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { WINDOW_PROVIDERS } from './providers/window.providers';
+
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
 
@@ -145,6 +147,7 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
       multi: true
     },
     NgbActiveModal,
+    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })

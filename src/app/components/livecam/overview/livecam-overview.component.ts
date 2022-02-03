@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
@@ -28,7 +34,8 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public scheduledRecordings: Recording[] = [];
   public moment = moment;
 
-  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> = {} as ElementRef;
+  @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> =
+    {} as ElementRef;
 
   /**
    * Constructor
@@ -41,8 +48,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     public livecamService: LivecamService,
     public userService: UserService,
     private modalService: NgbModal
-  ) {
-  }
+  ) {}
 
   /**
    * Inits page
@@ -53,12 +59,8 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.livecamService.getLiveStreamFeed().subscribe({
-      next: (data) => {
-        new JSMpeg.Player(data.url, {
-          canvas: this.streaming_canvas.nativeElement,
-        });
-      },
+    new JSMpeg.Player(this.livecamService.getLiveStreamFeedPath(), {
+      canvas: this.streaming_canvas.nativeElement,
     });
   }
 
@@ -101,8 +103,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   /**
    * Gets live stream feed
    */
-  public async getLiveStreamFeed(): Promise<void> {
-  }
+  public async getLiveStreamFeed(): Promise<void> {}
 
   /**
    * Downloads a recording
