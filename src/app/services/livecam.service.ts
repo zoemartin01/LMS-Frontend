@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 
 import { Recording } from '../types/recording';
 import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
+import { WINDOW } from '../providers/window.providers';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 /**
@@ -19,16 +20,22 @@ import { VideoResolution } from '../types/enums/video-resolution';
  * @class
  */
 export class LivecamService {
-
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(
+    private httpClient: HttpClient,
+    @Inject(WINDOW) private window: Window
+  ) {}
 
   /**
    * Schedules a recording with the submitted parameters
    *
    * @param {Recording} recording data of the recording to schedule
    */
-  public scheduleRecording(start: moment.Moment, end: moment.Moment, resolution: VideoResolution, bitrate: number): Observable<Recording> {
+  public scheduleRecording(
+    start: moment.Moment,
+    end: moment.Moment,
+    resolution: VideoResolution,
+    bitrate: number
+  ): Observable<Recording> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.createSchedule}`;
     const requestBody = {
       start: start.toISOString(),
@@ -46,8 +53,11 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to delete
    */
   public deleteRecording(recordingId: RecordingId): Observable<{}> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.deleteRecording}`
-      .replace(':id', recordingId!);
+    const apiURL =
+      `${environment.baseUrl}${environment.apiRoutes.livecam.deleteRecording}`.replace(
+        ':id',
+        recordingId!
+      );
     return <Observable<{}>>this.httpClient.delete(apiURL);
   }
 
@@ -57,8 +67,11 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to download
    */
   public downloadRecording(recordingId: RecordingId): Observable<ArrayBuffer> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`
-      .replace(':id', recordingId!);
+    const apiURL =
+      `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`.replace(
+        ':id',
+        recordingId!
+      );
     if (recordingId === null) throw new Error('recordingId cannot be null');
 
     apiURL.replace(':id', recordingId);
@@ -71,8 +84,11 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to get data for
    */
   public getRecordingData(recordingId: RecordingId): Observable<Recording> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.getSingleRecording}`
-      .replace(':id', recordingId!);
+    const apiURL =
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getSingleRecording}`.replace(
+        ':id',
+        recordingId!
+      );
     return <Observable<Recording>>this.httpClient.get(apiURL);
   }
 
@@ -95,8 +111,13 @@ export class LivecamService {
   /**
    * Gets the live stream feed
    */
-  public getLiveStreamFeed(): Observable<{url: string}> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.streamFeed}`;
-    return <Observable<{url: string}>>this.httpClient.get(apiURL);
+  public getLiveStreamFeedPath(): string {
+    const isSSL = this.window.location.protocol === 'https:';
+    const protocol = isSSL ? 'wss:' : 'ws:';
+    const host = environment.production
+      ? this.window.location.hostname + environment.baseUrl
+      : environment.baseUrl.replace(/http(s)?:\/\//g, '');
+    const token = localStorage.getItem('accessToken');
+    return `${protocol}//${host}${environment.apiRoutes.livecam.streamFeed}?token=${token}`;
   }
 }

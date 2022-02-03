@@ -61,6 +61,7 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
+import { WINDOW_PROVIDERS } from './providers/window.providers';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
       multi: true
     },
     NgbActiveModal,
+    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })
