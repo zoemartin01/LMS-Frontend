@@ -5,13 +5,13 @@ import { InventoryItemCreateComponent } from "../item-create/inventory-item-crea
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
 import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
+import { OrderRequestComponent } from "../../order-management/request/order-request.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
-import {OrderRequestComponent} from "../../order-management/request/order-request.component";
 
 @Component({
   selector: 'app-inventory-list',
@@ -35,7 +35,11 @@ export class InventoryListComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public inventoryService: InventoryService, public authService: AuthService, private modalService: NgbModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
