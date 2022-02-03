@@ -7,6 +7,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AutosizeModule } from 'ngx-autosize';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { WINDOW_PROVIDERS } from './providers/window.providers';
 
@@ -67,6 +70,8 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
 import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
+
+
 
 @NgModule({
   declarations: [
@@ -134,6 +139,9 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     MarkdownModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
+    LoadingBarHttpClientModule,
+    LoadingBarModule,
   ],
   providers: [
     {

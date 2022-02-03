@@ -8,6 +8,7 @@ import { Recording } from '../types/recording';
 import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
 import { WINDOW } from '../providers/window.providers';
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root',
@@ -95,17 +96,28 @@ export class LivecamService {
   /**
    * Gets the data for all recordings
    */
-  public getAllRecordings(): Observable<Recording[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}`;
+  public getAllRecordings(
+    limit: number = 0,
+    offset: number = 0
+  ): Observable<Recording[]> {
+    const apiURL =
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}` +
+      `?limit=${limit}&offset=${offset}`;
     return <Observable<Recording[]>>this.httpClient.get(apiURL);
   }
 
   /**
    * Gets the data for all scheduled recordings
    */
-  public getAllScheduledRecordings(): Observable<Recording[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}`;
-    return <Observable<Recording[]>>this.httpClient.get(apiURL);
+  public getAllScheduledRecordings(
+    limit: number = 0,
+    offset: number = 0
+  ): Observable<PagedResponse<Recording>> {
+    const apiURL =
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}` +
+      `?limit=${limit}&offset=${offset}`;
+    console.log(apiURL);
+    return this.httpClient.get<PagedResponse<Recording>>(apiURL);
   }
 
   /**
