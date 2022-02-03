@@ -12,6 +12,7 @@ import { WhitelistRetailer } from "../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../types/aliases/whitelist-retailer-id";
 import { WhitelistRetailerDomain } from '../types/whitelist-retailer-domain';
 import { WhitelistRetailerDomainId } from "../types/aliases/whitelist-retailer-domain-id";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -124,10 +125,14 @@ export class AdminService {
    * Gets all whitelist retailers
    *
    */
-  public getWhitelistRetailers(): Observable<WhitelistRetailer[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`;
+  public getWhitelistRetailers(
+    limit: number = 0,
+    offset: number = 0
+  ): Observable<PagedResponse<WhitelistRetailer>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<WhitelistRetailer[]>(apiURL);
+    return this.httpClient.get<PagedResponse<WhitelistRetailer>>(apiURL);
   }
 
   /**
