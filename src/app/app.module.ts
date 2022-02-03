@@ -5,7 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AutosizeModule } from 'ngx-autosize';
+import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { WINDOW_PROVIDERS } from './providers/window.providers';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
@@ -61,7 +64,9 @@ import { WhitelistRetailerCreateComponent } from './components/settings/whitelis
 import { WhitelistRetailerDeleteComponent } from './components/settings/whitelist-retailer/delete/whitelist-retailer-delete.component';
 import { WhitelistRetailerEditComponent } from './components/settings/whitelist-retailer/edit/whitelist-retailer-edit.component';
 import { WhitelistRetailerViewComponent } from './components/settings/whitelist-retailer/view/whitelist-retailer-view.component';
-import { WINDOW_PROVIDERS } from './providers/window.providers';
+import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
+import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
+import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +121,9 @@ import { WINDOW_PROVIDERS } from './providers/window.providers';
     WhitelistRetailerDeleteComponent,
     WhitelistRetailerEditComponent,
     WhitelistRetailerViewComponent,
+    WhitelistRetailerDomainCreateComponent,
+    WhitelistRetailerDomainDeleteComponent,
+    WhitelistRetailerDomainEditComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -123,6 +131,7 @@ import { WINDOW_PROVIDERS } from './providers/window.providers';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    MarkdownModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
   ],

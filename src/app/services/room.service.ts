@@ -9,7 +9,6 @@ import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Appointment } from "../types/appointment";
-import { RoomTimespanType } from "../types/enums/timespan-type";
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +39,12 @@ export class RoomService {
    * @param {RoomId} roomId id of room
    */
   public getRoomData(roomId: RoomId): Observable<Room> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom}`;
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getSingleRoom
+      .replace(':id', roomId)}`;
 
     return this.httpClient.get<Room>(apiURL);
   }
@@ -48,12 +52,21 @@ export class RoomService {
   /**
    * Creates room with data
    *
-   * @param {Room} room data of new room
+   * @todo Sarah: fix JSDoc
+   *
+   * @param name
+   * @param description
+   * @param maxConcurrentBookings
+   * @param autoAcceptBookings
    */
-  public createRoom(room: Room): Observable<Room> {
+  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean)
+    : Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {
-      room: room
+      name: name,
+      description: description,
+      maxConcurrentBookings: maxConcurrentBookings,
+      autoAcceptBookings: autoAcceptBookings,
     };
 
     return this.httpClient.post<Room>(apiURL, requestBody);
@@ -71,12 +84,8 @@ export class RoomService {
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.updateRoom.replace(':id', roomId)}`;
-    const requestBody = {
-      roomId: roomId,
-      changedData: changedData,
-    };
 
-    return this.httpClient.patch<Room>(apiURL, requestBody);
+    return this.httpClient.patch<Room>(apiURL, changedData);
   }
 
   /**
@@ -106,6 +115,7 @@ export class RoomService {
     };
 
     return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
+    //TODO not timeslot param but parameters of timeslot
   }
 
   /**
@@ -155,96 +165,24 @@ export class RoomService {
   }
 
   /**
-   * Formats timespans to easily display them as calendar
+   * Get data of room to easily display room calendar
    *
-   * @param {RoomTimespan[][][]} room         room for which the calendar should be shown
-   * @param {number}             appointments list of appointments of the room
-   *
-   * @todo maybe add endpoint for this in backend (code can be reused there)
-   * @todo in any case refactor ist needed as this method is much too long
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {string|null} date date contained in week the calendar should be shown
    */
-  public getTimespansAsCalendar(
-    room: Room, appointments: Appointment[]
-  ): { displayTimespans: RoomTimespan[][][], minTimeslot: number } {
-    //find out min and max timeslots in available timespans
-    let minTimeslot = 23;
-    let maxTimeslot = 0;
-    for (let availableTimespan of room.availableTimeslots) {
-      if (availableTimespan.start == null || availableTimespan.end == null) {
-        continue;
-      }
-
-      let timespanStart = +availableTimespan.start.format("HH");
-      if (timespanStart < minTimeslot) {
-        minTimeslot = timespanStart;
-      }
-
-      let timespanEnd = +availableTimespan.end.format("HH");
-      if (timespanEnd > maxTimeslot) {
-        maxTimeslot = timespanEnd;
-      }
+  public getRoomCalendar(roomId: RoomId, date: number|null = null)
+    : Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
+    if(roomId === null) {
+      throw ParseArgumentException;
     }
 
-    if (minTimeslot === 23 && maxTimeslot === 0) {
-      return { displayTimespans: [], minTimeslot: 0 };
-    }
+    const dateString = date === null ? '' : `?date=${date}`;
 
-    //initialise array (timeslot, days, parallel bookings)
-    let displayTimespans: RoomTimespan[][][] = [...Array((maxTimeslot - minTimeslot + 1))]
-      .map(() => [...Array(7)]
-        .map(() => Array(room.maxConcurrentBookings)));
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
+      .replace(':id', roomId)}${dateString}`;
 
-    //set unavailable timespans due to different available timeslots
-    //@todo handle case that there are multiple available timeslots per day
-    for (let availableTimespan of room.availableTimeslots) {
-      if (availableTimespan.start == null || availableTimespan.end == null) {
-        continue;
-      }
+    return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
 
-      let timespanStart = +availableTimespan.start.format("HH");
-      if (timespanStart > minTimeslot) {
-        let hour = +availableTimespan.start.format("HH");
-        let day = (+availableTimespan.start.format("e")+6)%7;
-
-        displayTimespans[hour][day][0] = {
-          id: null,
-          room,
-          start: availableTimespan.start.subtract(timespanStart - minTimeslot, 'hours'),
-          end: availableTimespan.start,
-          type: RoomTimespanType.unavailable,
-        };
-      }
-
-      let timespanEnd = +availableTimespan.end.format("HH");
-      if (timespanEnd < maxTimeslot) {
-        let hour = +availableTimespan.end.format("HH");
-        let day = (+availableTimespan.end.format("e")+6)%7;
-
-        displayTimespans[hour][day][0] = {
-          id: null,
-          room,
-          start: availableTimespan.end,
-          end: availableTimespan.end.add(maxTimeslot - timespanEnd, 'hours'),
-          type: RoomTimespanType.unavailable,
-        };
-      }
-    }
-
-    //add all timespans to the calendar (appointments and unavailable timeslots)
-    let timespans: RoomTimespan[] = appointments;
-    timespans = timespans.concat(room.unavailableTimeslots);
-    for (let timespan of timespans) {
-      if (timespan.start == null || timespan.end == null){
-        continue;
-      }
-
-      let hour = +timespan.start.format("HH");
-      let day = (+timespan.start.format("e")+6)%7;
-
-      displayTimespans[hour][day].push(timespan);
-    }
-
-    return { displayTimespans, minTimeslot };
   }
 
   /**

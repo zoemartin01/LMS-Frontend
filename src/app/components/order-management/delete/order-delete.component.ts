@@ -4,7 +4,9 @@ import { ActivatedRoute } from "@angular/router";
 import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-order-delete',
@@ -20,12 +22,21 @@ import { OrderStatus } from "../../../types/enums/order-status";
 export class OrderDeleteComponent implements OnInit {
   public order: Order = {
     id: null,
-    item: '',
+    itemName: null,
+    item: null,
     quantity: null,
-    purchaseUrl: '',
-    userId: null,
-    userFullName: '',
-    orderStatus: OrderStatus.unknown,
+    url: '',
+    user: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: UserRole.unknown,
+      notificationChannel: NotificationChannel.unknown,
+      emailVerification: true,
+      isActiveDirectory: false,
+    },
+    status: OrderStatus.unknown,
   }
 
   /**

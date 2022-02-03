@@ -24,9 +24,7 @@ export class RoomTimeslotsComponent implements OnInit {
     name: '',
     description: '',
     maxConcurrentBookings: 1,
-    automaticRequestAcceptance: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
+    autoAcceptBookings: null,
   };
 
   /**

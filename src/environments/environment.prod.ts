@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3000/api/v1',
+  baseUrl: '/api/v1',
 
   //localStorage
   storageKeys: {
@@ -61,6 +61,7 @@ export const environment = {
     rooms: {
       getAllRooms: '/rooms',
       getSingleRoom: '/rooms/:id',
+      getRoomCalendar: '/rooms/:id/calendar',
 
       createRoom: '/rooms',
       updateRoom: '/rooms/:id',

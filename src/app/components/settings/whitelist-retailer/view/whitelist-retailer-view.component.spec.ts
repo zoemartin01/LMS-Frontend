@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { WhitelistRetailerViewComponent } from './whitelist-retailer-view.component';
 
-describe('ViewComponent', () => {
+describe('WhitelistRetailerViewComponent', () => {
   let component: WhitelistRetailerViewComponent;
   let fixture: ComponentFixture<WhitelistRetailerViewComponent>;
 
@@ -16,6 +17,9 @@ describe('ViewComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     })
     .compileComponents();

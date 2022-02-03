@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { OrderRequestComponent } from "../request/order-request.component";
 
 import { OrderService } from "../../../services/order.service";
+import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -17,14 +23,18 @@ import { OrderId } from "../../../types/aliases/order-id";
  *
  */
 export class AdminOrderListComponent implements OnInit {
-  public orders: Order[] = [];
+  public pendingOrders: Order[] = [];
+  public acceptedOrders: Order[] = [];
+  public declinedOrders: Order[] = [];
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public orderService: OrderService) {
+  constructor(public orderService: OrderService, public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -38,12 +48,32 @@ export class AdminOrderListComponent implements OnInit {
    * Gets all orders with data
    */
   public async getInventory(): Promise<void> {
+    this.orderService.getAllOrders().subscribe({
+      next: res => {
+        this.pendingOrders = res.filter((order: Order) => +order.status === OrderStatus.pending);
+        this.acceptedOrders = res.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
+        this.declinedOrders = res.filter((order: Order) => +order.status === OrderStatus.declined);
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      }
+    })
   }
 
   /**
    * Opens form to create order
    */
   public openOrderCreationForm(): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openOrderView(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
@@ -75,7 +105,7 @@ export class AdminOrderListComponent implements OnInit {
    *
    * @param {OrderId} orderId id of order
    */
-  public async acceptOrderRequest(orderId: OrderId): Promise<void> {
+  public async openOrderAcceptDialog(orderId: OrderId): Promise<void> {
   }
 
   /**
@@ -83,6 +113,13 @@ export class AdminOrderListComponent implements OnInit {
    *
    * @param {OrderId} orderId id of order
    */
-  public async declineOrderRequest(orderId: OrderId): Promise<void> {
+  public async openOrderDeclineDialog(orderId: OrderId): Promise<void> {
+  }
+
+  public getItemName(order: Order) {
+    if (order === null) {
+      throw ParseArgumentException;
+    }
+    return ((order.item === null) ? order.itemName : order.item.name);
   }
 }
