@@ -105,6 +105,16 @@ export class AdminService {
   }
 
   /**
+   * Gets all whitelist retailers
+   *
+   */
+  public getWhitelistRetailers(): Observable<WhitelistRetailer[]> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`;
+
+    return this.httpClient.get<WhitelistRetailer[]>(apiURL);
+  }
+
+  /**
    * Gets whitelist retailer data
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
@@ -120,15 +130,6 @@ export class AdminService {
     return this.httpClient.get<WhitelistRetailer>(apiURL);
   }
 
-  /**
-   * Gets all whitelist retailers
-   *
-   */
-  public getWhitelistRetailers(): Observable<WhitelistRetailer[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`;
-
-    return this.httpClient.get<WhitelistRetailer[]>(apiURL);
-  }
 
   /**
    * Creates whitelist retailer with data
