@@ -17,7 +17,6 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Recording } from 'src/app/types/recording';
 import { RecordingId } from 'src/app/types/aliases/recording-id';
-import { environment } from 'src/environments/environment';
 import { PagedList } from 'src/app/types/paged-list';
 import { PagedResponse } from 'src/app/types/paged-response';
 
