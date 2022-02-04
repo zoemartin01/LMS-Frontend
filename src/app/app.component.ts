@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { interval, startWith, switchMap } from "rxjs";
 
@@ -9,6 +9,8 @@ import { UserService } from "./services/user.service";
 import { User } from "./types/user";
 import { UnreadMessages } from "./types/unread-messages";
 import { NotificationChannel } from "./types/enums/notification-channel";
+import { environment } from 'src/environments/environment';
+import { WINDOW } from './providers/window.providers';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +44,8 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     public messagingService: MessagingService,
     private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    @Inject(WINDOW) private window: Window) {
   }
 
   /**
@@ -50,19 +53,29 @@ export class AppComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
-      this.getUnreadMessagesAmounts();
+      const ws = new WebSocket(this.unreadMessagesWebSocketPath());
 
-      //polling unread messages amount
-      setInterval(() => {
-        if (!this.authService.isUserLoggedIn()) {
-          clearInterval();
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          this.unreadMessages = data;
+        } catch (err) {
+          // ignore
         }
-
-        this.getUnreadMessagesAmounts();
-      }, 5000);
+      };
 
       this.getUserDetails();
     }
+  }
+
+  private unreadMessagesWebSocketPath(): string {
+    const isSSL = this.window.location.protocol === 'https:';
+    const protocol = isSSL ? 'wss:' : 'ws:';
+    const host = environment.production
+      ? this.window.location.hostname + environment.baseUrl
+      : environment.baseUrl.replace(/http(s)?:\/\//g, '');
+    const token = localStorage.getItem('accessToken');
+    return `${protocol}//${host}${environment.apiRoutes.messages.getCurrentUserUnreadMessagesAmounts}?token=${token}`;
   }
 
   /**
@@ -74,20 +87,6 @@ export class AppComponent implements OnInit {
         const notificationChannel: NotificationChannel = res.notificationChannel;
         this.showMessageBox = (notificationChannel === NotificationChannel.emailAndMessageBox
           || notificationChannel === NotificationChannel.messageBoxOnly);
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    });
-  }
-
-  /**
-   * Retrieves the amounts of unread messages for current user
-   */
-  public async getUnreadMessagesAmounts(): Promise<void>{
-    this.messagingService.getUnreadMessagesAmounts().subscribe({
-      next: (res: UnreadMessages) => {
-        this.unreadMessages = res;
       },
       error: error => {
         console.error('There was an error!', error);
