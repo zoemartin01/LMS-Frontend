@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 
 import{ InventoryItem } from "../types/inventory-item";
 import { InventoryItemId } from "../types/aliases/inventory-item-id";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,14 @@ export class InventoryService {
   /**
    * Retrieves all inventory items
    */
-  public getInventoryItems(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}`;
+  public getInventoryItems(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<InventoryItem>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<PagedResponse<InventoryItem>>(apiURL);
   }
 
   /**
