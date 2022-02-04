@@ -5,6 +5,7 @@ import { InventoryItemCreateComponent } from "../item-create/inventory-item-crea
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
 import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
+import { OrderRequestComponent } from "../../order-management/request/order-request.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
@@ -34,7 +35,11 @@ export class InventoryListComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public inventoryService: InventoryService, public authService: AuthService, private modalService: NgbModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -77,9 +82,21 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create order
    *
-   * @param {InventoryItemId} inventoryItemId id of item to order
+   * @param {string} inventoryItemName name of item to order
    */
-  public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
+  public openOrderCreationForm(inventoryItemName: string): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.componentInstance.requestOrderForm.controls['itemName'].setValue(inventoryItemName);
+    modal.componentInstance.requestOrderForm.controls['itemName'].disable();
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openInventoryItemViewForm(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
