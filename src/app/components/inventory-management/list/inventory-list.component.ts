@@ -5,12 +5,14 @@ import { InventoryItemCreateComponent } from "../item-create/inventory-item-crea
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
 import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
 import { InventoryItemViewComponent } from "../item-view/inventory-item-view.component";
+import { OrderRequestComponent } from "../../order-management/request/order-request.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-inventory-list',
@@ -25,7 +27,7 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
  *
  */
 export class InventoryListComponent implements OnInit {
-  public inventory: InventoryItem[] = [];
+  public inventory: PagedList<InventoryItem> = new PagedList<InventoryItem>();
 
   /**
    * Constructor
@@ -34,7 +36,11 @@ export class InventoryListComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public inventoryService: InventoryService, public authService: AuthService, private modalService: NgbModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -47,10 +53,13 @@ export class InventoryListComponent implements OnInit {
   /**
    * Gets all items with data
    */
-  public async getInventory(): Promise<void> {
-    this.inventoryService.getInventoryItems().subscribe({
+  public async getInventory(page: number = this.inventory.page): Promise<void> {
+    const pageSize = this.inventory.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.inventoryService.getInventoryItems(pageSize, offset).subscribe({
       next: res => {
-        this.inventory = res;
+        this.inventory.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -77,9 +86,21 @@ export class InventoryListComponent implements OnInit {
   /**
    * Opens form to create order
    *
-   * @param {InventoryItemId} inventoryItemId id of item to order
+   * @param {string} inventoryItemName name of item to order
    */
-  public openOrderCreationForm(inventoryItemId: InventoryItemId): void {
+  public openOrderCreationForm(inventoryItemName: string): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.componentInstance.requestOrderForm.controls['itemName'].setValue(inventoryItemName);
+    modal.componentInstance.requestOrderForm.controls['itemName'].disable();
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.openInventoryItemViewForm(result.split(' ')[1]);
+      }
+
+      if (result !== 'aborted') {
+        this.getInventory();
+      }
+    });
   }
 
   /**
