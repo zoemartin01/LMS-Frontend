@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody class="align-middle">
-      <tr *ngFor="let inventoryItem of inventory">
+      <tr *ngFor="let inventoryItem of inventory.data | paginate: { id: 'inventory', itemsPerPage: inventory.pageSize, currentPage: inventory.page, totalItems: inventory.total }">
         <td>{{ inventoryItem.name }}</td>
         <td>{{ inventoryItem.description }}</td>
         <td>{{ inventoryItem.quantity }}</td>
@@ -40,4 +40,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getInventory($event)" id="inventory"></pagination-controls>
+  </div>
 </div>

@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let recording of scheduledRecordings">
+      <tr *ngFor="let recording of scheduledRecordings.data | paginate: { id: 'scheduled', itemsPerPage: scheduledRecordings.pageSize, currentPage: scheduledRecordings.page, totalItems: scheduledRecordings.total }">
         <td>{{ recording.start?.format("DD.MM.YYYY, HH:mm") }} - {{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ userService.getFullName(recording.user!) }}</td>
         <td>{{ recording.resolution }}</td>
@@ -43,6 +43,10 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getScheduledRecordings($event)" id="scheduled"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -58,7 +62,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let recording of doneRecordings">
+      <tr *ngFor="let recording of doneRecordings.data | paginate: { id: 'done', itemsPerPage: doneRecordings.pageSize, currentPage: doneRecordings.page, totalItems: doneRecordings.total }">
         <td>{{ recording.start?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ recording.resolution }}</td>
@@ -82,4 +86,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getFinishedRecordings($event)" id="done"></pagination-controls>
+  </div>
 </div>
