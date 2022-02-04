@@ -7,6 +7,7 @@ import { environment } from "../../environments/environment";
 import { Order } from "../types/order";
 import { OrderId } from "../types/aliases/order-id";
 import { OrderStatus } from "../types/enums/order-status";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,14 @@ export class OrderService {
   /**
    * Retrieves all orders
    */
-  public getAllOrders(): Observable<Order[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllOrders}`;
+  public getAllOrders(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Order>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllOrders}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Order[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Order>>(apiURL);
   }
 
   /**
