@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let room of rooms">
+    <tr *ngFor="let room of rooms.data | paginate: { id: 'rooms', itemsPerPage: rooms.pageSize, currentPage: rooms.page, totalItems: rooms.total }">
       <td class="col-sm-2">{{ room.name }}</td>
       <td class="col-sm-4">{{ room.description }}</td>
       <td class="col-sm-1">
@@ -34,4 +34,8 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getRooms($event)" id="rooms"></pagination-controls>
+  </div>
 </div>

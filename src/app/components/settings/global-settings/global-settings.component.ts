@@ -1,17 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
-import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
-import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
-import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
+import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {GlobalSetting} from "../../../types/global-setting";
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
+import { GlobalSetting } from "../../../types/global-setting";
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import { PagedList } from 'src/app/types/paged-list';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-global-settings',
@@ -25,13 +27,13 @@ import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id"
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public whitelistRetailers: WhitelistRetailer[] = [];
+  public whitelistRetailers: PagedList<WhitelistRetailer> = new PagedList<WhitelistRetailer>();
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-      Validators.required,
+       Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-      Validators.required,
+       Validators.required,
     ]),
     "static.homepage": new FormControl(''),
     "static.safety_instructions": new FormControl(''),
@@ -53,7 +55,7 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
-    this.getWhitelistRetailers();
+    this.getWhitelistRetailers(this.whitelistRetailers.page);
   }
 
   /**
@@ -93,10 +95,16 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Gets whitelist retailers
    */
-  public async getWhitelistRetailers(): Promise<void> {
-    this.adminService.getWhitelistRetailers().subscribe({
+  public async getWhitelistRetailers(page: number): Promise<void> {
+    const pageSize = this.whitelistRetailers.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.adminService.getWhitelistRetailers(pageSize, offset).subscribe({
       next: res => {
-        this.whitelistRetailers = res;
+        this.whitelistRetailers.total = res.total;
+        this.whitelistRetailers.page = page;
+
+        this.whitelistRetailers.data = res.data;
       },
       error: error => {
         console.error('There was an error!', error);
@@ -135,14 +143,14 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-  /**
+   /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
     const modal = this.modalService.open(WhitelistRetailerCreateComponent);
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -157,7 +165,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -172,7 +180,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -187,7 +195,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -209,4 +217,3 @@ export class GlobalSettingsComponent implements OnInit {
     fileReader.readAsText(file);
   }
 }
-

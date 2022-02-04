@@ -3,6 +3,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { WINDOW_PROVIDERS } from "../../../providers/window.providers";
+
 import { LivecamDeleteComponent } from './livecam-delete.component';
 
 describe('LivecamDeleteComponent', () => {
@@ -20,6 +22,7 @@ describe('LivecamDeleteComponent', () => {
       ],
       providers: [
         NgbActiveModal,
+        WINDOW_PROVIDERS,
       ],
     })
     .compileComponents();

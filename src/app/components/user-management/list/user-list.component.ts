@@ -1,19 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
-import {UserService} from "../../../services/user.service";
+import { AdminService } from "../../../services/admin.service";
+import { UserService } from "../../../services/user.service";
 
-import {UserAcceptComponent} from "../accept/user-accept.component";
-import {UserDeclineComponent} from "../decline/user-decline.component";
-import {UserDeleteComponent} from "../delete/user-delete.component";
-import {UserEditComponent} from "../edit/user-edit.component";
-import {UserViewComponent} from "../view/user-view.component";
+import { UserAcceptComponent } from "../accept/user-accept.component";
+import { UserDeclineComponent } from "../decline/user-decline.component";
+import { UserDeleteComponent } from "../delete/user-delete.component";
+import { UserEditComponent } from "../edit/user-edit.component";
+import { UserViewComponent } from "../view/user-view.component";
 
-import {User} from "../../../types/user";
-import {UserId} from "../../../types/aliases/user-id";
-import {UserRole} from "../../../types/enums/user-role";
-import {AuthService} from "../../../services/auth.service";
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-user-list',
@@ -54,8 +53,9 @@ export class UserListComponent implements OnInit {
   public async getUsers(): Promise<void> {
     this.adminService.getUsers().subscribe({
       next: res => {
-        this.pendingUsers = res.filter((user: User) => user.role == UserRole.pending && user.emailVerification);
-        this.acceptedUsers = res.filter((user: User) => user.role != UserRole.pending && user.emailVerification);
+        this.pendingUsers = res.data.filter((user: User) => user.role == UserRole.pending && user.emailVerification);
+        this.acceptedUsers = res.data.filter((user: User) => user.role != UserRole.pending && user.emailVerification);
+        console.log(res, this.pendingUsers, this.acceptedUsers)
       },
       error: error => {
         console.error('There was an error!', error);
