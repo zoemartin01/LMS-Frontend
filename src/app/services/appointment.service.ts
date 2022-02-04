@@ -46,10 +46,14 @@ export class AppointmentService {
   /**
    * Retrieves all appointments for current user
    */
-  public getAllAppointmentsForCurrentUser(): Observable<Appointment[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}`;
+  public getAllAppointmentsForCurrentUser(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Appointment>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Appointment[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }
 
   /**
