@@ -107,7 +107,7 @@ export class AppointmentService {
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments
-      .replace(':id', seriesId)}`;
+      .replace(':id', seriesId)}?limit=${limit}&offset=${offset}`;
 
     return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }
