@@ -71,7 +71,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
    * Gets recording data of all recordings
    */
   public async getFinishedRecordings(page: number): Promise<void> {
-    const pageSize = environment.defaultPageSize;
+    const pageSize = this.doneRecordings.pageSize;
     const offset = (page - 1) * pageSize;
 
     this.livecamService.getFinishedRecordings(pageSize, offset).subscribe({
