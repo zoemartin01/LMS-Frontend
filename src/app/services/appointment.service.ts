@@ -61,15 +61,19 @@ export class AppointmentService {
    *
    * @param {RoomId} roomId id of room to retrieve appointments
    */
-  public getAllAppointmentsForRoom(roomId: RoomId): Observable<Appointment[]> {
+  public getAllAppointmentsForRoom(
+    roomId: RoomId, 
+    limit: number = 0,
+    offset: number = 0,
+    ): Observable<PagedResponse<Appointment>> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
 
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments
-      .replace(':id', roomId)}`;
+      .replace(':id', roomId)}?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Appointment[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }
 
   /**
@@ -93,7 +97,11 @@ export class AppointmentService {
    *
    * @param {SeriesId} seriesId id of the appointment
    */
-  public getAllAppointmentsForSeries(seriesId : SeriesId): Observable<Appointment[]> {
+  public getAllAppointmentsForSeries(
+    seriesId : SeriesId,
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Appointment>> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
@@ -101,7 +109,7 @@ export class AppointmentService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments
       .replace(':id', seriesId)}`;
 
-    return this.httpClient.get<Appointment[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }
 
   /**
