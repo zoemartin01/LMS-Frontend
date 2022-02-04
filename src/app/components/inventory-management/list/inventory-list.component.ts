@@ -12,6 +12,7 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-inventory-list',
@@ -26,7 +27,7 @@ import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
  *
  */
 export class InventoryListComponent implements OnInit {
-  public inventory: InventoryItem[] = [];
+  public inventory: PagedList<InventoryItem> = new PagedList<InventoryItem>();
 
   /**
    * Constructor
@@ -52,10 +53,13 @@ export class InventoryListComponent implements OnInit {
   /**
    * Gets all items with data
    */
-  public async getInventory(): Promise<void> {
-    this.inventoryService.getInventoryItems().subscribe({
+  public async getInventory(page: number = this.inventory.page): Promise<void> {
+    const pageSize = this.inventory.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.inventoryService.getInventoryItems(pageSize, offset).subscribe({
       next: res => {
-        this.inventory = res;
+        this.inventory.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);

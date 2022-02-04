@@ -10,6 +10,8 @@ export const environment = {
     userRole: 'userRole',
   },
 
+  defaultPageSize: 10,
+
   //routes
   apiRoutes: {
     auth: {

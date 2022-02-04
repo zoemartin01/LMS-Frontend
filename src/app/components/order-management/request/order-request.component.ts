@@ -67,7 +67,7 @@ export class OrderRequestComponent implements OnInit {
   public async getAllInventoryItems(): Promise<void> {
     this.inventoryService.getInventoryItems().subscribe({
       next: res => {
-        this.existingItems = res;
+        this.existingItems = res.data;
       },
       error: error => {
         console.error('There was an error!', error)

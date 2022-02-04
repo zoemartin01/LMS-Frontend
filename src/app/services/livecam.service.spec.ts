@@ -137,7 +137,7 @@ describe('LivecamService', () => {
   });
 
   it('should get all recordings', () => {
-    service.getAllRecordings().subscribe((res: any) => {
+    service.getFinishedRecordings().subscribe((res: any) => {
       expect(res.length).toBe(2);
       expect(res).toEqual([
         {
