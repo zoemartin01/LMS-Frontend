@@ -9,6 +9,7 @@ import { TimespanId } from "../types/aliases/timespan-id";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +28,19 @@ export class AppointmentService {
   /**
    * Retrieves all appointments
    */
-  public getAllAppointments(): Observable<Appointment[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`;
+  public getAllAppointments(
+    limit: number = 0,
+    offset: number = 0,
+    confirmationStatus: ConfirmationStatus|undefined = undefined,
+  ): Observable<PagedResponse<Appointment>> {
+    let apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Appointment[]>(apiURL);
+    if (confirmationStatus !== undefined) {
+      apiURL += `&confirmationStatus=${confirmationStatus}`;
+    }
+
+    return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }
 
   /**
