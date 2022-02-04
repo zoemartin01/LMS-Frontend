@@ -96,14 +96,15 @@ export class LivecamService {
   /**
    * Gets the data for all recordings
    */
-  public getAllRecordings(
+  public getFinishedRecordings(
     limit: number = 0,
     offset: number = 0
-  ): Observable<Recording[]> {
+  ): Observable<PagedResponse<Recording>> {
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}` +
       `?limit=${limit}&offset=${offset}`;
-    return <Observable<Recording[]>>this.httpClient.get(apiURL);
+
+    return this.httpClient.get<PagedResponse<Recording>>(apiURL);
   }
 
   /**
@@ -116,7 +117,7 @@ export class LivecamService {
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}` +
       `?limit=${limit}&offset=${offset}`;
-    console.log(apiURL);
+
     return this.httpClient.get<PagedResponse<Recording>>(apiURL);
   }
 

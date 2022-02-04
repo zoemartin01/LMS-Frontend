@@ -27,12 +27,7 @@ import { environment } from 'src/environments/environment';
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public whitelistRetailers: PagedList<WhitelistRetailer> = {
-    data: [],
-    total: 0,
-    page: 1,
-    pageSize: environment.defaultPageSize,
-  }
+  public whitelistRetailers: PagedList<WhitelistRetailer> = new PagedList<WhitelistRetailer>();
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
        Validators.required,

@@ -17,8 +17,6 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Recording } from 'src/app/types/recording';
 import { RecordingId } from 'src/app/types/aliases/recording-id';
-import { map, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PagedList } from 'src/app/types/paged-list';
 import { PagedResponse } from 'src/app/types/paged-response';
@@ -35,15 +33,9 @@ import { PagedResponse } from 'src/app/types/paged-response';
  *
  */
 export class LivecamOverviewComponent implements OnInit, AfterViewInit {
-  public doneRecordings: Recording[] = [];
-  public scheduledRecordings: PagedList<Recording> = {
-    data: [],
-    total: 0,
-    page: 1,
-    pageSize: environment.defaultPageSize,
-  };
+  public doneRecordings: PagedList<Recording> = new PagedList<Recording>();
+  public scheduledRecordings: PagedList<Recording> = new PagedList<Recording>();
   public moment = moment;
-
 
   @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> =
     {} as ElementRef;
@@ -65,8 +57,8 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getRecordings();
-    this.getScheduledRecordings(1);
+    this.getFinishedRecordings(this.doneRecordings.page);
+    this.getScheduledRecordings(this.scheduledRecordings.page);
   }
 
   ngAfterViewInit(): void {
@@ -78,16 +70,21 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   /**
    * Gets recording data of all recordings
    */
-  public async getRecordings(): Promise<void> {
+  public async getFinishedRecordings(page: number): Promise<void> {
     const pageSize = environment.defaultPageSize;
+    const offset = (page - 1) * pageSize;
 
-    this.livecamService.getAllRecordings(pageSize, (pageSize - 1) * pageSize).subscribe({
+    this.livecamService.getFinishedRecordings(pageSize, offset).subscribe({
       next: (res) => {
-        this.doneRecordings = res.map((recording: Recording) => {
-          recording.start = moment(recording.start);
-          recording.end = moment(recording.end);
-          return recording;
-        });
+        this.doneRecordings.parse(
+          res,
+          page,
+          (recording: Recording) => {
+            recording.start = moment(recording.start);
+            recording.end = moment(recording.end);
+            return recording;
+          }
+        )
       },
       error: (error) => {
         console.error('There was an error!', error);
@@ -100,20 +97,23 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
    */
   public async getScheduledRecordings(page: number): Promise<void> {
     const pageSize = this.scheduledRecordings.pageSize;
+    const offset = (page - 1) * pageSize;
 
-    this.livecamService.getAllScheduledRecordings(pageSize, (page - 1) * pageSize).subscribe({
+    this.livecamService.getAllScheduledRecordings(pageSize, offset).subscribe({
       next: (res: PagedResponse<Recording>) => {
-        this.scheduledRecordings.total = res.total;
-        this.scheduledRecordings.page = page;
-
-        this.scheduledRecordings.data = res.data.map((recording: Recording) => {
-          recording.start = moment(recording.start);
-          recording.end = moment(recording.end);
-          return recording;
-        });
-      }, error: (error) => {
+        this.scheduledRecordings.parse(
+          res,
+          page,
+          (recording: Recording) => {
+            recording.start = moment(recording.start);
+            recording.end = moment(recording.end);
+            return recording;
+          }
+        );
+      },
+      error: (error) => {
         console.error('There was an error!', error);
-      }
+      },
     });
   }
 
@@ -175,7 +175,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     modal.componentInstance.recording.id = recordingId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getRecordings();
+        this.getFinishedRecordings(this.doneRecordings.page);
         this.getScheduledRecordings(this.scheduledRecordings.page);
       }
     });
@@ -188,7 +188,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     const modal = this.modalService.open(LivecamScheduleComponent);
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getRecordings();
+        this.getFinishedRecordings(this.doneRecordings.page);
         this.getScheduledRecordings(this.scheduledRecordings.page);
       }
     });
