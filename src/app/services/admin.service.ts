@@ -55,10 +55,14 @@ export class AdminService {
   /**
    * Gets users
    */
-  public getUsers(): Observable<User[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllUsers}`;
+  public getUsers(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<User>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllUsers}` +
+    `?limit=${limit}&offset=${offset}`
 
-    return this.httpClient.get<User[]>(apiURL);
+    return this.httpClient.get<PagedResponse<User>>(apiURL);
   }
 
   /**
