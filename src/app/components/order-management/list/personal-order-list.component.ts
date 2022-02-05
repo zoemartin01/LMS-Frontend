@@ -60,9 +60,9 @@ export class PersonalOrderListComponent implements OnInit {
   public async getOrders(): Promise<void> {
     this.orderService.getAllOrdersForCurrentUser().subscribe({
       next: res => {
-        this.pendingOrders = res.filter((order: Order) => +order.status === OrderStatus.pending);
-        this.acceptedOrders = res.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
-        this.declinedOrders = res.filter((order: Order) => +order.status === OrderStatus.declined);
+        this.pendingOrders = res.data.filter((order: Order) => +order.status === OrderStatus.pending);
+        this.acceptedOrders = res.data.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
+        this.declinedOrders = res.data.filter((order: Order) => +order.status === OrderStatus.declined);
       },
       error: error => {
         console.error('There was an error!', error);

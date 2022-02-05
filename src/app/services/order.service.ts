@@ -40,10 +40,14 @@ export class OrderService {
   /**
    * Retrieves all orders for current user
    */
-  public getAllOrdersForCurrentUser(): Observable<Order[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUserOrders}`;
+  public getAllOrdersForCurrentUser(
+    limit: number = 0,
+    offset: number = 0,
+    ): Observable<PagedResponse<Order>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUserOrders}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Order[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Order>>(apiURL);
   }
 
   /**
