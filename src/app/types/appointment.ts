@@ -11,4 +11,5 @@ export interface Appointment extends RoomTimespan {
   confirmationStatus: ConfirmationStatus,
   timeSlotRecurrence: TimeSlotRecurrence,
   maxStart: moment.Moment | undefined,
+  amount: number,
 }
