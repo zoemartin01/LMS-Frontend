@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Edit Order</h4>
+  <h4 class="modal-title">View Order</h4>
 </div>
 
 <div class="modal-body">
@@ -34,4 +34,10 @@
       </select>
     </div>
   </form>
+</div>
+
+<div class="modal-footer">
+  <a (click)="openOrderEditForm()"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+  <a (click)="openOrderDeletionDialog()"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Close</button>
 </div>
