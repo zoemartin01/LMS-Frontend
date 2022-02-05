@@ -28,6 +28,7 @@ export class AppointmentAcceptComponent implements OnInit {
     date: new FormControl('', Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
     amount: new FormControl(1, Validators.required),
+    lastDate: new FormControl('', Validators.required),
   })
   public appointment: Appointment = {
     id: null,
@@ -83,14 +84,17 @@ export class AppointmentAcceptComponent implements OnInit {
 
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
-
+        if (this.appointment.maxStart !== undefined) {
+          this.appointment.maxStart = moment(this.appointment.maxStart);
+          this.appointmentAcceptForm.controls['lastDate'].setValue(res.maxStart?.format('DD.MM.YYYY'));
+        }
         this.appointmentAcceptForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
         this.appointmentAcceptForm.controls['room'].setValue(res.room.name);
         this.appointmentAcceptForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
         this.appointmentAcceptForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
         this.appointmentAcceptForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentAcceptForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
-        this.appointmentAcceptForm.controls['lastDate'].setValue(res.maxStart);
+        this.appointmentAcceptForm.controls['amount'].setValue(res.amount);
       },
       error: error => {
         console.error('There was an error!', error);

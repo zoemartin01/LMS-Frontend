@@ -46,7 +46,7 @@
                  id="endHour" formControlName="endHour" autocomplete="endHour">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" >
       <label for="timeSlotRecurrence" class="my-1">Recurrence</label>
       <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
         <option value="1">single</option>
@@ -64,10 +64,19 @@
                id="lastDate" formControlName="lastDate" autocomplete="lastDate">
       </div>
     </div>
+    <div class="form-group">
+      <label for="amount" class="my-1">Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Amount" aria-describedby="inputGroupPrepend"
+               id="amount" formControlName="amount" autocomplete="amount">
+      </div>
+    </div>
   </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-success" (click)="acceptAppointment()">Accept Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-success" (click)="acceptAppointment()">Accept Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-success" (click)="acceptAppointmentSeries()">Accept Appointment</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
