@@ -31,7 +31,7 @@ export class LivecamScheduleComponent {
       Validators.required,
       Validators.min(1),
     ]),
-    bitrate_unit: new FormControl('mbps', [
+    bitrate_unit: new FormControl('kbps', [
       Validators.required,
     ]),
   });
@@ -97,6 +97,12 @@ export class LivecamScheduleComponent {
   }
 
   public async updateEndField() : Promise<void> {
+    console.log(this.resolutions());
     this.endMin = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
+  }
+
+  public resolutions(): string[] {
+    const keys = Object.keys(VideoResolution).filter(x => !(parseInt(x) >= 0)).filter(x => x != '' && x != 'unknown');
+    return keys.map(x => Object.keys(VideoResolution)[Object.values(VideoResolution).indexOf(x)]);
   }
 }
