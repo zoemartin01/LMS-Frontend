@@ -13,7 +13,6 @@ import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-global-settings',
@@ -81,15 +80,6 @@ export class GlobalSettingsComponent implements OnInit {
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
       ) / 86400000
     );
-    this.globalSettingsForm.controls['static.homepage'].setValue(
-      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.homepage')[0].value
-    );
-    this.globalSettingsForm.controls['static.safety_instructions'].setValue(
-      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.safety_instructions')[0].value
-    );
-    this.globalSettingsForm.controls['static.lab_rules'].setValue(
-      +globalSettings.filter((setting: GlobalSetting) => setting.key === 'static.lab_rules')[0].value
-    );
   }
 
   /**
@@ -101,7 +91,9 @@ export class GlobalSettingsComponent implements OnInit {
 
     this.adminService.getWhitelistRetailers(pageSize, offset).subscribe({
       next: res => {
+
         this.whitelistRetailers.total = res.total;
+        console.log(        this.whitelistRetailers.total);
         this.whitelistRetailers.page = page;
 
         this.whitelistRetailers.data = res.data;
