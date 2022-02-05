@@ -91,6 +91,7 @@ export const environment = {
     inventory_item: {
       getAllItems: '/inventory-items',
       getSingleItem: '/inventory-items/:id',
+      getByName: 'inventory-items/name/:name',
 
       createItem: '/inventory-items',
       updateItem: '/inventory-items/:id',
