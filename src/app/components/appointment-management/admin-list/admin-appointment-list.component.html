@@ -35,7 +35,7 @@
         {{ pendingAppointment.start?.format("HH:mm") }} - {{ pendingAppointment.end?.format("HH:mm") }}
       </td>
       <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][pendingAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(pendingAppointment.seriesId) | async }}</td>
+      <td class="col-sm-2">{{ pendingAppointment.maxStart ? pendingAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(pendingAppointment.user) }}</td>
       <td class="d-flex justify-content-end">
         <a (click)="acceptAppointmentRequest(
@@ -81,7 +81,7 @@
         {{ acceptedAppointment.start?.format("HH:mm") }} - {{ acceptedAppointment.end?.format("HH:mm") }}
       </td>
       <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][acceptedAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(acceptedAppointment.seriesId) | async }}</td>
+      <td class="col-sm-2">{{ acceptedAppointment.maxStart ? acceptedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(acceptedAppointment.user) }}</td>
       <td class="d-flex justify-content-end">
         <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary mx-1">
@@ -124,7 +124,7 @@
         {{ deniedAppointment.start?.format("HH:mm") }} - {{ deniedAppointment.end?.format("HH:mm") }}
       </td>
       <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][deniedAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(deniedAppointment.seriesId) | async }}</td>
+      <td class="col-sm-2">{{ deniedAppointment.maxStart ? deniedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(deniedAppointment.user) }}</td>
         <td class="d-flex justify-content-end">
         <a (click)="openAppointmentView(deniedAppointment.id)" type="button" class="btn btn-secondary mx-1">

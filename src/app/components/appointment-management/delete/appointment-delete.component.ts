@@ -46,7 +46,8 @@ export class AppointmentDeleteComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
-    timeSlotRecurrence: TimeSlotRecurrence.unknown
+    timeSlotRecurrence: TimeSlotRecurrence.unknown,
+    maxStart: undefined
   };
 
   /**

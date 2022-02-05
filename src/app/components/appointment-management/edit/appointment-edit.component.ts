@@ -58,7 +58,8 @@ export class AppointmentEditComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
-    timeSlotRecurrence: TimeSlotRecurrence.unknown
+    timeSlotRecurrence: TimeSlotRecurrence.unknown,
+    maxStart: undefined
   };
   public rooms: Room[] = [];
   public startTimeSlots = Array.from(Array(5).keys());//@todo set dinamically

@@ -82,6 +82,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );
@@ -112,6 +113,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );
@@ -148,6 +150,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );
