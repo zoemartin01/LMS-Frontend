@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pendingUser of pendingUsers">
+    <tr *ngFor="let pendingUser of pendingUsers.data | paginate: { id: 'pending', itemsPerPage: pendingUsers.pageSize, currentPage: pendingUsers.page, totalItems: pendingUsers.total }">
       <td class="col-sm-4">{{ userService.getFullName(pendingUser) }}</td>
       <td class="col-sm-4">{{ pendingUser.email }}</td>
       <td class="col-sm-2"></td>
@@ -27,6 +27,9 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedUsers($event)" id="pending"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -42,7 +45,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let acceptedUser of acceptedUsers">
+    <tr *ngFor="let acceptedUser of acceptedUsers.data | paginate: { id: 'accepted', itemsPerPage: acceptedUsers.pageSize, currentPage: acceptedUsers.page, totalItems: acceptedUsers.total }">
       <td class="col-sm-4">{{ userService.getFullName(acceptedUser) }}</td>
       <td class="col-sm-4">{{ acceptedUser.email }}</td>
       <td class="col-sm-2">{{ ['', 'Pending User', 'Visitor', 'Admin'][acceptedUser.role] }}</td>
@@ -61,4 +64,7 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedUsers($event)" id="accepted"></pagination-controls>
+  </div>
 </div>
