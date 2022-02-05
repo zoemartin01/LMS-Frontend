@@ -13,7 +13,6 @@ import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-global-settings',
@@ -35,6 +34,9 @@ export class GlobalSettingsComponent implements OnInit {
     "recording.auto_delete": new FormControl('', [
        Validators.required,
     ]),
+    "static.homepage": new FormControl(''),
+    "static.safety_instructions": new FormControl(''),
+    "static.lab_rules": new FormControl(''),
   });
 
   /**
@@ -68,6 +70,11 @@ export class GlobalSettingsComponent implements OnInit {
     })
   }
 
+  /**
+   * @todo Mario write JSDoc
+   * @param globalSettings
+   * @private
+   */
   private updateGlobalSettingsForm(globalSettings: GlobalSetting[]) {
     this.globalSettingsForm.controls['user.max_recordings'].setValue(
       +globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value
@@ -90,7 +97,6 @@ export class GlobalSettingsComponent implements OnInit {
       next: res => {
         this.whitelistRetailers.total = res.total;
         this.whitelistRetailers.page = page;
-
         this.whitelistRetailers.data = res.data;
       },
       error: error => {
@@ -106,10 +112,17 @@ export class GlobalSettingsComponent implements OnInit {
     if (this.globalSettingsForm.valid) {
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        changedFields.push({
-          key,
-          value: this.globalSettingsForm.controls[key].value,
-        });
+        if (key == 'recording.auto_delete') {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value * 86400000,
+          });
+        } else {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value,
+          });
+        }
       }
 
       this.adminService.updateGlobalSettings(changedFields).subscribe({
@@ -178,5 +191,22 @@ export class GlobalSettingsComponent implements OnInit {
         this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
+  }
+
+  /**
+   * Updates content of static page
+   * @param {any} event file selection event that triggered this method
+   * @param {string} staticPageName name of the static page to update
+   */
+  onFileSelected(event: any, staticPageName : string) {
+    const file: File = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      const fileContents = fileReader.result;
+      this.globalSettingsForm.controls[staticPageName].setValue(
+        fileContents
+      );
+    };
+    fileReader.readAsText(file);
   }
 }
