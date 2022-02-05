@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
+import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {UserService} from "../../../services/user.service";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-delete',

@@ -37,7 +37,6 @@ export class GlobalSettingsComponent implements OnInit {
     "static.homepage": new FormControl(''),
     "static.safety_instructions": new FormControl(''),
     "static.lab_rules": new FormControl(''),
-
   });
 
   /**
@@ -71,6 +70,11 @@ export class GlobalSettingsComponent implements OnInit {
     })
   }
 
+  /**
+   * @todo Mario write JSDoc
+   * @param globalSettings
+   * @private
+   */
   private updateGlobalSettingsForm(globalSettings: GlobalSetting[]) {
     this.globalSettingsForm.controls['user.max_recordings'].setValue(
       +globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value
@@ -91,11 +95,8 @@ export class GlobalSettingsComponent implements OnInit {
 
     this.adminService.getWhitelistRetailers(pageSize, offset).subscribe({
       next: res => {
-
         this.whitelistRetailers.total = res.total;
-        console.log(        this.whitelistRetailers.total);
         this.whitelistRetailers.page = page;
-
         this.whitelistRetailers.data = res.data;
       },
       error: error => {

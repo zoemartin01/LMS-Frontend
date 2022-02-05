@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {UserService} from "../../../services/user.service";
+import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
 
 @Component({
   selector: 'app-user-settings',
@@ -17,8 +17,6 @@ import {UserDeleteComponent} from "../../user-management/delete/user-delete.comp
 
 /**
  * Component for user settings page
- *
- *
  */
 export class UserSettingsComponent implements OnInit {
   public userSettingsForm: FormGroup = new FormGroup({
@@ -26,7 +24,6 @@ export class UserSettingsComponent implements OnInit {
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
   });
-
   public user: User = {
     id: null,
     firstName: '',
@@ -37,7 +34,6 @@ export class UserSettingsComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-
   passwordConfirmationFails: boolean = false;
 
   /**

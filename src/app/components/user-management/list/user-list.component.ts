@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
 import { UserService } from "../../../services/user.service";
 
 import { UserAcceptComponent } from "../accept/user-accept.component";
@@ -12,8 +13,7 @@ import { UserViewComponent } from "../view/user-view.component";
 
 import { User } from "../../../types/user";
 import { UserId } from "../../../types/aliases/user-id";
-import {AuthService} from "../../../services/auth.service";
-import {PagedList} from "../../../types/paged-list";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-user-list',
@@ -38,7 +38,12 @@ export class UserListComponent implements OnInit {
    * @param {UserService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public userService: UserService, public adminService: AdminService, public authService: AuthService, private modalService: NgbModal) {
+  constructor(
+    public userService: UserService,
+    public adminService: AdminService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
