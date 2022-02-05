@@ -127,12 +127,8 @@ export class OrderEditComponent implements OnInit {
    * @param {NgForm} orderEditForm submitted edit form
    */
   public async editOrder(): Promise<void> {
-    this.orderService.updateOrderData(this.order.id, {
-      itemName: this.orderEditForm.controls['itemName'].value,
-      quantity: this.orderEditForm.controls['quantity'].value,
-      url: this.orderEditForm.controls['url'].value,
-      status: +this.orderEditForm.controls['status'].value,
-    }).subscribe({
+    this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)
+    ).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
@@ -140,5 +136,28 @@ export class OrderEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
+  }
+
+  /**
+   * Gets all values of a form that are marked with a dirty bit
+   *
+   * @param {FormGroup} form form
+   */
+  public getDirtyValues(form: FormGroup) {
+    let dirtyValues: { [key: string]: any} = {};
+
+    Object.keys(form.controls)
+      .forEach(key => {
+        let currentControl = form.controls[key];
+
+        if (currentControl.dirty) {
+          if ((<FormGroup>currentControl).controls)
+            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
+          else
+            dirtyValues[key] = currentControl.value;
+        }
+      });
+
+    return dirtyValues;
   }
 }
