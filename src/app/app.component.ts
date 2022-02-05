@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { interval, startWith, switchMap } from "rxjs";
+import { WINDOW } from './providers/window.providers';
+import { environment } from 'src/environments/environment';
 
 import { AuthService } from "./services/auth.service";
 import { MessagingService } from "./services/messaging.service";
@@ -9,8 +10,6 @@ import { UserService } from "./services/user.service";
 import { User } from "./types/user";
 import { UnreadMessages } from "./types/unread-messages";
 import { NotificationChannel } from "./types/enums/notification-channel";
-import { environment } from 'src/environments/environment';
-import { WINDOW } from './providers/window.providers';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +38,7 @@ export class AppComponent implements OnInit {
    * @param {MessagingService} messagingService service providing messaging functionalities
    * @param {UserService} userService service providing user functionalities
    * @param {Router} router router providing navigation
+   * @param {Window} window window provider
    */
   constructor(
     public authService: AuthService,
