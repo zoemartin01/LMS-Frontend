@@ -35,10 +35,8 @@ export class LivecamScheduleComponent {
       Validators.required,
     ]),
   });
-
   public moment = moment;
   public endMin = moment();
-
   public scheduleError: boolean = false;
   public scheduleErrorMessage: string = '';
 
@@ -96,11 +94,16 @@ export class LivecamScheduleComponent {
     }
   }
 
+  /**
+   * @todo Zoe JSDoc
+   */
   public async updateEndField() : Promise<void> {
-    console.log(this.resolutions());
     this.endMin = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
   }
 
+  /**
+   * @todo Zoe JSDoc
+   */
   public resolutions(): string[] {
     const keys = Object.keys(VideoResolution).filter(x => !(parseInt(x) >= 0)).filter(x => x != '' && x != 'unknown');
     return keys.map(x => Object.keys(VideoResolution)[Object.values(VideoResolution).indexOf(x)]);
