@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
-import { AppointmentService } from "../../../services/appointment.service";
+import {AppointmentService} from "../../../services/appointment.service";
 
-import { Appointment } from "../../../types/appointment";
-import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { RoomTimespanType } from "../../../types/enums/timespan-type";
-import { UserRole } from "../../../types/enums/user-role";
+import {Appointment} from "../../../types/appointment";
+import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {RoomTimespanType} from "../../../types/enums/timespan-type";
+import {UserRole} from "../../../types/enums/user-role";
+import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-delete',
@@ -45,6 +46,9 @@ export class AppointmentDeleteComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
+    timeSlotRecurrence: TimeSlotRecurrence.unknown,
+    maxStart: undefined,
+    amount: 1
   };
 
   /**

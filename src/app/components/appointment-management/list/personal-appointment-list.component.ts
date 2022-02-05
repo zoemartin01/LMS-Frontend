@@ -11,7 +11,6 @@ import { AppointmentViewComponent } from "../view/appointment-view.component";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
-import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -59,6 +58,7 @@ export class PersonalAppointmentListComponent implements OnInit {
           (appointment: Appointment) => {
             appointment.start = moment(appointment.start);
             appointment.end = moment(appointment.end);
+            if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
             return appointment;
           }
         )

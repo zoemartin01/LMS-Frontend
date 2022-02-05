@@ -84,6 +84,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );
@@ -114,6 +115,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );
@@ -140,9 +142,7 @@ export class AdminAppointmentListComponent implements OnInit {
    * @todo Sarah JSDoc
    * @param page
    */
-  public async getDeniedAppointments(
-    page: number = this.deniedAppointments.page
-  ) : Promise<void> {
+  public async getDeniedAppointments(page: number = this.deniedAppointments.page) : Promise<void> {
     const pageSize = this.deniedAppointments.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -156,6 +156,7 @@ export class AdminAppointmentListComponent implements OnInit {
             (appointment: Appointment) => {
               appointment.start = moment(appointment.start);
               appointment.end = moment(appointment.end);
+              if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
               return appointment;
             }
           );

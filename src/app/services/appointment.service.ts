@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
-import { Observable } from "rxjs";
+import { firstValueFrom, last, Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import * as moment from "moment";
 
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
+import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
-import {Room} from "../types/room";
 import { PagedResponse } from '../types/paged-response';
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,7 @@ export class AppointmentService {
    * @param {RoomId} roomId id of room to retrieve appointments
    */
   public getAllAppointmentsForRoom(
-    roomId: RoomId, 
+    roomId: RoomId,
     limit: number = 0,
     offset: number = 0,
     ): Observable<PagedResponse<Appointment>> {
@@ -97,7 +98,7 @@ export class AppointmentService {
   /**
    * Retrieves all data of the appointments for one series
    *
-   * @param {SeriesId} seriesId id of the appointment
+   * @param {SeriesId} seriesId id of the appointment series
    */
   public getAllAppointmentsForSeries(
     seriesId : SeriesId,
@@ -115,20 +116,37 @@ export class AppointmentService {
   }
 
   /**
+   * Helper method to get the last date of an appointment of a series
+   *
+   * @param seriesId id of the appointment series
+   */
+  public async getLastDateForSeries(seriesId : SeriesId) {
+    if(seriesId != null) {
+      const appointments = await firstValueFrom(this.getAllAppointmentsForSeries(seriesId));
+      const lastAppointment = appointments.data[appointments.data.length - 1];
+      return lastAppointment.start?.format("DD.MM.YYYY");
+    } else {
+      return '';
+    }
+  }
+
+  /**
    * Creates a new appointment request
    *
    * @param room room of the appointment to take place in
    * @param confirmationStatus default pending
    * @param start start of the appointment
    * @param end end of the appointment
+   * @param timeSlotRecurrence recurrence of the appointment
    */
-  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment,): Observable<Appointment> {
+  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       room: room,
       confirmationStatus: confirmationStatus,
       start: start,
       end: end,
+      timeSlotRecurrence: timeSlotRecurrence
     };
     return this.httpClient.post<Appointment>(apiURL, requestBody);
   }
@@ -140,10 +158,11 @@ export class AppointmentService {
    * @param confirmationStatus default pending
    * @param start start of the appointment
    * @param end end of the appointment
+   * @param timeSlotRecurrence recurrence of the appointment
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, difference: number, amount: number)
+  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence, difference: number, amount: number)
     : Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
@@ -151,6 +170,7 @@ export class AppointmentService {
       confirmationStatus: confirmationStatus,
       start: start,
       end: end,
+      timeSlotRecurrence: timeSlotRecurrence,
       difference: difference,
       amount: amount
     };

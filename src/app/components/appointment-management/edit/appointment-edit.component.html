@@ -1,119 +1,82 @@
-<div class="row justify-content-center">
-  <div class="card">
-    <div class="col-auto card-body">
-      <form (keyup.enter)="editAppointment()" [formGroup]="appointmentEditForm" (ngSubmit)="editAppointment()">
-        <div class="form-group">
-          <label for="email" class="my-1">E-Mail Address</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupPrepend">@</span>
-            </div>
-            <input type="email" class="form-control" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
-                   id="email" formControlName="email" autocomplete="email">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="my-1">Password</label>
-          <input type="password" class="form-control" placeholder="Password" id="password"
-                 formControlName="password">
-        </div>
-        <br>
-        <div class="row">
-          <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!appointmentEditForm.valid" role="button">Log in</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+<div class="modal-header">
+  <h5 class="modal-title">Edit Appointment</h5>
+  <a routerLink="/room-overview/145" class="btn-close" role="button"></a>
 </div>
-
-<div class="modal" id="edit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-     aria-hidden="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Appointment</h5>
-        <a routerLink="/room-overview/145" class="btn-close" role="button"></a>
+<div class="modal-body">
+  <form class="form-inline col-sm-6 mx-auto py-3">
+    <div class="form-group">
+      <label for="weekday" class="my-1">Weekday</label>
+      <div class="input-group">
+        <select class="form-select" id="weekday" name="weekday">
+          <option value="1"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 1">
+            Monday
+          </option>
+          <option value="2"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 2">
+            Tuesday
+          </option>
+          <option value="3"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 3">
+            Wednesday
+          </option>
+          <option value="4"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 4">
+            Thursday
+          </option>
+          <option value="5"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 5">
+            Friday
+          </option>
+          <option value="6"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 6">
+            Saturday
+          </option>
+          <option value="0"
+                  [selected]="appointment.start !== null && +appointment.start.format('e') === 0">
+            Sunday
+          </option>
+        </select>
       </div>
-      <div class="modal-body">
-        <form class="form-inline col-sm-6 mx-auto py-3">
-          <div class="form-group">
-            <label for="weekday" class="my-1">Weekday</label>
-            <div class="input-group">
-              <select class="form-select" id="weekday" name="weekday">
-                <option value="1"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 1">
-                  Monday
-                </option>
-                <option value="2"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 2">
-                  Tuesday
-                </option>
-                <option value="3"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 3">
-                  Wednesday
-                </option>
-                <option value="4"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 4">
-                  Thursday
-                </option>
-                <option value="5"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 5">
-                  Friday
-                </option>
-                <option value="6"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 6">
-                  Saturday
-                </option>
-                <option value="0"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 0">
-                  Sunday
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="startTime" class="my-1">Start time</label>
-            <div class="input-group">
-              <select class="form-select" id="startTime" name="startTime">
-                <option [value]="i" *ngFor="let i of startTimeSlots"
-                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
-                  {{ i }}:00
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="endTime" class="my-1">End time</label>
-            <div class="input-group">
-              <select class="form-select" id="endTime" name="endTime">
-                <option [value]="i" *ngFor="let i of endTimeSlots"
-                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
-                  {{ i }}:00
-                </option>
-              </select>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col text-center">
-              <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" id="remember_me">
-                <label class="form-check-label" for="remember_me">Recurring Appointment</label>
-              </div>
-            </div>
-          </div>
-          <br>
-        </form>
+    </div>
+    <div class="form-group">
+      <label for="startTime" class="my-1">Start time</label>
+      <div class="input-group">
+        <select class="form-select" id="startTime" name="startTime">
+          <option [value]="i" *ngFor="let i of startTimeSlots"
+                  [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
+            {{ i }}:00
+          </option>
+        </select>
       </div>
-      <div class="modal-footer">
-        <div class="col text-center">
-          <a routerLink="#" class="btn btn-primary" role="button">Save</a>
-          <a routerLink="#" class="btn btn-primary" role="button">Save recurring</a>
-          <a routerLink="/room-overview/145" class="btn btn-danger" role="button">Abort</a>
+    </div>
+    <div class="form-group">
+      <label for="endTime" class="my-1">End time</label>
+      <div class="input-group">
+        <select class="form-select" id="endTime" name="endTime">
+          <option [value]="i" *ngFor="let i of endTimeSlots"
+                  [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
+            {{ i }}:00
+          </option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col text-center">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="remember_me">
+          <label class="form-check-label" for="remember_me">Recurring Appointment</label>
         </div>
       </div>
     </div>
+    <br>
+  </form>
+</div>
+<div class="modal-footer">
+  <div class="col text-center">
+    <a routerLink="#" class="btn btn-primary" role="button">Save</a>
+    <a routerLink="#" class="btn btn-primary" role="button">Save recurring</a>
+    <a routerLink="/room-overview/145" class="btn btn-danger" role="button">Abort</a>
   </div>
 </div>
