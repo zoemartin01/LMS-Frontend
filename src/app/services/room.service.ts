@@ -9,6 +9,7 @@ import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Appointment } from "../types/appointment";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +28,14 @@ export class RoomService {
   /**
    * Gets data of all rooms
    */
-  public getRoomsData(): Observable<Room[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}`;
+  public getRoomsData(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Room>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Room[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Room>>(apiURL);
   }
 
   /**

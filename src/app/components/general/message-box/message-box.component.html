@@ -3,7 +3,7 @@
 </div>
 
 <div class="row card-container">
-  <div class="card" *ngFor="let message of messages">
+  <div class="card" *ngFor="let message of messages.data | paginate: { id: 'messages', itemsPerPage: messages.pageSize, currentPage: messages.page, totalItems: messages.total }">
     <div class="card-body">
       <h5 class="card-title">{{ message.title }}</h5>
       <p class="card-text">{{ message.content }}</p>
@@ -30,7 +30,11 @@
       </span>
     </div>
   </div>
-  <div *ngIf="messages.length === 0" class="text-center">
+  <div *ngIf="messages.data.length === 0" class="text-center">
     no messages
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getMessages($event)" id="messages"></pagination-controls>
   </div>
 </div>

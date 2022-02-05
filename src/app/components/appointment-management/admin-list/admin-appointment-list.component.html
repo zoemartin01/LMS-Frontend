@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pendingAppointment of pendingAppointments">
+    <tr *ngFor="let pendingAppointment of pendingAppointments.data | paginate: { id: 'pending', itemsPerPage: pendingAppointments.pageSize, currentPage: pendingAppointments.page, totalItems: pendingAppointments.total }">
       <td class="col-sm-2">{{ pendingAppointment.room.name }}</td>
       <td class="col-sm-2">{{ pendingAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
@@ -51,6 +51,10 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getPendingAppointments($event)" id="pending"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -67,7 +71,7 @@
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let acceptedAppointment of acceptedAppointments">
+    <tr *ngFor="let acceptedAppointment of acceptedAppointments.data | paginate: { id: 'accepted', itemsPerPage: acceptedAppointments.pageSize, currentPage: acceptedAppointments.page, totalItems: acceptedAppointments.total }">
       <td class="col-sm-2">{{ acceptedAppointment.room.name }}</td>
       <td class="col-sm-2">{{ acceptedAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
@@ -89,6 +93,10 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedAppointments($event)" id="accepted"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -105,7 +113,7 @@
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let deniedAppointment of deniedAppointments">
+    <tr *ngFor="let deniedAppointment of deniedAppointments.data | paginate: { id: 'denied', itemsPerPage: deniedAppointments.pageSize, currentPage: deniedAppointments.page, totalItems: deniedAppointments.total }">
       <td class="col-sm-2">{{ deniedAppointment.room.name }}</td>
       <td class="col-sm-2">{{ deniedAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
@@ -124,4 +132,8 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getDeniedAppointments($event)" id="denied"></pagination-controls>
+  </div>
 </div>

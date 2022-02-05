@@ -7,6 +7,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AutosizeModule } from 'ngx-autosize';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+
+import { WINDOW_PROVIDERS } from './providers/window.providers';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
@@ -129,8 +134,11 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    LoadingBarHttpClientModule,
+    LoadingBarModule,
     MarkdownModule.forRoot(),
     NgbModule,
+    NgxPaginationModule,
     ReactiveFormsModule,
   ],
   providers: [
@@ -145,6 +153,7 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
       multi: true
     },
     NgbActiveModal,
+    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })

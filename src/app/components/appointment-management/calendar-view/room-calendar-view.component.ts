@@ -12,6 +12,7 @@ import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { Room } from "../../../types/room";
+import { PagedResponse } from 'src/app/types/paged-response';
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -122,8 +123,8 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async getRooms(): Promise<void> {
     this.roomService.getRoomsData().subscribe({
-      next: (rooms: Room[]) => {
-        this.rooms = rooms;
+      next: (rooms: PagedResponse<Room>) => {
+        this.rooms = rooms.data;
       },
       error: error => {
         console.error('There was an error!', error);

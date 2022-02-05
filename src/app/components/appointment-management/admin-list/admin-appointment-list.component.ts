@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from "moment";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as moment from 'moment';
 
-import { AppointmentService } from "../../../services/appointment.service";
-import { AuthService } from "../../../services/auth.service";
-import { UserService } from "../../../services/user.service";
+import { AppointmentCreateComponent } from "../create/appointment-create.component";
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { AppointmentEditComponent } from "../edit/appointment-edit.component";
+import { AppointmentViewComponent } from "../view/appointment-view.component";
+
+import { AppointmentService } from '../../../services/appointment.service';
+import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
-import {AppointmentViewComponent} from "../view/appointment-view.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UserEditComponent} from "../../user-management/edit/user-edit.component";
-import {AppointmentEditComponent} from "../edit/appointment-edit.component";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
-import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
-import {RoomCreateComponent} from "../../room-management/create/room-create.component";
-import {AppointmentCreateComponent} from "../create/appointment-create.component";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-admin-appointment-list',
   templateUrl: './admin-appointment-list.component.html',
-  styleUrls: ['./admin-appointment-list.component.scss']
+  styleUrls: ['./admin-appointment-list.component.scss'],
 })
 
 /**
@@ -29,10 +28,12 @@ import {AppointmentCreateComponent} from "../create/appointment-create.component
  *
  */
 export class AdminAppointmentListComponent implements OnInit {
-  public appointments: Appointment[] = [];
-  public pendingAppointments: Appointment[] = [];
-  public acceptedAppointments: Appointment[] = [];
-  public deniedAppointments: Appointment[] = [];
+  public pendingAppointments: PagedList<Appointment> =
+    new PagedList<Appointment>();
+  public acceptedAppointments: PagedList<Appointment> =
+    new PagedList<Appointment>();
+  public deniedAppointments: PagedList<Appointment> =
+    new PagedList<Appointment>();
 
   /**
    * Constructor
@@ -59,29 +60,72 @@ export class AdminAppointmentListComponent implements OnInit {
    * Gets appointment data of all appointments
    */
   public async getAppointments(): Promise<void> {
-    this.appointmentService.getAllAppointments().subscribe({
-      next: res => {
-        //@todo fix typecast from string to moment
-        this.appointments = res.map((appointment: Appointment) => {
-          appointment.start = moment(appointment.start);
-          appointment.end = moment(appointment.end);
-          return appointment;
-        });
-        this.pendingAppointments = this.appointments
-          .filter((appointment: Appointment) => appointment.confirmationStatus == ConfirmationStatus.pending);
-        this.acceptedAppointments = this.appointments
-          .filter((appointment: Appointment) => appointment.confirmationStatus == ConfirmationStatus.accepted);
-        this.deniedAppointments = this.appointments
-          .filter((appointment: Appointment) => appointment.confirmationStatus == ConfirmationStatus.denied);
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    });
+    await this.getPendingAppointments();
+    await this.getAcceptedAppointments();
+    await this.getDeniedAppointments();
   }
 
   /**
-   * Opens appointment creation form
+   * Gets appointment data of all pending appointments
+   */
+  public async getPendingAppointments(
+    page: number = this.pendingAppointments.page
+  ): Promise<void> {
+    const pageSize = this.pendingAppointments.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.appointmentService
+      .getAllAppointments(pageSize, offset, ConfirmationStatus.pending)
+      .subscribe({
+        next: (res) => {
+          this.pendingAppointments.parse(
+            res,
+            page,
+            (appointment: Appointment) => {
+              appointment.start = moment(appointment.start);
+              appointment.end = moment(appointment.end);
+              return appointment;
+            }
+          );
+          console.log(res);
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        },
+      });
+  }
+
+  /**
+   * Gets appointment data of all accepted appointments
+   */
+  public async getAcceptedAppointments(
+    page: number = this.acceptedAppointments.page
+  ) : Promise<void> {
+    const pageSize = this.acceptedAppointments.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.appointmentService
+      .getAllAppointments(pageSize, offset, ConfirmationStatus.accepted)
+      .subscribe({
+        next: (res) => {
+          this.acceptedAppointments.parse(
+            res,
+            page,
+            (appointment: Appointment) => {
+              appointment.start = moment(appointment.start);
+              appointment.end = moment(appointment.end);
+              return appointment;
+            }
+          );
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        },
+      });
+  }
+
+  /**
+   * Gets appointment data of all denied appointments
    */
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
@@ -90,6 +134,36 @@ export class AdminAppointmentListComponent implements OnInit {
         this.getAppointments();
       }
     });
+  }
+
+  /**
+   * @todo Sarah JSDoc
+   * @param page
+   */
+  public async getDeniedAppointments(
+    page: number = this.deniedAppointments.page
+  ) : Promise<void> {
+    const pageSize = this.deniedAppointments.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.appointmentService
+      .getAllAppointments(pageSize, offset, ConfirmationStatus.denied)
+      .subscribe({
+        next: (res) => {
+          this.deniedAppointments.parse(
+            res,
+            page,
+            (appointment: Appointment) => {
+              appointment.start = moment(appointment.start);
+              appointment.end = moment(appointment.end);
+              return appointment;
+            }
+          );
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        },
+      });
   }
 
   /**
@@ -143,24 +217,31 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    * @param {boolean} isSeries is an appointment series
    */
-  public async acceptAppointmentRequest(appointmentId: TimespanId, isSeries: boolean): Promise<void> {
+  public async acceptAppointmentRequest(
+    appointmentId: TimespanId,
+    isSeries: boolean
+  ): Promise<void> {
     isSeries
-      ? this.appointmentService.acceptAppointmentSeriesRequest(appointmentId).subscribe({
-        next: () => {
-          this.getAppointments();
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      })
-      : this.appointmentService.acceptAppointmentRequest(appointmentId).subscribe({
-        next: () => {
-          this.getAppointments();
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      });
+      ? this.appointmentService
+          .acceptAppointmentSeriesRequest(appointmentId)
+          .subscribe({
+            next: () => {
+              this.getAppointments();
+            },
+            error: (error) => {
+              console.error('There was an error!', error);
+            },
+          })
+      : this.appointmentService
+          .acceptAppointmentRequest(appointmentId)
+          .subscribe({
+            next: () => {
+              this.getAppointments();
+            },
+            error: (error) => {
+              console.error('There was an error!', error);
+            },
+          });
   }
 
   /**
@@ -169,24 +250,31 @@ export class AdminAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    * @param {boolean} isSeries is an appointment series
    */
-  public async declineAppointmentRequest(appointmentId: TimespanId, isSeries: boolean): Promise<void> {
+  public async declineAppointmentRequest(
+    appointmentId: TimespanId,
+    isSeries: boolean
+  ): Promise<void> {
     console.log(isSeries);
     isSeries
-      ? this.appointmentService.declineAppointmentSeriesRequest(appointmentId).subscribe({
-        next: () => {
-          this.getAppointments();
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      })
-      : this.appointmentService.declineAppointmentRequest(appointmentId).subscribe({
-        next: () => {
-          this.getAppointments();
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      });
+      ? this.appointmentService
+          .declineAppointmentSeriesRequest(appointmentId)
+          .subscribe({
+            next: () => {
+              this.getAppointments();
+            },
+            error: (error) => {
+              console.error('There was an error!', error);
+            },
+          })
+      : this.appointmentService
+          .declineAppointmentRequest(appointmentId)
+          .subscribe({
+            next: () => {
+              this.getAppointments();
+            },
+            error: (error) => {
+              console.error('There was an error!', error);
+            },
+          });
   }
 }

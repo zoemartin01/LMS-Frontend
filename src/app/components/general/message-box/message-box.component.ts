@@ -12,6 +12,8 @@ import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { PagedResponse } from 'src/app/types/paged-response';
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-message-box',
@@ -25,7 +27,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  *
  */
 export class MessageBoxComponent implements OnInit {
-  public messages: Message[] = [];
+  public messages: PagedList<Message> = new PagedList<Message>();
   public unreadMessages: UnreadMessages = {
     sum: 0,
     appointments: 0,
@@ -49,6 +51,7 @@ export class MessageBoxComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal
   ) {
+    this.messages.pageSize = 8;
   }
 
   /**
@@ -84,10 +87,13 @@ export class MessageBoxComponent implements OnInit {
   /**
    * Retrieves all messages for current user
    */
-  public async getMessages(): Promise<void> {
+  public async getMessages(page: number = this.messages.page): Promise<void> {
+    const pageSize = this.messages.pageSize;
+    const offset = (page - 1) * pageSize;
+
     this.messagingService.getMessages().subscribe({
-      next: (res: Message[]) => {
-        this.messages = res;
+      next: (res: PagedResponse<Message>) => {
+        this.messages.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);
