@@ -28,11 +28,11 @@
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let appointment of appointments">
+    <tr *ngFor="let appointment of appointments.data | paginate: { id: 'appointments', itemsPerPage: appointments.pageSize, currentPage: appointments.page, totalItems: appointments.total }">
       <td>{{ appointment.room?.name }}</td>
       <td>{{ appointment.start?.format("DD.MM.YYYY") }}</td>
       <td>{{ appointment.start?.format("HH:mm") }} - {{ appointment.end?.format("HH:mm") }}</td>
-      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][appointment.timeSlotRecurrence]}}</td>   <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(deniedAppointment.seriesId) | async }}</td>
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][appointment.timeSlotRecurrence]}}</td>   <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(appointment.seriesId) | async }}</td>
       <td class="col-sm-2">{{ appointmentService.getLastDateForSeries(appointment.seriesId) | async }}</td>
       <td>{{ ['', 'pending', 'accepted', 'denied'][appointment.confirmationStatus] }}</td>
       <td class="d-flex justify-content-end">
@@ -46,4 +46,8 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAllAppointmentsForCurrentUser($event)" id="appointments"></pagination-controls>
+  </div>
 </div>

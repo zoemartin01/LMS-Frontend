@@ -10,6 +10,7 @@ import {AppointmentViewComponent} from "../view/appointment-view.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
 import {AppointmentCreateComponent} from "../create/appointment-create.component";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -23,7 +24,7 @@ import {AppointmentCreateComponent} from "../create/appointment-create.component
  *
  */
 export class PersonalAppointmentListComponent implements OnInit {
-  public appointments: Appointment[] = [];
+  public appointments: PagedList<Appointment> = new PagedList<Appointment>();
 
   /**
    * Constructor
@@ -45,14 +46,21 @@ export class PersonalAppointmentListComponent implements OnInit {
   /**
    * Gets appointment data of all appointments for current user
    */
-  public async getAllAppointmentsForCurrentUser(): Promise<void> {
-    this.appointmentService.getAllAppointmentsForCurrentUser().subscribe({
+  public async getAllAppointmentsForCurrentUser(page: number = this.appointments.page): Promise<void> {
+    const pageSize = this.appointments.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.appointmentService.getAllAppointmentsForCurrentUser(pageSize, offset).subscribe({
       next: res => {
-        this.appointments = res.map((appointment: Appointment) => {
-          appointment.start = moment(appointment.start);
-          appointment.end = moment(appointment.end);
-          return appointment;
-        });
+        this.appointments.parse(
+          res,
+          page,
+          (appointment: Appointment) => {
+            appointment.start = moment(appointment.start);
+            appointment.end = moment(appointment.end);
+            return appointment;
+          }
+        )
       },
       error: error => {
         console.error('There was an error!', error);
