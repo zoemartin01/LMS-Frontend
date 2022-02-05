@@ -267,7 +267,7 @@ export class AppointmentService {
    * @param {SeriesId} seriesId id of series of appointments
    */
   public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<Appointment[]> {
-    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
+    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
   /**

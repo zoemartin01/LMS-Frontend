@@ -13,6 +13,8 @@ import { Appointment } from '../../../types/appointment';
 import { TimespanId } from '../../../types/aliases/timespan-id';
 import { ConfirmationStatus } from '../../../types/enums/confirmation-status';
 import { PagedList } from 'src/app/types/paged-list';
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -124,9 +126,7 @@ export class AdminAppointmentListComponent implements OnInit {
       });
   }
 
-  /**
-   * Gets appointment data of all denied appointments
-   */
+
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
     modal.result.then((result) => {
@@ -136,6 +136,9 @@ export class AdminAppointmentListComponent implements OnInit {
     });
   }
 
+  /**
+   * Gets appointment data of all denied appointments
+   */
   public async getDeniedAppointments(page: number = this.deniedAppointments.page) : Promise<void> {
     const pageSize = this.deniedAppointments.pageSize;
     const offset = (page - 1) * pageSize;
@@ -206,70 +209,34 @@ export class AdminAppointmentListComponent implements OnInit {
     });
   }
 
+
   /**
-   * Sets appointment request to accepted
+   * Opens appointment accept confirmation dialog
    *
-   * @param {TimespanId} appointmentId id of appointment
-   * @param {boolean} isSeries is an appointment series
+   * @param {TimespanId} timespanId id of pending appointment request
    */
-  public async acceptAppointmentRequest(
-    appointmentId: TimespanId,
-    isSeries: boolean
-  ): Promise<void> {
-    isSeries
-      ? this.appointmentService
-          .acceptAppointmentSeriesRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          })
-      : this.appointmentService
-          .acceptAppointmentRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          });
+  public openAppointmentAcceptDialog(timespanId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentAcceptComponent);
+    modal.componentInstance.appointment.id = timespanId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
-   * Sets appointment request to declined
+   * Opens appointment decline confirmation dialog
    *
-   * @param {TimespanId} appointmentId id of appointment
-   * @param {boolean} isSeries is an appointment series
+   * @param {TimespanId} timespanId id of pending appointment request
    */
-  public async declineAppointmentRequest(
-    appointmentId: TimespanId,
-    isSeries: boolean
-  ): Promise<void> {
-    console.log(isSeries);
-    isSeries
-      ? this.appointmentService
-          .declineAppointmentSeriesRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          })
-      : this.appointmentService
-          .declineAppointmentRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          });
+  public async openAppointmentDeclineDialog(timespanId: TimespanId): Promise<void> {
+    const modal = this.modalService.open(AppointmentDeclineComponent);
+    modal.componentInstance.appointment.id = timespanId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 }
