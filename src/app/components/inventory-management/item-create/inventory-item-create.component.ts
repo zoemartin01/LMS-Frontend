@@ -20,7 +20,6 @@ import { InventoryItem } from "../../../types/inventory-item";
  */
 export class InventoryItemCreateComponent {
   public inventoryItems: InventoryItem[] = [];
-
   public createInventoryItemForm: FormGroup = new FormGroup({
     itemName: new FormControl('', [
       Validators.required,
@@ -46,9 +45,9 @@ export class InventoryItemCreateComponent {
    */
   public async createInventoryItem(): Promise<void> {
     if (this.createInventoryItemForm.valid) {
-        const name = this.createInventoryItemForm.value.itemName;
-        const description = this.createInventoryItemForm.value.description;
-        const quantity = +this.createInventoryItemForm.value.quantity;
+      const name = this.createInventoryItemForm.value.itemName;
+      const description = this.createInventoryItemForm.value.description;
+      const quantity = +this.createInventoryItemForm.value.quantity;
       this.inventoryService.createInventoryItem(name, description,quantity).subscribe({
         next: (inventoryItem: InventoryItem) => {
           if (inventoryItem.id !== null ) {
