@@ -3,7 +3,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { PersonalOrderListComponent } from './personal-order-list.component';
-import {} from 'jasmine';
 
 describe('PersonalOrderListComponent', () => {
   let component: PersonalOrderListComponent;
