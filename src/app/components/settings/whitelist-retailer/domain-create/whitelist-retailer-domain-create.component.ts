@@ -70,7 +70,6 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
         this.activeModal.close(this.domainCreateForm.value.domain);
         return;
       }
-      //@todo Mario: fix edit (throws 404)
       this.adminService.addDomainToWhitelistRetailer(
         this.whitelistRetailer.id,
         this.domainCreateForm.value.domain

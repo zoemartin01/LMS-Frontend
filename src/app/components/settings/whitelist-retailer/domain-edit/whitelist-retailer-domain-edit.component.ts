@@ -77,7 +77,6 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       this.activeModal.close(this.domainEditForm.controls['domain'].value);
       return;
     }
-    //@todo Mario: fix edit (throws 404)
     this.adminService.editDomainOfWhitelistRetailer(
       this.whitelistRetailer.id,
       this.whitelistRetailerDomain.id,
