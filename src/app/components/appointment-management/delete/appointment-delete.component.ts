@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-
-import {AppointmentService} from "../../../services/appointment.service";
-
-import {Appointment} from "../../../types/appointment";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {UserRole} from "../../../types/enums/user-role";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-appointment-delete',
