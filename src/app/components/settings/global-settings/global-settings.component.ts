@@ -71,8 +71,8 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   /**
-   * @todo Mario write JSDoc
-   * @param globalSettings
+   * Updates the form for global settings
+   * @param {GlobalSetting[]} globalSettings global settings
    * @private
    */
   private updateGlobalSettingsForm(globalSettings: GlobalSetting[]) {
