@@ -54,6 +54,8 @@ export class AdminService {
 
   /**
    * Gets pending users
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
   public getPendingUsers(
     limit: number = 0,
@@ -67,6 +69,8 @@ export class AdminService {
 
   /**
    * Gets accepted users
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
   public getAcceptedUsers(
     limit: number = 0,
@@ -140,7 +144,8 @@ export class AdminService {
 
   /**
    * Gets all whitelist retailers
-   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
   public getWhitelistRetailers(
     limit: number = 0,
