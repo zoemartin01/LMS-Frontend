@@ -16,13 +16,13 @@
       <th class="col-sm-2">Item</th>
       <th class="col-sm-2">Quantity</th>
       <th class="col-sm-2">Purchase Url</th>
-      <th class="col-sm-2">User Name</th>
+      <th class="col-sm-2">User</th>
       <th class="col-sm-2"></th>
       <th class="col-sm-2"></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pendingOrder of pendingOrders">
+    <tr *ngFor="let pendingOrder of pendingOrders.data | paginate: { id: 'pending', itemsPerPage: pendingOrders.pageSize, currentPage: pendingOrders.page, totalItems: pendingOrders.total }">
       <td class="col-sm-2">{{ getItemName(pendingOrder) }}</td>
       <td class="col-sm-2">{{ pendingOrder.quantity}}</td>
       <td class="col-sm-2">{{ pendingOrder.url}}</td>
@@ -35,6 +35,9 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getPendingOrders($event)" id="pending"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -52,7 +55,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let acceptedOrder of acceptedOrders">
+    <tr *ngFor="let acceptedOrder of acceptedOrders.data | paginate: { id: 'accepted', itemsPerPage: acceptedOrders.pageSize, currentPage: acceptedOrders.page, totalItems: acceptedOrders.total }">
       <td class="col-sm-2">{{ getItemName(acceptedOrder) }}</td>
       <td class="col-sm-2">{{ acceptedOrder.quantity}}</td>
       <td class="col-sm-2">{{ acceptedOrder.url}}</td>
@@ -60,13 +63,16 @@
       <td class="col-sm-2">{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
       <td class="col-sm-2">
         <a (click)="openOrderView(acceptedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
-        <a (click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+        <a *ngIf="!(acceptedOrder.status === 4)"(click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
         <a (click)="openOrderDeletionDialog(acceptedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
         <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check-fill"></i></button></a>
       </td>
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedOrders($event)" id="accepted"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -84,7 +90,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let declinedOrder of declinedOrders">
+    <tr *ngFor="let declinedOrder of declinedOrders.data | paginate: { id: 'declined', itemsPerPage: declinedOrders.pageSize, currentPage: declinedOrders.page, totalItems: declinedOrders.total }">
       <td class="col-sm-2">{{ getItemName(declinedOrder) }}</td>
       <td class="col-sm-2">{{ declinedOrder.quantity}}</td>
       <td class="col-sm-2">{{ declinedOrder.url}}</td>
@@ -97,4 +103,7 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getDeclinedOrders($event)" id="declined"></pagination-controls>
+  </div>
 </div>

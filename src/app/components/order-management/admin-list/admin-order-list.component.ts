@@ -20,6 +20,7 @@ import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
 import {InventoryItemViewComponent} from "../../inventory-management/item-view/inventory-item-view.component";
 import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
 import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
+import {PagedList} from "../../../types/paged-list";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -33,9 +34,9 @@ import {InventoryOrderComponent} from "../inventory-order/inventory-order.compon
  *
  */
 export class AdminOrderListComponent implements OnInit {
-  public pendingOrders: Order[] = [];
-  public acceptedOrders: Order[] = [];
-  public declinedOrders: Order[] = [];
+  public pendingOrders: PagedList<Order> = new PagedList<Order>();
+  public acceptedOrders: PagedList<Order> = new PagedList<Order>();
+  public declinedOrders: PagedList<Order> = new PagedList<Order>();
 
   /**
    * Constructor
@@ -51,18 +52,64 @@ export class AdminOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getOrders();
+    this.getPendingOrders(this.pendingOrders.page);
+    this.getAcceptedOrders(this.acceptedOrders.page);
+    this.getDeclinedOrders(this.declinedOrders.page);
   }
 
   /**
-   * Gets all orders with data
+   * Gets data of all pending orders
+   * @param page
    */
-  public async getOrders(): Promise<void> {
-    this.orderService.getAllOrders().subscribe({
+  public async getPendingOrders(page: number): Promise<void> {
+    const pageSize = this.pendingOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllPendingOrders(pageSize, offset).subscribe({
       next: res => {
-        this.pendingOrders = res.data.filter((order: Order) => +order.status === OrderStatus.pending);
-        this.acceptedOrders = res.data.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
-        this.declinedOrders = res.data.filter((order: Order) => +order.status === OrderStatus.declined);
+        this.pendingOrders.total = res.total;
+        this.pendingOrders.page = page;
+
+        this.pendingOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
+    })
+  }
+
+  /**
+   * Gets data of all accepted orders
+   * @param page
+   */
+  public async getAcceptedOrders(page: number): Promise<void> {
+    const pageSize = this.acceptedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllAcceptedOrders(pageSize, offset).subscribe({
+      next: res => {
+        this.acceptedOrders.total = res.total;
+        this.acceptedOrders.page = page;
+
+        this.acceptedOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
+    })
+  }
+
+  /**
+   * Gets data of all declined orders
+   * @param page
+   */
+  public async getDeclinedOrders(page: number): Promise<void> {
+    const pageSize = this.declinedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllDeclinedOrders(pageSize, offset).subscribe({
+      next: res => {
+        this.declinedOrders.total = res.total;
+        this.declinedOrders.page = page;
+
+        this.declinedOrders.data = res.data;
       },
       error: error => {
         console.error('There was an error!', error)
@@ -81,7 +128,9 @@ export class AdminOrderListComponent implements OnInit {
       }
 
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -96,7 +145,9 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -111,7 +162,9 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -126,7 +179,9 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -141,7 +196,8 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page)
+        this.getAcceptedOrders(this.acceptedOrders.page);
       }
     });
   }
@@ -156,7 +212,8 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page)
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -171,7 +228,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getAcceptedOrders(this.acceptedOrders.page);
       }
     });
   }
