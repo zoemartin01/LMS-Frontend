@@ -1,1 +1,85 @@
-<p>appointment-delete works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Delete Appointment</h4>
+</div>
+<div class="modal-body">
+  <p>Are you sure that you want to delete this appointment?</p>
+
+  <form [formGroup]="appointmentDeleteForm"><div class="modal-body">
+
+    <div class="form-group row">
+      <div class="col">
+        <label for="user" class="my-1">User</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="User" id="user" formControlName="user" autocomplete="user">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="room" class="my-1">Room</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Room" aria-describedby="inputGroupPrepend"
+               id="room" formControlName="room" autocomplete="room">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="date" class="my-1">Date</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Date" aria-describedby="inputGroupPrepend"
+               id="date" formControlName="date" autocomplete="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startHour" class="my-1">Start</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Start" aria-describedby="inputGroupPrepend"
+               id="startHour" formControlName="startHour" autocomplete="startHour">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="endHour" class="my-1">End</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="End" aria-describedby="inputGroupPrepend"
+               id="endHour" formControlName="endHour" autocomplete="endHour">
+      </div>
+    </div>
+    <div class="form-group" >
+      <label for="timeSlotRecurrence" class="my-1">Recurrence</label>
+      <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
+        <option value="1">single</option>
+        <option value="2">daily</option>
+        <option value="3">weekly</option>
+        <option value="3">monthly</option>
+        <option value="3">yearly</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="(appointment.timeSlotRecurrence!=1)">
+      <label for="lastDate" class="my-1">Last Date</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Last Date" aria-describedby="inputGroupPrepend"
+               id="lastDate" formControlName="lastDate" autocomplete="lastDate">
+      </div>
+    </div>
+    <!---Todo achtung das wird nicht angezeigt (weil alles ==1) bis zoe den feeder fixt :)))--->
+    <div class="form-group" *ngIf="(appointment.timeSlotRecurrence!=1)">
+      <label for="amount" class="my-1">Amount</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Amount" aria-describedby="inputGroupPrepend"
+               id="amount" formControlName="amount" autocomplete="amount">
+      </div>
+    </div>
+    <!---Todo achtung das wird nicht angezeigt (weil alles ==1) bis zoe den feeder fixt :)))--->
+  </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="deleteAppointment()">Delete Single Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteAppointmentSeries()">Delete Appointment Series</button>
+  <!---Todo achtung alles ist ===1, button funktioniert also nicht für series bis zoe den feeder fixt :)))--->
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>
