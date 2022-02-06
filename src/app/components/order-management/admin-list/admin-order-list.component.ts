@@ -14,11 +14,6 @@ import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import { OrderStatus } from "../../../types/enums/order-status";
-import {InventoryItemCreateComponent} from "../../inventory-management/item-create/inventory-item-create.component";
-import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
-import {InventoryItemViewComponent} from "../../inventory-management/item-view/inventory-item-view.component";
-import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
 import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
 import {PagedList} from "../../../types/paged-list";
 
@@ -59,7 +54,8 @@ export class AdminOrderListComponent implements OnInit {
 
   /**
    * Gets data of all pending orders
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getPendingOrders(page: number): Promise<void> {
     const pageSize = this.pendingOrders.pageSize;
@@ -79,7 +75,8 @@ export class AdminOrderListComponent implements OnInit {
 
   /**
    * Gets data of all accepted orders
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getAcceptedOrders(page: number): Promise<void> {
     const pageSize = this.acceptedOrders.pageSize;
@@ -99,7 +96,8 @@ export class AdminOrderListComponent implements OnInit {
 
   /**
    * Gets data of all declined orders
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getDeclinedOrders(page: number): Promise<void> {
     const pageSize = this.declinedOrders.pageSize;
@@ -233,6 +231,11 @@ export class AdminOrderListComponent implements OnInit {
     });
   }
 
+  /**
+   * Helper method to get name of item
+   *
+   * @param {Order} order order
+   */
   public getItemName(order: Order) {
     if (order === null) {
       throw ParseArgumentException;

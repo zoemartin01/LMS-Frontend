@@ -13,7 +13,6 @@ import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import { OrderStatus } from "../../../types/enums/order-status";
 import {PagedList} from "../../../types/paged-list";
 
 @Component({
@@ -59,7 +58,8 @@ export class PersonalOrderListComponent implements OnInit {
 
   /**
    * Gets data of all pending orders for current user
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getPendingOrders(page: number): Promise<void> {
     const pageSize = this.pendingOrders.pageSize;
@@ -79,7 +79,8 @@ export class PersonalOrderListComponent implements OnInit {
 
   /**
    * Gets data of all accepted orders for current user
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getAcceptedOrders(page: number): Promise<void> {
     const pageSize = this.acceptedOrders.pageSize;
@@ -99,7 +100,8 @@ export class PersonalOrderListComponent implements OnInit {
 
   /**
    * Gets data of all declined orders
-   * @param page
+   *
+   * @param {number} page current number of page
    */
   public async getDeclinedOrders(page: number): Promise<void> {
     const pageSize = this.declinedOrders.pageSize;
@@ -187,6 +189,11 @@ export class PersonalOrderListComponent implements OnInit {
     });
   }
 
+  /**
+   * Helper method to get name of item
+   *
+   * @param {Order} order order
+   */
   public getItemName(order: Order) {
     if (order === null) {
       throw ParseArgumentException;

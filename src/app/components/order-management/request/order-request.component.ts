@@ -77,8 +77,6 @@ export class OrderRequestComponent implements OnInit {
 
   /**
    * Checks url of item to order against urls of whitelisted retailers
-   *
-   * @param {String} orderUrl name of item to be ordered
    */
   public async checkUrlAgainstWhitelistedRetailers() {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
@@ -94,8 +92,6 @@ export class OrderRequestComponent implements OnInit {
 
   /**
    * Creates order request with data
-   *
-   * @param {NgForm} orderCreationForm submitted create form
    */
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {

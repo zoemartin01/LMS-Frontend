@@ -9,7 +9,6 @@ import { UserRole } from "../../../types/enums/user-role";
 import {FormControl, FormGroup} from "@angular/forms";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrderEditComponent} from "../edit/order-edit.component";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
 import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 @Component({

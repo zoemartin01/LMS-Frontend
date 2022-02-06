@@ -109,6 +109,11 @@ export class OrderEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Helper method to update the order edit form
+   * @param {Order} order order
+   * @private
+   */
   private updateOrderEditForm(order: Order) {
     this.order = order;
     if (order.item !== null) {
@@ -123,8 +128,6 @@ export class OrderEditComponent implements OnInit {
 
   /**
    * Changes data of order
-   *
-   * @param {NgForm} orderEditForm submitted edit form
    */
   public async editOrder(): Promise<void> {
     this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)
