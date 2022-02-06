@@ -184,7 +184,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public getRowspan(object: Appointment|string|null): number {
     const appointment = <Appointment>object;
-    return moment(appointment.end).diff(moment(appointment.start), 'hours');
+    return moment(appointment.end).hours() - moment(appointment.start).hours();
   }
 
   /**
