@@ -25,6 +25,7 @@ export class AppointmentDeclineComponent implements OnInit {
     date: new FormControl('', Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
     amount: new FormControl(1, Validators.required),
+    lastDate: new FormControl('', Validators.required),
   });
   public appointment: Appointment = {
     id: null,
