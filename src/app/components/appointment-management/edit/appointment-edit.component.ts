@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
@@ -74,11 +74,9 @@ export class AppointmentEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
-   * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public appointmentService: AppointmentService,
-    public activeModal: NgbActiveModal
   ) {
   }
 
@@ -105,8 +103,8 @@ export class AppointmentEditComponent implements OnInit {
 
         this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
         this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
-        this.appointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
-        this.appointmentEditForm.controls['amount'].setValue(this.appointment.amount);
+        this.recurringAppointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
+        this.recurringAppointmentEditForm.controls['amount'].setValue(this.appointment.amount);
 
         this.isRecurring = this.appointment.timeSlotRecurrence === TimeSlotRecurrence.single;
       },
@@ -149,9 +147,9 @@ export class AppointmentEditComponent implements OnInit {
       const day = moment(this.date).minutes(0).seconds(0);
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
-        .hours()).format();
+        .hours()).toISOString();
       changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).format();
+        .hours()).toISOString();
     }
 
     this.appointmentService.editAppointment(this.appointment.id, changedData).subscribe({
@@ -168,29 +166,26 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointmentSeries(): Promise<void> {
-    let changedData: { [key: string]: any} = {};
-
-    changedData = this.getDirtyValues(this.recurringAppointmentEditForm);
+    let changedData: { [key: string]: any} =  this.getDirtyValues(this.recurringAppointmentEditForm);
 
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
       const day = moment(this.date).minutes(0).seconds(0);
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
-        .hours()).format();
+        .hours()).toISOString();
       changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).format();
+        .hours()).toISOString();
     }
 
     this.appointmentService.editAppointmentSeries(this.appointment.seriesId, changedData).subscribe({
       next: () => {
-        this.activeModal.close('edited');
+        this.close.emit(true);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     });
-    this.close.emit(true);
   }
 
   /**

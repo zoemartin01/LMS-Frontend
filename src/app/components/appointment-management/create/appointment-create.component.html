@@ -1,1 +1,77 @@
-<p>appointment-create works!</p>
+<div class="row justify-content-center">
+  <div class="card">
+    <div class="col-auto card-body">
+      <h5 class="card-title">Edit Appointment</h5>
+      <div class="form-group">
+        <label for="date" class="control-label">Day</label>
+        <div class="input-group">
+          <input class="form-control" type="text" id="date" #dateInput [value]="dateText">
+          <input class="display-none" type="text" [positionTarget]="dateInput" placement="bottom"
+                 [(ngModel)]="dateField" ngbDatepicker #d="ngbDatepicker"
+                 (dateSelect)="handleDatepickerChange()">
+          <button class="btn btn-primary" type="button" (click)="d.toggle();
+          d.navigateTo({ year: +date.format('YYYY'), month: +date.format('MM') })">
+            <i class="bi bi-calendar-date-fill"></i>
+          </button>
+        </div>
+      </div>
+      <form (keyup.enter)="createAppointment()" [formGroup]="appointmentCreateForm">
+        <div class="form-group">
+          <label for="startTime" class="my-1">Start time</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="startTime" formControlName="startHour" step="1" min="0"
+                   max="23">
+            <span class="input-group-text">:</span>
+            <input class="form-control" type="text" value="00" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="endTime" class="my-1">End time</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1" min="0" max="23">
+            <span class="input-group-text">:</span>
+            <input class="form-control" type="text" value="00" disabled>
+          </div>
+        </div>
+        <br>
+        <div class="alert alert-danger" role="alert"
+             *ngIf="appointmentCreateForm.controls['startHour'].value >= appointmentCreateForm.controls['endHour'].value">
+          End of appointment needs to be be after start!
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="recurring" [checked]="isRecurring"
+                     (change)="isRecurring = !isRecurring">
+              <label class="form-check-label" for="recurring">Recurring Appointment</label>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form (keyup.enter)="createAppointment()" *ngIf="isRecurring" [formGroup]="recurringAppointmentCreateForm">
+        <div class="form-group">
+          <label for="timeSlotRecurrence" class="my-1">Recurrence Frequency</label>
+          <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
+            <option value="2">daily</option>
+            <option value="3">weekly</option>
+            <option value="4">monthly</option>
+            <option value="5">yearly</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="endTime" class="my-1">Recurrence Amount</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="amount" formControlName="amount" step="1" min="1" max="2048">
+          </div>
+        </div>
+      </form>
+      <br>
+      <div class="row">
+        <div class="col text-center">
+          <button (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
+          <button (click)="close.emit(false)" class="btn btn-secondary" role="button">Abort</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

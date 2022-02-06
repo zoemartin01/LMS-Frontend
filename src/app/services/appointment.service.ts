@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
-import { firstValueFrom, last, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
@@ -117,36 +117,20 @@ export class AppointmentService {
   }
 
   /**
-   * Helper method to get the last date of an appointment of a series
-   *
-   * @param seriesId id of the appointment series
-   */
-  public async getLastDateForSeries(seriesId : SeriesId) {
-    if(seriesId != null) {
-      const appointments = await firstValueFrom(this.getAllAppointmentsForSeries(seriesId));
-      const lastAppointment = appointments.data[appointments.data.length - 1];
-      return lastAppointment.start?.format("DD.MM.YYYY");
-    } else {
-      return '';
-    }
-  }
-
-  /**
    * Creates a new appointment request
    *
    * @param room room of the appointment to take place in
-   * @param confirmationStatus confirmation status of appointment
    * @param start start of the appointment
    * @param end end of the appointment
    */
-  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: moment.Moment, end: moment.Moment): Observable<Appointment> {
+  public createAppointment(room : Room, start: moment.Moment, end: moment.Moment): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
-      room: room,
-      confirmationStatus: confirmationStatus,
-      start: start,
-      end: end,
+      room,
+      start: start.toISOString(),
+      end: end.toISOString(),
     };
+
     return this.httpClient.post<Appointment>(apiURL, requestBody);
   }
 
@@ -154,15 +138,14 @@ export class AppointmentService {
    * Creates a new appointment request for a series of appointments
    *
    * @param room room of the appointment to take place in
-   * @param confirmationStatus confirmation status of appointment
    * @param start start of the appointment
    * @param end end of the appointment
    * @param timeSlotRecurrence recurrence of the appointment
    * @param {number} amount 2-2048, amount of appointments wanted for the series
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are not created
    */
   public createAppointmentSeries(
       room: Room,
-      confirmationStatus: ConfirmationStatus,
       start: moment.Moment,
       end: moment.Moment,
       timeSlotRecurrence: TimeSlotRecurrence,
@@ -171,13 +154,12 @@ export class AppointmentService {
     ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
-      room: room,
-      confirmationStatus: confirmationStatus,
-      start: start,
-      end: end,
-      timeSlotRecurrence: timeSlotRecurrence,
-      amount: amount,
-      force: force,
+      room,
+      start: start.toISOString(),
+      end: end.toISOString(),
+      timeSlotRecurrence,
+      amount,
+      force,
     };
 
     return this.httpClient.post<Appointment[]>(apiURL, requestBody);
@@ -193,6 +175,7 @@ export class AppointmentService {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointment
       .replace(':id', appointmentId)}`;
 
@@ -209,6 +192,7 @@ export class AppointmentService {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointmentSeries
       .replace(':id', seriesId)}`;
 

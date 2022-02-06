@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppointmentCreateComponent } from './appointment-create.component';
 
@@ -15,6 +15,7 @@ describe('AppointmentCreateComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgbModule,
       ],
       providers: [
         NgbActiveModal,
