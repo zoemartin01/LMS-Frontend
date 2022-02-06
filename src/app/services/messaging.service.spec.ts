@@ -67,7 +67,7 @@ describe('MessagingService', () => {
     );
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.messages
-      .getCurrentUserMessages}`);
+      .getCurrentUserMessages}?limit=0&offset=0`);
 
     expect(mockRequest.request.method).toBe('GET');
 

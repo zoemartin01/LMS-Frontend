@@ -83,7 +83,7 @@ export class OrderRequestComponent implements OnInit {
   public async checkUrlAgainstWhitelistedRetailers(): Promise<boolean> {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
       next: res => {
-        this.linkWarning = res;
+        this.linkWarning = res.isWhitelisted;
       },
       error: error => {
         console.error('There was an error!', error);
