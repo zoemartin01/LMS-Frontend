@@ -64,7 +64,6 @@
                id="lastDate" formControlName="lastDate" autocomplete="lastDate">
       </div>
     </div>
-    <!---Todo achtung das wird nicht angezeigt (weil alles ==1) bis zoe den feeder fixt :)))--->
     <div class="form-group" *ngIf="(appointment.timeSlotRecurrence!=1)">
       <label for="amount" class="my-1">Amount</label>
       <div class="input-group">
@@ -73,13 +72,11 @@
                id="amount" formControlName="amount" autocomplete="amount">
       </div>
     </div>
-    <!---Todo achtung das wird nicht angezeigt (weil alles ==1) bis zoe den feeder fixt :)))--->
   </div>
   </form>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="deleteAppointment()">Delete Single Appointment</button>
   <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteAppointmentSeries()">Delete Appointment Series</button>
-  <!---Todo achtung alles ist ===1, button funktioniert also nicht für series bis zoe den feeder fixt :)))--->
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

@@ -30,13 +30,11 @@ export class AppointmentCreateComponent {
   @Output() close = new EventEmitter<boolean>();
 
   public appointmentCreateForm: FormGroup = new FormGroup({
-    start: new FormControl('', [
-      Validators.required
-    ]),
-    end: new FormControl('', [
-      Validators.required
-    ]),
-    //Todo formstate
+    start: new FormControl('', Validators.required),
+    end: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
+    timeSlotRecurrence: new FormControl('', Validators.required),
+    amount: new FormControl(1, Validators.required)
   });
 
   /**
@@ -55,15 +53,15 @@ export class AppointmentCreateComponent {
    */
   public async createAppointment(appointmentCreationForm: NgForm): Promise<void> {
     if (this.appointmentCreateForm.valid) {
-      const room = this.room;
-      const difference = this.appointmentCreateForm.value.difference; //Todo no difference!!
-      const confirmationStatus = ConfirmationStatus.pending;
+      const room = this.room; //todo woher kommt der raum
       const start = this.appointmentCreateForm.value.start;
       const end = this.appointmentCreateForm.value.end;
-      const amount = this.appointmentCreateForm.value.amount;
-      if(this.appointmentCreateForm.value.isSeries) {
-        const recurrence = TimeSlotRecurrence.unknown; //TODO
-        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, difference, amount).subscribe({
+      const recurrence = this.appointmentCreateForm.value.timeSlotRecurrence;
+      const confirmationStatus = ConfirmationStatus.pending;
+      if(recurrence !== TimeSlotRecurrence.single) {
+        const amount = this.appointmentCreateForm.value.amount;
+        //Todo test amount !== 1 && recurrence === single -> fehler
+        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, amount).subscribe({
           next: () => {
             this.activeModal.close('created');
           }, error: error => {
@@ -71,8 +69,7 @@ export class AppointmentCreateComponent {
           }
         });
       } else {
-        const recurrence = TimeSlotRecurrence.unknown; //TODO
-        this.appointmentService.createAppointment(room, confirmationStatus, start, end, recurrence).subscribe({
+        this.appointmentService.createAppointment(room, confirmationStatus, start, end).subscribe({
           next: () => {
             this.activeModal.close('created');
           }, error: error => {
@@ -83,7 +80,6 @@ export class AppointmentCreateComponent {
     } else {
       console.log('Invalid form data')
     }
-
     this.close.emit(true);
   }
 }
