@@ -57,14 +57,12 @@ export class RoomService {
   /**
    * Creates room with data
    *
-   * @todo Sarah: fix JSDoc
-   *
-   * @param name
-   * @param description
-   * @param maxConcurrentBookings
-   * @param autoAcceptBookings
+   * @param {string} name name of room
+   * @param {string} description description of room
+   * @param {number} maxConcurrentBookings maximum concurrent appointments of room
+   * @param {boolean} autoAcceptBookings automatic acceptance of appointment requests
    */
-  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean)
+  public createRoom(name: string, description: string, maxConcurrentBookings: number, autoAcceptBookings: boolean)
     : Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {

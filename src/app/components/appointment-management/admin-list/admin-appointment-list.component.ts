@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from 'moment';
+
+import { AppointmentCreateComponent } from "../create/appointment-create.component";
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { AppointmentEditComponent } from "../edit/appointment-edit.component";
+import { AppointmentViewComponent } from "../view/appointment-view.component";
 
 import { AppointmentService } from '../../../services/appointment.service';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
-import {AppointmentViewComponent} from "../view/appointment-view.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppointmentEditComponent} from "../edit/appointment-edit.component";
-import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
-import {AppointmentCreateComponent} from "../create/appointment-create.component";
-import { Appointment } from '../../../types/appointment';
-import { TimespanId } from '../../../types/aliases/timespan-id';
-import { ConfirmationStatus } from '../../../types/enums/confirmation-status';
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { PagedList } from 'src/app/types/paged-list';
 import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
 import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
@@ -24,7 +26,6 @@ import { AppointmentDeclineComponent } from "../decline/appointment-decline.comp
 
 /**
  * Component for the admin appointment list page, to view all appointments and all requested appointments
- *
  *
  */
 export class AdminAppointmentListComponent implements OnInit {
@@ -67,10 +68,9 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all pending appointments
+   * @param {number} page current number of page
    */
-  public async getPendingAppointments(
-    page: number = this.pendingAppointments.page
-  ): Promise<void> {
+  public async getPendingAppointments(page: number = this.pendingAppointments.page): Promise<void> {
     const pageSize = this.pendingAppointments.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -98,10 +98,10 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all accepted appointments
+   *
+   * @param {number} page current number of page
    */
-  public async getAcceptedAppointments(
-    page: number = this.acceptedAppointments.page
-  ) : Promise<void> {
+  public async getAcceptedAppointments(page: number = this.acceptedAppointments.page) : Promise<void> {
     const pageSize = this.acceptedAppointments.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -126,7 +126,9 @@ export class AdminAppointmentListComponent implements OnInit {
       });
   }
 
-
+  /**
+   * Opens appointment creation form
+   */
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
     modal.result.then((result) => {
@@ -138,6 +140,8 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all denied appointments
+   *
+   * @param {number} page current number of page
    */
   public async getDeniedAppointments(page: number = this.deniedAppointments.page) : Promise<void> {
     const pageSize = this.deniedAppointments.pageSize;

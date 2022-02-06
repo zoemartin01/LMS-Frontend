@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
-import {firstValueFrom, last, Observable} from "rxjs";
+import { firstValueFrom, last, Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
+import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
-import {Room} from "../types/room";
-import {Moment} from "moment";
-import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
-
 import { PagedResponse } from '../types/paged-response';
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -140,7 +139,7 @@ export class AppointmentService {
    * @param end end of the appointment
    * @param timeSlotRecurrence recurrence of the appointment
    */
-  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence): Observable<Appointment> {
+  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: moment.Moment, end: moment.Moment, timeSlotRecurrence: TimeSlotRecurrence): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       room: room,
@@ -163,7 +162,7 @@ export class AppointmentService {
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence, difference: number, amount: number)
+  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: moment.Moment, end: moment.Moment, timeSlotRecurrence: TimeSlotRecurrence, difference: number, amount: number)
     : Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
