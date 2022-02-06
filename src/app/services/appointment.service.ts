@@ -3,7 +3,6 @@ import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { firstValueFrom, last, Observable } from "rxjs";
 import { environment } from "../../environments/environment";
-import * as moment from "moment";
 
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
@@ -13,6 +12,7 @@ import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
 import { PagedResponse } from '../types/paged-response';
 import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -279,7 +279,7 @@ export class AppointmentService {
    * @param {SeriesId} seriesId id of series of appointments
    */
   public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<Appointment[]> {
-    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
+    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
   /**

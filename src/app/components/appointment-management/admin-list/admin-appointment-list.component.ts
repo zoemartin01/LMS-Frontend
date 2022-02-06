@@ -15,6 +15,8 @@ import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { PagedList } from 'src/app/types/paged-list';
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 
 @Component({
   selector: 'app-admin-appointment-list',
@@ -24,7 +26,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the admin appointment list page, to view all appointments and all requested appointments
- *
  *
  */
 export class AdminAppointmentListComponent implements OnInit {
@@ -67,10 +68,9 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all pending appointments
+   * @param {number} page current number of page
    */
-  public async getPendingAppointments(
-    page: number = this.pendingAppointments.page
-  ): Promise<void> {
+  public async getPendingAppointments(page: number = this.pendingAppointments.page): Promise<void> {
     const pageSize = this.pendingAppointments.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -98,10 +98,10 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all accepted appointments
+   *
+   * @param {number} page current number of page
    */
-  public async getAcceptedAppointments(
-    page: number = this.acceptedAppointments.page
-  ) : Promise<void> {
+  public async getAcceptedAppointments(page: number = this.acceptedAppointments.page) : Promise<void> {
     const pageSize = this.acceptedAppointments.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -127,7 +127,7 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * Gets appointment data of all denied appointments
+   * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
@@ -139,8 +139,9 @@ export class AdminAppointmentListComponent implements OnInit {
   }
 
   /**
-   * @todo Sarah JSDoc
-   * @param page
+   * Gets appointment data of all denied appointments
+   *
+   * @param {number} page current number of page
    */
   public async getDeniedAppointments(page: number = this.deniedAppointments.page) : Promise<void> {
     const pageSize = this.deniedAppointments.pageSize;
@@ -212,70 +213,34 @@ export class AdminAppointmentListComponent implements OnInit {
     });
   }
 
+
   /**
-   * Sets appointment request to accepted
+   * Opens appointment accept confirmation dialog
    *
-   * @param {TimespanId} appointmentId id of appointment
-   * @param {boolean} isSeries is an appointment series
+   * @param {TimespanId} timespanId id of pending appointment request
    */
-  public async acceptAppointmentRequest(
-    appointmentId: TimespanId,
-    isSeries: boolean
-  ): Promise<void> {
-    isSeries
-      ? this.appointmentService
-          .acceptAppointmentSeriesRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          })
-      : this.appointmentService
-          .acceptAppointmentRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          });
+  public openAppointmentAcceptDialog(timespanId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentAcceptComponent);
+    modal.componentInstance.appointment.id = timespanId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 
   /**
-   * Sets appointment request to declined
+   * Opens appointment decline confirmation dialog
    *
-   * @param {TimespanId} appointmentId id of appointment
-   * @param {boolean} isSeries is an appointment series
+   * @param {TimespanId} timespanId id of pending appointment request
    */
-  public async declineAppointmentRequest(
-    appointmentId: TimespanId,
-    isSeries: boolean
-  ): Promise<void> {
-    console.log(isSeries);
-    isSeries
-      ? this.appointmentService
-          .declineAppointmentSeriesRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          })
-      : this.appointmentService
-          .declineAppointmentRequest(appointmentId)
-          .subscribe({
-            next: () => {
-              this.getAppointments();
-            },
-            error: (error) => {
-              console.error('There was an error!', error);
-            },
-          });
+  public async openAppointmentDeclineDialog(timespanId: TimespanId): Promise<void> {
+    const modal = this.modalService.open(AppointmentDeclineComponent);
+    modal.componentInstance.appointment.id = timespanId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAppointments();
+      }
+    });
   }
 }
