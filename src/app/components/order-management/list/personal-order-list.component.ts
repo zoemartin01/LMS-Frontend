@@ -14,6 +14,7 @@ import { UserService } from "../../../services/user.service";
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
 import { OrderStatus } from "../../../types/enums/order-status";
+import {PagedList} from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -27,9 +28,9 @@ import { OrderStatus } from "../../../types/enums/order-status";
  *
  */
 export class PersonalOrderListComponent implements OnInit {
-  public pendingOrders: Order[] = [];
-  public acceptedOrders: Order[] = [];
-  public declinedOrders: Order[] = [];
+  public pendingOrders: PagedList<Order> = new PagedList<Order>();
+  public acceptedOrders: PagedList<Order> = new PagedList<Order>();
+  public declinedOrders: PagedList<Order> = new PagedList<Order>();
 
   /**
    * Constructor
@@ -51,24 +52,71 @@ export class PersonalOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getOrders();
+    this.getPendingOrders(this.pendingOrders.page);
+    this.getAcceptedOrders(this.acceptedOrders.page);
+    this.getDeclinedOrders(this.declinedOrders.page);
   }
 
   /**
-   * Gets data of all orders
+   * Gets data of all pending orders for current user
+   * @param page
    */
-  public async getOrders(): Promise<void> {
-    this.orderService.getAllOrdersForCurrentUser().subscribe({
+  public async getPendingOrders(page: number): Promise<void> {
+    const pageSize = this.pendingOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllPendingOrdersForCurrentUser(pageSize, offset).subscribe({
       next: res => {
-        this.pendingOrders = res.data.filter((order: Order) => +order.status === OrderStatus.pending);
-        this.acceptedOrders = res.data.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
-        this.declinedOrders = res.data.filter((order: Order) => +order.status === OrderStatus.declined);
+        this.pendingOrders.total = res.total;
+        this.pendingOrders.page = page;
+
+        this.pendingOrders.data = res.data;
       },
       error: error => {
-        console.error('There was an error!', error);
+        console.error('There was an error!', error)
       },
     })
   }
+
+  /**
+   * Gets data of all accepted orders for current user
+   * @param page
+   */
+  public async getAcceptedOrders(page: number): Promise<void> {
+    const pageSize = this.acceptedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllAcceptedOrdersForCurrentUser(pageSize, offset).subscribe({
+      next: res => {
+        this.acceptedOrders.total = res.total;
+        this.acceptedOrders.page = page;
+
+        this.acceptedOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
+    })
+  }
+
+  /**
+   * Gets data of all declined orders
+   * @param page
+   */
+  public async getDeclinedOrders(page: number): Promise<void> {
+    const pageSize = this.declinedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllDeclinedOrdersForCurrentUser(pageSize, offset).subscribe({
+      next: res => {
+        this.declinedOrders.total = res.total;
+        this.declinedOrders.page = page;
+
+        this.declinedOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
+    })
+  }
+
 
   /**
    * Opens form to create order
@@ -81,7 +129,9 @@ export class PersonalOrderListComponent implements OnInit {
       }
 
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -96,7 +146,9 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -111,7 +163,9 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -126,7 +180,9 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getOrders();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }

@@ -99,6 +99,45 @@ export class OrderService {
   }
 
   /**
+   * Retrieves all pending orders for current user
+   */
+  public getAllPendingOrdersForCurrentUser(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Order>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersPendingOrders}` +
+      `?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<Order>>(apiURL);
+  }
+
+  /**
+   * Retrieves all accepted orders for current user
+   */
+  public getAllAcceptedOrdersForCurrentUser(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Order>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersAcceptedOrders}` +
+      `?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<Order>>(apiURL);
+  }
+
+  /**
+   * Retrieves all declined orders for current user
+   */
+  public getAllDeclinedOrdersForCurrentUser(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Order>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersDeclinedOrders}` +
+      `?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<Order>>(apiURL);
+  }
+
+  /**
    * Retrieves all data for one order
    *
    * @param {OrderId} orderId id of order

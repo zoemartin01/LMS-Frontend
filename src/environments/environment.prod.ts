@@ -100,6 +100,10 @@ export const environment = {
     },
     orders: {
       getCurrentUserOrders: '/user/orders',
+      getCurrentUsersPendingOrders: '/users/orders/pending',
+      getCurrentUsersAcceptedOrders: '/users/orders/accepted',
+      getCurrentUsersDeclinedOrders: '/users/orders/declined',
+
 
       getAllOrders: '/orders',
       getAllPendingOrders: '/orders/pending',

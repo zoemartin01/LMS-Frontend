@@ -22,7 +22,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pendingOrder of pendingOrders">
+    <tr *ngFor="let pendingOrder of pendingOrders.data | paginate: { id: 'pending', itemsPerPage: pendingOrders.pageSize, currentPage: pendingOrders.page, totalItems: pendingOrders.total }">
       <td class="col-sm-2">{{ getItemName(pendingOrder) }}</td>
       <td class="col-sm-2">{{ pendingOrder.quantity}}</td>
       <td class="col-sm-2">{{ pendingOrder.url}}</td>
@@ -36,6 +36,9 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getPendingOrders($event)" id="pending"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -53,7 +56,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let acceptedOrder of acceptedOrders">
+    <tr *ngFor="let acceptedOrder of acceptedOrders.data | paginate: { id: 'accepted', itemsPerPage: acceptedOrders.pageSize, currentPage: acceptedOrders.page, totalItems: acceptedOrders.total }">
       <td class="col-sm-2">{{ getItemName(acceptedOrder) }}</td>
       <td class="col-sm-2">{{ acceptedOrder.quantity}}</td>
       <td class="col-sm-2">{{ acceptedOrder.url}}</td>
@@ -67,6 +70,9 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedOrders($event)" id="accepted"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -84,7 +90,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let declinedOrder of declinedOrders">
+    <tr *ngFor="let declinedOrder of declinedOrders.data | paginate: { id: 'declined', itemsPerPage: declinedOrders.pageSize, currentPage: declinedOrders.page, totalItems: declinedOrders.total }">
       <td class="col-sm-2">{{ getItemName(declinedOrder) }}</td>
       <td class="col-sm-2">{{ declinedOrder.quantity}}</td>
       <td class="col-sm-2">{{ declinedOrder.url}}</td>
@@ -97,4 +103,7 @@
     </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getDeclinedOrders($event)" id="declined"></pagination-controls>
+  </div>
 </div>
