@@ -160,7 +160,15 @@ export class AppointmentService {
    * @param timeSlotRecurrence recurrence of the appointment
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(room: Room, confirmationStatus: ConfirmationStatus, start: moment.Moment, end: moment.Moment, timeSlotRecurrence: TimeSlotRecurrence, amount: number): Observable<Appointment[]> {
+  public createAppointmentSeries(
+      room: Room,
+      confirmationStatus: ConfirmationStatus,
+      start: moment.Moment,
+      end: moment.Moment,
+      timeSlotRecurrence: TimeSlotRecurrence,
+      amount: number,
+      force: boolean
+    ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
       room: room,
@@ -168,7 +176,8 @@ export class AppointmentService {
       start: start,
       end: end,
       timeSlotRecurrence: timeSlotRecurrence,
-      amount: amount
+      amount: amount,
+      force: force,
     };
 
     return this.httpClient.post<Appointment[]>(apiURL, requestBody);
