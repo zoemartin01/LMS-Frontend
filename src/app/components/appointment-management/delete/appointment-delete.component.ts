@@ -61,9 +61,6 @@ export class AppointmentDeleteComponent implements OnInit {
     maxStart: undefined,
     amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
-    timeSlotRecurrence: TimeSlotRecurrence.unknown,
-    maxStart: undefined,
-    amount: 1
   };
 
   /**
