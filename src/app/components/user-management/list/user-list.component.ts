@@ -84,7 +84,8 @@ export class UserListComponent implements OnInit {
         this.acceptedUsers.total = res.total;
         this.acceptedUsers.page = page;
 
-        this.acceptedUsers.data = res.data;      },
+        this.acceptedUsers.data = res.data;
+      },
       error: error => {
         console.error('There was an error!', error);
       }

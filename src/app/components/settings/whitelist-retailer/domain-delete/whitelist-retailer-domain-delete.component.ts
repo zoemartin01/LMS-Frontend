@@ -84,7 +84,6 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
       this.activeModal.close('deleted');
       return;
     }
-    //@todo Mario: fix edit (throws 404)
     this.adminService.deleteDomainOfWhitelistRetailer(this.whitelistRetailer.id, this.whitelistRetailerDomain.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');

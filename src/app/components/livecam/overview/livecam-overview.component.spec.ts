@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { WINDOW_PROVIDERS } from "../../../providers/window.providers";
 
 import { LivecamOverviewComponent } from './livecam-overview.component';
 
-describe('OverviewComponent', () => {
+describe('LivecamOverviewComponent', () => {
   let component: LivecamOverviewComponent;
   let fixture: ComponentFixture<LivecamOverviewComponent>;
 
@@ -17,6 +18,7 @@ describe('OverviewComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgxPaginationModule,
         RouterTestingModule,
       ],
       providers: [

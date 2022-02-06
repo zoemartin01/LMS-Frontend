@@ -166,7 +166,7 @@ describe('LivecamService', () => {
     });
 
     const mockRequest = httpMock.expectOne(
-      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}`
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}?limit=0&offset=0`
     );
 
     expect(mockRequest.request.method).toBe('GET');
@@ -227,7 +227,7 @@ describe('LivecamService', () => {
     });
 
     const mockRequest = httpMock.expectOne(
-      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}`
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}?limit=0&offset=0`
     );
 
     expect(mockRequest.request.method).toBe('GET');

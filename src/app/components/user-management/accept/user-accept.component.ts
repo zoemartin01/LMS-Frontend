@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
@@ -16,7 +16,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * @todo JSDoc Mario
+ * Component for accepting of a pending user
  */
 export class UserAcceptComponent implements OnInit {
   public userAcceptForm: FormGroup = new FormGroup({

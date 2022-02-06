@@ -53,10 +53,10 @@ export class AppointmentViewComponent implements OnInit {
     end: null,
     type: RoomTimespanType.appointment,
     seriesId: null,
-    confirmationStatus: ConfirmationStatus.unknown,
-    timeSlotRecurrence: TimeSlotRecurrence.unknown,
+    timeSlotRecurrence: 1,
     maxStart: undefined,
     amount: 1,
+    confirmationStatus: ConfirmationStatus.unknown,
   };
   public appointmentViewForm: FormGroup = new FormGroup({
     user: new FormControl('', Validators.required),
