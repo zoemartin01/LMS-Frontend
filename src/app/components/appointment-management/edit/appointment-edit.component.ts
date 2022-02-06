@@ -52,6 +52,9 @@ export class AppointmentEditComponent implements OnInit {
     end: null,
     type: RoomTimespanType.appointment,
     seriesId: null,
+    timeSlotRecurrence: 1,
+    maxStart: undefined,
+    amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
   };
   public rooms: Room[] = [];

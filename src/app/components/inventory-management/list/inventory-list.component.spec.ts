@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { InventoryListComponent } from './inventory-list.component';
 
@@ -15,8 +16,11 @@ describe('InventoryListComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgxPaginationModule,
         RouterTestingModule,
       ],
+      providers: [
+      ]
     })
     .compileComponents();
   });
