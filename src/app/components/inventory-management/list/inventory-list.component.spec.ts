@@ -19,8 +19,6 @@ describe('InventoryListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-      providers: [
-      ]
     })
     .compileComponents();
   });
