@@ -21,19 +21,20 @@ import { PagedResponse } from '../types/paged-response';
  */
 export class OrderService {
 
+  /**
+   * constructor
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all pending orders
    *
-   * @param limit
-   * @param offset
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllPendingOrders(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllPendingOrders(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllPendingOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -43,13 +44,10 @@ export class OrderService {
   /**
    * Retrieves all accepted orders
    *
-   * @param limit
-   * @param offset
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllAcceptedOrders(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllAcceptedOrders(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllAcceptedOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -59,13 +57,10 @@ export class OrderService {
   /**
    * Retrieves all declined orders
    *
-   * @param limit
-   * @param offset
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllDeclinedOrders(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllDeclinedOrders(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllDeclinedOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -74,11 +69,11 @@ export class OrderService {
 
   /**
    * Retrieves all pending orders for current user
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllPendingOrdersForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersPendingOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -87,11 +82,11 @@ export class OrderService {
 
   /**
    * Retrieves all accepted orders for current user
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllAcceptedOrdersForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllAcceptedOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersAcceptedOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -100,11 +95,11 @@ export class OrderService {
 
   /**
    * Retrieves all declined orders for current user
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllDeclinedOrdersForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
+  public getAllDeclinedOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUsersDeclinedOrders}` +
       `?limit=${limit}&offset=${offset}`;
 
@@ -130,7 +125,9 @@ export class OrderService {
   /**
    * Creates order with data
    *
-   * @param {Order} order data of new order
+   * @param {string} itemName name of item
+   * @param {number} quantity quantity of item
+   * @param {string} url url of item order
    */
   public requestOrder(itemName: string, quantity: number, url: string): Observable<Order> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.createOrder}`;
