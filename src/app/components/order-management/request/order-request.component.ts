@@ -34,7 +34,7 @@ export class OrderRequestComponent implements OnInit {
       Validators.required,
     ]),
   });
-  public linkWarning: boolean = false;
+  public linkWarning: boolean = true;
   requestOrderError: boolean = false;
   requestOrderErrorMessage: string = '';
 
@@ -80,16 +80,16 @@ export class OrderRequestComponent implements OnInit {
    *
    * @param {String} orderUrl name of item to be ordered
    */
-  public async checkUrlAgainstWhitelistedRetailers(): Promise<boolean> {
+  public async checkUrlAgainstWhitelistedRetailers() {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
       next: res => {
         this.linkWarning = res.isWhitelisted;
+        console.log(this.linkWarning)
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
-    return this.linkWarning;
   }
 
   /**
