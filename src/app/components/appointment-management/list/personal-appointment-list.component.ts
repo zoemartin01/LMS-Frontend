@@ -11,6 +11,7 @@ import { AppointmentViewComponent } from "../view/appointment-view.component";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-appointment-list',

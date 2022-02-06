@@ -1,18 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import * as moment from "moment";
 
 import {AppointmentService} from "../../../services/appointment.service";
-import {RoomService} from "../../../services/room.service";
 
 import {Appointment} from "../../../types/appointment";
-import {Room} from "../../../types/room";
 import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {UserRole} from "../../../types/enums/user-role";
 import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
-import * as moment from "moment";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -26,10 +24,8 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
  */
 export class AppointmentEditComponent implements OnInit {
   @Input() appointmentId: string = '';
-  @Output() updateCalendar = new EventEmitter<void>();
+  @Output() close = new EventEmitter<boolean>();
   public appointmentEditForm: FormGroup = new FormGroup({
-    user: new FormControl('', Validators.required),
-    room: new FormControl('', Validators.required),
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
@@ -63,26 +59,26 @@ export class AppointmentEditComponent implements OnInit {
     maxStart: undefined,
     amount: 1,
   };
-  public rooms: Room[] = [];
-  public startTimeSlots = Array.from(Array(5).keys());//@todo set dinamically
-  public endTimeSlots = Array.from(Array(5).keys()).map(x => x + 8);//@todo set dinamically
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
-   * @param {RoomService} roomService service providing room functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public appointmentService: AppointmentService, public roomService: RoomService,  public activeModal: NgbActiveModal) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
+    this.appointment.id = this.appointmentId;
     this.getAppointmentData();
-    this.getRooms();
+    console.log(this.appointment);
   }
 
   /**
@@ -96,11 +92,9 @@ export class AppointmentEditComponent implements OnInit {
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
 
-        this.appointmentEditForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
-        this.appointmentEditForm.controls['room'].setValue(res.room.name);
         this.appointmentEditForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.appointmentEditForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
-        this.appointmentEditForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
+        this.appointmentEditForm.controls['startHour'].setValue(res.start?.format('HH:00'));
+        this.appointmentEditForm.controls['endHour'].setValue(res.end?.format('HH:00'));
         this.appointmentEditForm.controls['confirmationStatus'].setValue(res.confirmationStatus);
         this.appointmentEditForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentEditForm.controls['amount'].setValue(res.amount);
@@ -112,36 +106,51 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   /**
-   * Gets all rooms
-   */
-  public getRooms(): void {
-  }
-  //todo why
-
-  /**
    * Changes data of single appointment
    */
   public async editAppointment(): Promise<void> {
-    this.appointmentService.editAppointment(this.appointment.id,
-      this.getDirtyValues(this.appointmentEditForm)
-    ).subscribe({
+    let changedData: { [key: string]: any} = {};
+
+    if (this.appointmentEditForm.controls['date'].dirty || this.appointmentEditForm.controls['startHour'].dirty
+      || this.appointmentEditForm.controls['endHour'].dirty) {
+      const appointmentStart = moment(this.appointment.start);
+
+      const day = moment(appointmentStart)
+        .add((+this.appointmentEditForm.controls['date'].value + 6) % 7 - (appointmentStart.day() + 6) % 7,
+          'days').minutes(0).seconds(0);
+
+      changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
+        .hours()).format();
+      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
+        .hours()).format();
+    }
+
+    this.appointmentService.editAppointment(this.appointment.id, changedData).subscribe({
       next: () => {
-        this.activeModal.close('edited');
+        this.close.emit(true);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     });
-    this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 
   /**
    * Changes data of single appointment
    */
   public async editAppointmentSeries(): Promise<void> {
-    this.appointmentService.editAppointmentSeries(this.appointment.id,
-      this.getDirtyValues(this.appointmentEditForm)
-    ).subscribe({
+    let changedData: { [key: string]: any} = {};
+
+    if (this.appointmentEditForm.controls['date'].dirty || this.appointmentEditForm.controls['startHour'].dirty
+      || this.appointmentEditForm.controls['endHour'].dirty) {
+      const day = moment(this.appointmentEditForm.controls['date'].value).minutes(0).seconds(0);
+      changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value).hours())
+        .toISOString();
+      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value).hours())
+        .toISOString();
+    }
+
+    this.appointmentService.editAppointmentSeries(this.appointment.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
@@ -149,7 +158,7 @@ export class AppointmentEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-    this.updateCalendar.emit(); //triggers calendar update in parent component
+    this.close.emit(true);
   }
 
   /**

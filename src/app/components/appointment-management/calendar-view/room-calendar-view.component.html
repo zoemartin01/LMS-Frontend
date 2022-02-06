@@ -109,10 +109,11 @@
   </div>
 
   <div class="sidebar">
-    <app-appointment-view *ngIf="action === 'view'" [appointmentId]="currentAppointmentId"></app-appointment-view>
+    <app-appointment-view *ngIf="action === 'view'" [appointmentId]="currentAppointmentId"
+                          (close)="closedSidebar($event)"></app-appointment-view>
     <app-appointment-edit *ngIf="action === 'edit'" [appointmentId]="currentAppointmentId"
-                          (updateCalendar)="updateCalendar()"></app-appointment-edit>
-    <app-appointment-create *ngIf="action === 'create'" (updateCalendar)="updateCalendar()"
+                          (close)="closedSidebar($event)"></app-appointment-edit>
+    <app-appointment-create *ngIf="action === 'create'" (close)="closedSidebar($event)"
                             [start]="appointmentCreationStart" [room]="room"></app-appointment-create>
   </div>
 </div>

@@ -139,7 +139,13 @@ export class AppointmentService {
    * @param end end of the appointment
    * @param timeSlotRecurrence recurrence of the appointment
    */
-  public createAppointment(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence): Observable<Appointment> {
+  public createAppointment(
+    room : Room,
+    confirmationStatus: ConfirmationStatus,
+    start: moment.Moment,
+    end: moment.Moment,
+    timeSlotRecurrence: TimeSlotRecurrence
+  ): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
       room: room,
@@ -162,8 +168,15 @@ export class AppointmentService {
    * @param {number} difference milliseconds, time difference between the appointments, regularity
    * @param {number} amount 2-2048, amount of appointments wanted for the series
    */
-  public createAppointmentSeries(room : Room, confirmationStatus: ConfirmationStatus, start: Moment, end: Moment, timeSlotRecurrence: TimeSlotRecurrence, difference: number, amount: number)
-    : Observable<Appointment[]> {
+  public createAppointmentSeries(
+    room: Room,
+    confirmationStatus: ConfirmationStatus,
+    start: moment.Moment,
+    end: moment.Moment,
+    timeSlotRecurrence: TimeSlotRecurrence,
+    difference: number,
+    amount: number
+  ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
       room: room,
