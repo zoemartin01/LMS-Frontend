@@ -27,7 +27,7 @@ export class AppointmentCreateComponent {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
-  @Output() updateCalendar = new EventEmitter<void>();
+  @Output() close = new EventEmitter<boolean>();
 
   public appointmentCreateForm: FormGroup = new FormGroup({
     start: new FormControl('', [
@@ -84,7 +84,6 @@ export class AppointmentCreateComponent {
       console.log('Invalid form data')
     }
 
-
-    this.updateCalendar.emit(); //triggers calendar update in parent component
+    this.close.emit(true);
   }
 }

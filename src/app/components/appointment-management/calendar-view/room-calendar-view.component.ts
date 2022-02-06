@@ -184,7 +184,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public getRowspan(object: Appointment|string|null): number {
     const appointment = <Appointment>object;
-    return moment(appointment.end).diff(moment(appointment.start), 'hours') + 1;
+    return moment(appointment.end).diff(moment(appointment.start), 'hours');
   }
 
   /**
@@ -217,6 +217,16 @@ export class RoomCalendarViewComponent implements OnInit {
   public openAppointmentEditForm(appointmentId: TimespanId): void {
     this.action = 'edit';
     this.currentAppointmentId = <string>appointmentId;
+  }
+
+  public closedSidebar(isDirty: boolean) {
+    this.action = '';
+    this.currentAppointmentId = '';
+    this.appointmentCreationStart = null;
+
+    if (isDirty) {
+      this.updateCalendar();
+    }
   }
 
   /**

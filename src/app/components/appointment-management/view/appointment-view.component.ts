@@ -5,7 +5,6 @@ import {AppointmentService} from "../../../services/appointment.service";
 import {AuthService} from "../../../services/auth.service";
 
 import {Appointment} from "../../../types/appointment";
-import {TimespanId} from "../../../types/aliases/timespan-id";
 import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
@@ -14,9 +13,7 @@ import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
-import {RoomEditComponent} from "../../room-management/edit/room-edit.component";
 import {AppointmentEditComponent} from "../edit/appointment-edit.component";
-import {RoomDeleteComponent} from "../../room-management/delete/room-delete.component";
 import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
 
 @Component({
@@ -32,7 +29,7 @@ import {AppointmentDeleteComponent} from "../delete/appointment-delete.component
  */
 export class AppointmentViewComponent implements OnInit {
   @Input() appointmentId: string = '';
-  @Output() updateCalendar = new EventEmitter<void>();
+  @Output() close = new EventEmitter<boolean>();
   public appointment: Appointment = {
     id: null,
     user: {
@@ -136,7 +133,7 @@ export class AppointmentViewComponent implements OnInit {
       }
     });
 
-    this.updateCalendar.emit(); //triggers calendar update in parent component
+    this.close.emit(true);
   }
 
   /**
@@ -156,6 +153,6 @@ export class AppointmentViewComponent implements OnInit {
         this.dirty = true;
       }
     });
-    this.updateCalendar.emit(); //triggers calendar update in parent component
+    this.close.emit(true);
   }
 }
