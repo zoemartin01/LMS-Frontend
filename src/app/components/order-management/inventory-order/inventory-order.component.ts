@@ -10,7 +10,6 @@ import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {OrderStatus} from "../../../types/enums/order-status";
 import {UserRole} from "../../../types/enums/user-role";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Component({
   selector: 'app-inventory-order',
@@ -126,42 +125,45 @@ export class InventoryOrderComponent implements OnInit {
     this.inventoryService.getInventoryItemByName(this.inventoryOrderForm.controls['itemName'].value).subscribe({
       next: res => {
         this.inventoryItem = res;
+        // case: no existing inventory item => create
+        if (this.inventoryItem === null) {
+          const name = this.inventoryOrderForm.value.itemName;
+          const description = '';
+          const quantity = this.inventoryOrderForm.value.quantity;
+          this.inventoryService.createInventoryItem(name, description, quantity).subscribe({
+            error: error => {
+              console.error('There was an error!', error);
+            },
+          });
+        } // case: existing inventory item => edit
+        else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
+          this.inventoryService.editInventoryItem(
+            this.inventoryItem.id, {quantity: (+this.inventoryItem.quantity + +this.order.quantity)}
+          ).subscribe({
+            error: error => {
+              console.error('There was an error!', error);
+            }
+          })
+        }
+
+        // change order status to inventoried and update item name
+        this.orderService.updateOrderData(this.order.id, {
+          itemName: this.inventoryOrderForm.value.itemName,
+          status: OrderStatus.inventoried,
+        }).subscribe({
+          next: () => {
+            this.activeModal.close(`inventoried ${this.order.id}`)
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        })
       },
+
       error: error => {
         console.error('There was an error!', error);
       },
     });
-    if (this.inventoryItem === null) {
-      const newInventoryItem: InventoryItem = {
-        id: null,
-        name: this.inventoryOrderForm.value.itemName,
-        description: '',
-        quantity: this.inventoryOrderForm.value.quantity,
-      };
-      this.inventoryService.createInventoryItem(newInventoryItem).subscribe({
-        error: error => {
-          console.error('There was an error!', error);
-        },
-      });
-    } else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
-      this.inventoryService.editInventoryItem(
-        this.inventoryItem.id, {quantity: this.inventoryItem.quantity + this.order.quantity}
-      ).subscribe({
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      })
-    }
-    this.orderService.updateOrderData(this.order.id, {
-      itemName: this.inventoryOrderForm.value.itemName,
-      status: OrderStatus.inventoried,
-    }).subscribe({
-      next: () => {
-        this.activeModal.close(`inventoried ${this.order.id}`)
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+
   }
 }
