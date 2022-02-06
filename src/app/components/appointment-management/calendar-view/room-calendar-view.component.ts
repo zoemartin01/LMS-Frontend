@@ -35,10 +35,10 @@ export class RoomCalendarViewComponent implements OnInit {
   public calendar: (Appointment|string|null)[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(1).keys());
-  public week: moment.Moment = moment();
   public action: string = '';
   public currentAppointmentId: string = '';
   public appointmentCreationStart: moment.Moment|null = null;
+  public week: moment.Moment = moment();
   public weekText: string = '';
   public weekField: NgbDateStruct = new class implements NgbDateStruct {
     day = 1;
@@ -234,7 +234,7 @@ export class RoomCalendarViewComponent implements OnInit {
    *
    * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+  public async openAppointmentDeletionDialog(appointmentId: TimespanId): Promise<void> {
     this.action = '';
     const modal = this.modalService.open(AppointmentDeleteComponent);
     modal.componentInstance.appointment.id = appointmentId;

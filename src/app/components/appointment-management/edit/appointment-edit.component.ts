@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
-import {AppointmentService} from "../../../services/appointment.service";
+import { AppointmentService } from "../../../services/appointment.service";
 
-import {Appointment} from "../../../types/appointment";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {UserRole} from "../../../types/enums/user-role";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import { Appointment } from "../../../types/appointment";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { UserRole } from "../../../types/enums/user-role";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -28,8 +28,10 @@ export class AppointmentEditComponent implements OnInit {
   public appointmentEditForm: FormGroup = new FormGroup({
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
-    timeSlotRecurrence: new FormControl('', Validators.required),
+  });
+  public recurringAppointmentEditForm: FormGroup = new FormGroup({
+    timeSlotRecurrence: new FormControl(''),
+    amount: new FormControl(''),
   });
   public appointment: Appointment = {
     id: null,
@@ -59,6 +61,14 @@ export class AppointmentEditComponent implements OnInit {
     amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
   };
+  public date: moment.Moment = moment();
+  public dateText: string = '';
+  public dateField: NgbDateStruct = new class implements NgbDateStruct {
+    day = 1;
+    month = 1;
+    year = 1990;
+  };
+  public isRecurring: boolean = false;
 
   /**
    * Constructor
@@ -78,7 +88,6 @@ export class AppointmentEditComponent implements OnInit {
   ngOnInit(): void {
     this.appointment.id = this.appointmentId;
     this.getAppointmentData();
-    console.log(this.appointment);
   }
 
   /**
@@ -90,14 +99,16 @@ export class AppointmentEditComponent implements OnInit {
         this.appointment = res;
 
         this.appointment.start = moment(this.appointment.start);
-        this.appointment.end = moment(this.appointment.end);
+        this.appointment.end = moment(this.appointment.end)
 
-        this.appointmentEditForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.appointmentEditForm.controls['startHour'].setValue(res.start?.format('HH:00'));
-        this.appointmentEditForm.controls['endHour'].setValue(res.end?.format('HH:00'));
-        this.appointmentEditForm.controls['confirmationStatus'].setValue(res.confirmationStatus);
-        this.appointmentEditForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
-        this.appointmentEditForm.controls['amount'].setValue(res.amount);
+        this.setDate(this.appointment.start);
+
+        this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
+        this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
+        this.appointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
+        this.appointmentEditForm.controls['amount'].setValue(this.appointment.amount);
+
+        this.isRecurring = this.appointment.timeSlotRecurrence === TimeSlotRecurrence.single;
       },
       error: error => {
         console.error('There was an error!', error);
@@ -106,18 +117,36 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   /**
+   * Sets current date
+   *
+   * @param {moment.Moment} date date
+   */
+  public setDate(date: moment.Moment): void {
+    this.date = date;
+
+    this.dateText = this.date.format("DD.MM.YYYY");
+
+    this.dateField.day = +this.date.format("D");
+    this.dateField.month = +this.date.format("M");
+    this.dateField.year = +this.date.format("YYYY");
+  }
+
+  /**
+   * Handles change of datepicker
+   */
+  public handleDatepickerChange(): void {
+    this.setDate(moment(`${this.dateField.year}-${this.dateField.month}-${this.dateField.day}`));
+  }
+
+  /**
    * Changes data of single appointment
    */
   public async editAppointment(): Promise<void> {
     let changedData: { [key: string]: any} = {};
 
-    if (this.appointmentEditForm.controls['date'].dirty || this.appointmentEditForm.controls['startHour'].dirty
+    if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
-      const appointmentStart = moment(this.appointment.start);
-
-      const day = moment(appointmentStart)
-        .add((+this.appointmentEditForm.controls['date'].value + 6) % 7 - (appointmentStart.day() + 6) % 7,
-          'days').minutes(0).seconds(0);
+      const day = moment(this.date).minutes(0).seconds(0);
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).format();
@@ -141,16 +170,19 @@ export class AppointmentEditComponent implements OnInit {
   public async editAppointmentSeries(): Promise<void> {
     let changedData: { [key: string]: any} = {};
 
-    if (this.appointmentEditForm.controls['date'].dirty || this.appointmentEditForm.controls['startHour'].dirty
+    changedData = this.getDirtyValues(this.recurringAppointmentEditForm);
+
+    if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
-      const day = moment(this.appointmentEditForm.controls['date'].value).minutes(0).seconds(0);
-      changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value).hours())
-        .toISOString();
-      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value).hours())
-        .toISOString();
+      const day = moment(this.date).minutes(0).seconds(0);
+
+      changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
+        .hours()).format();
+      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
+        .hours()).format();
     }
 
-    this.appointmentService.editAppointmentSeries(this.appointment.id, changedData).subscribe({
+    this.appointmentService.editAppointmentSeries(this.appointment.seriesId, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },

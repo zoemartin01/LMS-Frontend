@@ -34,8 +34,11 @@ export class AppointmentCreateComponent {
     end: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
-    amount: new FormControl(1, Validators.required)
+    amount: new FormControl(1, Validators.required),
+    force: new FormControl(false),
   });
+
+  public seriesConflict = false;
 
   /**
    * Constructor
@@ -53,17 +56,23 @@ export class AppointmentCreateComponent {
    */
   public async createAppointment(appointmentCreationForm: NgForm): Promise<void> {
     if (this.appointmentCreateForm.valid) {
-      const room = this.room; //todo woher kommt der raum
+      const room = this.room;
       const start = this.appointmentCreateForm.value.start;
       const end = this.appointmentCreateForm.value.end;
       const recurrence = this.appointmentCreateForm.value.timeSlotRecurrence;
       const confirmationStatus = ConfirmationStatus.pending;
+
       if(recurrence !== TimeSlotRecurrence.single) {
         const amount = this.appointmentCreateForm.value.amount;
-        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, amount).subscribe({
+        const force = this.appointmentCreateForm.value.force;
+        this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, amount, force).subscribe({
           next: () => {
             this.activeModal.close('created');
           }, error: error => {
+            if (error.status === 409) {
+              this.seriesConflict = true;
+            }
+
             console.error('There was an error!', error);
           }
         });
