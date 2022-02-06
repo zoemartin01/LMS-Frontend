@@ -49,7 +49,6 @@ export class WhitelistRetailerCreateComponent {
    * Creates whitelist retailer
    */
   public async createWhitelistRetailer(): Promise<void> {
-    //@todo Mario: adding domains fails
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
       next: () => {
         this.activeModal.close('created');
