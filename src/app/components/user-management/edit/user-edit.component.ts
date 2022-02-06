@@ -93,6 +93,7 @@ export class UserEditComponent implements OnInit {
         firstName: this.userEditForm.controls['firstName'].value,
         lastName: this.userEditForm.controls['lastName'].value,
         email: this.userEditForm.controls['email'].value,
+        password: this.userEditForm.controls['password'].value,
         role: +this.userEditForm.controls['role'].value,
         notificationChannel: +this.userEditForm.controls['notificationChannel'].value
       }
