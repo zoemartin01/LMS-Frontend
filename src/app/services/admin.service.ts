@@ -285,9 +285,9 @@ export class AdminService {
    *
    * @param {String} domain domain which is checked against whitelist
    */
-  public checkDomainAgainstWhitelist(domain: string): Observable<boolean> {
+  public checkDomainAgainstWhitelist(domain: string): Observable<{isWhitelisted : boolean}> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`;
 
-    return this.httpClient.post<boolean>(apiURL, { domain });
+    return this.httpClient.post<{isWhitelisted : boolean}>(apiURL, { domain });
   }
 }
