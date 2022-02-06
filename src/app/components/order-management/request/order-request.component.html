@@ -7,11 +7,11 @@
     <div class="form-group row">
       <label for="itemName" class="form-label">Item Name</label>
       <div class="input-group">
-       <input type="text" class="form-control" list="itemOptions" id="itemName" placeholder="Item Name"
-              formControlName="itemName">
+        <input type="text" class="form-control" list="itemOptions" id="itemName" placeholder="Item Name"
+               formControlName="itemName">
         <datalist id="itemOptions">
           <option *ngFor="let item of existingItems" [value] ="item.name"></option>
-       </datalist>
+        </datalist>
       </div>
     </div>
     <div class="form-group row">

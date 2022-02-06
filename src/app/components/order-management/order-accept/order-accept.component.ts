@@ -16,8 +16,6 @@ import { OrderStatus } from "../../../types/enums/order-status";
 })
 /**
  * Component to accept an order
- *
- *
  */
 export class OrderAcceptComponent implements OnInit {
   public orderAcceptForm: FormGroup = new FormGroup({
@@ -26,7 +24,6 @@ export class OrderAcceptComponent implements OnInit {
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,

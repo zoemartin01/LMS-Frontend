@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { OrderService } from "../../../services/order.service";
 
@@ -6,8 +8,6 @@ import { Order } from "../../../types/order";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-order-delete',
@@ -17,8 +17,6 @@ import {FormControl, FormGroup} from "@angular/forms";
 
 /**
  * Component for the deletion of an order
- *
- *
  */
 export class OrderDeleteComponent implements OnInit {
   public orderDeleteForm: FormGroup = new FormGroup({
@@ -27,7 +25,6 @@ export class OrderDeleteComponent implements OnInit {
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,
@@ -77,6 +74,7 @@ export class OrderDeleteComponent implements OnInit {
         } else {
           this.orderDeleteForm.controls['itemName'].setValue(res.itemName);
         }
+
         this.orderDeleteForm.controls['quantity'].setValue(res.quantity);
         this.orderDeleteForm.controls['url'].setValue(res.url);
         this.orderDeleteForm.controls['status'].setValue(res.status);

@@ -2,25 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
+import { OrderAcceptComponent } from "../order-accept/order-accept.component";
+import { OrderDeclineComponent } from "../order-decline/order-decline.component";
+import { OrderDeleteComponent } from "../delete/order-delete.component";
 import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";
 import { OrderViewComponent } from "../view/order-view.component";
-import { OrderDeleteComponent } from "../delete/order-delete.component";
-import { OrderDeclineComponent } from "../order-decline/order-decline.component";
-import { OrderAcceptComponent } from "../order-accept/order-accept.component";
 
 import { OrderService } from "../../../services/order.service";
 import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import { OrderStatus } from "../../../types/enums/order-status";
-import {InventoryItemCreateComponent} from "../../inventory-management/item-create/inventory-item-create.component";
-import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
-import {InventoryItemViewComponent} from "../../inventory-management/item-view/inventory-item-view.component";
-import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
-import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
-import {PagedList} from "../../../types/paged-list";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -30,8 +25,7 @@ import {PagedList} from "../../../types/paged-list";
 
 /**
  * Component for the admin order list page
- *
- *
+ * @todo Lena fix JSDoc of methods
  */
 export class AdminOrderListComponent implements OnInit {
   public pendingOrders: PagedList<Order> = new PagedList<Order>();

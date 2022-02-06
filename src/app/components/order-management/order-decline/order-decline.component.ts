@@ -17,8 +17,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component to decline an order
- *
- *
  */
 export class OrderDeclineComponent implements OnInit {
   public orderDeclineForm: FormGroup = new FormGroup({
@@ -27,7 +25,6 @@ export class OrderDeclineComponent implements OnInit {
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderEditComponent } from "../edit/order-edit.component";
 
 import { OrderService } from "../../../services/order.service";
 
@@ -6,11 +11,6 @@ import { Order } from "../../../types/order";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {OrderEditComponent} from "../edit/order-edit.component";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
-import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 @Component({
   selector: 'app-order-view',
@@ -51,7 +51,6 @@ export class OrderViewComponent implements OnInit {
   }
   public dirty: boolean = true;
 
-
   /**
    * Constructor
    * @constructor
@@ -67,7 +66,7 @@ export class OrderViewComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-      this.getOrderData();
+    this.getOrderData();
   }
 
   /**
@@ -83,6 +82,7 @@ export class OrderViewComponent implements OnInit {
         } else {
           this.orderViewForm.controls['itemName'].setValue(res.itemName);
         }
+
         this.orderViewForm.controls['quantity'].setValue(res.quantity);
         this.orderViewForm.controls['url'].setValue(res.url);
         this.orderViewForm.controls['status'].setValue(res.status);

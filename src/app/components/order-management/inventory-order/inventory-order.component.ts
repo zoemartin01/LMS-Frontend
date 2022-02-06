@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {Order} from "../../../types/order";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { InventoryItem } from "../../../types/inventory-item";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-inventory-order',
@@ -19,8 +19,6 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 /**
  * Component to inventory an order
- *
- *
  */
 export class InventoryOrderComponent implements OnInit {
   public inventoryOrderForm: FormGroup = new FormGroup({
@@ -29,7 +27,6 @@ export class InventoryOrderComponent implements OnInit {
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,
@@ -88,11 +85,13 @@ export class InventoryOrderComponent implements OnInit {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
+
         if (res.item !== null) {
           this.inventoryOrderForm.controls['itemName'].setValue(res.item.name);
         } else {
           this.inventoryOrderForm.controls['itemName'].setValue(res.itemName);
         }
+
         this.inventoryOrderForm.controls['quantity'].setValue(res.quantity);
         this.inventoryOrderForm.controls['url'].setValue(res.url);
         this.inventoryOrderForm.controls['status'].setValue(res.status);
@@ -119,7 +118,6 @@ export class InventoryOrderComponent implements OnInit {
 
   /**
    * Sets order status to "inventoried" and adds order to inventory
-   *
    */
   public async inventoryOrder(): Promise<void> {
     this.inventoryService.getInventoryItemByName(this.inventoryOrderForm.controls['itemName'].value).subscribe({
@@ -135,8 +133,8 @@ export class InventoryOrderComponent implements OnInit {
               console.error('There was an error!', error);
             },
           });
-        } // case: existing inventory item => edit
-        else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
+        //case: existing inventory item => edit
+        } else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
           this.inventoryService.editInventoryItem(
             this.inventoryItem.id, {quantity: (+this.inventoryItem.quantity + +this.order.quantity)}
           ).subscribe({
@@ -159,11 +157,9 @@ export class InventoryOrderComponent implements OnInit {
           }
         })
       },
-
       error: error => {
         console.error('There was an error!', error);
       },
     });
-
   }
 }

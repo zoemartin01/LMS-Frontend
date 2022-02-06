@@ -103,10 +103,10 @@ export const environment = {
       getCurrentUsersAcceptedOrders: '/user/orders/accepted',
       getCurrentUsersDeclinedOrders: '/user/orders/declined',
 
-
       getAllPendingOrders: '/orders/pending',
       getAllAcceptedOrders: '/orders/accepted',
       getAllDeclinedOrders: '/orders/declined',
+
       getSingleOrder: '/orders/:id',
 
       createOrder: '/orders',

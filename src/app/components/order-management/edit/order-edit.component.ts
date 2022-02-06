@@ -20,8 +20,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for the order edit popup
- *
- *
  */
 export class OrderEditComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
@@ -111,11 +109,13 @@ export class OrderEditComponent implements OnInit {
 
   private updateOrderEditForm(order: Order) {
     this.order = order;
+
     if (order.item !== null) {
       this.orderEditForm.controls['itemName'].setValue(order.item.name);
     } else {
       this.orderEditForm.controls['itemName'].setValue(order.itemName);
     }
+
     this.orderEditForm.controls['quantity'].setValue(order.quantity);
     this.orderEditForm.controls['url'].setValue(order.url);
     this.orderEditForm.controls['status'].setValue(order.status);
@@ -127,8 +127,7 @@ export class OrderEditComponent implements OnInit {
    * @param {NgForm} orderEditForm submitted edit form
    */
   public async editOrder(): Promise<void> {
-    this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)
-    ).subscribe({
+    this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },

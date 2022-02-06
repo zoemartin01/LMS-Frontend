@@ -41,6 +41,8 @@ import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
 import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
+import { OrderAcceptComponent } from './components/order-management/order-accept/order-accept.component';
+import { OrderDeclineComponent } from './components/order-management/order-decline/order-decline.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -70,8 +72,6 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
 import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
-import { OrderDeclineComponent } from './components/order-management/order-decline/order-decline.component';
-import { OrderAcceptComponent } from './components/order-management/order-accept/order-accept.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +100,8 @@ import { OrderAcceptComponent } from './components/order-management/order-accept
     LoginComponent,
     MessageBoxComponent,
     MessageDeleteComponent,
+    OrderAcceptComponent,
+    OrderDeclineComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
@@ -129,8 +131,6 @@ import { OrderAcceptComponent } from './components/order-management/order-accept
     WhitelistRetailerDomainCreateComponent,
     WhitelistRetailerDomainDeleteComponent,
     WhitelistRetailerDomainEditComponent,
-    OrderDeclineComponent,
-    OrderAcceptComponent,
   ],
   imports: [
     AppRoutingModule,
