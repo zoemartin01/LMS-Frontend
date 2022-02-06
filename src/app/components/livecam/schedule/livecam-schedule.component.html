@@ -33,10 +33,7 @@
     <div class="form-group">
       <label for="resolution" class="my-1">Resolution</label>
       <select class="form-select" id="resolution" formControlName="resolution">
-        <option value="1280x720">720p</option>
-        <option value="1920x1080">1080p</option>
-        <option value="2560x1440">1440p</option>
-        <option value="3840x2160">2160p</option>
+        <option *ngFor="let resolution of resolutions()" [value]="resolution">{{ resolution.split('x')[1]}}p</option>
       </select>
     </div>
     <div class="form-group row">
@@ -55,7 +52,7 @@
       <div class="col">
         <label for="bitrate_unit" class="my-1">Bitrate Unit</label>
         <select class="form-select" id="bitrate_unit" formControlName="bitrate_unit">
-          <option value="kbps">bit/s</option>
+          <option value="bps">bit/s</option>
           <option value="kbps">kbit/s</option>
           <option value="mbps">mbit/s</option>
         </select>

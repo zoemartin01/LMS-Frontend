@@ -53,14 +53,27 @@ export class AdminService {
   }
 
   /**
-   * Gets users
+   * Gets pending users
    */
-  public getUsers(
+  public getPendingUsers(
     limit: number = 0,
     offset: number = 0,
   ): Observable<PagedResponse<User>> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllUsers}` +
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllPendingUsers}` +
     `?limit=${limit}&offset=${offset}`
+
+    return this.httpClient.get<PagedResponse<User>>(apiURL);
+  }
+
+  /**
+   * Gets accepted users
+   */
+  public getAcceptedUsers(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<User>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllAcceptedUsers}` +
+      `?limit=${limit}&offset=${offset}`
 
     return this.httpClient.get<PagedResponse<User>>(apiURL);
   }

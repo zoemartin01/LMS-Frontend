@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
 import { UserService } from "../../../services/user.service";
 
 import { UserAcceptComponent } from "../accept/user-accept.component";
@@ -12,7 +13,7 @@ import { UserViewComponent } from "../view/user-view.component";
 
 import { User } from "../../../types/user";
 import { UserId } from "../../../types/aliases/user-id";
-import { UserRole } from "../../../types/enums/user-role";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-user-list',
@@ -26,36 +27,64 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class UserListComponent implements OnInit {
-  public pendingUsers: User[] = [];
-  public acceptedUsers: User[] = [];
+  public pendingUsers: PagedList<User> = new PagedList<User>();
+  public acceptedUsers: PagedList<User> = new PagedList<User>();
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {UserService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public userService: UserService, private modalService: NgbModal) {
+  constructor(
+    public userService: UserService,
+    public adminService: AdminService,
+    public authService: AuthService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.getUsers();
+    this.getAcceptedUsers(this.acceptedUsers.page);
+    this.getPendingUsers(this.pendingUsers.page);
   }
 
   /**
-   * Gets data of all users
+   * Gets data of all pending users
    */
-  public async getUsers(): Promise<void> {
-    this.adminService.getUsers().subscribe({
+  public async getPendingUsers(page: number): Promise<void> {
+    const pageSize = this.pendingUsers.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.adminService.getPendingUsers(pageSize, offset).subscribe({
       next: res => {
-        this.pendingUsers = res.data.filter((user: User) => user.role == UserRole.pending && user.emailVerification);
-        this.acceptedUsers = res.data.filter((user: User) => user.role != UserRole.pending && user.emailVerification);
-        console.log(res, this.pendingUsers, this.acceptedUsers)
+        this.pendingUsers.total = res.total;
+        this.pendingUsers.page = page;
+
+        this.pendingUsers.data = res.data;
       },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  /**
+   * Gets data of all accepted users
+   */
+  public async getAcceptedUsers(page: number): Promise<void> {
+    const pageSize = this.pendingUsers.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.adminService.getAcceptedUsers(pageSize, offset).subscribe({
+      next: res => {
+        this.acceptedUsers.total = res.total;
+        this.acceptedUsers.page = page;
+
+        this.acceptedUsers.data = res.data;      },
       error: error => {
         console.error('There was an error!', error);
       }
@@ -72,7 +101,8 @@ export class UserListComponent implements OnInit {
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getUsers();
+        this.getPendingUsers(this.pendingUsers.page);
+        this.getAcceptedUsers(this.acceptedUsers.page);
       }
     });
   }
@@ -87,7 +117,8 @@ export class UserListComponent implements OnInit {
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getUsers();
+        this.getPendingUsers(this.pendingUsers.page);
+        this.getAcceptedUsers(this.acceptedUsers.page);
       }
     });
   }
@@ -102,7 +133,7 @@ export class UserListComponent implements OnInit {
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getUsers();
+        this.getAcceptedUsers(this.acceptedUsers.page);
       }
     });
   }
@@ -117,7 +148,7 @@ export class UserListComponent implements OnInit {
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getUsers();
+        this.getAcceptedUsers(this.acceptedUsers.page);
       }
     });
   }
@@ -132,7 +163,7 @@ export class UserListComponent implements OnInit {
     modal.componentInstance.user.id = userId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getUsers();
+        this.getAcceptedUsers(this.acceptedUsers.page);
       }
     });
   }

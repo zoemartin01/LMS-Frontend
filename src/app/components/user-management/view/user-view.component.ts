@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
 
 import { UserDeleteComponent } from "../delete/user-delete.component";
 import { UserEditComponent } from "../edit/user-edit.component";
@@ -52,8 +53,14 @@ export class UserViewComponent implements OnInit {
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
+   * @param {AuthService} authService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal,
+    public authService: AuthService,
+    ) {
     this.userViewForm.disable();
   }
 
