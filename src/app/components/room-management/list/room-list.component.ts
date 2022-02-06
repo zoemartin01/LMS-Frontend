@@ -22,7 +22,6 @@ import { PagedList } from 'src/app/types/paged-list';
 /**
  * Component for the room list page
  *
- *
  */
 export class RoomListComponent implements OnInit {
   public rooms: PagedList<Room> = new PagedList<Room>();
@@ -46,6 +45,8 @@ export class RoomListComponent implements OnInit {
 
   /**
    * Gets all rooms with data
+   *
+   * @param {number} page current number of page
    */
   public async getRooms(page: number = this.rooms.page): Promise<void> {
     const pageSize = this.rooms.pageSize;

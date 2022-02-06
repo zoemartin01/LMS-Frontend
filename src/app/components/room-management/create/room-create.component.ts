@@ -13,7 +13,6 @@ import { RoomService } from "../../../services/room.service";
 /**
  * Component for the room create popup
  *
- *
  */
 export class RoomCreateComponent {
   public roomCreateForm: FormGroup = new FormGroup({

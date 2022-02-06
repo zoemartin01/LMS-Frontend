@@ -68,6 +68,7 @@ export class AdminAppointmentListComponent implements OnInit {
 
   /**
    * Gets appointment data of all pending appointments
+   *
    * @param {number} page current number of page
    */
   public async getPendingAppointments(page: number = this.pendingAppointments.page): Promise<void> {

@@ -66,10 +66,13 @@ export class AppointmentDeclineComponent implements OnInit {
   constructor(public appointmentService: AppointmentService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
     this.appointmentDeclineForm.disable();
   }
+
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.getAppointmentData();
   }
-
 
   /**
    * Gets appointment data

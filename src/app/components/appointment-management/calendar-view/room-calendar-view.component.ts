@@ -78,6 +78,7 @@ export class RoomCalendarViewComponent implements OnInit {
 
   /**
    * Sets current week for calendar
+   *
    * @param {moment.Moment} date date in a week
    */
   public setWeek(date: moment.Moment): void {

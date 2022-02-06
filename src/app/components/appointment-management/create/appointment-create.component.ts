@@ -17,7 +17,6 @@ import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 /**
  * Component for the appointment create page
  *
- *
  */
 export class AppointmentCreateComponent {
   @Input() start: moment.Moment|null = null;

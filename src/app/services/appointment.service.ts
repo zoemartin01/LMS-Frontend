@@ -25,17 +25,22 @@ import * as moment from "moment";
  */
 export class AppointmentService {
 
+  /**
+   * constructor
+   *
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all appointments
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
+   * @param {ConfirmationStatus} confirmationStatus confirmation status of appointments
    */
-  public getAllAppointments(
-    limit: number = 0,
-    offset: number = 0,
-    confirmationStatus: ConfirmationStatus|undefined = undefined,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointments(limit: number = 0, offset: number = 0, confirmationStatus: ConfirmationStatus|undefined = undefined): Observable<PagedResponse<Appointment>> {
     let apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -48,11 +53,11 @@ export class AppointmentService {
 
   /**
    * Retrieves all appointments for current user
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllAppointmentsForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForCurrentUser(limit: number = 0, offset: number = 0,): Observable<PagedResponse<Appointment>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -63,12 +68,10 @@ export class AppointmentService {
    * Retrieves all appointments for specified room
    *
    * @param {RoomId} roomId id of room to retrieve appointments
+   * @param limit maximum of loaded entities per request
+   * @param offset start of loaded entities per request
    */
-  public getAllAppointmentsForRoom(
-    roomId: RoomId,
-    limit: number = 0,
-    offset: number = 0,
-    ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForRoom(roomId: RoomId, limit: number = 0, offset: number = 0): Observable<PagedResponse<Appointment>> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -99,12 +102,10 @@ export class AppointmentService {
    * Retrieves all data of the appointments for one series
    *
    * @param {SeriesId} seriesId id of the appointment series
+   * @param limit maximum of loaded entities per request
+   * @param offset start of loaded entities per request
    */
-  public getAllAppointmentsForSeries(
-    seriesId : SeriesId,
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForSeries(seriesId : SeriesId, limit: number = 0, offset: number = 0): Observable<PagedResponse<Appointment>> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }

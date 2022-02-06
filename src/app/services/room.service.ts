@@ -22,16 +22,21 @@ import { PagedResponse } from '../types/paged-response';
  */
 export class RoomService {
 
+  /**
+   * constructor
+   *
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Gets data of all rooms
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getRoomsData(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Room>> {
+  public getRoomsData(limit: number = 0, offset: number = 0): Observable<PagedResponse<Room>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}` +
     `?limit=${limit}&offset=${offset}`;
 

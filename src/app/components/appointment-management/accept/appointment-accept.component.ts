@@ -29,7 +29,7 @@ export class AppointmentAcceptComponent implements OnInit {
     timeSlotRecurrence: new FormControl('', Validators.required),
     amount: new FormControl(1, Validators.required),
     lastDate: new FormControl('', Validators.required),
-  })
+  });
   public appointment: Appointment = {
     id: null,
     user: {
@@ -70,6 +70,9 @@ export class AppointmentAcceptComponent implements OnInit {
     this.appointmentAcceptForm.disable();
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.getAppointmentData();
   }
