@@ -60,7 +60,6 @@ export class AppointmentCreateComponent {
       const confirmationStatus = ConfirmationStatus.pending;
       if(recurrence !== TimeSlotRecurrence.single) {
         const amount = this.appointmentCreateForm.value.amount;
-        //Todo test amount !== 1 && recurrence === single -> fehler
         this.appointmentService.createAppointmentSeries(room, confirmationStatus, start, end, recurrence, amount).subscribe({
           next: () => {
             this.activeModal.close('created');
