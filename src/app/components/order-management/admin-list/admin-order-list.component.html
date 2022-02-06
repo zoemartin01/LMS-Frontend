@@ -62,6 +62,7 @@
         <a (click)="openOrderView(acceptedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
         <a (click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
         <a (click)="openOrderDeletionDialog(acceptedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+        <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check-fill"></i></button></a>
       </td>
     </tr>
     </tbody>

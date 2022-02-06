@@ -15,6 +15,11 @@ import { UserService } from "../../../services/user.service";
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
 import { OrderStatus } from "../../../types/enums/order-status";
+import {InventoryItemCreateComponent} from "../../inventory-management/item-create/inventory-item-create.component";
+import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
+import {InventoryItemViewComponent} from "../../inventory-management/item-view/inventory-item-view.component";
+import {InventoryItemEditComponent} from "../../inventory-management/item-edit/inventory-item-edit.component";
+import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -46,13 +51,13 @@ export class AdminOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getInventory();
+    this.getOrders();
   }
 
   /**
    * Gets all orders with data
    */
-  public async getInventory(): Promise<void> {
+  public async getOrders(): Promise<void> {
     this.orderService.getAllOrders().subscribe({
       next: res => {
         this.pendingOrders = res.data.filter((order: Order) => +order.status === OrderStatus.pending);
@@ -76,7 +81,7 @@ export class AdminOrderListComponent implements OnInit {
       }
 
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
       }
     });
   }
@@ -91,7 +96,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
       }
     });
   }
@@ -106,7 +111,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
       }
     });
   }
@@ -121,7 +126,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
       }
     });
   }
@@ -136,7 +141,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
       }
     });
   }
@@ -151,7 +156,22 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getOrders();
+      }
+    });
+  }
+
+  /**
+   * Opens form to create order
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public openInventoryOrderForm(orderId: OrderId): void {
+    const modal = this.modalService.open(InventoryOrderComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getOrders();
       }
     });
   }
