@@ -25,19 +25,6 @@ export class OrderService {
   }
 
   /**
-   * Retrieves all orders
-   */
-  public getAllOrders(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Order>> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllOrders}` +
-    `?limit=${limit}&offset=${offset}`;
-
-    return this.httpClient.get<PagedResponse<Order>>(apiURL);
-  }
-
-  /**
    * Retrieves all pending orders
    *
    * @param limit
@@ -81,19 +68,6 @@ export class OrderService {
   ): Observable<PagedResponse<Order>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getAllDeclinedOrders}` +
       `?limit=${limit}&offset=${offset}`;
-
-    return this.httpClient.get<PagedResponse<Order>>(apiURL);
-  }
-
-  /**
-   * Retrieves all orders for current user
-   */
-  public getAllOrdersForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-    ): Observable<PagedResponse<Order>> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.orders.getCurrentUserOrders}` +
-    `?limit=${limit}&offset=${offset}`;
 
     return this.httpClient.get<PagedResponse<Order>>(apiURL);
   }

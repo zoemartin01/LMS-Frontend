@@ -99,13 +99,11 @@ export const environment = {
       deleteItem: '/inventory-items/:id',
     },
     orders: {
-      getCurrentUserOrders: '/user/orders',
       getCurrentUsersPendingOrders: '/users/orders/pending',
       getCurrentUsersAcceptedOrders: '/users/orders/accepted',
       getCurrentUsersDeclinedOrders: '/users/orders/declined',
 
 
-      getAllOrders: '/orders',
       getAllPendingOrders: '/orders/pending',
       getAllAcceptedOrders: '/orders/accepted',
       getAllDeclinedOrders: '/orders/declined',
