@@ -21,17 +21,21 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class RoomService {
-
+  /**
+   * constructor
+   *
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Gets data of all rooms
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getRoomsData(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Room>> {
+  public getRoomsData(limit: number = 0, offset: number = 0): Observable<PagedResponse<Room>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllRooms}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -57,14 +61,12 @@ export class RoomService {
   /**
    * Creates room with data
    *
-   * @todo Sarah: fix JSDoc
-   *
-   * @param name
-   * @param description
-   * @param maxConcurrentBookings
-   * @param autoAcceptBookings
+   * @param {string} name name of room
+   * @param {string} description description of room
+   * @param {number} maxConcurrentBookings maximum concurrent appointments of room
+   * @param {boolean} autoAcceptBookings automatic acceptance of appointment requests
    */
-  public createRoom(name: String, description: String, maxConcurrentBookings: number, autoAcceptBookings: boolean)
+  public createRoom(name: string, description: string, maxConcurrentBookings: number, autoAcceptBookings: boolean)
     : Observable<Room> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createRoom}`;
     const requestBody = {

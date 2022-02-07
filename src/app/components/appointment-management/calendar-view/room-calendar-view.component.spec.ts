@@ -544,7 +544,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
         isActiveDirectory: false,
         notificationChannel: 3
       }
-    })).toBe(4);
+    })).toBe(3);
   });
 
   it('should open appointment creation form', () => {

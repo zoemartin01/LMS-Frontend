@@ -6,10 +6,13 @@ import { environment } from "../../environments/environment";
 
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
+import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
 import { PagedResponse } from '../types/paged-response';
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +24,22 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class AppointmentService {
-
+  /**
+   * constructor
+   *
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all appointments
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
+   * @param {ConfirmationStatus} confirmationStatus confirmation status of appointments
    */
-  public getAllAppointments(
-    limit: number = 0,
-    offset: number = 0,
-    confirmationStatus: ConfirmationStatus|undefined = undefined,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointments(limit: number = 0, offset: number = 0, confirmationStatus: ConfirmationStatus|undefined = undefined): Observable<PagedResponse<Appointment>> {
     let apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -45,11 +52,11 @@ export class AppointmentService {
 
   /**
    * Retrieves all appointments for current user
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllAppointmentsForCurrentUser(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForCurrentUser(limit: number = 0, offset: number = 0,): Observable<PagedResponse<Appointment>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -60,12 +67,10 @@ export class AppointmentService {
    * Retrieves all appointments for specified room
    *
    * @param {RoomId} roomId id of room to retrieve appointments
+   * @param limit maximum of loaded entities per request
+   * @param offset start of loaded entities per request
    */
-  public getAllAppointmentsForRoom(
-    roomId: RoomId, 
-    limit: number = 0,
-    offset: number = 0,
-    ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForRoom(roomId: RoomId, limit: number = 0, offset: number = 0): Observable<PagedResponse<Appointment>> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -95,13 +100,11 @@ export class AppointmentService {
   /**
    * Retrieves all data of the appointments for one series
    *
-   * @param {SeriesId} seriesId id of the appointment
+   * @param {SeriesId} seriesId id of the appointment series
+   * @param limit maximum of loaded entities per request
+   * @param offset start of loaded entities per request
    */
-  public getAllAppointmentsForSeries(
-    seriesId : SeriesId,
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<Appointment>> {
+  public getAllAppointmentsForSeries(seriesId : SeriesId, limit: number = 0, offset: number = 0): Observable<PagedResponse<Appointment>> {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
@@ -115,28 +118,47 @@ export class AppointmentService {
   /**
    * Creates a new appointment request
    *
-   * @param {Appointment} appointment all data about the requested appointment
+   * @param room room of the appointment to take place in
+   * @param start start of the appointment
+   * @param end end of the appointment
    */
-  public createAppointment(appointment: Appointment): Observable<Appointment> {
+  public createAppointment(room : Room, start: moment.Moment, end: moment.Moment): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
+    const requestBody = {
+      roomId: room.id,
+      start: start.toISOString(),
+      end: end.toISOString(),
+    };
 
-    return this.httpClient.post<Appointment>(apiURL, appointment);
+    return this.httpClient.post<Appointment>(apiURL, requestBody);
   }
 
   /**
    * Creates a new appointment request for a series of appointments
    *
-   * @param {Appointment} appointment the starting appointment of the series
-   * @param {number} difference milliseconds, time difference between the appointments, regularity
+   * @param room room of the appointment to take place in
+   * @param start start of the appointment
+   * @param end end of the appointment
+   * @param timeSlotRecurrence recurrence of the appointment
    * @param {number} amount 2-2048, amount of appointments wanted for the series
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are not created
    */
-  public createAppointmentSeries(appointment: Appointment, difference: number, amount: number)
-    : Observable<Appointment[]> {
+  public createAppointmentSeries(
+      room: Room,
+      start: moment.Moment,
+      end: moment.Moment,
+      timeSlotRecurrence: TimeSlotRecurrence,
+      amount: number,
+      force: boolean
+    ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
-      appointment: appointment,
-      difference: difference,
-      amount: amount
+      roomId: room.id,
+      start: start.toISOString(),
+      end: end.toISOString(),
+      timeSlotRecurrence,
+      amount,
+      force,
     };
 
     return this.httpClient.post<Appointment[]>(apiURL, requestBody);
@@ -152,6 +174,7 @@ export class AppointmentService {
     if (appointmentId === null) {
       throw ParseArgumentException;
     }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointment
       .replace(':id', appointmentId)}`;
 
@@ -168,6 +191,7 @@ export class AppointmentService {
     if (seriesId === null) {
       throw ParseArgumentException;
     }
+
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.updateAppointmentSeries
       .replace(':id', seriesId)}`;
 
@@ -230,7 +254,7 @@ export class AppointmentService {
    * @param {SeriesId} seriesId id of series of appointments
    */
   public acceptAppointmentSeriesRequest(seriesId: SeriesId): Observable<Appointment[]> {
-    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.denied });
+    return this.editAppointmentSeries(seriesId, { confirmationStatus: ConfirmationStatus.accepted });
   }
 
   /**

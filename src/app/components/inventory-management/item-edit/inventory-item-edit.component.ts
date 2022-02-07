@@ -15,9 +15,6 @@ import { InventoryItem } from "../../../types/inventory-item";
 
 /**
  * Component for the inventory item edit popup
- *
- *
- *
  */
 export class InventoryItemEditComponent implements OnInit {
   public inventoryItemEditForm: FormGroup = new FormGroup({
@@ -72,8 +69,6 @@ export class InventoryItemEditComponent implements OnInit {
 
   /**
    * Changes data of inventory item
-   *
-   * @param {NgForm} inventoryItemEditForm submitted edit form
    */
   public async editInventoryItemData(): Promise<void> {
     this.inventoryService.editInventoryItem(this.inventoryItem.id, this.utilityService.getDirtyValues(this.inventoryItemEditForm)

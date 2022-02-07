@@ -1,10 +1,10 @@
 <div class="modal-header">
-  <h4 class="modal-title">Delete Appointment</h4>
+  <h4 class="modal-title">Decline Appointment</h4>
 </div>
 <div class="modal-body">
-  <p>Are you sure that you want to delete this appointment?</p>
+  <p>Are you sure that you want to decline this appointment?</p>
 
-  <form [formGroup]="appointmentDeleteForm"><div class="modal-body">
+  <form [formGroup]="appointmentDeclineForm"><div class="modal-body">
 
     <div class="form-group row">
       <div class="col">
@@ -76,7 +76,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="deleteAppointment()">Delete Single Appointment</button>
-  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteAppointmentSeries()">Delete Appointment Series</button>
+  <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-danger" (click)="declineAppointment()">Decline Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="declineAppointmentSeries()">Decline Appointment Series</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

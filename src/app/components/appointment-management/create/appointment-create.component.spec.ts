@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppointmentCreateComponent } from './appointment-create.component';
 
@@ -14,12 +15,13 @@ describe('AppointmentCreateComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgbModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        NgbActiveModal,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AppointmentCreateComponent);
     component = fixture.componentInstance;
   });
