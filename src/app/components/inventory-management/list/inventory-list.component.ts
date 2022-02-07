@@ -88,13 +88,13 @@ export class InventoryListComponent implements OnInit {
    *
    * @param {string} inventoryItemName name of item to order
    */
-  public openOrderCreationForm(inventoryItemName: string): void {
+  public openOrderCreationForm(inventoryItemName: string, inventoryItemId: InventoryItemId): void {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(inventoryItemName);
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
-        this.openInventoryItemViewForm(result.split(' ')[1]);
+        this.openInventoryItemViewForm(inventoryItemId);
       }
 
       if (result !== 'aborted') {
