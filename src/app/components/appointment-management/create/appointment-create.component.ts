@@ -116,8 +116,8 @@ export class AppointmentCreateComponent implements OnInit {
           this.room,
           moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
           moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours()),
-          this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
-          this.recurringAppointmentCreateForm.value.amount,
+          +this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
+          +this.recurringAppointmentCreateForm.value.amount,
           this.force
         ).subscribe({
           next: () => {
