@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
@@ -54,12 +55,14 @@ export class OrderEditComponent implements OnInit {
    * @param {OrderService} orderService service providing order functionalities
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public orderService: OrderService,
     public inventoryService: InventoryService,
     public authService: AuthService,
+    public utilityService: UtilityService,
     public activeModal: NgbActiveModal
   ) {
     if (!(this.authService.isAdmin())) {
@@ -130,7 +133,7 @@ export class OrderEditComponent implements OnInit {
    * Changes data of order
    */
   public async editOrder(): Promise<void> {
-    this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)).subscribe({
+    this.orderService.updateOrderData(this.order.id, this.utilityService.getDirtyValues(this.orderEditForm)).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
@@ -138,28 +141,5 @@ export class OrderEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-  }
-
-  /**
-   * Gets all values of a form that are marked with a dirty bit
-   *
-   * @param {FormGroup} form form
-   */
-  public getDirtyValues(form: FormGroup) {
-    let dirtyValues: { [key: string]: any} = {};
-
-    Object.keys(form.controls)
-      .forEach(key => {
-        let currentControl = form.controls[key];
-
-        if (currentControl.dirty) {
-          if ((<FormGroup>currentControl).controls)
-            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
-          else
-            dirtyValues[key] = currentControl.value;
-        }
-      });
-
-    return dirtyValues;
   }
 }
