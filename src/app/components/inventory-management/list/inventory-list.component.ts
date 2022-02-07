@@ -22,7 +22,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the inventory list page
- *
  */
 export class InventoryListComponent implements OnInit {
   public inventory: PagedList<InventoryItem> = new PagedList<InventoryItem>();
