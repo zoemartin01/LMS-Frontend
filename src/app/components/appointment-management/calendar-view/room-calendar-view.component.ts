@@ -229,7 +229,12 @@ export class RoomCalendarViewComponent implements OnInit {
     this.currentAppointmentId = <string>appointmentId;
   }
 
-  public closedSidebar(isDirty: boolean) {
+  /**
+   * Closes sidebar and reloads data when needed
+   *
+   * @param isDirty
+   */
+  public closeSidebar(isDirty: boolean) {
     this.action = '';
     this.currentAppointmentId = '';
     this.appointmentCreationStart = null;
