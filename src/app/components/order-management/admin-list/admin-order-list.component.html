@@ -49,7 +49,7 @@
         <th class="col-sm-2">Quantity</th>
         <th class="col-sm-2">Purchase Url</th>
         <th class="col-sm-2">User Name</th>
-        <th class="col-sm-2">Order Status</th>
+        <th class="col-sm-1">Order Status</th>
         <th class="col-sm-2"></th>
       </tr>
     </thead>
@@ -59,12 +59,12 @@
         <td class="col-sm-2">{{ acceptedOrder.quantity}}</td>
         <td class="col-sm-2">{{ acceptedOrder.url}}</td>
         <td class="col-sm-2">{{ userService.getFullName(acceptedOrder.user)}}</td>
-        <td class="col-sm-2">{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
+        <td class="col-sm-1">{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
         <td class="col-sm-2">
           <a (click)="openOrderView(acceptedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
           <a *ngIf="!(acceptedOrder.status === 4)"(click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
           <a (click)="openOrderDeletionDialog(acceptedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
-          <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check-fill"></i></button></a>
+          <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check"></i></button></a>
         </td>
       </tr>
     </tbody>
