@@ -19,7 +19,6 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class InventoryService {
-
   /**
    * constructor
    * @param {HttpClient} httpClient httpClient of service

@@ -14,7 +14,6 @@ import { InventoryItem } from "../../../types/inventory-item";
 
 /**
  * Component for the inventory item create popup
- *
  */
 export class InventoryItemCreateComponent {
   public createInventoryItemForm: FormGroup = new FormGroup({

@@ -17,7 +17,6 @@ import { InventoryItem } from "../../../types/inventory-item";
 
 /**
  * Component for the inventory item view popup
- *
  */
 export class InventoryItemViewComponent implements OnInit {
   public inventoryItemViewForm: FormGroup = new FormGroup({
