@@ -30,7 +30,7 @@ export class InventoryItemViewComponent implements OnInit {
     description: '',
     quantity: null,
   };
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -42,7 +42,8 @@ export class InventoryItemViewComponent implements OnInit {
   constructor(
     public inventoryService: InventoryService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal) {
+    private modalService: NgbModal
+  ) {
     this.inventoryItemViewForm.disable();
   }
 
@@ -80,6 +81,7 @@ export class InventoryItemViewComponent implements OnInit {
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getInventoryItemData();
+        this.dirty = true;
       }
     });
   }
