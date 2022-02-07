@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from 'moment';
 
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
 import { AppointmentCreateComponent } from "../create/appointment-create.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 import { AppointmentEditComponent } from "../edit/appointment-edit.component";
 import { AppointmentViewComponent } from "../view/appointment-view.component";
@@ -15,8 +17,6 @@ import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { PagedList } from 'src/app/types/paged-list';
-import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
-import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 
 @Component({
   selector: 'app-admin-appointment-list',

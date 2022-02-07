@@ -57,13 +57,34 @@
         <thead class="thead-dark">
         <tr>
           <th></th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Monday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Tuesday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Wednesday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Thursday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Friday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Saturday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Sunday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Monday<br>
+            {{ getDayOfWeek(1).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Tuesday<br>
+            {{ getDayOfWeek(2).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Wednesday<br>
+            {{ getDayOfWeek(3).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Thursday<br>
+            {{ getDayOfWeek(4).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Friday<br>
+            {{ getDayOfWeek(5).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Saturday<br>
+            {{ getDayOfWeek(6).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Sunday<br>
+            {{ getDayOfWeek(0).format("DD.MM") }}
+          </th>
         </tr>
         </thead>
         <tbody>
@@ -114,10 +135,10 @@
 
   <div class="sidebar">
     <app-appointment-view *ngIf="action === 'view'" [appointmentId]="currentAppointmentId"
-                          (close)="closedSidebar($event)"></app-appointment-view>
+                          (close)="closeSidebar($event)"></app-appointment-view>
     <app-appointment-edit *ngIf="action === 'edit'" [appointmentId]="currentAppointmentId"
-                          (close)="closedSidebar($event)"></app-appointment-edit>
-    <app-appointment-create *ngIf="action === 'create'" (close)="closedSidebar($event)"
+                          (close)="closeSidebar($event)"></app-appointment-edit>
+    <app-appointment-create *ngIf="action === 'create'" (close)="closeSidebar($event)"
                             [start]="appointmentCreationStart" [room]="room"></app-appointment-create>
   </div>
 </div>

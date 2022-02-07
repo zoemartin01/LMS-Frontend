@@ -126,7 +126,7 @@ export class AppointmentService {
   public createAppointment(room : Room, start: moment.Moment, end: moment.Moment): Observable<Appointment> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`;
     const requestBody = {
-      room,
+      roomId: room.id,
       start: start.toISOString(),
       end: end.toISOString(),
     };
@@ -154,7 +154,7 @@ export class AppointmentService {
     ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
-      room,
+      roomId: room.id,
       start: start.toISOString(),
       end: end.toISOString(),
       timeSlotRecurrence,

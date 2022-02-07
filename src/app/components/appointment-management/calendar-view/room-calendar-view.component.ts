@@ -3,6 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
@@ -71,9 +73,13 @@ export class RoomCalendarViewComponent implements OnInit {
         this.room.id = params['id'];
         this.updateCalendar();
       }
-    });
 
-    this.setWeek(moment());
+      if (params['date'] !== undefined) {
+        this.setWeek(moment(params['date']));
+      } else {
+        this.setWeek(moment());
+      }
+    });
   }
 
   /**
@@ -139,6 +145,14 @@ export class RoomCalendarViewComponent implements OnInit {
   public changeRoom(roomId: string): void {
     this.room.id = roomId;
     this.updateCalendar();
+  }
+
+  /**
+   * Returns specified day of week as moment
+   * @param dayOfWeek
+   */
+  public getDayOfWeek(dayOfWeek: number): moment.Moment {
+    return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
   }
 
   /**
@@ -219,7 +233,12 @@ export class RoomCalendarViewComponent implements OnInit {
     this.currentAppointmentId = <string>appointmentId;
   }
 
-  public closedSidebar(isDirty: boolean) {
+  /**
+   * Closes sidebar and reloads data when needed
+   *
+   * @param isDirty
+   */
+  public closeSidebar(isDirty: boolean) {
     this.action = '';
     this.currentAppointmentId = '';
     this.appointmentCreationStart = null;
@@ -253,7 +272,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentAcceptComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
@@ -269,7 +288,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentDeclineComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
