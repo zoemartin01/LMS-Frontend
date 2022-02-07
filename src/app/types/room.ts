@@ -1,5 +1,4 @@
 import { RoomId } from "./aliases/room-id";
-import { RoomTimespan } from "./room-timespan";
 
 export interface Room {
   id: RoomId,

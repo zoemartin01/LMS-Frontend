@@ -18,10 +18,12 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col">Room</th>
-      <th class="col">Date</th>
-      <th class="col">Time</th>
-      <th class="col">Status</th>
+      <th class="col-sm-2">Room</th>
+      <th class="col-sm-2">Date</th>
+      <th class="col-sm-2">Time</th>
+      <th class="col-sm-2">Recurrence</th>
+      <th class="col-sm-2">Last Date</th>
+      <th class="col-sm-2">Status</th>
       <th class="col-sm-1" style="align-self: right;"></th>
     </tr>
     </thead>
@@ -30,8 +32,13 @@
       <td>{{ appointment.room?.name }}</td>
       <td>{{ appointment.start?.format("DD.MM.YYYY") }}</td>
       <td>{{ appointment.start?.format("HH:mm") }} - {{ appointment.end?.format("HH:mm") }}</td>
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][appointment.timeSlotRecurrence]}}</td>
+      <td class="col-sm-2">{{ appointment.maxStart ? appointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td>{{ ['', 'pending', 'accepted', 'denied'][appointment.confirmationStatus] }}</td>
       <td class="d-flex justify-content-end">
+        <a [routerLink]="['/room-overview', { id: appointment.room.id, date: appointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
         <a (click)="openAppointmentView(appointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>

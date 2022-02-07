@@ -1,10 +1,10 @@
 <div class="modal-header">
-  <h4 class="modal-title">Delete Appointment</h4>
+  <h4 class="modal-title">Accept Appointment</h4>
 </div>
 <div class="modal-body">
-  <p>Are you sure that you want to delete this appointment?</p>
+  <p>Are you sure that you want to accept this appointment?</p>
 
-  <form [formGroup]="appointmentDeleteForm"><div class="modal-body">
+  <form [formGroup]="appointmentAcceptForm"><div class="modal-body">
 
     <div class="form-group row">
       <div class="col">
@@ -34,8 +34,8 @@
       <label for="startHour" class="my-1">Start</label>
       <div class="input-group">
         <div class="input-group-prepend"></div>
-        <input class="form-control" type="text" placeholder="Start" aria-describedby="inputGroupPrepend"
-               id="startHour" formControlName="startHour" autocomplete="startHour">
+          <input class="form-control" type="text" placeholder="Start" aria-describedby="inputGroupPrepend"
+                 id="startHour" formControlName="startHour" autocomplete="startHour">
       </div>
     </div>
     <div class="form-group">
@@ -43,7 +43,7 @@
       <div class="input-group">
         <div class="input-group-prepend"></div>
         <input class="form-control" type="text" placeholder="End" aria-describedby="inputGroupPrepend"
-               id="endHour" formControlName="endHour" autocomplete="endHour">
+                 id="endHour" formControlName="endHour" autocomplete="endHour">
       </div>
     </div>
     <div class="form-group" >
@@ -76,7 +76,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="deleteAppointment()">Delete Single Appointment</button>
-  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteAppointmentSeries()">Delete Appointment Series</button>
+  <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-success" (click)="acceptAppointment()">Accept Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-success" (click)="acceptAppointmentSeries()">Accept Appointment Series</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
