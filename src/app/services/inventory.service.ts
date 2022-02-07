@@ -94,4 +94,13 @@ export class InventoryService {
 
     return this.httpClient.delete<InventoryItem>(apiURL);
   }
+
+  public getInventoryItemByName(inventoryItemName: string): Observable<InventoryItem> {
+    if (inventoryItemName === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName.replace(':name', inventoryItemName)}`;
+
+    return this.httpClient.get<InventoryItem>(apiURL);
+  }
 }

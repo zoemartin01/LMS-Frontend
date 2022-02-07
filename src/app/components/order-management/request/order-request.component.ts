@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../services/admin.service";
@@ -17,11 +17,9 @@ import { Order } from "../../../types/order";
 
 /**
  * Component for order request popup
- *
- *
  */
 export class OrderRequestComponent implements OnInit {
-  public existingItems: InventoryItem[] = []
+  public existingItems: InventoryItem[] = [];
   public requestOrderForm: FormGroup = new FormGroup({
     itemName: new FormControl('', [
       Validators.required,
@@ -77,10 +75,8 @@ export class OrderRequestComponent implements OnInit {
 
   /**
    * Checks url of item to order against urls of whitelisted retailers
-   *
-   * @param {String} orderUrl name of item to be ordered
    */
-  public async checkUrlAgainstWhitelistedRetailers(): Promise<boolean> {
+  public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
       next: res => {
         this.linkWarning = res.isWhitelisted;
@@ -89,13 +85,10 @@ export class OrderRequestComponent implements OnInit {
         console.error('There was an error!', error);
       }
     })
-    return this.linkWarning;
   }
 
   /**
    * Creates order request with data
-   *
-   * @param {NgForm} orderCreationForm submitted create form
    */
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {

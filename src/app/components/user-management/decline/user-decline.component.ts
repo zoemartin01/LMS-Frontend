@@ -82,7 +82,7 @@ export class UserDeclineComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
-      }
+      },
     });
   }
 }

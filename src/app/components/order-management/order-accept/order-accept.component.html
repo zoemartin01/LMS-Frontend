@@ -1,10 +1,11 @@
 <div class="modal-header">
-  <h4 class="modal-title">Delete Order</h4>
+  <h4 class="modal-title">Accept Order</h4>
 </div>
 
 <div class="modal-body">
-  <p>Are you sure that you want to delete this order?</p>
-  <form [formGroup]="orderDeleteForm">
+  <p>Are you sure that you want to accept this order?</p>
+
+  <form [formGroup]="orderAcceptForm">
     <div class="form-group">
       <label for="itemName" class="my-1">Item Name</label>
       <div class="input-group">
@@ -38,6 +39,6 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="deleteOrder()">Delete Order</button>
+  <button type="button" class="btn btn-danger" (click)="acceptOrder()">Accept Order</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
