@@ -88,8 +88,10 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Gets whitelist retailers
+   *
+   * @param {number} page current number of page
    */
-  public async getWhitelistRetailers(page: number): Promise<void> {
+  public async getWhitelistRetailers(page: number = this.whitelistRetailers.page): Promise<void> {
     const pageSize = this.whitelistRetailers.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -195,6 +197,7 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Updates content of static page
+   *
    * @param {any} event file selection event that triggered this method
    * @param {string} staticPageName name of the static page to update
    */
