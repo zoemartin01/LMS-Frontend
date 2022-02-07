@@ -47,7 +47,7 @@ export class OrderViewComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
