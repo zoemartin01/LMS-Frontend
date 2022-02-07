@@ -68,6 +68,8 @@ export class AppointmentEditComponent implements OnInit {
     year = 1990;
   };
   public isRecurring: boolean = false;
+  public seriesConflict = false;
+  public force = false;
 
   /**
    * Constructor
@@ -167,6 +169,10 @@ export class AppointmentEditComponent implements OnInit {
   public async editAppointmentSeries(): Promise<void> {
     let changedData: { [key: string]: any} =  this.getDirtyValues(this.recurringAppointmentEditForm);
 
+    if (this.force) {
+      changedData['force'] = this.force;
+    }
+
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
       const day = moment(this.date).minutes(0).seconds(0);
@@ -182,6 +188,11 @@ export class AppointmentEditComponent implements OnInit {
         this.closeForm.emit(true);
       },
       error: error => {
+        if (error.status === 409) {
+          this.seriesConflict = false;
+          this.seriesConflict = true;
+        }
+
         console.error('There was an error!', error);
       }
     });
