@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Room } from "../../../types/room";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-room-edit',
@@ -15,7 +15,6 @@ import {UtilityService} from "../../../services/utility.service";
 
 /**
  * Component for the room edit popup
- *
  */
 export class RoomEditComponent implements OnInit {
   public roomEditForm: FormGroup = new FormGroup({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ import {FormGroup} from "@angular/forms";
  */
 export class UtilityService {
 
-  constructor() { }
+  constructor() {
+  }
 
   /**
    * Gets all values of a form that are marked with a dirty bit
