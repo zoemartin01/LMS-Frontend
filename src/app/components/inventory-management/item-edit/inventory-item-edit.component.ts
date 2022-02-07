@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 
@@ -21,9 +21,11 @@ import { InventoryItem } from "../../../types/inventory-item";
  */
 export class InventoryItemEditComponent implements OnInit {
   public inventoryItemEditForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(null, [
+      Validators.required, Validators.min(0)
+    ]),
   });
 
   public inventoryItem: InventoryItem = {
@@ -37,10 +39,10 @@ export class InventoryItemEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
-   * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public inventoryService: InventoryService,  public activeModal: NgbActiveModal, private route: ActivatedRoute) {
+  constructor(public inventoryService: InventoryService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -56,20 +58,16 @@ export class InventoryItemEditComponent implements OnInit {
   public async getInventoryItemData() : Promise<void> {
     this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
       next: res => {
-        this.updateInventoryItemEditForm(res);
+        this.inventoryItem = res;
+
+        this.inventoryItemEditForm.controls['name'].setValue(res.name);
+        this.inventoryItemEditForm.controls['description'].setValue(res.description);
+        this.inventoryItemEditForm.controls['quantity'].setValue(res.quantity);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
-  }
-
-  private updateInventoryItemEditForm(inventoryItem: InventoryItem) {
-    this.inventoryItem = inventoryItem;
-
-    this.inventoryItemEditForm.controls['name'].setValue(inventoryItem.name);
-    this.inventoryItemEditForm.controls['description'].setValue(inventoryItem.description);
-    this.inventoryItemEditForm.controls['quantity'].setValue(inventoryItem.quantity);
   }
 
   /**
@@ -78,11 +76,7 @@ export class InventoryItemEditComponent implements OnInit {
    * @param {NgForm} inventoryItemEditForm submitted edit form
    */
   public async editInventoryItemData(): Promise<void> {
-    this.inventoryService.editInventoryItem(this.inventoryItem.id, {
-        name: this.inventoryItemEditForm.controls['name'].value,
-        description: this.inventoryItemEditForm.controls['description'].value,
-        quantity: this.inventoryItemEditForm.controls['quantity'].value,
-      }
+    this.inventoryService.editInventoryItem(this.inventoryItem.id, this.utilityService.getDirtyValues(this.inventoryItemEditForm)
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
