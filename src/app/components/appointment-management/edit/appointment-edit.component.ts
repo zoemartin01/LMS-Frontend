@@ -69,6 +69,8 @@ export class AppointmentEditComponent implements OnInit {
     year = 1990;
   };
   public isRecurring: boolean = false;
+  public seriesConflict = false;
+  public force = false;
 
   /**
    * Constructor
@@ -183,6 +185,11 @@ export class AppointmentEditComponent implements OnInit {
         this.close.emit(true);
       },
       error: error => {
+        if (error.status === 409) {
+          this.seriesConflict = false;
+          this.seriesConflict = true;
+        }
+
         console.error('There was an error!', error);
       }
     });
