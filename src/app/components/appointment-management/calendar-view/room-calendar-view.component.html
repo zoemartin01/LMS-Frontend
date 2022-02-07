@@ -135,10 +135,10 @@
 
   <div class="sidebar">
     <app-appointment-view *ngIf="action === 'view'" [appointmentId]="currentAppointmentId"
-                          (close)="closeSidebar($event)"></app-appointment-view>
+                          (closeForm)="closeSidebar($event)"></app-appointment-view>
     <app-appointment-edit *ngIf="action === 'edit'" [appointmentId]="currentAppointmentId"
-                          (close)="closeSidebar($event)"></app-appointment-edit>
-    <app-appointment-create *ngIf="action === 'create'" (close)="closeSidebar($event)"
+                          (closeForm)="closeSidebar($event)"></app-appointment-edit>
+    <app-appointment-create *ngIf="action === 'create'" (closeForm)="closeSidebar($event)"
                             [start]="appointmentCreationStart" [room]="room"></app-appointment-create>
   </div>
 </div>

@@ -56,7 +56,7 @@
         <option value="3">yearly</option>
       </select>
     </div>
-    <div class="form-group" *ngIf="(appointment.timeSlotRecurrence!=1)">
+    <div class="form-group" *ngIf="appointment.timeSlotRecurrence !== 1">
       <label for="lastDate" class="my-1">Last Date</label>
       <div class="input-group">
         <div class="input-group-prepend"></div>
@@ -64,7 +64,7 @@
                id="lastDate" formControlName="lastDate" autocomplete="lastDate">
       </div>
     </div>
-    <div class="form-group" *ngIf="(appointment.timeSlotRecurrence!=1)">
+    <div class="form-group" *ngIf="appointment.timeSlotRecurrence !== 1">
       <label for="amount" class="my-1">Amount</label>
       <div class="input-group">
         <div class="input-group-prepend"></div>
