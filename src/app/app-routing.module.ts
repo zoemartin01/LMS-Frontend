@@ -1,30 +1,30 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from './guards/auth.guard';
-import {AdminGuard} from './guards/admin.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
-import {AdminAppointmentListComponent} from "./components/appointment-management/admin-list/admin-appointment-list.component";
-import {AdminOrderListComponent} from './components/order-management/admin-list/admin-order-list.component';
-import {DashboardComponent} from './components/general/dashboard/dashboard.component';
-import {EmailVerificationComponent} from './components/auth/email-verification/email-verification.component';
-import {GlobalSettingsComponent} from './components/settings/global-settings/global-settings.component';
-import {HelpFaqComponent} from './components/general/help-faq/help-faq.component';
-import {HomepageComponent} from './components/general/homepage/homepage.component';
-import {HwlabRulesComponent} from './components/general/hwlab-rules/hwlab-rules.component';
-import {InventoryListComponent} from './components/inventory-management/list/inventory-list.component';
-import {InventoryOrderComponent} from './components/order-management/inventory-order/inventory-order.component';
-import {LivecamOverviewComponent} from './components/livecam/overview/livecam-overview.component';
-import {LoginComponent} from './components/auth/login/login.component';
-import {MessageBoxComponent} from './components/general/message-box/message-box.component';
-import {PersonalAppointmentListComponent} from "./components/appointment-management/list/personal-appointment-list.component";
-import {PersonalOrderListComponent} from './components/order-management/list/personal-order-list.component';
-import {RegisterComponent} from './components/auth/register/register.component';
-import {RoomCalendarViewComponent} from "./components/appointment-management/calendar-view/room-calendar-view.component";
-import {RoomListComponent} from './components/room-management/list/room-list.component';
-import {RoomTimeslotsComponent} from './components/room-management/room-timeslots/room-timeslots.component';
-import {SafetyInstructionsComponent} from './components/general/safety-instructions/safety-instructions.component';
-import {UserListComponent} from './components/user-management/list/user-list.component';
-import {UserSettingsComponent} from './components/settings/user-settings/user-settings.component';
+import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
+import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
+import { DashboardComponent } from './components/general/dashboard/dashboard.component';
+import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
+import { GlobalSettingsComponent } from './components/settings/global-settings/global-settings.component';
+import { HelpFaqComponent } from './components/general/help-faq/help-faq.component';
+import { HomepageComponent } from './components/general/homepage/homepage.component';
+import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
+import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
+import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
+import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { MessageBoxComponent } from './components/general/message-box/message-box.component';
+import { PersonalAppointmentListComponent } from "./components/appointment-management/list/personal-appointment-list.component";
+import { PersonalOrderListComponent } from './components/order-management/list/personal-order-list.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { RoomCalendarViewComponent } from "./components/appointment-management/calendar-view/room-calendar-view.component";
+import { RoomListComponent } from './components/room-management/list/room-list.component';
+import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
+import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { UserListComponent } from './components/user-management/list/user-list.component';
+import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 
 const routes: Routes = [
   //General
