@@ -44,6 +44,9 @@
         <a (click)="openAppointmentDeclineDialog(pendingAppointment.id)" type="button" class="btn btn-danger mx-1">
           <i class="bi bi-x"></i>
         </a>
+        <a [routerLink]="['/room-overview', { id: pendingAppointment.room.id, date: pendingAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+          <i class="bi bi-calendar2-week-fill"></i>
+        </a>
       </td>
     </tr>
     </tbody>
@@ -79,13 +82,10 @@
       <td class="col-sm-2">{{ userService.getFullName(acceptedAppointment.user) }}</td>
       <td class="d-flex justify-content-end">
         <a [routerLink]="['/room-overview', { id: acceptedAppointment.room.id, date: acceptedAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
-          <i class="bi bi-eye-fill"></i>
+          <i class="bi bi-calendar2-week-fill"></i>
         </a>
         <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
-        </a>
-        <a (click)="openAppointmentEditForm(acceptedAppointment.id)"><button type="button" class="btn btn-primary">
-          <i class="bi bi-pencil-fill"></i></button>
         </a>
         <a (click)="openAppointmentDeletionDialog(acceptedAppointment.id)" type="button" class="btn btn-danger mx-1">
           <i class="bi bi-trash-fill"></i>
