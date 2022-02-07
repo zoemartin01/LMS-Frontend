@@ -144,6 +144,14 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
+   * Returns specified day of week as moment
+   * @param dayOfWeek
+   */
+  public getDayOfWeek(dayOfWeek: number): moment.Moment {
+    return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
+  }
+
+  /**
    * Checks if object is an appointment
    *
    * @param {Appointment|string|null} object object

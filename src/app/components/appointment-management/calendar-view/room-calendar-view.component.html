@@ -57,13 +57,34 @@
         <thead class="thead-dark">
         <tr>
           <th></th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Monday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Tuesday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Wednesday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Thursday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Friday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Saturday</th>
-          <th [attr.colspan]="room.maxConcurrentBookings">Sunday</th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Monday<br>
+            {{ getDayOfWeek(1).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Tuesday<br>
+            {{ getDayOfWeek(2).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Wednesday<br>
+            {{ getDayOfWeek(3).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Thursday<br>
+            {{ getDayOfWeek(4).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Friday<br>
+            {{ getDayOfWeek(5).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Saturday<br>
+            {{ getDayOfWeek(6).format("DD.MM") }}
+          </th>
+          <th [attr.colspan]="room.maxConcurrentBookings">
+            Sunday<br>
+            {{ getDayOfWeek(0).format("DD.MM") }}
+          </th>
         </tr>
         </thead>
         <tbody>
