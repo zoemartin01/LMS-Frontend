@@ -76,7 +76,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-success" (click)="declineAppointment()">Decline Appointment</button>
-  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-success" (click)="declineAppointmentSeries()">Decline Appointment Series</button>
+  <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-danger" (click)="declineAppointment()">Decline Appointment</button>
+  <button *ngIf="appointment.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="declineAppointmentSeries()">Decline Appointment Series</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
