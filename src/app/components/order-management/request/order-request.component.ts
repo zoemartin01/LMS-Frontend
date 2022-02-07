@@ -92,10 +92,10 @@ export class OrderRequestComponent implements OnInit {
    */
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {
-      this.orderService.requestOrder(
-        this.requestOrderForm.value.itemName,
-        this.requestOrderForm.value.quantity,
-        this.requestOrderForm.value.url
+      const itemName = this.requestOrderForm.value.itemName;
+      const quantity = this.requestOrderForm.value.quantity;
+      const url = this.requestOrderForm.value.url;
+      this.orderService.requestOrder(itemName, quantity, url
       ).subscribe({
         next: (orderRequest: Order) => {
           if (orderRequest.id !== null) {
@@ -111,6 +111,7 @@ export class OrderRequestComponent implements OnInit {
     } else {
       this.requestOrderError = true;
       this.requestOrderErrorMessage = 'Invalid form values';
+      console.error('Invalid form values');
     }
   }
 }
