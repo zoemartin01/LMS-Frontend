@@ -29,7 +29,6 @@ import { PagedResponse } from 'src/app/types/paged-response';
 /**
  * Component for the overview of the livecam
  *
- *
  */
 export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public doneRecordings: PagedList<Recording> = new PagedList<Recording>();
@@ -60,6 +59,9 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     this.getScheduledRecordings(this.scheduledRecordings.page);
   }
 
+  /**
+   * Inits page after view
+   */
   ngAfterViewInit(): void {
     new JSMpeg.Player(this.livecamService.getLiveStreamFeedPath(), {
       canvas: this.streaming_canvas.nativeElement,
@@ -68,8 +70,10 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
 
   /**
    * Gets recording data of all recordings
+   *
+   * @param {number} page current number of page
    */
-  public async getFinishedRecordings(page: number): Promise<void> {
+  public async getFinishedRecordings(page: number = this.doneRecordings.page): Promise<void> {
     const pageSize = this.doneRecordings.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -93,8 +97,10 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
 
   /**
    * Gets recording data of all scheduled recordings
+   *
+   * @param {number} page current number of page
    */
-  public async getScheduledRecordings(page: number): Promise<void> {
+  public async getScheduledRecordings(page: number = this.scheduledRecordings.page): Promise<void> {
     const pageSize = this.scheduledRecordings.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -115,11 +121,6 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
       },
     });
   }
-
-  /**
-   * Gets live stream feed
-   */
-  public async getLiveStreamFeed(): Promise<void> {}
 
   /**
    * Downloads a recording
@@ -193,9 +194,22 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Helper method to convert bytes to a human-readable format
+   *
+   * @param {number} bytes bytes
+   * @param {number} decimals decimals
+   */
   public readableBytes = (bytes: number, decimals: number = 2) =>
     LivecamOverviewComponent.readableBytes(bytes, decimals);
 
+
+  /**
+   * Static helper method to convert bytes to a human-readable format
+   *
+   * @param {number} bytes bytes
+   * @param {number} decimals decimals
+   */
   public static readableBytes(bytes: number, decimals: number = 2): string {
     if (bytes == 0) return '0 Bytes';
     const k = 1024;

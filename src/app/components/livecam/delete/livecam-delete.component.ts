@@ -22,7 +22,6 @@ import { NotificationChannel } from 'src/app/types/enums/notification-channel';
 /**
  * Component for the deletion of a livecam recording
  *
- *
  */
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {
@@ -73,6 +72,9 @@ export class LivecamDeleteComponent implements OnInit {
     this.getRecordingData();
   }
 
+  /**
+   * Get data of one recording
+   */
   public async getRecordingData(): Promise<void> {
     this.livecamService.getRecordingData(this.recording.id).subscribe({
       next: (res) => {
