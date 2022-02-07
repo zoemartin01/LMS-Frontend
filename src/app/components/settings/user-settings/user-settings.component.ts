@@ -75,6 +75,7 @@ export class UserSettingsComponent implements OnInit {
    */
   public openUserDeletionDialog(): void {
     const modal = this.modalService.open(UserDeleteComponent);
+    modal.componentInstance.user.id = this.user.id;
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getUserData();
