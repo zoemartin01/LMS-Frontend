@@ -1,9 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
+import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
 
-import {AdminService} from './admin.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {environment} from "../../environments/environment";
+import { AdminService } from './admin.service';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { environment } from "../../environments/environment";
 
 describe('AdminService', () => {
   let service: AdminService;
