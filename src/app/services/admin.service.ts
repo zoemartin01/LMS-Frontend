@@ -24,6 +24,10 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class AdminService {
+  /**
+   * constructor
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
@@ -54,13 +58,11 @@ export class AdminService {
 
   /**
    * Gets pending users
+   *
    * @param {number} limit maximum of loaded entities per request
    * @param {number} offset start of loaded entities per request
    */
-  public getPendingUsers(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<User>> {
+  public getPendingUsers(limit: number = 0, offset: number = 0): Observable<PagedResponse<User>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllPendingUsers}` +
     `?limit=${limit}&offset=${offset}`
 
@@ -69,13 +71,11 @@ export class AdminService {
 
   /**
    * Gets accepted users
+   *
    * @param {number} limit maximum of loaded entities per request
    * @param {number} offset start of loaded entities per request
    */
-  public getAcceptedUsers(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<User>> {
+  public getAcceptedUsers(limit: number = 0, offset: number = 0): Observable<PagedResponse<User>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.user_management.getAllAcceptedUsers}` +
       `?limit=${limit}&offset=${offset}`
 
@@ -144,13 +144,11 @@ export class AdminService {
 
   /**
    * Gets all whitelist retailers
+   *
    * @param {number} limit maximum of loaded entities per request
    * @param {number} offset start of loaded entities per request
    */
-  public getWhitelistRetailers(
-    limit: number = 0,
-    offset: number = 0
-  ): Observable<PagedResponse<WhitelistRetailer>> {
+  public getWhitelistRetailers(limit: number = 0, offset: number = 0): Observable<PagedResponse<WhitelistRetailer>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -208,12 +206,9 @@ export class AdminService {
    * Adds domain to whitelist retailer
    *
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
-   * @param {String} whitelistRetailerDomain new whitelist retailer domain
+   * @param {string} whitelistRetailerDomain new whitelist retailer domain
    */
-  public addDomainToWhitelistRetailer(
-    whitelistRetailerId: WhitelistRetailerId,
-    whitelistRetailerDomain: String,
-  ): Observable<WhitelistRetailerDomain> {
+  public addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: string): Observable<WhitelistRetailerDomain> {
     if (whitelistRetailerId === null) {
       throw ParseArgumentException;
     }
@@ -232,11 +227,7 @@ export class AdminService {
    * @param {object} changedData changed fields of domain of a whitelist retailer
    *
    */
-  public editDomainOfWhitelistRetailer(
-    whitelistRetailerId: WhitelistRetailerId,
-    whitelistRetailerDomainId: WhitelistRetailerDomainId,
-    changedData: object
-  ): Observable<WhitelistRetailerDomain> {
+  public editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId, changedData: object): Observable<WhitelistRetailerDomain> {
     if (whitelistRetailerId === null || whitelistRetailerDomainId === null) {
       throw ParseArgumentException;
     }
@@ -253,10 +244,7 @@ export class AdminService {
    * @param {WhitelistRetailerDomainId} whitelistRetailerDomainId id of whitelist retailer domain
    * @param {WhitelistRetailerId} whitelistRetailerId id of whitelist retailer
    */
-  public deleteDomainOfWhitelistRetailer(
-    whitelistRetailerId: WhitelistRetailerId,
-    whitelistRetailerDomainId: WhitelistRetailerDomainId
-  ): Observable<void> {
+  public deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<void> {
     if (whitelistRetailerId === null || whitelistRetailerDomainId === null) {
       throw ParseArgumentException;
     }
@@ -288,7 +276,7 @@ export class AdminService {
   /**
    * Checks domain against whitelist
    *
-   * @param {String} domain domain which is checked against whitelist
+   * @param {string} domain domain which is checked against whitelist
    */
   public checkDomainAgainstWhitelist(domain: string): Observable<{isWhitelisted : boolean}> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`;
