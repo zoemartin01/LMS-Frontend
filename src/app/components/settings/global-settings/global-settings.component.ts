@@ -200,13 +200,17 @@ export class GlobalSettingsComponent implements OnInit {
    */
   onFileSelected(event: any, staticPageName : string) {
     const file: File = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      const fileContents = fileReader.result;
-      this.globalSettingsForm.controls[staticPageName].setValue(
-        fileContents
-      );
-    };
-    fileReader.readAsText(file);
+    if (file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const fileContents = fileReader.result;
+        this.globalSettingsForm.controls[staticPageName].setValue(
+          fileContents
+        );
+      };
+      fileReader.readAsText(file);
+    } else {
+      console.error('File must be a markdown file');
+    }
   }
 }
