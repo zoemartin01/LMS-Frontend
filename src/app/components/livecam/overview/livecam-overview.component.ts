@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 const JSMpeg: any = require('@cycjimmy/jsmpeg-player');
@@ -28,13 +22,11 @@ import { PagedResponse } from 'src/app/types/paged-response';
 
 /**
  * Component for the overview of the livecam
- *
  */
 export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public doneRecordings: PagedList<Recording> = new PagedList<Recording>();
   public scheduledRecordings: PagedList<Recording> = new PagedList<Recording>();
   public moment = moment;
-
   @ViewChild('camera') streaming_canvas: ElementRef<HTMLCanvasElement> =
     {} as ElementRef;
 
