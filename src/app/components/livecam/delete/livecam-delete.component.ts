@@ -21,8 +21,6 @@ import { NotificationChannel } from 'src/app/types/enums/notification-channel';
 
 /**
  * Component for the deletion of a livecam recording
- *
- *
  */
 export class LivecamDeleteComponent implements OnInit {
   public recording: Recording = {
@@ -43,7 +41,6 @@ export class LivecamDeleteComponent implements OnInit {
     bitrate: 0,
     size: 0,
   };
-
   public recordingDeleteForm: FormGroup = new FormGroup({
     user_name: new FormControl(''),
     start: new FormControl(''),
@@ -52,7 +49,6 @@ export class LivecamDeleteComponent implements OnInit {
     bitrate: new FormControl(''),
     size: new FormControl(''),
   });
-
   public moment = moment;
 
   /**
@@ -73,6 +69,9 @@ export class LivecamDeleteComponent implements OnInit {
     this.getRecordingData();
   }
 
+  /**
+   * Get data of one recording
+   */
   public async getRecordingData(): Promise<void> {
     this.livecamService.getRecordingData(this.recording.id).subscribe({
       next: (res) => {

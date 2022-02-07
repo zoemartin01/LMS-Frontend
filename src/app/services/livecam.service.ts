@@ -29,14 +29,12 @@ export class LivecamService {
   /**
    * Schedules a recording with the submitted parameters
    *
-   * @param {Recording} recording data of the recording to schedule
+   * @param {moment} start start of recording
+   * @param {moment} end end of recording
+   * @param {VideoResolution} resolution video resolution of recording
+   * @param {number} bitrate bitrate of recording
    */
-  public scheduleRecording(
-    start: moment.Moment,
-    end: moment.Moment,
-    resolution: VideoResolution,
-    bitrate: number
-  ): Observable<Recording> {
+  public scheduleRecording(start: moment.Moment, end: moment.Moment, resolution: VideoResolution, bitrate: number): Observable<Recording> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.livecam.createSchedule}`;
     const requestBody = {
       start: start.toISOString(),
@@ -95,11 +93,11 @@ export class LivecamService {
 
   /**
    * Gets the data for all recordings
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getFinishedRecordings(
-    limit: number = 0,
-    offset: number = 0
-  ): Observable<PagedResponse<Recording>> {
+  public getFinishedRecordings(limit: number = 0, offset: number = 0): Observable<PagedResponse<Recording>> {
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}` +
       `?limit=${limit}&offset=${offset}`;
@@ -109,11 +107,11 @@ export class LivecamService {
 
   /**
    * Gets the data for all scheduled recordings
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getAllScheduledRecordings(
-    limit: number = 0,
-    offset: number = 0
-  ): Observable<PagedResponse<Recording>> {
+  public getAllScheduledRecordings(limit: number = 0, offset: number = 0): Observable<PagedResponse<Recording>> {
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}` +
       `?limit=${limit}&offset=${offset}`;

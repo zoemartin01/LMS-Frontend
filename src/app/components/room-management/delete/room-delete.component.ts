@@ -14,7 +14,6 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the deletion of a room
- *
  */
 export class RoomDeleteComponent implements OnInit {
   public roomDeleteForm: FormGroup = new FormGroup({

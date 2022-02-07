@@ -29,7 +29,7 @@ import { UserRole } from "../../../types/enums/user-role";
  */
 export class AppointmentViewComponent implements OnInit {
   @Input() appointmentId: string = '';
-  @Output() close = new EventEmitter<boolean>();
+  @Output() closeForm = new EventEmitter<boolean>();
   public appointment: Appointment = {
     id: null,
     user: {
@@ -133,7 +133,7 @@ export class AppointmentViewComponent implements OnInit {
       }
     });
 
-    this.close.emit(true);
+    this.closeForm.emit(true);
   }
 
   /**
@@ -144,7 +144,7 @@ export class AppointmentViewComponent implements OnInit {
     modal.componentInstance.appointment.id = this.appointment.id;
     modal.result.then((result) => {
       if (result === 'deleted') {
-        this.activeModal.close('dirty');
+        this.closeForm.emit(true);
         return;
       }
 
@@ -153,6 +153,5 @@ export class AppointmentViewComponent implements OnInit {
         this.dirty = true;
       }
     });
-    this.close.emit(true);
   }
 }

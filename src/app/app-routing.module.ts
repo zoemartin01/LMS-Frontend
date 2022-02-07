@@ -146,12 +146,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'global-settings',
+    path: 'application-settings',
     canActivate: [AuthGuard, AdminGuard],
     component: GlobalSettingsComponent,
     pathMatch: 'full',
     data: {
-      title: 'Global Settings'
+      title: 'Application Settings'
     }
   },
   {

@@ -19,17 +19,20 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class InventoryService {
-
+  /**
+   * constructor
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all inventory items
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getInventoryItems(
-    limit: number = 0,
-    offset: number = 0,
-  ): Observable<PagedResponse<InventoryItem>> {
+  public getInventoryItems(limit: number = 0, offset: number = 0): Observable<PagedResponse<InventoryItem>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}` +
     `?limit=${limit}&offset=${offset}`;
 
@@ -53,7 +56,9 @@ export class InventoryService {
   /**
    * Creates inventory item with data
    *
-   * @param {InventoryItem} inventoryItem data of new inventory item
+   * @param {string} name name of item
+   * @param {string} description description of item
+   * @param {number} quantity quantity of item
    */
   public createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
@@ -93,5 +98,14 @@ export class InventoryService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
 
     return this.httpClient.delete<InventoryItem>(apiURL);
+  }
+
+  public getInventoryItemByName(inventoryItemName: string): Observable<InventoryItem> {
+    if (inventoryItemName === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName.replace(':name', inventoryItemName)}`;
+
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from "../../../services/appointment.service";
-import {ActivatedRoute} from "@angular/router";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Appointment} from "../../../types/appointment";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Appointment } from "../../../types/appointment";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 import * as moment from "moment";
 
 @Component({
@@ -16,6 +16,7 @@ import * as moment from "moment";
   templateUrl: './appointment-accept.component.html',
   styleUrls: ['./appointment-accept.component.scss']
 })
+
 /**
  * Component for the appointment accept function, to accept requested appointments
  */

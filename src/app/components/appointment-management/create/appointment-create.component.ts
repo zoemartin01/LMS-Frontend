@@ -16,7 +16,6 @@ import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 /**
  * Component for the appointment create page
- *
  */
 export class AppointmentCreateComponent implements OnInit {
   @Input() start: moment.Moment|null = null;
@@ -27,7 +26,7 @@ export class AppointmentCreateComponent implements OnInit {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
-  @Output() close = new EventEmitter<boolean>();
+  @Output() closeForm = new EventEmitter<boolean>();
   public appointmentCreateForm: FormGroup = new FormGroup({
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
@@ -105,7 +104,7 @@ export class AppointmentCreateComponent implements OnInit {
           moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours())
         ).subscribe({
           next: () => {
-            this.close.emit(true);
+            this.closeForm.emit(true);
           },
           error: error => {
             console.error('There was an error!', error);
@@ -122,7 +121,7 @@ export class AppointmentCreateComponent implements OnInit {
         ).subscribe({
           next: () => {
             this.seriesConflict = false;
-            this.close.emit(true);
+            this.closeForm.emit(true);
           },
           error: error => {
             if (error.status === 409) {

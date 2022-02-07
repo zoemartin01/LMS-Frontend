@@ -20,11 +20,10 @@ import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 /**
  * Component for the appointment edit page
- *
  */
 export class AppointmentEditComponent implements OnInit {
   @Input() appointmentId: string = '';
-  @Output() close = new EventEmitter<boolean>();
+  @Output() closeForm = new EventEmitter<boolean>();
   public appointmentEditForm: FormGroup = new FormGroup({
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
@@ -156,7 +155,7 @@ export class AppointmentEditComponent implements OnInit {
 
     this.appointmentService.editAppointment(this.appointment.id, changedData).subscribe({
       next: () => {
-        this.close.emit(true);
+        this.closeForm.emit(true);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -182,7 +181,7 @@ export class AppointmentEditComponent implements OnInit {
 
     this.appointmentService.editAppointmentSeries(this.appointment.seriesId, changedData).subscribe({
       next: () => {
-        this.close.emit(true);
+        this.closeForm.emit(true);
       },
       error: error => {
         if (error.status === 409) {
