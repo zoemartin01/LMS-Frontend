@@ -80,6 +80,12 @@ export class UserEditComponent implements OnInit {
     })
   }
 
+  /**
+   * Helper method to update the user edit form
+   *
+   * @param  {User} user user to be edited
+   * @private
+   */
   private updateUserEditForm(user: User) {
     this.user = user;
 
