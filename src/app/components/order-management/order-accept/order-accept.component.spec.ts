@@ -1,30 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NgxPaginationModule } from "ngx-pagination";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { PersonalOrderListComponent } from './personal-order-list.component';
+import { OrderAcceptComponent } from './order-accept.component';
 
-describe('PersonalOrderListComponent', () => {
-  let component: PersonalOrderListComponent;
-  let fixture: ComponentFixture<PersonalOrderListComponent>;
+describe('OrderAcceptComponent', () => {
+  let component: OrderAcceptComponent;
+  let fixture: ComponentFixture<OrderAcceptComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        PersonalOrderListComponent,
+        OrderAcceptComponent
       ],
       imports: [
         HttpClientModule,
-        NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        NgbActiveModal,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PersonalOrderListComponent);
+    fixture = TestBed.createComponent(OrderAcceptComponent);
     component = fixture.componentInstance;
   });
 

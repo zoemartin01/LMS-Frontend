@@ -95,14 +95,15 @@ export class LivecamScheduleComponent {
   }
 
   /**
-   * @todo Zoe JSDoc
+   * Helper method that sets the minimum of end moment to be the start moment
    */
   public async updateEndField() : Promise<void> {
     this.endMin = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
   }
 
+
   /**
-   * @todo Zoe JSDoc
+   * Helper method that turns all non-null enum values into strings
    */
   public resolutions(): string[] {
     const keys = Object.keys(VideoResolution).filter(x => !(parseInt(x) >= 0)).filter(x => x != '' && x != 'unknown');

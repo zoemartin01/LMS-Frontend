@@ -74,6 +74,7 @@ export class WhitelistRetailerCreateComponent {
 
   /**
    * Opens form to edit a domain
+   *
    * @param whitelistRetailerDomain {string} domain to edit
    */
   openWhitelistRetailerDomainEditForm(whitelistRetailerDomain: string) {
@@ -89,6 +90,7 @@ export class WhitelistRetailerCreateComponent {
 
   /**
    * Opens dialog to delete a domain
+   *
    * @param whitelistRetailerDomain domain to delete
    */
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain: string) {

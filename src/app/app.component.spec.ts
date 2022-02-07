@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoadingBarModule } from "@ngx-loading-bar/core";
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
+import {} from 'jasmine';
 import { Observable } from 'rxjs';
 import { WINDOW } from "./providers/window.providers";
 import { environment } from "../environments/environment";
