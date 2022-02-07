@@ -8,6 +8,7 @@ import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.com
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
+import {OrderRequestComponent} from "../../order-management/request/order-request.component";
 
 @Component({
   selector: 'app-inventory-item-view',
@@ -98,6 +99,12 @@ export class InventoryItemViewComponent implements OnInit {
         this.dirty = true;
       }
     });
+  }
+
+  public openOrderCreationForm(): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
+    modal.componentInstance.requestOrderForm.controls['itemName'].disable();
   }
 
 }
