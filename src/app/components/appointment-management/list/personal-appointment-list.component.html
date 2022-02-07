@@ -36,6 +36,9 @@
       <td class="col-sm-2">{{ appointment.maxStart ? appointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td>{{ ['', 'pending', 'accepted', 'denied'][appointment.confirmationStatus] }}</td>
       <td class="d-flex justify-content-end">
+        <a [routerLink]="['/room-overview', { id: appointment.room.id, date: appointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
         <a (click)="openAppointmentView(appointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>

@@ -78,6 +78,9 @@
       <td class="col-sm-2">{{ acceptedAppointment.maxStart ? acceptedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(acceptedAppointment.user) }}</td>
       <td class="d-flex justify-content-end">
+        <a [routerLink]="['/room-overview', { id: acceptedAppointment.room.id, date: acceptedAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
         <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>
