@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Room } from "../../../types/room";
 
@@ -14,51 +15,84 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit popup
- *
- *
  */
 export class RoomEditComponent implements OnInit {
+  public roomEditForm: FormGroup = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    description: new FormControl('', Validators.required),
+    maxConcurrentBookings: new FormControl(1, [
+      Validators.required,
+      Validators.min(1),
+    ]),
+    autoAcceptBookings: new FormControl(false, Validators.required),
+  });
   public room: Room = {
     id: null,
     name: '',
     description: '',
     maxConcurrentBookings: 1,
-    automaticRequestAcceptance: null,
-    availableTimeslots: [],
-    unavailableTimeslots: [],
+    autoAcceptBookings: null,
   };
 
   /**
    * Constructor
    * @constructor
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {RoomService} roomService service providing room functionalities
-   * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, private route: ActivatedRoute) {
+  constructor(public utilityService: UtilityService, public roomService: RoomService, public activeModal: NgbActiveModal) {
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.room.id = params['id'];
-      this.getRoomData();
-    });
+    this.getRoomData();
   }
 
   /**
    * Gets all data of room
    */
   public async getRoomData() : Promise<void> {
-    //use this.room.id here and set this.room
+    this.roomService.getRoomData(this.room.id).subscribe({
+      next: res => {
+        this.room = res;
+
+        this.roomEditForm.controls['name'].setValue(res.name);
+        this.roomEditForm.controls['description'].setValue(res.description);
+        this.roomEditForm.controls['maxConcurrentBookings'].setValue(res.maxConcurrentBookings);
+        this.roomEditForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
+  }
+
+  /**
+   * Toggles state of autoAcceptBookings
+   */
+  public toggleAutoAcceptBookings() {
+    this.roomEditForm.controls['autoAcceptBookings'].setValue(!this.roomEditForm.controls['autoAcceptBookings'].value);
+    this.roomEditForm.controls['autoAcceptBookings'].markAsDirty();
   }
 
   /**
    * Changes data of room
-   *
-   * @param {NgForm} roomEditForm submitted edit form
    */
-  public async editRoomData(roomEditForm: NgForm): Promise<void> {
+  public async editRoomData(): Promise<void> {
+    this.roomService.editRoomData(this.room.id,
+      this.utilityService.getDirtyValues(this.roomEditForm)
+    ).subscribe({
+      next: () => {
+        this.activeModal.close('edited');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }

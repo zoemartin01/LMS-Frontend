@@ -1,1 +1,43 @@
-<p>room-delete works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Delete Room</h4>
+</div>
+<div class="modal-body">
+  <form (keyup.enter)="deleteRoom()" [formGroup]="roomDeleteForm" (ngSubmit)="deleteRoom()">
+    <div class="form-group row">
+      <div class="col">
+        <label for="name" class="my-1">Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Name" id="name"
+                 formControlName="name" autocomplete="name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="my-1">Description</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="text" placeholder="Description" aria-describedby="inputGroupPrepend"
+               id="description" formControlName="description" autocomplete="description">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="maxConcurrentBookings" class="my-1">Maximum Concurrent Bookings</label>
+      <div class="input-group">
+        <div class="input-group-prepend"></div>
+        <input class="form-control" type="number" placeholder="MaxConcurrentBookings" aria-describedby="inputGroupPrepend"
+               id="maxConcurrentBookings" formControlName="maxConcurrentBookings" autocomplete="maxConcurrentBookings">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="autoAcceptBookings"
+               [checked]="roomDeleteForm.controls['autoAcceptBookings'].value">
+        <label class="form-check-label" for="autoAcceptBookings">Automatic Accept Bookings</label>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="deleteRoom()">Delete Room</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>

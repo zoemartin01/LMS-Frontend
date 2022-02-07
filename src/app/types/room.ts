@@ -6,7 +6,5 @@ export interface Room {
   name: string,
   description: string,
   maxConcurrentBookings: number,
-  automaticRequestAcceptance: boolean|null,
-  availableTimeslots: RoomTimespan[],
-  unavailableTimeslots: RoomTimespan[],
+  autoAcceptBookings: boolean|null,
 }

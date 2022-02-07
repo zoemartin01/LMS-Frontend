@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
 import{ InventoryItem } from "../types/inventory-item";
 import { InventoryItemId } from "../types/aliases/inventory-item-id";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +26,14 @@ export class InventoryService {
   /**
    * Retrieves all inventory items
    */
-  public getInventoryItems(): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+  public getInventoryItems(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<InventoryItem>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}` +
+    `?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<InventoryItem>>(apiURL);
   }
 
   /**
@@ -33,9 +41,13 @@ export class InventoryService {
    *
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
-  public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+  public getInventoryItemData(inventoryItemId: InventoryItemId): Observable<InventoryItem> {
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getSingleItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 
   /**
@@ -43,9 +55,15 @@ export class InventoryService {
    *
    * @param {InventoryItem} inventoryItem data of new inventory item
    */
-  public createInventoryItem(inventoryItem: InventoryItem): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+  public createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
+
+    const reqBody = {
+      name: name,
+      description: description,
+      quantity: quantity,
+    };
+    return this.httpClient.post<InventoryItem>(apiURL, reqBody);
   }
 
   /**
@@ -54,9 +72,13 @@ export class InventoryService {
    * @param {InventoryItemId} inventoryItemId id of associated inventory item
    * @param {object} changedData changed fields of inventory item
    */
-  public changeInventoryItemData(inventoryItemId: InventoryItemId, changedData: object): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+  public editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.updateItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.patch<InventoryItem>(apiURL, changedData);
   }
 
   /**
@@ -64,8 +86,21 @@ export class InventoryService {
    *
    * @param {InventoryItemId} inventoryItemId id of inventory item
    */
-  public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<any> {
-    //@todo implement
-    return this.httpClient.get('');
+  public deleteInventoryItem(inventoryItemId: InventoryItemId): Observable<InventoryItem> {
+    if (inventoryItemId === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
+
+    return this.httpClient.delete<InventoryItem>(apiURL);
+  }
+
+  public getInventoryItemByName(inventoryItemName: string): Observable<InventoryItem> {
+    if (inventoryItemName === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName.replace(':name', inventoryItemName)}`;
+
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 }

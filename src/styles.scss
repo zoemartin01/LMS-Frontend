@@ -25,6 +25,9 @@
 
 .btn {
   margin: 5px 8px;
+  border-radius: 0 !important;
+  border-top-right-radius: 0.7rem !important;
+  border-bottom-left-radius: 0.7rem !important;
 }
 
 .btn-primary {
@@ -60,12 +63,6 @@
 }
 
 .modal-content {
-  border-radius: 0 !important;
-  border-top-right-radius: 0.7rem !important;
-  border-bottom-left-radius: 0.7rem !important;
-}
-
-.btn {
   border-radius: 0 !important;
   border-top-right-radius: 0.7rem !important;
   border-bottom-left-radius: 0.7rem !important;
@@ -133,6 +130,10 @@ table.cal-table .btn {
   border: 1px solid #fff !important;
 }
 
+table.cal-table i {
+  color: #fff;
+}
+
 input.danger {
   border-color: var(--danger);
   color: var(--danger);
@@ -149,4 +150,16 @@ input.warning {
 
 .warning {
   color: var(--warning);
+}
+
+.modal-dialog {
+  top: 60px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.display-none {
+  display: none;
 }

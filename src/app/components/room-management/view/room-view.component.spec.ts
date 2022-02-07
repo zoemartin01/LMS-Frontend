@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomViewComponent } from './room-view.component';
 
@@ -16,6 +18,11 @@ describe('RoomViewComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     })
     .compileComponents();
@@ -24,7 +31,6 @@ describe('RoomViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

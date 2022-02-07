@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { PersonalAppointmentListComponent } from './personal-appointment-list.component';
 
@@ -15,16 +16,13 @@ describe('PersonalAppointmentListComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(PersonalAppointmentListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

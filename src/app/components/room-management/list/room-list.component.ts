@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { RoomCreateComponent } from "../create/room-create.component";
+import { RoomDeleteComponent } from "../delete/room-delete.component";
+import { RoomEditComponent } from "../edit/room-edit.component";
+import { RoomViewComponent } from "../view/room-view.component";
 
 import { RoomService } from "../../../services/room.service";
+import { UserService } from "../../../services/user.service";
 
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-room-list',
@@ -17,14 +25,16 @@ import { RoomId } from "../../../types/aliases/room-id";
  *
  */
 export class RoomListComponent implements OnInit {
-  public rooms: Room[] = [];
+  public rooms: PagedList<Room> = new PagedList<Room>();
 
   /**
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UserService} userService service providing user functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public roomService: RoomService) {
+  constructor(public roomService: RoomService, public userService: UserService, private modalService: NgbModal) {
   }
 
   /**
@@ -37,10 +47,13 @@ export class RoomListComponent implements OnInit {
   /**
    * Gets all rooms with data
    */
-  public async getRooms(): Promise<void> {
-    this.roomService.getRoomsData().subscribe({
+  public async getRooms(page: number = this.rooms.page): Promise<void> {
+    const pageSize = this.rooms.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.roomService.getRoomsData(pageSize, offset).subscribe({
       next: res => {
-        this.rooms = res;
+        this.rooms.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -52,6 +65,12 @@ export class RoomListComponent implements OnInit {
    * Opens room create form
    */
   public openRoomCreationForm(): void {
+    const modal = this.modalService.open(RoomCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
@@ -60,6 +79,13 @@ export class RoomListComponent implements OnInit {
    * @param {RoomId} roomId id of room to view
    */
   public openRoomView(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomViewComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
@@ -68,6 +94,13 @@ export class RoomListComponent implements OnInit {
    * @param {RoomId} roomId id of room to edit
    */
   public openRoomEditForm(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomEditComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 
   /**
@@ -76,5 +109,12 @@ export class RoomListComponent implements OnInit {
    * @param {roomId} roomId id of room to delete
    */
   public openRoomDeletionDialog(roomId: RoomId): void {
+    const modal = this.modalService.open(RoomDeleteComponent);
+    modal.componentInstance.room.id = roomId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getRooms();
+      }
+    });
   }
 }

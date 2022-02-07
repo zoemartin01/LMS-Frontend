@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { MessageDeleteComponent } from "./delete/message-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { MessagingService } from "../../../services/messaging.service";
@@ -9,6 +12,8 @@ import { Message } from "../../../types/message";
 import { MessageId } from "../../../types/aliases/message-id";
 import { UnreadMessages } from "../../../types/unread-messages";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { PagedResponse } from 'src/app/types/paged-response';
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-message-box',
@@ -22,7 +27,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  *
  */
 export class MessageBoxComponent implements OnInit {
-  public messages: Message[] = [];
+  public messages: PagedList<Message> = new PagedList<Message>();
   public unreadMessages: UnreadMessages = {
     sum: 0,
     appointments: 0,
@@ -37,13 +42,16 @@ export class MessageBoxComponent implements OnInit {
    * @param {UserService} userService service providing user functionalities
    * @param {AuthService} authService service providing authentication functionalities
    * @param {Router} router router providing navigation
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public messagingService: MessagingService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
+    this.messages.pageSize = 8;
   }
 
   /**
@@ -53,9 +61,10 @@ export class MessageBoxComponent implements OnInit {
     this.userService.getUserDetails().subscribe({
       next: (res) => {
         const notificationChannel = res.notificationChannel;
-        if (notificationChannel === NotificationChannel.emailAndMessageBox
-          || notificationChannel === NotificationChannel.messageBoxOnly) {
+        if (notificationChannel !== NotificationChannel.emailAndMessageBox
+          && notificationChannel !== NotificationChannel.messageBoxOnly) {
           this.router.navigateByUrl('/dashboard');
+          return;
         }
 
         this.updatePage();
@@ -70,7 +79,7 @@ export class MessageBoxComponent implements OnInit {
    * Updates page
    * @private
    */
-  private updatePage() {
+  public updatePage() {
     this.getUnreadMessagesAmounts();
     this.getMessages();
   }
@@ -78,10 +87,13 @@ export class MessageBoxComponent implements OnInit {
   /**
    * Retrieves all messages for current user
    */
-  public async getMessages(): Promise<void> {
+  public async getMessages(page: number = this.messages.page): Promise<void> {
+    const pageSize = this.messages.pageSize;
+    const offset = (page - 1) * pageSize;
+
     this.messagingService.getMessages().subscribe({
-      next: (res: Message[]) => {
-        this.messages = res;
+      next: (res: PagedResponse<Message>) => {
+        this.messages.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -106,10 +118,16 @@ export class MessageBoxComponent implements OnInit {
   /**
    * Opens message deletion dialog
    *
-   * @param {MessageId} messageId id of message to be deleted
+   * @param {Message} message message to be deleted
    */
-  public async openAppointmentDeletionDialog(messageId: MessageId): Promise<void> {
-    //@todo Adrian: implement deletion dialog
+  public async openMessageDeletionDialog(message: Message): Promise<void> {
+    const modal = this.modalService.open(MessageDeleteComponent);
+    modal.componentInstance.message = message;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getMessages();
+      }
+    });
   }
 
   /**

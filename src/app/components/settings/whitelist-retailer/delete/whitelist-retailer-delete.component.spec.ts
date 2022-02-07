@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { WhitelistRetailerDeleteComponent } from './whitelist-retailer-delete.component';
 
@@ -17,6 +18,9 @@ describe('WhitelistRetailerDeleteComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
+      providers: [
+        NgbActiveModal,
+      ],
     })
     .compileComponents();
   });
@@ -24,7 +28,6 @@ describe('WhitelistRetailerDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

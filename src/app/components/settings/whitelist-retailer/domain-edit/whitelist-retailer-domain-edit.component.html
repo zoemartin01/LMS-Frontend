@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">Edit Domain</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="domainEditForm">
+    <div class="form-group row">
+      <div class="col">
+        <label for="domain" class="my-1">Domain</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="domain"
+                 formControlName="domain">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" [disabled]="!domainEditForm.valid"
+          (click)="editDomainOfWhitelistRetailer()">Save
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>

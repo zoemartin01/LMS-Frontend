@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { AppointmentService } from "../../../services/appointment.service";
@@ -23,6 +23,8 @@ import { UserRole } from "../../../types/enums/user-role";
  *
  */
 export class AppointmentViewComponent implements OnInit {
+  @Input() appointmentId: string = '';
+  @Output() updateCalendar = new EventEmitter<void>();
   public appointment: Appointment = {
     id: null,
     user: {
@@ -32,20 +34,23 @@ export class AppointmentViewComponent implements OnInit {
       email: '',
       role: UserRole.unknown,
       notificationChannel: NotificationChannel.unknown,
+      emailVerification: true,
+      isActiveDirectory: false,
     },
     room: {
       id: null,
       name: '',
       description: '',
       maxConcurrentBookings: 1,
-      automaticRequestAcceptance: null,
-      availableTimeslots: [],
-      unavailableTimeslots: [],
+      autoAcceptBookings: null,
     },
     start: null,
     end: null,
     type: RoomTimespanType.appointment,
     seriesId: null,
+    timeSlotRecurrence: 1,
+    maxStart: undefined,
+    amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
   };
 
@@ -84,6 +89,8 @@ export class AppointmentViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
+
+    this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 
   /**
@@ -92,5 +99,7 @@ export class AppointmentViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+
+    this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 }

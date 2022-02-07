@@ -1,9 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { GlobalSettingsComponent } from './global-settings.component';
+
+import { AdminService } from "../../../services/admin.service";
 
 describe('GlobalSettingsComponent', () => {
   let component: GlobalSettingsComponent;
@@ -16,8 +19,12 @@ describe('GlobalSettingsComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        NgxPaginationModule,
+        ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
+      ],
+      providers: [
+        AdminService,
       ],
     })
     .compileComponents();
@@ -26,7 +33,6 @@ describe('GlobalSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GlobalSettingsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

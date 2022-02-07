@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-appointment-create',
@@ -15,6 +16,8 @@ import { AppointmentService } from "../../../services/appointment.service";
  *
  */
 export class AppointmentCreateComponent {
+  @Input() start: moment.Moment|null = null;
+  @Output() updateCalendar = new EventEmitter<void>();
 
   /**
    * Constructor
@@ -30,5 +33,7 @@ export class AppointmentCreateComponent {
    * @param {NgForm} appointmentCreationForm submitted creation form
    */
   public async createAppointment(appointmentCreationForm: NgForm): Promise<void> {
+
+    this.updateCalendar.emit(); //triggers calendar update in parent component
   }
 }

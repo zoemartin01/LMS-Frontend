@@ -1,1 +1,79 @@
-<p>schedule works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Schedule Recording</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="recordingScheduleForm">
+    <div class="form-group">
+      <label for="start" class="my-1">Recording Start</label>
+      <div class="input-group">
+        <input
+          (change)="updateEndField()"
+          type="datetime-local"
+          [min]="moment().format('YYYY-MM-DDTHH:mm')"
+          class="form-control"
+          placeholder="Start"
+          id="start"
+          formControlName="start"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="end" class="my-1">Recording End</label>
+      <div class="input-group">
+        <input
+          type="datetime-local"
+          [min]="endMin.format('YYYY-MM-DDTHH:mm')"
+          class="form-control"
+          placeholder="End"
+          id="end"
+          formControlName="end"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="resolution" class="my-1">Resolution</label>
+      <select class="form-select" id="resolution" formControlName="resolution">
+        <option *ngFor="let resolution of resolutions()" [value]="resolution">{{ resolution.split('x')[1]}}p</option>
+      </select>
+    </div>
+    <div class="form-group row">
+      <div class="col">
+        <label for="bitrate" class="my-1">Bitrate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Bitrate"
+            id="bitrate"
+            formControlName="bitrate"
+          />
+        </div>
+      </div>
+      <div class="col">
+        <label for="bitrate_unit" class="my-1">Bitrate Unit</label>
+        <select class="form-select" id="bitrate_unit" formControlName="bitrate_unit">
+          <option value="bps">bit/s</option>
+          <option value="kbps">kbit/s</option>
+          <option value="mbps">mbit/s</option>
+        </select>
+      </div>
+    </div>
+  </form>
+  <div class="alert alert-danger" role="alert" *ngIf="scheduleError">
+    <b>Creation failed:</b>
+    <br>
+    <div [innerHTML]="scheduleErrorMessage"></div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="scheduleRecording()">
+    Schedule Recording
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="activeModal.close('aborted')"
+  >
+    Abort
+  </button>
+</div>

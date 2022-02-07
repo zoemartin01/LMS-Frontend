@@ -4,77 +4,97 @@
 
 <br>
 
-<!--
-<div class="card-body">
-  <form (keyup.enter)="editGlobalSettings(globalSettingsForm)" #globalSettingsForm="ngForm"
-        (ngSubmit)="editGlobalSettings(globalSettingsForm)">
-    <div class="form-group row my-2">
-      <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
-      <div class="col">
-        <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
-      </div>
-    </div>
-        <div class="form-group row my-2">
-      <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
-      <div class="col">
-        <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1">
-      </div>
-    </div>
-    <div class="form-group my-2 row">
-      <label for="link" class="col-sm-3 col-form-label">Purchase Link <i
-        class="bi bi-info-circle"></i></label>
-      <div class="col">
-        <input type="url" class="form-control" id="link" placeholder="Purchase Link"
-               (input)="checkUrlAgainstWhitelistedRetailers(link.value)" #link>
-        <div class="row" *ngIf="linkWarning">
-          <label role="alert" for="link" class="warning">That shop is not on the list of approved retailers.</label>
+<div class="row justify-content-center">
+  <div class="card col-md-3">
+    <div class="col-auto card-body">
+      <form class="form-inline mx-auto py-3" [formGroup]="globalSettingsForm">
+        <div class="form-group">
+          <div class="input-group">
+            <label for="maxRecordings" class="my-1">Maximum Recordings</label>
+            <div class="input-group">
+              <input type="number" min="1" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </form>
-  <div class="row">
-    <div class="col text-center">
-      <a routerLink="#" class="btn btn-primary" role="button">Request Order</a>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="recordingAutoDelete" class="my-1">Days before recordings are deleted</label>
+            <div class="input-group">
+              <input type="number" min="1" class="form-control" id="recordingAutoDelete"
+                     formControlName="recording.auto_delete">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="homePage" class="my-1">Home Page</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="homePage" accept=".md, .txt"
+                   formControlName="static.homepage" (change)="onFileSelected($event, 'static.homepage')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="safetyInstructions" class="my-1">Safety Instructions</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="safetyInstructions" accept=".md, .txt"
+                   formControlName="static.safety_instructions" (change)="onFileSelected($event, 'static.safety_instructions')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="labRules" class="my-1">Lab Rules</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="labRules" accept=".md, .txt"
+                   formControlName="static.lab_rules" (change)="onFileSelected($event, 'static.lab_rules')">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col text-center">
+            <button type="button" class="btn btn-primary" [disabled]="!globalSettingsForm.valid"
+                    (click)="editGlobalSettings()">Submit
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="getGlobalSettings()">Reset</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div> -->
+</div>
 
-<!-- <form action="maxRecordings = quantity">
-  <label for="quantity">Maximum Recordings</label>
-  <input type="number" id="quantity" name="quantity" placeholder="{{maxRecordings}}">
-  <input type="submit">
-</form>
-<form action="autodeleteTimespan = quantity">
-  <label for="quantity">Timespan before recording automatic deletion</label>
-  <input type="number" id="hours" name="quantity" placeholder="Hours">
-  <input type="number" id="days" name="quantity" placeholder="Days">
-  <input type="number" id="weeks" name="quantity" placeholder="Weeks">
-  <input type="submit">
-</form> -->
 <div class="row">
   <h2 class="display-5">Whitelist Retailers</h2>
+  <div class="row">
+    <div class="col text-left">
+      <a (click)="openWhitelistRetailerCreationForm()" class="btn btn-primary" role="button">
+        <i class="bi-plus-lg"></i> Create Retailer
+      </a>
+    </div>
+  </div>
   <table class="table table-striped">
     <thead class="thead-dark">
-      <tr>
-        <th class="col-sm-4">Name</th>
-        <th class="col-sm-2"></th>
-      </tr>
+    <tr>
+      <th class="col-sm-10">Name</th>
+      <th class="col-sm-2"></th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let whitelistRetailer of whitelistRetailers">
-        <td class="col-sm-4">{{ whitelistRetailer.name }}</td>
-        <td class="col-sm-2">
-          <a (click)="openWhitelistRetailerView(whitelistRetailer.id)">
-            <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
-          </a>
-          <a (click)="openWhitelistRetailerEditForm(whitelistRetailer.id)">
-            <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-          </a>
-          <a (click)="openWhitelistRetailerDeletionDialog(whitelistRetailer.id)">
-            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-          </a>
-        </td>
-      </tr>
+    <tr *ngFor="let whitelistRetailer of whitelistRetailers.data | paginate: { id: 'server', itemsPerPage: whitelistRetailers.pageSize, currentPage: whitelistRetailers.page, totalItems: whitelistRetailers.total }">
+      <td class="col-sm-10">{{ whitelistRetailer.name }}</td>
+      <td class="col-sm-2">
+        <a (click)="openWhitelistRetailerView(whitelistRetailer.id)">
+          <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
+        </a>
+        <a (click)="openWhitelistRetailerEditForm(whitelistRetailer.id)">
+          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+        </a>
+        <a (click)="openWhitelistRetailerDeletionDialog(whitelistRetailer.id)">
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+        </a>
+      </td>
+    </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getWhitelistRetailers($event)" id="server"></pagination-controls>
+  </div>
 </div>

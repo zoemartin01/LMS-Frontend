@@ -52,13 +52,13 @@ export class LoginComponent {
           this.authService.setAccessToken(res.accessToken);
           this.authService.setRefreshToken(res.refreshToken);
           this.authService.setUserId(res.userId);
-          this.authService.setUserRole(<UserRole><unknown>res.role ?? UserRole.unknown);
+          this.authService.setUserRole(<UserRole><unknown>res.role);
 
           this.router.navigateByUrl('/dashboard');
         },
         error: error => {
           this.loginError = true;
-          this.loginErrorMessage = error;
+          this.loginErrorMessage = error.error.message;
           console.error('There was an error!', error);
         }
       })

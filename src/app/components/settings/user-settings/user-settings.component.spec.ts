@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { UserSettingsComponent } from './user-settings.component';
 
@@ -15,9 +16,13 @@ describe('UserSettingsComponent', () => {
         UserSettingsComponent,
       ],
       imports: [
-        HttpClientModule,
-        RouterTestingModule,
         FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        NgbActiveModal,
       ],
     })
     .compileComponents();
@@ -26,7 +31,6 @@ describe('UserSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserSettingsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

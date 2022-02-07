@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
@@ -8,6 +8,8 @@ import { OrderService } from "../../../services/order.service";
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-inventory-order',
@@ -17,61 +19,147 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component to inventory an order
- *
- *
  */
 export class InventoryOrderComponent implements OnInit {
+  public inventoryOrderForm: FormGroup = new FormGroup({
+    itemName: new FormControl(''),
+    quantity: new FormControl(null),
+    url: new FormControl(''),
+    status: new FormControl(0),
+  });
   public order: Order = {
     id: null,
-    item: '',
+    itemName: null,
+    item: null,
     quantity: null,
-    purchaseUrl: '',
-    userId: null,
-    userFullName: '',
-    orderStatus: OrderStatus.unknown,
+    url: '',
+    user: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: UserRole.unknown,
+      notificationChannel: NotificationChannel.unknown,
+      emailVerification: true,
+      isActiveDirectory: false,
+    },
+    status: OrderStatus.unknown,
   }
-  public inventoryItems: InventoryItem[] = [];
+  public inventoryItem: InventoryItem = {
+    id: null,
+    name: '',
+    description: '',
+    quantity: null,
+  }
+  existingItems: InventoryItem[] = [];
 
   /**
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {OrderService} orderService service providing order functionalities
-   * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public inventoryService: InventoryService,
     public orderService: OrderService,
-    private route: ActivatedRoute) {
+    public activeModal: NgbActiveModal
+  ) {
+    this.inventoryOrderForm.controls['quantity'].disable();
+    this.inventoryOrderForm.controls['url'].disable();
+    this.inventoryOrderForm.controls['status'].disable();
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.order.id = params['id'];
       this.getOrderData();
-    });
+      this.getAllInventoryItems();
   }
 
   /**
    * Gets all data of order
    */
   public async getOrderData(): Promise<void> {
+    this.orderService.getOrderData(this.order.id).subscribe({
+      next: res => {
+        this.order = res;
+
+        if (res.item !== null) {
+          this.inventoryOrderForm.controls['itemName'].setValue(res.item.name);
+        } else {
+          this.inventoryOrderForm.controls['itemName'].setValue(res.itemName);
+        }
+
+        this.inventoryOrderForm.controls['quantity'].setValue(res.quantity);
+        this.inventoryOrderForm.controls['url'].setValue(res.url);
+        this.inventoryOrderForm.controls['status'].setValue(res.status);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 
   /**
    * Gets all inventory items
    */
-  public async getInventoryItems(): Promise<void> {
+  public async getAllInventoryItems(): Promise<void> {
+    this.inventoryService.getInventoryItems().subscribe({
+      next: res => {
+        this.existingItems = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      }
+    });
   }
 
   /**
-   * Sets order status to "inventoried" and creates new inventory item if needed
-   *
-   * @param {NgForm} inventoryOrderForm submitted inventory form
+   * Sets order status to "inventoried" and adds order to inventory
    */
-  public async inventoryOrder(inventoryOrderForm: NgForm): Promise<void> {
+  public async inventoryOrder(): Promise<void> {
+    this.inventoryService.getInventoryItemByName(this.inventoryOrderForm.controls['itemName'].value).subscribe({
+      next: res => {
+        this.inventoryItem = res;
+        // case: no existing inventory item => create
+        if (this.inventoryItem === null) {
+          const name = this.inventoryOrderForm.value.itemName;
+          const description = '';
+          const quantity = this.inventoryOrderForm.value.quantity;
+          this.inventoryService.createInventoryItem(name, description, quantity).subscribe({
+            error: error => {
+              console.error('There was an error!', error);
+            },
+          });
+        //case: existing inventory item => edit
+        } else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
+          this.inventoryService.editInventoryItem(
+            this.inventoryItem.id, {quantity: (+this.inventoryItem.quantity + +this.order.quantity)}
+          ).subscribe({
+            error: error => {
+              console.error('There was an error!', error);
+            }
+          })
+        }
+
+        // change order status to inventoried and update item name
+        this.orderService.updateOrderData(this.order.id, {
+          itemName: this.inventoryOrderForm.value.itemName,
+          status: OrderStatus.inventoried,
+        }).subscribe({
+          next: () => {
+            this.activeModal.close(`inventoried ${this.order.id}`)
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        })
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 }

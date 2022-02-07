@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3000/api/v1',
+  baseUrl: '/api/v1',
 
   //localStorage
   storageKeys: {
@@ -9,6 +9,8 @@ export const environment = {
     userId: 'userId',
     userRole: 'userRole',
   },
+
+  defaultPageSize: 10,
 
   //routes
   apiRoutes: {
@@ -52,7 +54,8 @@ export const environment = {
       checkDomainAgainstWhitelist: '/global-settings/whitelist-retailers/check',
     },
     user_management: {
-      getAllUsers: '/users',
+      getAllPendingUsers: '/users/pending',
+      getAllAcceptedUsers: '/users/accepted',
       getSingleUser: '/users/:id',
 
       updateUser: '/users/:id',
@@ -61,6 +64,7 @@ export const environment = {
     rooms: {
       getAllRooms: '/rooms',
       getSingleRoom: '/rooms/:id',
+      getRoomCalendar: '/rooms/:id/calendar',
 
       createRoom: '/rooms',
       updateRoom: '/rooms/:id',
@@ -88,15 +92,21 @@ export const environment = {
     inventory_item: {
       getAllItems: '/inventory-items',
       getSingleItem: '/inventory-items/:id',
+      getByName: '/inventory-items/name/:name',
 
       createItem: '/inventory-items',
       updateItem: '/inventory-items/:id',
       deleteItem: '/inventory-items/:id',
     },
     orders: {
-      getCurrentUserOrders: '/user/orders',
+      getCurrentUsersPendingOrders: '/users/orders/pending',
+      getCurrentUsersAcceptedOrders: '/users/orders/accepted',
+      getCurrentUsersDeclinedOrders: '/users/orders/declined',
 
-      getAllOrders: '/orders',
+      getAllPendingOrders: '/orders/pending',
+      getAllAcceptedOrders: '/orders/accepted',
+      getAllDeclinedOrders: '/orders/declined',
+
       getSingleOrder: '/orders/:id',
 
       createOrder: '/orders',
