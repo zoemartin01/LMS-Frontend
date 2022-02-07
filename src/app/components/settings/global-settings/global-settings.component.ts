@@ -13,6 +13,7 @@ import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -29,10 +30,10 @@ export class GlobalSettingsComponent implements OnInit {
   public whitelistRetailers: PagedList<WhitelistRetailer> = new PagedList<WhitelistRetailer>();
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
     "static.homepage": new FormControl(''),
     "static.safety_instructions": new FormControl(''),
@@ -42,10 +43,11 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Constructor
    * @constructor
+   * @param {UtilityService} utilityService service providing utility functionality
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, private modalService: NgbModal) {
+  constructor(public utilityService: UtilityService, public adminService: AdminService, private modalService: NgbModal) {
   }
 
   /**
@@ -88,8 +90,10 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Gets whitelist retailers
+   *
+   * @param {number} page current number of page
    */
-  public async getWhitelistRetailers(page: number): Promise<void> {
+  public async getWhitelistRetailers(page: number = this.whitelistRetailers.page): Promise<void> {
     const pageSize = this.whitelistRetailers.pageSize;
     const offset = (page - 1) * pageSize;
 
@@ -136,7 +140,7 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-   /**
+  /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
@@ -195,18 +199,23 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Updates content of static page
+   *
    * @param {any} event file selection event that triggered this method
    * @param {string} staticPageName name of the static page to update
    */
-  onFileSelected(event: any, staticPageName : string) {
+  onFileSelected(event: any, staticPageName: string) {
     const file: File = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      const fileContents = fileReader.result;
-      this.globalSettingsForm.controls[staticPageName].setValue(
-        fileContents
-      );
-    };
-    fileReader.readAsText(file);
+    if (file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const fileContents = fileReader.result;
+        this.globalSettingsForm.controls[staticPageName].setValue(
+          fileContents
+        );
+      };
+      fileReader.readAsText(file);
+    } else {
+      console.error('File must be a markdown file');
+    }
   }
 }

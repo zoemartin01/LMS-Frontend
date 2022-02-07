@@ -22,9 +22,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the inventory list page
- *
- *
- *
  */
 export class InventoryListComponent implements OnInit {
   public inventory: PagedList<InventoryItem> = new PagedList<InventoryItem>();
@@ -52,6 +49,8 @@ export class InventoryListComponent implements OnInit {
 
   /**
    * Gets all items with data
+   *
+   * @param {number} page number of current page
    */
   public async getInventory(page: number = this.inventory.page): Promise<void> {
     const pageSize = this.inventory.pageSize;
