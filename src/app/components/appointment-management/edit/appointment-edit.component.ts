@@ -169,6 +169,10 @@ export class AppointmentEditComponent implements OnInit {
   public async editAppointmentSeries(): Promise<void> {
     let changedData: { [key: string]: any} =  this.getDirtyValues(this.recurringAppointmentEditForm);
 
+    if (this.force) {
+      changedData['force'] = this.force;
+    }
+
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
       const day = moment(this.date).minutes(0).seconds(0);
