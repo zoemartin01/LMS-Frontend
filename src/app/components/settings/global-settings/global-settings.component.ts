@@ -12,6 +12,8 @@ import { AdminService } from "../../../services/admin.service";
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import { PagedList } from 'src/app/types/paged-list';
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -25,23 +27,27 @@ import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-i
  *
  */
 export class GlobalSettingsComponent implements OnInit {
-  public whitelistRetailers: WhitelistRetailer[] = [];
+  public whitelistRetailers: PagedList<WhitelistRetailer> = new PagedList<WhitelistRetailer>();
   public globalSettingsForm: FormGroup = new FormGroup({
     "user.max_recordings": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
     "recording.auto_delete": new FormControl('', [
-       Validators.required,
+      Validators.required,
     ]),
+    "static.homepage": new FormControl(''),
+    "static.safety_instructions": new FormControl(''),
+    "static.lab_rules": new FormControl(''),
   });
 
   /**
    * Constructor
    * @constructor
+   * @param {UtilityService} utilityService service providing utility functionality
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, private modalService: NgbModal) {
+  constructor(public utilityService: UtilityService, public adminService: AdminService, private modalService: NgbModal) {
   }
 
   /**
@@ -49,7 +55,7 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
-    this.getWhitelistRetailers();
+    this.getWhitelistRetailers(this.whitelistRetailers.page);
   }
 
   /**
@@ -66,6 +72,11 @@ export class GlobalSettingsComponent implements OnInit {
     })
   }
 
+  /**
+   * Updates the form for global settings
+   * @param {GlobalSetting[]} globalSettings global settings
+   * @private
+   */
   private updateGlobalSettingsForm(globalSettings: GlobalSetting[]) {
     this.globalSettingsForm.controls['user.max_recordings'].setValue(
       +globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value
@@ -79,11 +90,18 @@ export class GlobalSettingsComponent implements OnInit {
 
   /**
    * Gets whitelist retailers
+   *
+   * @param {number} page current number of page
    */
-  public async getWhitelistRetailers(): Promise<void> {
-    this.adminService.getWhitelistRetailers().subscribe({
+  public async getWhitelistRetailers(page: number = this.whitelistRetailers.page): Promise<void> {
+    const pageSize = this.whitelistRetailers.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.adminService.getWhitelistRetailers(pageSize, offset).subscribe({
       next: res => {
-        this.whitelistRetailers = res;
+        this.whitelistRetailers.total = res.total;
+        this.whitelistRetailers.page = page;
+        this.whitelistRetailers.data = res.data;
       },
       error: error => {
         console.error('There was an error!', error);
@@ -98,10 +116,17 @@ export class GlobalSettingsComponent implements OnInit {
     if (this.globalSettingsForm.valid) {
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        changedFields.push({
-          key,
-          value: this.globalSettingsForm.controls[key].value,
-        });
+        if (key == 'recording.auto_delete') {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value * 86400000,
+          });
+        } else {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value,
+          });
+        }
       }
 
       this.adminService.updateGlobalSettings(changedFields).subscribe({
@@ -115,14 +140,14 @@ export class GlobalSettingsComponent implements OnInit {
     }
   }
 
-   /**
+  /**
    * Opens whitelist retailer creation form
    */
   public openWhitelistRetailerCreationForm(): void {
     const modal = this.modalService.open(WhitelistRetailerCreateComponent);
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -137,7 +162,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -152,7 +177,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
   }
@@ -167,8 +192,30 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers();
+        this.getWhitelistRetailers(this.whitelistRetailers.page);
       }
     });
+  }
+
+  /**
+   * Updates content of static page
+   *
+   * @param {any} event file selection event that triggered this method
+   * @param {string} staticPageName name of the static page to update
+   */
+  onFileSelected(event: any, staticPageName: string) {
+    const file: File = event.target.files[0];
+    if (file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const fileContents = fileReader.result;
+        this.globalSettingsForm.controls[staticPageName].setValue(
+          fileContents
+        );
+      };
+      fileReader.readAsText(file);
+    } else {
+      console.error('File must be a markdown file');
+    }
   }
 }

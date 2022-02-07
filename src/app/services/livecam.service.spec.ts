@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
+import { WINDOW_PROVIDERS } from "../providers/window.providers";
+
 import { LivecamService } from './livecam.service';
 
 import { VideoResolution } from '../types/enums/video-resolution';
@@ -13,8 +15,13 @@ describe('LivecamService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [LivecamService],
+      imports: [
+        HttpClientTestingModule,
+      ],
+      providers: [
+        LivecamService,
+        WINDOW_PROVIDERS,
+      ],
     });
 
     service = TestBed.inject(LivecamService);
@@ -130,7 +137,7 @@ describe('LivecamService', () => {
   });
 
   it('should get all recordings', () => {
-    service.getAllRecordings().subscribe((res: any) => {
+    service.getFinishedRecordings().subscribe((res: any) => {
       expect(res.length).toBe(2);
       expect(res).toEqual([
         {
@@ -159,7 +166,7 @@ describe('LivecamService', () => {
     });
 
     const mockRequest = httpMock.expectOne(
-      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}`
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllRecordings}?limit=0&offset=0`
     );
 
     expect(mockRequest.request.method).toBe('GET');
@@ -220,7 +227,7 @@ describe('LivecamService', () => {
     });
 
     const mockRequest = httpMock.expectOne(
-      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}`
+      `${environment.baseUrl}${environment.apiRoutes.livecam.getAllScheduled}?limit=0&offset=0`
     );
 
     expect(mockRequest.request.method).toBe('GET');
@@ -251,7 +258,7 @@ describe('LivecamService', () => {
     ]);
   });
 
-  it('should get the live stream feed', () => {
+  /*it('should get the live stream feed', () => {
     service.getLiveStreamFeed().subscribe((res: any) => {
       url: 'ws://localhost:8080/livecam/feed';
     });
@@ -265,5 +272,5 @@ describe('LivecamService', () => {
     mockRequest.flush({
       url: 'ws://localhost:8080/livecam/feed',
     });
-  });
+  });*/
 });

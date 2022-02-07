@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { OrderService } from "../../../services/order.service";
 
@@ -16,10 +17,14 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the deletion of an order
- *
- *
  */
 export class OrderDeleteComponent implements OnInit {
+  public orderDeleteForm: FormGroup = new FormGroup({
+    itemName: new FormControl(''),
+    quantity: new FormControl(null),
+    url: new FormControl(''),
+    status: new FormControl(0),
+  });
   public order: Order = {
     id: null,
     itemName: null,
@@ -37,29 +42,60 @@ export class OrderDeleteComponent implements OnInit {
       isActiveDirectory: false,
     },
     status: OrderStatus.unknown,
-  }
+  };
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
-   * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, private route: ActivatedRoute) {
+  constructor(public orderService: OrderService, public activeModal: NgbActiveModal) {
+    this.orderDeleteForm.disable();
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.order.id = params['id'];
-    });
+    this.getOrderData();
+  }
+
+  /**
+   * Gets all data of order
+   */
+  public async getOrderData() : Promise<void> {
+    this.orderService.getOrderData(this.order.id).subscribe({
+      next: res => {
+        this.order = res;
+
+        if (res.item !== null) {
+          this.orderDeleteForm.controls['itemName'].setValue(res.item.name);
+        } else {
+          this.orderDeleteForm.controls['itemName'].setValue(res.itemName);
+        }
+
+        this.orderDeleteForm.controls['quantity'].setValue(res.quantity);
+        this.orderDeleteForm.controls['url'].setValue(res.url);
+        this.orderDeleteForm.controls['status'].setValue(res.status);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      },
+    })
   }
 
   /**
    * Deletes order
    */
   public async deleteOrder(): Promise<void> {
+    this.orderService.deleteOrder(this.order.id).subscribe({
+      next: () => {
+        this.activeModal.close('deleted');
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 }

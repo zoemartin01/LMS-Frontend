@@ -1,3 +1,5 @@
+<ngx-loading-bar></ngx-loading-bar>
+
 <div class="container p-3">
   <header class="bg-navbar kit-rounded bg-primary">
     <nav class="navbar navbar-expand-lg navbar-dark nav-fill w-100">
@@ -26,6 +28,8 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownAppointments">
                 <a class="dropdown-item" routerLink="/appointments">My Appointments</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" routerLink="/room-overview">Room Overview</a>
               </div>
             </li>
             <li class="nav-item">
@@ -96,7 +100,6 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownOrdersAdmin">
                 <a class="dropdown-item" routerLink="/orders">My Orders</a>
-                  <a class="dropdown-item" routerLink="/orders/request">New Order</a>
                   <hr class="dropdown-divider">
                   <a class="dropdown-item" routerLink="/orders/all">All Orders</a>
               </div>
@@ -127,7 +130,7 @@
               <div class="dropdown-menu" aria-labelledby="accountDropdown">
               <a class="dropdown-item" routerLink="/settings">Account Settings</a>
               <hr class="dropdown-divider">
-                <a class="dropdown-item" routerLink="/global-settings">Application Settings</a>
+                <a class="dropdown-item" routerLink="/application-settings">Application Settings</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" (click)="logout()">Log out</a>
               </div>

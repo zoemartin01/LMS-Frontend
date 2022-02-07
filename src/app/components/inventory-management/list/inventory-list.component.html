@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col text-left">
-    <a (click)="openInventoryItemCreationForm()" class="btn btn-primary" role="button">+ Create Item</a>
+    <a (click)="openInventoryItemCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create Item</a>
   </div>
 </div>
 
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody class="align-middle">
-      <tr *ngFor="let inventoryItem of inventory">
+      <tr *ngFor="let inventoryItem of inventory.data | paginate: { id: 'inventory', itemsPerPage: inventory.pageSize, currentPage: inventory.page, totalItems: inventory.total }">
         <td>{{ inventoryItem.name }}</td>
         <td>{{ inventoryItem.description }}</td>
         <td>{{ inventoryItem.quantity }}</td>
@@ -27,17 +27,21 @@
           <a (click)="openInventoryItemViewForm(inventoryItem.id)">
             <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
           </a>
-          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+          <a *ngIf="authService.isAdmin()" (click)="openInventoryItemEditForm(inventoryItem.id)">
             <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
           </a>
-          <a (click)="openItemDeletionDialog(inventoryItem.id)">
+          <a *ngIf="authService.isAdmin()" (click)="openItemDeletionDialog(inventoryItem.id)">
             <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
           </a>
-          <a (click)="openInventoryItemEditForm(inventoryItem.id)">
+          <a (click)="openOrderCreationForm(inventoryItem.name)">
             <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
           </a>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getInventory($event)" id="inventory"></pagination-controls>
+  </div>
 </div>

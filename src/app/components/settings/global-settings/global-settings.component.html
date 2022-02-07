@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="display-2 text-center">Global Settings</h1>
+  <h1 class="display-2 text-center">Application Settings</h1>
 </div>
 
 <br>
@@ -12,7 +12,7 @@
           <div class="input-group">
             <label for="maxRecordings" class="my-1">Maximum Recordings</label>
             <div class="input-group">
-              <input type="number" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
+              <input type="number" min="1" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
             </div>
           </div>
         </div>
@@ -20,9 +20,30 @@
           <div class="input-group">
             <label for="recordingAutoDelete" class="my-1">Days before recordings are deleted</label>
             <div class="input-group">
-              <input type="number" class="form-control" id="recordingAutoDelete"
+              <input type="number" min="1" class="form-control" id="recordingAutoDelete"
                      formControlName="recording.auto_delete">
             </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="homePage" class="my-1">Home Page</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="homePage" accept=".md, .txt"
+                   formControlName="static.homepage" (change)="onFileSelected($event, 'static.homepage')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="safetyInstructions" class="my-1">Safety Instructions</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="safetyInstructions" accept=".md, .txt"
+                   formControlName="static.safety_instructions" (change)="onFileSelected($event, 'static.safety_instructions')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="labRules" class="my-1">Lab Rules</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="labRules" accept=".md, .txt"
+                   formControlName="static.lab_rules" (change)="onFileSelected($event, 'static.lab_rules')">
           </div>
         </div>
         <br>
@@ -56,7 +77,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let whitelistRetailer of whitelistRetailers">
+    <tr *ngFor="let whitelistRetailer of whitelistRetailers.data | paginate: { id: 'server', itemsPerPage: whitelistRetailers.pageSize, currentPage: whitelistRetailers.page, totalItems: whitelistRetailers.total }">
       <td class="col-sm-10">{{ whitelistRetailer.name }}</td>
       <td class="col-sm-2">
         <a (click)="openWhitelistRetailerView(whitelistRetailer.id)">
@@ -72,4 +93,8 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getWhitelistRetailers($event)" id="server"></pagination-controls>
+  </div>
 </div>

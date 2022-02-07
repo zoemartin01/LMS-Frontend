@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Room } from "../../../types/room";
 
@@ -14,7 +15,6 @@ import { Room } from "../../../types/room";
 
 /**
  * Component for the room edit popup
- *
  */
 export class RoomEditComponent implements OnInit {
   public roomEditForm: FormGroup = new FormGroup({
@@ -39,10 +39,11 @@ export class RoomEditComponent implements OnInit {
   /**
    * Constructor
    * @constructor
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {RoomService} roomService service providing room functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, public activeModal: NgbActiveModal) {
+  constructor(public utilityService: UtilityService, public roomService: RoomService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -84,7 +85,7 @@ export class RoomEditComponent implements OnInit {
    */
   public async editRoomData(): Promise<void> {
     this.roomService.editRoomData(this.room.id,
-      this.getDirtyValues(this.roomEditForm)
+      this.utilityService.getDirtyValues(this.roomEditForm)
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
@@ -93,28 +94,5 @@ export class RoomEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-  }
-
-  /**
-   * Gets all values of a form that are marked with a dirty bit
-   *
-   * @param {FormGroup} form form
-   */
-  public getDirtyValues(form: FormGroup) {
-    let dirtyValues: { [key: string]: any} = {};
-
-    Object.keys(form.controls)
-      .forEach(key => {
-        let currentControl = form.controls[key];
-
-        if (currentControl.dirty) {
-          if ((<FormGroup>currentControl).controls)
-            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
-          else
-            dirtyValues[key] = currentControl.value;
-        }
-      });
-
-    return dirtyValues;
   }
 }

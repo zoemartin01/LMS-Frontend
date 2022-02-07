@@ -11,6 +11,7 @@ import { UserService } from "../../../services/user.service";
 
 import { Room } from "../../../types/room";
 import { RoomId } from "../../../types/aliases/room-id";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-room-list',
@@ -20,11 +21,9 @@ import { RoomId } from "../../../types/aliases/room-id";
 
 /**
  * Component for the room list page
- *
- *
  */
 export class RoomListComponent implements OnInit {
-  public rooms: Room[] = [];
+  public rooms: PagedList<Room> = new PagedList<Room>();
 
   /**
    * Constructor
@@ -45,11 +44,16 @@ export class RoomListComponent implements OnInit {
 
   /**
    * Gets all rooms with data
+   *
+   * @param {number} page current number of page
    */
-  public async getRooms(): Promise<void> {
-    this.roomService.getRoomsData().subscribe({
+  public async getRooms(page: number = this.rooms.page): Promise<void> {
+    const pageSize = this.rooms.pageSize;
+    const offset = (page - 1) * pageSize;
+
+    this.roomService.getRoomsData(pageSize, offset).subscribe({
       next: res => {
-        this.rooms = res;
+        this.rooms.parse(res, page);
       },
       error: error => {
         console.error('There was an error!', error);

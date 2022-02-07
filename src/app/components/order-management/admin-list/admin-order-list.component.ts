@@ -2,14 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
+import { OrderAcceptComponent } from "../order-accept/order-accept.component";
+import { OrderDeclineComponent } from "../order-decline/order-decline.component";
+import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";
+import { OrderViewComponent } from "../view/order-view.component";
 
 import { OrderService } from "../../../services/order.service";
 import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import { OrderStatus } from "../../../types/enums/order-status";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -19,13 +25,11 @@ import { OrderStatus } from "../../../types/enums/order-status";
 
 /**
  * Component for the admin order list page
- *
- *
  */
 export class AdminOrderListComponent implements OnInit {
-  public pendingOrders: Order[] = [];
-  public acceptedOrders: Order[] = [];
-  public declinedOrders: Order[] = [];
+  public pendingOrders: PagedList<Order> = new PagedList<Order>();
+  public acceptedOrders: PagedList<Order> = new PagedList<Order>();
+  public declinedOrders: PagedList<Order> = new PagedList<Order>();
 
   /**
    * Constructor
@@ -41,22 +45,71 @@ export class AdminOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getInventory();
+    this.getPendingOrders(this.pendingOrders.page);
+    this.getAcceptedOrders(this.acceptedOrders.page);
+    this.getDeclinedOrders(this.declinedOrders.page);
   }
 
   /**
-   * Gets all orders with data
+   * Gets data of all pending orders
+   *
+   * @param {number} page current number of page
    */
-  public async getInventory(): Promise<void> {
-    this.orderService.getAllOrders().subscribe({
+  public async getPendingOrders(page: number): Promise<void> {
+    const pageSize = this.pendingOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllPendingOrders(pageSize, offset).subscribe({
       next: res => {
-        this.pendingOrders = res.filter((order: Order) => +order.status === OrderStatus.pending);
-        this.acceptedOrders = res.filter((order: Order) => +order.status !== OrderStatus.pending && +order.status !== OrderStatus.declined);
-        this.declinedOrders = res.filter((order: Order) => +order.status === OrderStatus.declined);
+        this.pendingOrders.total = res.total;
+        this.pendingOrders.page = page;
+
+        this.pendingOrders.data = res.data;
       },
       error: error => {
         console.error('There was an error!', error)
-      }
+      },
+    })
+  }
+
+  /**
+   * Gets data of all accepted orders
+   *
+   * @param {number} page current number of page
+   */
+  public async getAcceptedOrders(page: number): Promise<void> {
+    const pageSize = this.acceptedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllAcceptedOrders(pageSize, offset).subscribe({
+      next: res => {
+        this.acceptedOrders.total = res.total;
+        this.acceptedOrders.page = page;
+
+        this.acceptedOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
+    })
+  }
+
+  /**
+   * Gets data of all declined orders
+   *
+   * @param {number} page current number of page
+   */
+  public async getDeclinedOrders(page: number): Promise<void> {
+    const pageSize = this.declinedOrders.pageSize;
+    const offset = (page - 1) * pageSize;
+    this.orderService.getAllDeclinedOrders(pageSize, offset).subscribe({
+      next: res => {
+        this.declinedOrders.total = res.total;
+        this.declinedOrders.page = page;
+
+        this.declinedOrders.data = res.data;
+      },
+      error: error => {
+        console.error('There was an error!', error)
+      },
     })
   }
 
@@ -71,7 +124,9 @@ export class AdminOrderListComponent implements OnInit {
       }
 
       if (result !== 'aborted') {
-        this.getInventory();
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -82,6 +137,15 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order to edit
    */
   public openOrderEditForm(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderEditComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
+      }
+    });
   }
 
   /**
@@ -90,6 +154,15 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public openOrderDeletionDialog(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderDeleteComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
+      }
+    });
   }
 
   /**
@@ -98,6 +171,15 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public openOrderView(orderId: OrderId): void {
+    const modal = this.modalService.open(OrderViewComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getPendingOrders(this.pendingOrders.page);
+        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.getDeclinedOrders(this.declinedOrders.page);
+      }
+    });
   }
 
   /**
@@ -106,6 +188,14 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public async openOrderAcceptDialog(orderId: OrderId): Promise<void> {
+    const modal = this.modalService.open(OrderAcceptComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getPendingOrders(this.pendingOrders.page)
+        this.getAcceptedOrders(this.acceptedOrders.page);
+      }
+    });
   }
 
   /**
@@ -114,8 +204,36 @@ export class AdminOrderListComponent implements OnInit {
    * @param {OrderId} orderId id of order
    */
   public async openOrderDeclineDialog(orderId: OrderId): Promise<void> {
+    const modal = this.modalService.open(OrderDeclineComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getPendingOrders(this.pendingOrders.page)
+        this.getDeclinedOrders(this.declinedOrders.page);
+      }
+    });
   }
 
+  /**
+   * Opens form to create order
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public openInventoryOrderForm(orderId: OrderId): void {
+    const modal = this.modalService.open(InventoryOrderComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAcceptedOrders(this.acceptedOrders.page);
+      }
+    });
+  }
+
+  /**
+   * Helper method to get name of item
+   *
+   * @param {Order} order order
+   */
   public getItemName(order: Order) {
     if (order === null) {
       throw ParseArgumentException;

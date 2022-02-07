@@ -7,6 +7,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AutosizeModule } from 'ngx-autosize';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+
+import { WINDOW_PROVIDERS } from './providers/window.providers';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
@@ -36,6 +41,8 @@ import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
 import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
+import { OrderAcceptComponent } from './components/order-management/order-accept/order-accept.component';
+import { OrderDeclineComponent } from './components/order-management/order-decline/order-decline.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -65,6 +72,8 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
 import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
+import { AppointmentAcceptComponent } from './components/appointment-management/accept/appointment-accept.component';
+import { AppointmentDeclineComponent } from './components/appointment-management/decline/appointment-decline.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +102,8 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     LoginComponent,
     MessageBoxComponent,
     MessageDeleteComponent,
+    OrderAcceptComponent,
+    OrderDeclineComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
@@ -122,6 +133,8 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     WhitelistRetailerDomainCreateComponent,
     WhitelistRetailerDomainDeleteComponent,
     WhitelistRetailerDomainEditComponent,
+    AppointmentAcceptComponent,
+    AppointmentDeclineComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -129,8 +142,11 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    LoadingBarHttpClientModule,
+    LoadingBarModule,
     MarkdownModule.forRoot(),
     NgbModule,
+    NgxPaginationModule,
     ReactiveFormsModule,
   ],
   providers: [
@@ -145,6 +161,7 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
       multi: true
     },
     NgbActiveModal,
+    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })

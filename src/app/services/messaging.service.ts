@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 import { Message } from "../types/message";
 import { MessageId } from "../types/aliases/message-id";
 import { UnreadMessages } from "../types/unread-messages";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,14 @@ export class MessagingService {
   /**
    * Retrieves all messages for current user
    */
-  public getMessages(): Observable<Message[]> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserMessages}`;
+  public getMessages(
+    limit: number = 0,
+    offset: number = 0,
+  ): Observable<PagedResponse<Message>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.messages.getCurrentUserMessages}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get<Message[]>(apiURL);
+    return this.httpClient.get<PagedResponse<Message>>(apiURL);
   }
 
   /**

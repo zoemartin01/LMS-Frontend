@@ -3,6 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
@@ -12,6 +14,7 @@ import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { Room } from "../../../types/room";
+import { PagedResponse } from 'src/app/types/paged-response';
 
 @Component({
   selector: 'app-room-calendar-view',
@@ -34,10 +37,10 @@ export class RoomCalendarViewComponent implements OnInit {
   public calendar: (Appointment|string|null)[][][] = [];
   public minTimeslot: number = 0;
   public columnKeys = Array.from(Array(1).keys());
-  public week: moment.Moment = moment();
   public action: string = '';
   public currentAppointmentId: string = '';
   public appointmentCreationStart: moment.Moment|null = null;
+  public week: moment.Moment = moment();
   public weekText: string = '';
   public weekField: NgbDateStruct = new class implements NgbDateStruct {
     day = 1;
@@ -70,13 +73,18 @@ export class RoomCalendarViewComponent implements OnInit {
         this.room.id = params['id'];
         this.updateCalendar();
       }
-    });
 
-    this.setWeek(moment());
+      if (params['date'] !== undefined) {
+        this.setWeek(moment(params['date']));
+      } else {
+        this.setWeek(moment());
+      }
+    });
   }
 
   /**
    * Sets current week for calendar
+   *
    * @param {moment.Moment} date date in a week
    */
   public setWeek(date: moment.Moment): void {
@@ -122,8 +130,8 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async getRooms(): Promise<void> {
     this.roomService.getRoomsData().subscribe({
-      next: (rooms: Room[]) => {
-        this.rooms = rooms;
+      next: (rooms: PagedResponse<Room>) => {
+        this.rooms = rooms.data;
       },
       error: error => {
         console.error('There was an error!', error);
@@ -137,6 +145,14 @@ export class RoomCalendarViewComponent implements OnInit {
   public changeRoom(roomId: string): void {
     this.room.id = roomId;
     this.updateCalendar();
+  }
+
+  /**
+   * Returns specified day of week as moment
+   * @param dayOfWeek
+   */
+  public getDayOfWeek(dayOfWeek: number): moment.Moment {
+    return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
   }
 
   /**
@@ -182,7 +198,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public getRowspan(object: Appointment|string|null): number {
     const appointment = <Appointment>object;
-    return moment(appointment.end).diff(moment(appointment.start), 'hours') + 1;
+    return moment(appointment.end).hours() - moment(appointment.start).hours();
   }
 
   /**
@@ -218,11 +234,26 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
+   * Closes sidebar and reloads data when needed
+   *
+   * @param isDirty
+   */
+  public closeSidebar(isDirty: boolean) {
+    this.action = '';
+    this.currentAppointmentId = '';
+    this.appointmentCreationStart = null;
+
+    if (isDirty) {
+      this.updateCalendar();
+    }
+  }
+
+  /**
    * Opens appointment deletion dialog
    *
    * @param {TimespanId} appointmentId id of appointment
    */
-  public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+  public async openAppointmentDeletionDialog(appointmentId: TimespanId): Promise<void> {
     this.action = '';
     const modal = this.modalService.open(AppointmentDeleteComponent);
     modal.componentInstance.appointment.id = appointmentId;
@@ -241,7 +272,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentAcceptComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
@@ -257,7 +288,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentDeclineComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {

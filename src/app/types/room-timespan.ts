@@ -10,4 +10,7 @@ export interface RoomTimespan {
   start: moment.Moment|null,
   end: moment.Moment|null,
   type: RoomTimespanType,
+  timeSlotRecurrence: number, //@todo fix
+  maxStart: moment.Moment|undefined,
+  amount: number,
 }

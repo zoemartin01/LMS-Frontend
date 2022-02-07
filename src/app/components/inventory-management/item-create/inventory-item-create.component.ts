@@ -14,26 +14,18 @@ import { InventoryItem } from "../../../types/inventory-item";
 
 /**
  * Component for the inventory item create popup
- *
- *
- *
  */
 export class InventoryItemCreateComponent {
-  public inventoryItems: InventoryItem[] = [];
   public createInventoryItemForm: FormGroup = new FormGroup({
     itemName: new FormControl('', [
       Validators.required,
     ]),
-    description: new FormControl('', [
-      Validators.required,
-    ]),
+    description: new FormControl(''),
     quantity: new FormControl('', [
       Validators.required,
       Validators.min(1),
     ])
   });
-  createInventoryItemError: boolean = false;
-  createInventoryItemErrorMessage: string = '';
 
   /**
    * Constructor
@@ -49,28 +41,21 @@ export class InventoryItemCreateComponent {
    */
   public async createInventoryItem(): Promise<void> {
     if (this.createInventoryItemForm.valid) {
-      const inventoryItem: InventoryItem = {
-        id: null,
-        name: this.createInventoryItemForm.value.itemName,
-        description: this.createInventoryItemForm.value.description,
-        quantity: this.createInventoryItemForm.value.quantity,
-      };
-
-      this.inventoryService.createInventoryItem(inventoryItem).subscribe({
+      const name = this.createInventoryItemForm.value.itemName;
+      const description = this.createInventoryItemForm.value.description;
+      const quantity = +this.createInventoryItemForm.value.quantity;
+      this.inventoryService.createInventoryItem(name, description,quantity).subscribe({
         next: (inventoryItem: InventoryItem) => {
           if (inventoryItem.id !== null ) {
             this.activeModal.close(`created ${inventoryItem.id}`);
           }
         },
         error: error => {
-          this.createInventoryItemError = true;
-          this.createInventoryItemErrorMessage = error.error.message;
           console.error('There was an error!', error);
         }
       })
     } else {
-      this.createInventoryItemError = true;
-      this.createInventoryItemErrorMessage = 'Invalid form values';
+      console.error('Invalid form values');
     }
   }
 }

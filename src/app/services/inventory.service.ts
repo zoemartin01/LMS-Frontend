@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 
 import{ InventoryItem } from "../types/inventory-item";
 import { InventoryItemId } from "../types/aliases/inventory-item-id";
+import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +19,24 @@ import { InventoryItemId } from "../types/aliases/inventory-item-id";
  * @class
  */
 export class InventoryService {
-
+  /**
+   * constructor
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
   /**
    * Retrieves all inventory items
+   *
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
    */
-  public getInventoryItems(): Observable<any> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}`;
+  public getInventoryItems(limit: number = 0, offset: number = 0): Observable<PagedResponse<InventoryItem>> {
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getAllItems}` +
+    `?limit=${limit}&offset=${offset}`;
 
-    return this.httpClient.get(apiURL);
+    return this.httpClient.get<PagedResponse<InventoryItem>>(apiURL);
   }
 
   /**
@@ -48,19 +56,19 @@ export class InventoryService {
   /**
    * Creates inventory item with data
    *
-   * @param {InventoryItem} inventoryItem data of new inventory item
+   * @param {string} name name of item
+   * @param {string} description description of item
+   * @param {number} quantity quantity of item
    */
-  public createInventoryItem(inventoryItem: InventoryItem): Observable<InventoryItem> {
-    if (inventoryItem === null) {
-      throw ParseArgumentException;
-    }
+  public createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.createItem}`;
 
-    return this.httpClient.post<InventoryItem>(apiURL, {
-      name: inventoryItem.name,
-      description: inventoryItem.description,
-      quantity: inventoryItem.quantity,
-    });
+    const reqBody = {
+      name: name,
+      description: description,
+      quantity: quantity,
+    };
+    return this.httpClient.post<InventoryItem>(apiURL, reqBody);
   }
 
   /**
@@ -90,5 +98,14 @@ export class InventoryService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
 
     return this.httpClient.delete<InventoryItem>(apiURL);
+  }
+
+  public getInventoryItemByName(inventoryItemName: string): Observable<InventoryItem> {
+    if (inventoryItemName === null) {
+      throw ParseArgumentException;
+    }
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName.replace(':name', inventoryItemName)}`;
+
+    return this.httpClient.get<InventoryItem>(apiURL);
   }
 }

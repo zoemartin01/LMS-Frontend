@@ -22,35 +22,36 @@
       <th class="col-sm-2">Room</th>
       <th class="col-sm-2">Date</th>
       <th class="col-sm-2">Time</th>
+      <th class="col">Recurrence</th>
+      <th class="col">Last Date</th>
       <th class="col-sm-2">User</th>
-      <th class="col-sm-1"></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pendingAppointment of pendingAppointments">
+    <tr *ngFor="let pendingAppointment of pendingAppointments.data | paginate: { id: 'pending', itemsPerPage: pendingAppointments.pageSize, currentPage: pendingAppointments.page, totalItems: pendingAppointments.total }">
       <td class="col-sm-2">{{ pendingAppointment.room.name }}</td>
       <td class="col-sm-2">{{ pendingAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
         {{ pendingAppointment.start?.format("HH:mm") }} - {{ pendingAppointment.end?.format("HH:mm") }}
       </td>
+      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][pendingAppointment.timeSlotRecurrence]}}</td>
+      <td class="col-sm-2">{{ pendingAppointment.maxStart ? pendingAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(pendingAppointment.user) }}</td>
       <td class="d-flex justify-content-end">
-        <a (click)="acceptAppointmentRequest(
-        pendingAppointment.seriesId ?? pendingAppointment.id,
-        pendingAppointment.seriesId !== null)"
-           type="button" class="btn btn-success mx-1">
+        <a (click)="openAppointmentAcceptDialog(pendingAppointment.id)" type="button" class="btn btn-success mx-1">
           <i class="bi bi-check"></i>
         </a>
-        <a (click)="declineAppointmentRequest(
-        pendingAppointment.seriesId ?? pendingAppointment.id,
-        pendingAppointment.seriesId !== null)"
-           type="button" class="btn btn-danger mx-1">
+        <a (click)="openAppointmentDeclineDialog(pendingAppointment.id)" type="button" class="btn btn-danger mx-1">
           <i class="bi bi-x"></i>
         </a>
       </td>
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getPendingAppointments($event)" id="pending"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -61,21 +62,25 @@
       <th class="col-sm-2">Room</th>
       <th class="col-sm-2">Date</th>
       <th class="col-sm-2">Time</th>
+      <th class="col">Recurrence</th>
+      <th class="col">Last Date</th>
       <th class="col-sm-2">User</th>
-      <th class="col-sm-2">Status</th>
-      <th class="col-sm-1"></th>
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let acceptedAppointment of acceptedAppointments">
+    <tr *ngFor="let acceptedAppointment of acceptedAppointments.data | paginate: { id: 'accepted', itemsPerPage: acceptedAppointments.pageSize, currentPage: acceptedAppointments.page, totalItems: acceptedAppointments.total }">
       <td class="col-sm-2">{{ acceptedAppointment.room.name }}</td>
       <td class="col-sm-2">{{ acceptedAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
         {{ acceptedAppointment.start?.format("HH:mm") }} - {{ acceptedAppointment.end?.format("HH:mm") }}
       </td>
+      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][acceptedAppointment.timeSlotRecurrence]}}</td>
+      <td class="col-sm-2">{{ acceptedAppointment.maxStart ? acceptedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(acceptedAppointment.user) }}</td>
-      <td class="col-sm-2">{{ ['', 'pending', 'accepted', 'denied'][acceptedAppointment.confirmationStatus] }}</td>
       <td class="d-flex justify-content-end">
+        <a [routerLink]="['/room-overview', { id: acceptedAppointment.room.id, date: acceptedAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+          <i class="bi bi-eye-fill"></i>
+        </a>
         <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>
@@ -89,6 +94,10 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAcceptedAppointments($event)" id="accepted"></pagination-controls>
+  </div>
 </div>
 
 <div class="row">
@@ -99,21 +108,22 @@
       <th class="col-sm-2">Room</th>
       <th class="col-sm-2">Date</th>
       <th class="col-sm-2">Time</th>
+      <th class="col">Recurrence</th>
+      <th class="col">Last Date</th>
       <th class="col-sm-2">User</th>
-      <th class="col-sm-2">Status</th>
-      <th class="col-sm-1"></th>
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr *ngFor="let deniedAppointment of deniedAppointments">
+    <tr *ngFor="let deniedAppointment of deniedAppointments.data | paginate: { id: 'denied', itemsPerPage: deniedAppointments.pageSize, currentPage: deniedAppointments.page, totalItems: deniedAppointments.total }">
       <td class="col-sm-2">{{ deniedAppointment.room.name }}</td>
       <td class="col-sm-2">{{ deniedAppointment.start?.format("DD.MM.YYYY") }}</td>
       <td class="col-sm-2">
         {{ deniedAppointment.start?.format("HH:mm") }} - {{ deniedAppointment.end?.format("HH:mm") }}
       </td>
+      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][deniedAppointment.timeSlotRecurrence]}}</td>
+      <td class="col-sm-2">{{ deniedAppointment.maxStart ? deniedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
       <td class="col-sm-2">{{ userService.getFullName(deniedAppointment.user) }}</td>
-      <td class="col-sm-2">{{ ['', 'pending', 'accepted', 'denied'][deniedAppointment.confirmationStatus] }}</td>
-      <td class="d-flex justify-content-end">
+        <td class="d-flex justify-content-end">
         <a (click)="openAppointmentView(deniedAppointment.id)" type="button" class="btn btn-secondary mx-1">
           <i class="bi bi-eye-fill"></i>
         </a>
@@ -124,4 +134,8 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getDeniedAppointments($event)" id="denied"></pagination-controls>
+  </div>
 </div>

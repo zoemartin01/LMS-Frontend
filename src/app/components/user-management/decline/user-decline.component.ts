@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
@@ -16,7 +16,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 })
 
 /**
- * @todo JSDoc Mario
+ * Component for declining of a pending user
  */
 export class UserDeclineComponent implements OnInit {
   public userDeclineForm: FormGroup = new FormGroup({
@@ -82,7 +82,7 @@ export class UserDeclineComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
-      }
+      },
     });
   }
 }
