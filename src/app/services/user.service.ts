@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
-import {User} from "../types/user";
-import {UserId} from "../types/aliases/user-id";
+import { User } from "../types/user";
+import { UserId } from "../types/aliases/user-id";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,6 @@ import {UserId} from "../types/aliases/user-id";
  * @class
  */
 export class UserService {
-
   /**
    * constructor
    * @param {HttpClient} httpClient httpClient of service

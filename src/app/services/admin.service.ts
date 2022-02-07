@@ -24,7 +24,6 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class AdminService {
-
   /**
    * constructor
    * @param {HttpClient} httpClient httpClient of service
