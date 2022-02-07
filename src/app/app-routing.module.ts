@@ -166,24 +166,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room/:id/edit',
-    canActivate: [AuthGuard, AdminGuard],
-    component: RoomEditComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Edit Room'
-    }
-  },
-  {
-    path: 'room/:id/delete',
-    canActivate: [AuthGuard, AdminGuard],
-    component: RoomDeleteComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'Delete Room'
-    }
-  },
-  {
     path: 'room/:id/timeslots',
     canActivate: [AuthGuard, AdminGuard],
     component: TimeslotsListComponent,
