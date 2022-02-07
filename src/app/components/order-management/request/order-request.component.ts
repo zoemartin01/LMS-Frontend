@@ -17,8 +17,6 @@ import { Order } from "../../../types/order";
 
 /**
  * Component for order request popup
- *
- *
  */
 export class OrderRequestComponent implements OnInit {
   public existingItems: InventoryItem[] = [];

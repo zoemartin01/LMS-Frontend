@@ -13,7 +13,7 @@ import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import {PagedList} from "../../../types/paged-list";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -23,7 +23,6 @@ import {PagedList} from "../../../types/paged-list";
 
 /**
  * Component for personal order list page
- * @todo Lena fix JSDoc of methods
  */
 export class PersonalOrderListComponent implements OnInit {
   public pendingOrders: PagedList<Order> = new PagedList<Order>();

@@ -11,10 +11,6 @@ import { Order } from "../../../types/order";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {OrderEditComponent} from "../edit/order-edit.component";
-import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 @Component({
   selector: 'app-order-view',
@@ -24,8 +20,6 @@ import {OrderDeleteComponent} from "../delete/order-delete.component";
 
 /**
  * Component for the order view popup
- *
- *
  */
 export class OrderViewComponent implements OnInit {
   public orderViewForm: FormGroup = new FormGroup({

@@ -15,8 +15,7 @@ import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
-import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
-import {PagedList} from "../../../types/paged-list";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-admin-order-list',
@@ -26,7 +25,6 @@ import {PagedList} from "../../../types/paged-list";
 
 /**
  * Component for the admin order list page
- * @todo Lena fix JSDoc of methods
  */
 export class AdminOrderListComponent implements OnInit {
   public pendingOrders: PagedList<Order> = new PagedList<Order>();
