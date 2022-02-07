@@ -3,6 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
+import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
+import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
@@ -253,7 +255,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async acceptAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentAcceptComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
@@ -269,7 +271,7 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public async declineAppointmentRequest(appointmentId: TimespanId): Promise<void> {
     this.action = '';
-    const modal = this.modalService.open(AppointmentDeleteComponent);
+    const modal = this.modalService.open(AppointmentDeclineComponent);
     modal.componentInstance.appointment.id = appointmentId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
