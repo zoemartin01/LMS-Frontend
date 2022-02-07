@@ -12,7 +12,7 @@
           <div class="input-group">
             <label for="maxRecordings" class="my-1">Maximum Recordings</label>
             <div class="input-group">
-              <input type="number" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
+              <input type="number" min="1" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
           <div class="input-group">
             <label for="recordingAutoDelete" class="my-1">Days before recordings are deleted</label>
             <div class="input-group">
-              <input type="number" class="form-control" id="recordingAutoDelete"
+              <input type="number" min="1" class="form-control" id="recordingAutoDelete"
                      formControlName="recording.auto_delete">
             </div>
           </div>
@@ -28,21 +28,21 @@
         <div class="form-group">
           <label for="homePage" class="my-1">Home Page</label>
           <div class="input-group">
-            <input type="file" class="file-upload" id="homePage"
+            <input type="file" class="file-upload" id="homePage" accept=".md, .txt"
                    formControlName="static.homepage" (change)="onFileSelected($event, 'static.homepage')">
           </div>
         </div>
         <div class="form-group">
           <label for="safetyInstructions" class="my-1">Safety Instructions</label>
           <div class="input-group">
-            <input type="file" class="file-upload" id="safetyInstructions"
+            <input type="file" class="file-upload" id="safetyInstructions" accept=".md, .txt"
                    formControlName="static.safety_instructions" (change)="onFileSelected($event, 'static.safety_instructions')">
           </div>
         </div>
         <div class="form-group">
           <label for="labRules" class="my-1">Lab Rules</label>
           <div class="input-group">
-            <input type="file" class="file-upload" id="labRules"
+            <input type="file" class="file-upload" id="labRules" accept=".md, .txt"
                    formControlName="static.lab_rules" (change)="onFileSelected($event, 'static.lab_rules')">
           </div>
         </div>
