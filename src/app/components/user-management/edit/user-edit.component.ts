@@ -3,11 +3,11 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -17,8 +17,6 @@ import {UtilityService} from "../../../services/utility.service";
 
 /**
  * Component for user edit popup
- *
- *
  */
 export class UserEditComponent implements OnInit {
   public userEditForm: FormGroup = new FormGroup({
@@ -45,7 +43,6 @@ export class UserEditComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-
   public UserRole = UserRole;
 
   /**
@@ -72,7 +69,6 @@ export class UserEditComponent implements OnInit {
     this.adminService.getUser(this.user.id).subscribe({
       next: res => {
         this.updateUserEditForm(res);
-        console.log(this.userEditForm);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -80,6 +76,12 @@ export class UserEditComponent implements OnInit {
     })
   }
 
+  /**
+   * Helper method to update the user edit form
+   *
+   * @param  {User} user user to be edited
+   * @private
+   */
   private updateUserEditForm(user: User) {
     this.user = user;
 
@@ -94,7 +96,6 @@ export class UserEditComponent implements OnInit {
    * Changes data of user
    */
   public async editUserData(): Promise<void> {
-    console.log(this.userEditForm);
     let changedData = this.utilityService.getDirtyValues(this.userEditForm);
 
     if (this.userEditForm.controls['role'].dirty) {
