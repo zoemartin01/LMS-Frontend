@@ -17,6 +17,10 @@ import { UserId } from "../types/aliases/user-id";
  */
 export class AuthService {
 
+  /**
+   * constructor
+   * @param {HttpClient} httpClient httpClient of service
+   */
   constructor(private httpClient: HttpClient) {
   }
 
