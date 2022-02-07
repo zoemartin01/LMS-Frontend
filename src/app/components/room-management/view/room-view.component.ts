@@ -38,7 +38,7 @@ export class RoomViewComponent implements OnInit {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -91,6 +91,7 @@ export class RoomViewComponent implements OnInit {
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getRoomData();
+        this.dirty = true;
       }
     });
   }
