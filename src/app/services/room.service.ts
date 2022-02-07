@@ -21,7 +21,6 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class RoomService {
-
   /**
    * constructor
    *

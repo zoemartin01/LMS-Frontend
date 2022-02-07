@@ -26,7 +26,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the admin appointment list page, to view all appointments and all requested appointments
- *
  */
 export class AdminAppointmentListComponent implements OnInit {
   public pendingAppointments: PagedList<Appointment> =

@@ -20,7 +20,6 @@ import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 /**
  * Component for the appointment edit page
- *
  */
 export class AppointmentEditComponent implements OnInit {
   @Input() appointmentId: string = '';

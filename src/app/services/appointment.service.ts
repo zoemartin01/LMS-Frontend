@@ -24,7 +24,6 @@ import * as moment from "moment";
  * @class
  */
 export class AppointmentService {
-
   /**
    * constructor
    *
