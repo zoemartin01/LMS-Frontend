@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col text-left">
-    <a (click)="openRoomCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create New Room</a>
+    <a (click)="openRoomCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create Room</a>
   </div>
 </div>
 
@@ -12,13 +12,13 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-2">Name</th>
+      <th class="col-sm-1">Name</th>
       <th class="col-sm-4">Description</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let room of rooms.data | paginate: { id: 'rooms', itemsPerPage: rooms.pageSize, currentPage: rooms.page, totalItems: rooms.total }">
-      <td class="col-sm-2">{{ room.name }}</td>
+      <td class="col-sm-1">{{ room.name }}</td>
       <td class="col-sm-4">{{ room.description }}</td>
       <td class="col-sm-1">
         <a (click)="openRoomView(room.id)">

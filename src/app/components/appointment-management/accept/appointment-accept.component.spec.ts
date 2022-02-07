@@ -3,16 +3,16 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { AppointmentViewComponent } from './appointment-view.component';
+import { AppointmentAcceptComponent } from './appointment-accept.component';
 
-describe('AppointmentViewComponent', () => {
-  let component: AppointmentViewComponent;
-  let fixture: ComponentFixture<AppointmentViewComponent>;
+describe('AppointmentAcceptComponent', () => {
+  let component: AppointmentAcceptComponent;
+  let fixture: ComponentFixture<AppointmentAcceptComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppointmentViewComponent,
+        AppointmentAcceptComponent,
       ],
       imports: [
         HttpClientModule,
@@ -23,7 +23,7 @@ describe('AppointmentViewComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppointmentViewComponent);
+    fixture = TestBed.createComponent(AppointmentAcceptComponent);
     component = fixture.componentInstance;
   });
 

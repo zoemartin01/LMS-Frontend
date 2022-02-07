@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from 'moment';
 
-import { AuthService } from "../../../services/auth.service";
 import { AppointmentService } from "../../../services/appointment.service";
+import { AuthService } from "../../../services/auth.service";
+
+import { AppointmentCreateComponent } from "../create/appointment-create.component";
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { AppointmentViewComponent } from "../view/appointment-view.component";
 
 import { Appointment } from "../../../types/appointment";
 import { TimespanId } from "../../../types/aliases/timespan-id";
-import { PagedList } from 'src/app/types/paged-list';
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -27,8 +32,9 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public appointmentService: AppointmentService, public authService: AuthService) {
+  constructor(public appointmentService: AppointmentService, public authService: AuthService, private modalService: NgbModal) {
   }
 
   /**
@@ -53,6 +59,7 @@ export class PersonalAppointmentListComponent implements OnInit {
           (appointment: Appointment) => {
             appointment.start = moment(appointment.start);
             appointment.end = moment(appointment.end);
+            if (appointment.maxStart !== null) appointment.maxStart = moment(appointment.maxStart)
             return appointment;
           }
         )
@@ -67,6 +74,12 @@ export class PersonalAppointmentListComponent implements OnInit {
    * Opens appointment creation form
    */
   public openAppointmentCreationForm(): void {
+    const modal = this.modalService.open(AppointmentCreateComponent);
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAllAppointmentsForCurrentUser();
+      }
+    });
   }
 
   /**
@@ -75,6 +88,13 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentView(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentViewComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAllAppointmentsForCurrentUser();
+      }
+    });
   }
 
   /**
@@ -83,5 +103,12 @@ export class PersonalAppointmentListComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentDeletionDialog(appointmentId: TimespanId): void {
+    const modal = this.modalService.open(AppointmentDeleteComponent);
+    modal.componentInstance.appointment.id = appointmentId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAllAppointmentsForCurrentUser();
+      }
+    });
   }
 }
