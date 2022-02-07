@@ -73,9 +73,13 @@ export class RoomCalendarViewComponent implements OnInit {
         this.room.id = params['id'];
         this.updateCalendar();
       }
-    });
 
-    this.setWeek(moment());
+      if (params['date'] !== undefined) {
+        this.setWeek(moment(params['date']));
+      } else {
+        this.setWeek(moment());
+      }
+    });
   }
 
   /**

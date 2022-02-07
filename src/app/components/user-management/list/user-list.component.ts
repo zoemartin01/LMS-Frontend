@@ -56,8 +56,10 @@ export class UserListComponent implements OnInit {
 
   /**
    * Gets data of all pending users
+   *
+   * @param {number} page number of current page
    */
-  public async getPendingUsers(page: number): Promise<void> {
+  public async getPendingUsers(page: number = this.pendingUsers.page): Promise<void> {
     const pageSize = this.pendingUsers.pageSize;
     const offset = (page - 1) * pageSize;
     this.adminService.getPendingUsers(pageSize, offset).subscribe({
@@ -75,8 +77,10 @@ export class UserListComponent implements OnInit {
 
   /**
    * Gets data of all accepted users
+   *
+   * @param {number} page number of current page
    */
-  public async getAcceptedUsers(page: number): Promise<void> {
+  public async getAcceptedUsers(page: number = this.acceptedUsers.page): Promise<void> {
     const pageSize = this.pendingUsers.pageSize;
     const offset = (page - 1) * pageSize;
     this.adminService.getAcceptedUsers(pageSize, offset).subscribe({

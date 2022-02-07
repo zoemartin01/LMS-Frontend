@@ -20,7 +20,6 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the deletion of an appointment or a series of appointments
- *
  */
 export class AppointmentDeleteComponent implements OnInit {
   public appointmentDeleteForm: FormGroup = new FormGroup({

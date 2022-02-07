@@ -21,7 +21,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the room list page
- *
  */
 export class RoomListComponent implements OnInit {
   public rooms: PagedList<Room> = new PagedList<Room>();

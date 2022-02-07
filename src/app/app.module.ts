@@ -43,6 +43,8 @@ import { LivecamScheduleComponent } from './components/livecam/schedule/livecam-
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';
 import { MessageDeleteComponent } from './components/general/message-box/delete/message-delete.component';
+import { OrderAcceptComponent } from './components/order-management/order-accept/order-accept.component';
+import { OrderDeclineComponent } from './components/order-management/order-decline/order-decline.component';
 import { OrderDeleteComponent } from './components/order-management/delete/order-delete.component';
 import { OrderEditComponent } from './components/order-management/edit/order-edit.component';
 import { OrderRequestComponent } from './components/order-management/request/order-request.component';
@@ -107,6 +109,8 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     LoginComponent,
     MessageBoxComponent,
     MessageDeleteComponent,
+    OrderAcceptComponent,
+    OrderDeclineComponent,
     OrderDeleteComponent,
     OrderEditComponent,
     OrderRequestComponent,
