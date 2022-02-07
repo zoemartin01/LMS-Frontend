@@ -106,7 +106,7 @@ export class AppointmentEditComponent implements OnInit {
         this.recurringAppointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
         this.recurringAppointmentEditForm.controls['amount'].setValue(this.appointment.amount);
 
-        this.isRecurring = this.appointment.timeSlotRecurrence === TimeSlotRecurrence.single;
+        this.isRecurring = this.appointment.timeSlotRecurrence !== TimeSlotRecurrence.single;
       },
       error: error => {
         console.error('There was an error!', error);
