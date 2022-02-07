@@ -48,9 +48,9 @@
           </div>
         </div>
       </form>
-      <form *ngIf="isRecurring" [formGroup]="recurringAppointmentEditForm">
+      <form *ngIf="isRecurring" [formGroup]="recurringAppointmentEditForm" (keyup.enter)="editAppointment()">
         <div class="form-group">
-          <label for="timeSlotRecurrence" class="my-1">Recurrence Frequence</label>
+          <label for="timeSlotRecurrence" class="my-1">Recurrence Frequency</label>
           <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
             <option value="2">daily</option>
             <option value="3">weekly</option>

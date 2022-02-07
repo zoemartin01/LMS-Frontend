@@ -1,20 +1,20 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-
-import {AppointmentService} from "../../../services/appointment.service";
-import {AuthService} from "../../../services/auth.service";
-
-import {Appointment} from "../../../types/appointment";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {UserRole} from "../../../types/enums/user-role";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
-import {AppointmentEditComponent} from "../edit/appointment-edit.component";
-import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
+
+import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { AppointmentEditComponent } from "../edit/appointment-edit.component";
+
+import { AppointmentService } from "../../../services/appointment.service";
+import { AuthService } from "../../../services/auth.service";
+
+import { Appointment } from "../../../types/appointment";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-appointment-view',
