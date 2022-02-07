@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderEditComponent } from "../edit/order-edit.component";
 
 import { OrderService } from "../../../services/order.service";
 
@@ -16,10 +20,15 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the order view popup
- *
- *
  */
 export class OrderViewComponent implements OnInit {
+  public orderViewForm: FormGroup = new FormGroup({
+    itemName: new FormControl(''),
+    quantity: new FormControl(null),
+    url: new FormControl(''),
+    status: new FormControl(0),
+  });
+
   public order: Order = {
     id: null,
     itemName: null,
@@ -38,41 +47,80 @@ export class OrderViewComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
+  public dirty: boolean = true;
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
-   * @param {ActivatedRoute} route route that activated this component
+   * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public orderService: OrderService, private route: ActivatedRoute) {
+  constructor(public orderService: OrderService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+    this.orderViewForm.disable();
   }
 
   /**
    * Inits page
    */
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.order.id = params['id'];
-      this.getOrderData();
-    });
+    this.getOrderData();
   }
 
   /**
    * Gets all data of order
    */
   public async getOrderData() : Promise<void> {
+    this.orderService.getOrderData(this.order.id).subscribe({
+      next: res => {
+        this.order = res;
+
+        if (res.item !== null) {
+          this.orderViewForm.controls['itemName'].setValue(res.item.name);
+        } else {
+          this.orderViewForm.controls['itemName'].setValue(res.itemName);
+        }
+
+        this.orderViewForm.controls['quantity'].setValue(res.quantity);
+        this.orderViewForm.controls['url'].setValue(res.url);
+        this.orderViewForm.controls['status'].setValue(res.status);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
    * Opens order edit form
    */
   public openOrderEditForm(): void {
+    const modal = this.modalService.open(OrderEditComponent);
+    modal.componentInstance.order.id = this.order.id;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getOrderData();
+        this.dirty= true;
+      }
+    });
   }
 
   /**
    * Opens order deletion confirmation dialog
    */
   public openOrderDeletionDialog(): void {
+    const modal = this.modalService.open(OrderDeleteComponent);
+    modal.componentInstance.order.id = this.order.id;
+    modal.result.then((result) => {
+      if (result === 'deleted') {
+        this.activeModal.close('dirty');
+        return;
+      }
+
+      if (result !== 'aborted') {
+        this.getOrderData();
+        this.dirty = true;
+      }
+    });
   }
 }

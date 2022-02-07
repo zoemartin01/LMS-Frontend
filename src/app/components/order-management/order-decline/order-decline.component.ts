@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup } from "@angular/forms";
 
 import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
-  selector: 'app-order-delete',
-  templateUrl: './order-delete.component.html',
-  styleUrls: ['./order-delete.component.scss']
+  selector: 'app-order-decline',
+  templateUrl: './order-decline.component.html',
+  styleUrls: ['./order-decline.component.scss']
 })
 
 /**
- * Component for the deletion of an order
+ * Component to decline an order
  */
-export class OrderDeleteComponent implements OnInit {
-  public orderDeleteForm: FormGroup = new FormGroup({
+export class OrderDeclineComponent implements OnInit {
+  public orderDeclineForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
     quantity: new FormControl(null),
     url: new FormControl(''),
@@ -51,7 +51,7 @@ export class OrderDeleteComponent implements OnInit {
    * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(public orderService: OrderService, public activeModal: NgbActiveModal) {
-    this.orderDeleteForm.disable();
+    this.orderDeclineForm.disable();
   }
 
   /**
@@ -70,14 +70,13 @@ export class OrderDeleteComponent implements OnInit {
         this.order = res;
 
         if (res.item !== null) {
-          this.orderDeleteForm.controls['itemName'].setValue(res.item.name);
+          this.orderDeclineForm.controls['itemName'].setValue(res.item.name);
         } else {
-          this.orderDeleteForm.controls['itemName'].setValue(res.itemName);
+          this.orderDeclineForm.controls['itemName'].setValue(res.itemName);
         }
-
-        this.orderDeleteForm.controls['quantity'].setValue(res.quantity);
-        this.orderDeleteForm.controls['url'].setValue(res.url);
-        this.orderDeleteForm.controls['status'].setValue(res.status);
+        this.orderDeclineForm.controls['quantity'].setValue(res.quantity);
+        this.orderDeclineForm.controls['url'].setValue(res.url);
+        this.orderDeclineForm.controls['status'].setValue(res.status);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -86,16 +85,16 @@ export class OrderDeleteComponent implements OnInit {
   }
 
   /**
-   * Deletes order
+   * Declines order
    */
-  public async deleteOrder(): Promise<void> {
-    this.orderService.deleteOrder(this.order.id).subscribe({
+  public async declineOrder() : Promise<void> {
+    this.orderService.declineOrderRequest(this.order.id).subscribe({
       next: () => {
-        this.activeModal.close('deleted');
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
-      }
+      },
     });
   }
 }

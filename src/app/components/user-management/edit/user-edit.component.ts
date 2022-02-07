@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
@@ -16,8 +17,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user edit popup
- *
- *
  */
 export class UserEditComponent implements OnInit {
   public userEditForm: FormGroup = new FormGroup({
@@ -28,7 +27,7 @@ export class UserEditComponent implements OnInit {
     ]),
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
-    role: new FormControl(''),
+    role: new FormControl(0),
     notificationChannel: new FormControl(''),
   });
   registerError: boolean = false;
@@ -44,14 +43,16 @@ export class UserEditComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
+  public UserRole = UserRole;
 
   /**
    * Constructor
    * @constructor
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public utilityService: UtilityService, public adminService: AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -89,14 +90,17 @@ export class UserEditComponent implements OnInit {
    * Changes data of user
    */
   public async editUserData(): Promise<void> {
-    this.adminService.updateUser(this.user.id, {
-        firstName: this.userEditForm.controls['firstName'].value,
-        lastName: this.userEditForm.controls['lastName'].value,
-        email: this.userEditForm.controls['email'].value,
-        role: +this.userEditForm.controls['role'].value,
-        notificationChannel: +this.userEditForm.controls['notificationChannel'].value
-      }
-    ).subscribe({
+    let changedData = this.utilityService.getDirtyValues(this.userEditForm);
+
+    if (this.userEditForm.controls['role'].dirty) {
+      changedData['role'] = +changedData['role'];
+    }
+
+    if (this.userEditForm.controls['notificationChannel'].dirty) {
+      changedData['notificationChannel'] = +changedData['notificationChannel'];
+    }
+
+    this.adminService.updateUser(this.user.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
