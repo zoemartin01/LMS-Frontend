@@ -3,10 +3,9 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
-import { AppointmentService } from "../../../../services/appointment.service";
+import { RoomService } from "../../../../services/room.service";
 
 import { Room } from "../../../../types/room";
-import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-timeslot-create',
@@ -15,7 +14,7 @@ import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence"
 })
 
 /**
- * Component for the appointment create page
+ * Component for the timeslot create page
  */
 export class TimeslotCreateComponent implements OnInit {
   @Input() start: moment.Moment|null = null;
@@ -27,14 +26,14 @@ export class TimeslotCreateComponent implements OnInit {
     autoAcceptBookings: null,
   };
   @Output() closeForm = new EventEmitter<boolean>();
-  public appointmentCreateForm: FormGroup = new FormGroup({
-    type: new FormControl(''),
+  public timeslotCreateForm: FormGroup = new FormGroup({
+    type: new FormControl(2),
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
   });
-  public recurringAppointmentCreateForm: FormGroup = new FormGroup({
+  public recurringTimeslotCreateForm: FormGroup = new FormGroup({
     timeSlotRecurrence: new FormControl(''),
-    amount: new FormControl(''),
+    amount: new FormControl(1),
   });
   public date: moment.Moment = moment();
   public dateText: string = '';
@@ -50,10 +49,10 @@ export class TimeslotCreateComponent implements OnInit {
   /**
    * Constructor
    * @constructor
-   * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {RoomService} roomService service providing room functionalities
    */
   constructor(
-    public appointmentService: AppointmentService,
+    public roomService: RoomService,
   ) {
   }
 
@@ -62,11 +61,8 @@ export class TimeslotCreateComponent implements OnInit {
    */
   ngOnInit(): void {
     this.setDate(this.start ?? moment());
-
-    this.appointmentCreateForm.controls['startHour'].setValue(this.date.format('HH'));
-    this.appointmentCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours').format('HH'));
-    this.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
-    this.recurringAppointmentCreateForm.controls['amount'].setValue(1);
+    this.timeslotCreateForm.controls['startHour'].setValue(this.date.format('HH'));
+    this.timeslotCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours').format('HH'));
   }
 
   /**
@@ -92,17 +88,18 @@ export class TimeslotCreateComponent implements OnInit {
   }
 
   /**
-   * Opens appointment creation form
+   * Opens timeslot creation form
    */
-  public async createAppointment(): Promise<void> {
-    if (this.appointmentCreateForm.valid) {
+  public async createTimeslot(): Promise<void> {
+    if (this.timeslotCreateForm.valid) {
       const day = moment(this.date).minutes(0).seconds(0);
 
       if (!this.isRecurring) {
-        this.appointmentService.createAppointment(
+        this.roomService.createTimeslot(
           this.room,
-          moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours())
+          moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+          moment(day).hours(moment(this.timeslotCreateForm.controls['endHour'].value, 'HH:mm').hours()),
+          +this.timeslotCreateForm.controls['type'].value
         ).subscribe({
           next: () => {
             this.closeForm.emit(true);
@@ -112,13 +109,13 @@ export class TimeslotCreateComponent implements OnInit {
           }
         });
       } else {
-        this.appointmentService.createAppointmentSeries(
+        this.roomService.createTimeslotSeries(
           this.room,
-          moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours()),
-          +this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
-          +this.recurringAppointmentCreateForm.value.amount,
-          this.force
+          moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+          moment(day).hours(moment(this.timeslotCreateForm.controls['endHour'].value, 'HH:mm').hours()),
+          +this.timeslotCreateForm.controls['type'].value,
+          +this.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].value,
+          +this.recurringTimeslotCreateForm.controls['amount'].value
         ).subscribe({
           next: () => {
             this.seriesConflict = false;

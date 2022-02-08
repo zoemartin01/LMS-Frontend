@@ -2,7 +2,7 @@
   <div class="card">
     <div class="col-auto card-body">
       <h5 class="card-title">Create Timeslot</h5>
-      <form (keyup.enter)="createAppointment()" [formGroup]="appointmentCreateForm">
+      <form (keyup.enter)="createTimeslot()" [formGroup]="timeslotCreateForm">
         <div class="form-group">
           <label for="type" class="my-1">Type</label>
           <select class="form-select" id="type" formControlName="type">
@@ -10,19 +10,21 @@
             <option value="3">unavailable</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="date" class="control-label">Day</label>
-          <div class="input-group">
-            <input class="form-control" type="text" id="date" #dateInput [value]="dateText">
-            <input class="display-none" type="text" [positionTarget]="dateInput" placement="bottom"
-                   [(ngModel)]="dateField" ngbDatepicker #d="ngbDatepicker"
-                   (dateSelect)="handleDatepickerChange()">
-            <button class="btn btn-primary" type="button" (click)="d.toggle();
-            d.navigateTo({ year: +date.format('YYYY'), month: +date.format('MM') })">
-              <i class="bi bi-calendar-date-fill"></i>
-            </button>
-          </div>
+      </form>
+      <div class="form-group">
+        <label for="date" class="control-label">Day</label>
+        <div class="input-group">
+          <input class="form-control" type="text" id="date" #dateInput [value]="dateText">
+          <input class="display-none" type="text" [positionTarget]="dateInput" placement="bottom"
+                 [(ngModel)]="dateField" ngbDatepicker #d="ngbDatepicker"
+                 (dateSelect)="handleDatepickerChange()">
+          <button class="btn btn-primary" type="button" (click)="d.toggle();
+          d.navigateTo({ year: +date.format('YYYY'), month: +date.format('MM') })">
+            <i class="bi bi-calendar-date-fill"></i>
+          </button>
         </div>
+      </div>
+      <form (keyup.enter)="createTimeslot()" [formGroup]="timeslotCreateForm">
         <div class="form-group">
           <label for="startTime" class="my-1">Start time</label>
           <div class="input-group">
@@ -42,7 +44,7 @@
         </div>
         <br>
         <div class="alert alert-danger" role="alert"
-             *ngIf="appointmentCreateForm.controls['startHour'].value >= appointmentCreateForm.controls['endHour'].value">
+             *ngIf="timeslotCreateForm.controls['startHour'].value >= timeslotCreateForm.controls['endHour'].value">
           End of appointment needs to be be after start!
         </div>
         <div class="row">
@@ -55,7 +57,7 @@
           </div>
         </div>
       </form>
-      <form (keyup.enter)="createAppointment()" *ngIf="isRecurring" [formGroup]="recurringAppointmentCreateForm">
+      <form (keyup.enter)="createTimeslot()" *ngIf="isRecurring" [formGroup]="recurringTimeslotCreateForm">
         <div class="form-group">
           <label for="timeSlotRecurrence" class="my-1">Recurrence Frequency</label>
           <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
@@ -71,21 +73,11 @@
             <input class="form-control" type="number" id="amount" formControlName="amount" step="1" min="1" max="2048">
           </div>
         </div>
-        <br>
-        <div class="alert alert-warning" role="alert" *ngIf="seriesConflict">
-          <b>Warning:</b><br>
-          Your recurring appointment has some collisions with other appointments.<br>
-          <br>
-          <label class="form-check-label" for="force">
-            <input type="checkbox" class="form-check-input" id="force" [checked]="force" (change)="force = !force">
-            Create all appointments except for those that have collisions.
-          </label>
-        </div>
       </form>
       <br>
       <div class="row">
         <div class="col text-center">
-          <button (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
+          <button (click)="createTimeslot()" class="btn btn-primary" role="button">Save</button>
           <button (click)="closeForm.emit(false)" class="btn btn-secondary" role="button">Abort</button>
         </div>
       </div>
