@@ -30,6 +30,8 @@ export class AppointmentCreateComponent implements OnInit {
   public appointmentCreateForm: FormGroup = new FormGroup({
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
+    safetyInstructions: new FormControl(false, Validators.requiredTrue),
+    hwlabRules: new FormControl(false, Validators.requiredTrue),
   });
   public recurringAppointmentCreateForm: FormGroup = new FormGroup({
     timeSlotRecurrence: new FormControl(''),
@@ -45,12 +47,16 @@ export class AppointmentCreateComponent implements OnInit {
   public isRecurring: boolean = false;
   public seriesConflict = false;
   public force = false;
+  public timeslotConflict = false;
+  public timeslotConflictMessage = '';
+  public hasError = false;
+  public hasErrorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
-#   */
+   */
   constructor(
     public appointmentService: AppointmentService,
   ) {
@@ -95,6 +101,7 @@ export class AppointmentCreateComponent implements OnInit {
    */
   public async createAppointment(): Promise<void> {
     if (this.appointmentCreateForm.valid) {
+      this.hasError = false;
       const day = moment(this.date).minutes(0).seconds(0);
 
       if (!this.isRecurring) {
@@ -107,6 +114,11 @@ export class AppointmentCreateComponent implements OnInit {
             this.closeForm.emit(true);
           },
           error: error => {
+            if (error.status === 409) {
+              this.timeslotConflict = true;
+              this.timeslotConflictMessage = error.error.message;
+            }
+
             console.error('There was an error!', error);
           }
         });
@@ -133,7 +145,11 @@ export class AppointmentCreateComponent implements OnInit {
         });
       }
     } else {
-      console.log('Invalid form data')
+      if (this.appointmentCreateForm.controls['safetyInstructions'].invalid || this.appointmentCreateForm.controls['hwlabRules'].invalid) {
+        this.hasError = true;
+        this.hasErrorMessage = 'Please accept the safety instructions and the hwlab rules.';
+      }
+      console.error('Invalid form data')
     }
   }
 }

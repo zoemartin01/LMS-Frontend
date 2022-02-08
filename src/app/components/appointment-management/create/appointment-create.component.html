@@ -47,6 +47,30 @@
             </div>
           </div>
         </div>
+        <div class="alert alert-danger mt-2" role="alert" *ngIf="timeslotConflict">
+          <b>Error:</b><br>
+          {{ timeslotConflictMessage }}<br>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form-group text-center">
+            <label class="form-check-label" for="safetyInstructions">
+              <input type="checkbox" class="form-check-input" id="safetyInstructions"
+                     formControlName="safetyInstructions">
+              I have read and agree to the <a routerLink="/safety-instructions">Safety Introductions of Hardware Lab</a>
+            </label>
+          </div>
+          <div class="form-group text-center">
+            <label class="form-check-label" for="hwlabRules">
+              <input type="checkbox" class="form-check-input" id="hwlabRules" formControlName="hwlabRules">
+              I have read and agree to the <a routerLink="/hwlab-rules">Rules of Hardware Lab</a>
+            </label>
+          </div>
+        </div>
+        <div class="alert alert-danger mt-2" role="alert"
+             *ngIf="hasError">
+          {{ hasErrorMessage }}
+        </div>
       </form>
       <form (keyup.enter)="createAppointment()" *ngIf="isRecurring" [formGroup]="recurringAppointmentCreateForm">
         <div class="form-group">
