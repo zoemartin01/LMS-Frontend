@@ -39,7 +39,12 @@
     <div class="form-group">
       <label for="password_confirmation" class="my-1">Password Confirmation</label>
       <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
-             formControlName="password_confirmation" autocomplete="password">
+             formControlName="password_confirmation" autocomplete="password"
+             (change)="checkPasswordConfirmation()">
+      <div class=" alert alert-danger" role="alert" *ngIf="passwordConfirmationFails">
+        <b>Edit failed:</b><br>
+        {{ userEditErrorMessage }}
+      </div>
     </div>
     <div class="form-group">
       <label for="role" class="my-1">User Role</label>
@@ -60,6 +65,8 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="editUserData()">Save</button>
+  <button type="button" class="btn btn-primary" [disabled]="!userEditForm.valid || passwordConfirmationFails"
+          (click)="editUserData()">Save
+  </button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
