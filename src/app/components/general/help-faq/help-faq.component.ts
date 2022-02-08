@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from 'src/app/services/admin.service';
-import {AuthService} from "../../../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-faq',
