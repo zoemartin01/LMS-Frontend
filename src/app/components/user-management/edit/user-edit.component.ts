@@ -34,8 +34,6 @@ export class UserEditComponent implements OnInit {
     role: new FormControl(0),
     notificationChannel: new FormControl(''),
   });
-  userEditError: boolean = false;
-  userEditErrorMessage: string = 'Password must match password confirmation';
   passwordConfirmationFails: boolean = false;
   public user: User = {
     id: null,
