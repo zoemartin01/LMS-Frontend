@@ -71,7 +71,9 @@ export class InventoryItemEditComponent implements OnInit {
    * Changes data of inventory item
    */
   public async editInventoryItemData(): Promise<void> {
-    this.inventoryService.editInventoryItem(this.inventoryItem.id, this.utilityService.getDirtyValues(this.inventoryItemEditForm)
+    this.inventoryService.editInventoryItem(
+      this.inventoryItem.id,
+      this.utilityService.getDirtyValues(this.inventoryItemEditForm)
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
