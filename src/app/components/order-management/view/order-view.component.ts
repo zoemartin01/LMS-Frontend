@@ -78,8 +78,7 @@ export class OrderViewComponent implements OnInit {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
-        this.canInteract = !(this.order.status === OrderStatus.inventoried) &&
-          ((this.order.status === OrderStatus.pending) || this.authService.isAdmin());
+        this.canInteract = (this.order.status === OrderStatus.pending) || this.authService.isAdmin();
 
         if (res.item !== null) {
           this.orderViewForm.controls['itemName'].setValue(res.item.name);
