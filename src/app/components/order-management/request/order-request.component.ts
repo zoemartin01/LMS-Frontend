@@ -92,10 +92,11 @@ export class OrderRequestComponent implements OnInit {
    */
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {
-      const itemName = this.requestOrderForm.controls['itemName'].value;
-      const quantity = this.requestOrderForm.controls['quantity'].value;
-      const url = this.requestOrderForm.controls['url'].value;
-      this.orderService.requestOrder(itemName, quantity, url).subscribe({
+      this.orderService.requestOrder(
+        this.requestOrderForm.controls['itemName'].value,
+        this.requestOrderForm.controls['quantity'].value,
+        this.requestOrderForm.controls['url'].value
+      ).subscribe({
         next: (orderRequest: Order) => {
           if (orderRequest.id !== null) {
             this.activeModal.close(`created ${orderRequest.id}`);
