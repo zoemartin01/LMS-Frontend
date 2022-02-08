@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
@@ -24,10 +26,13 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 export class OrderEditComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
   public orderEditForm: FormGroup = new FormGroup({
-    itemName: new FormControl(''),
-    quantity: new FormControl(null),
-    url: new FormControl(''),
-    status: new FormControl(0),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(null,[
+      Validators.required,
+      Validators.min(1),
+    ]),
+    url: new FormControl('', Validators.required),
+    status: new FormControl(0, Validators.required),
   });
   public order: Order = {
     id: null,
@@ -47,6 +52,7 @@ export class OrderEditComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
+  public linkWarning: boolean = false;
 
   /**
    * Constructor
@@ -54,12 +60,16 @@ export class OrderEditComponent implements OnInit {
    * @param {OrderService} orderService service providing order functionalities
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public orderService: OrderService,
     public inventoryService: InventoryService,
     public authService: AuthService,
+    public adminService: AdminService,
+    public utilityService: UtilityService,
     public activeModal: NgbActiveModal
   ) {
     if (!(this.authService.isAdmin())) {
@@ -72,11 +82,7 @@ export class OrderEditComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getOrderData();
-    if (!this.authService.isAdmin() && this.order.status !== OrderStatus.pending) {
-      this.orderEditForm.disable();
-    } else {
-      this.getAllInventoryItems();
-    }
+    this.getAllInventoryItems();
   }
 
   /**
@@ -99,7 +105,17 @@ export class OrderEditComponent implements OnInit {
   public async getOrderData(): Promise<void> {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
-        this.updateOrderEditForm(res);
+        this.order = res;
+
+        if (res.item !== null) {
+          this.orderEditForm.controls['itemName'].setValue(res.item.name);
+        } else {
+          this.orderEditForm.controls['itemName'].setValue(res.itemName);
+        }
+
+        this.orderEditForm.controls['quantity'].setValue(res.quantity);
+        this.orderEditForm.controls['url'].setValue(res.url);
+        this.orderEditForm.controls['status'].setValue(res.status);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -108,29 +124,28 @@ export class OrderEditComponent implements OnInit {
   }
 
   /**
-   * Helper method to update the order edit form
-   * @param {Order} order order
-   * @private
+   * Checks url of item to order against urls of whitelisted retailers
    */
-  private updateOrderEditForm(order: Order) {
-    this.order = order;
-
-    if (order.item !== null) {
-      this.orderEditForm.controls['itemName'].setValue(order.item.name);
-    } else {
-      this.orderEditForm.controls['itemName'].setValue(order.itemName);
-    }
-
-    this.orderEditForm.controls['quantity'].setValue(order.quantity);
-    this.orderEditForm.controls['url'].setValue(order.url);
-    this.orderEditForm.controls['status'].setValue(order.status);
+  public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
+    this.adminService.checkDomainAgainstWhitelist(this.orderEditForm.controls['url'].value).subscribe({
+      next: res => {
+        this.linkWarning = res.isWhitelisted;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
    * Changes data of order
    */
   public async editOrder(): Promise<void> {
-    this.orderService.updateOrderData(this.order.id, this.getDirtyValues(this.orderEditForm)).subscribe({
+    const changedData = this.utilityService.getDirtyValues(this.orderEditForm);
+    if (this.orderEditForm.controls['status'].dirty) {
+      changedData['status'] = +changedData['status'];
+    }
+    this.orderService.updateOrderData(this.order.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
@@ -138,28 +153,5 @@ export class OrderEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-  }
-
-  /**
-   * Gets all values of a form that are marked with a dirty bit
-   *
-   * @param {FormGroup} form form
-   */
-  public getDirtyValues(form: FormGroup) {
-    let dirtyValues: { [key: string]: any} = {};
-
-    Object.keys(form.controls)
-      .forEach(key => {
-        let currentControl = form.controls[key];
-
-        if (currentControl.dirty) {
-          if ((<FormGroup>currentControl).controls)
-            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
-          else
-            dirtyValues[key] = currentControl.value;
-        }
-      });
-
-    return dirtyValues;
   }
 }
