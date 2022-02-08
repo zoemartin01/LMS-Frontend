@@ -53,6 +53,9 @@ export class AdminAppointmentListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.pendingAppointments.pageSize = 3;
+    this.acceptedAppointments.pageSize = 3;
+    this.deniedAppointments.pageSize = 3;
     this.getAppointments();
   }
 

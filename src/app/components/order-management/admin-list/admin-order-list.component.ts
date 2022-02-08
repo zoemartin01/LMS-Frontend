@@ -45,6 +45,10 @@ export class AdminOrderListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.pendingOrders.pageSize = 3;
+    this.acceptedOrders.pageSize = 3;
+    this.declinedOrders.pageSize = 3;
+
     this.getPendingOrders(this.pendingOrders.page);
     this.getAcceptedOrders(this.acceptedOrders.page);
     this.getDeclinedOrders(this.declinedOrders.page);

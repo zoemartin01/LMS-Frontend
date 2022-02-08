@@ -20,7 +20,7 @@
     <tr *ngFor="let room of rooms.data | paginate: { id: 'rooms', itemsPerPage: rooms.pageSize, currentPage: rooms.page, totalItems: rooms.total }">
       <td class="col-sm-1">{{ room.name }}</td>
       <td class="col-sm-4">{{ room.description }}</td>
-      <td class="col-sm-1">
+      <td class="col-sm-2">
         <button type="button" class="btn btn-primary" routerLink="/room/{{ this.room.id }}/timeslots">Edit Available Timeslots</button>
         <a (click)="openRoomView(room.id)">
           <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
