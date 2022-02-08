@@ -77,7 +77,7 @@ export class OrderRequestComponent implements OnInit {
    * Checks url of item to order against urls of whitelisted retailers
    */
   public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
-    this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
+    this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.controls['url'].value).subscribe({
       next: res => {
         this.linkWarning = res.isWhitelisted;
       },

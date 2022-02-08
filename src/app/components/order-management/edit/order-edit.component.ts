@@ -12,6 +12,7 @@ import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-edit',
@@ -51,6 +52,7 @@ export class OrderEditComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
+  public linkWarning: boolean = false;
 
   /**
    * Constructor
@@ -58,6 +60,7 @@ export class OrderEditComponent implements OnInit {
    * @param {OrderService} orderService service providing order functionalities
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {AdminService} adminService service providing admin functionalities
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
@@ -65,6 +68,7 @@ export class OrderEditComponent implements OnInit {
     public orderService: OrderService,
     public inventoryService: InventoryService,
     public authService: AuthService,
+    public adminService: AdminService,
     public utilityService: UtilityService,
     public activeModal: NgbActiveModal
   ) {
@@ -117,6 +121,20 @@ export class OrderEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
+  }
+
+  /**
+   * Checks url of item to order against urls of whitelisted retailers
+   */
+  public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
+    this.adminService.checkDomainAgainstWhitelist(this.orderEditForm.controls['url'].value).subscribe({
+      next: res => {
+        this.linkWarning = res.isWhitelisted;
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**
