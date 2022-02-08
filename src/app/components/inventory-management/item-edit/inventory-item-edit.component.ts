@@ -3,9 +3,9 @@ import { FormControl, FormGroup, NgForm } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-inventory-item-edit',
