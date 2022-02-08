@@ -38,7 +38,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" routerLink="/room/{{ this.room.id }}/timeslots">Edit Available Timeslots</button>
+  <button type="button" class="btn btn-primary" (click)="openTimeslotPage()">Edit Available Timeslots</button>
   <a (click)="openRoomEditForm()">
     <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
   </a>
