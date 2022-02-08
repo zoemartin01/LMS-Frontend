@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-inventory-item-edit',
@@ -33,9 +34,10 @@ export class InventoryItemEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService,  public activeModal: NgbActiveModal) {
+  constructor(public inventoryService: InventoryService,  public utilityService: UtilityService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -51,7 +53,11 @@ export class InventoryItemEditComponent implements OnInit {
   public async getInventoryItemData() : Promise<void> {
     this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
       next: res => {
-        this.updateInventoryItemEditForm(res);
+        this.inventoryItem = res;
+
+        this.inventoryItemEditForm.controls['name'].setValue(res.name);
+        this.inventoryItemEditForm.controls['description'].setValue(res.description);
+        this.inventoryItemEditForm.controls['quantity'].setValue(res.quantity);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -60,27 +66,15 @@ export class InventoryItemEditComponent implements OnInit {
   }
 
   /**
-   * Helper method to update inventory item form
-   * @param {InventoryItem} inventoryItem inventory item
-   * @private
-   */
-  private updateInventoryItemEditForm(inventoryItem: InventoryItem) {
-    this.inventoryItem = inventoryItem;
-
-    this.inventoryItemEditForm.controls['name'].setValue(inventoryItem.name);
-    this.inventoryItemEditForm.controls['description'].setValue(inventoryItem.description);
-    this.inventoryItemEditForm.controls['quantity'].setValue(inventoryItem.quantity);
-  }
-
-  /**
    * Changes data of inventory item
    */
   public async editInventoryItemData(): Promise<void> {
-    this.inventoryService.editInventoryItem(this.inventoryItem.id, {
-        name: this.inventoryItemEditForm.controls['name'].value,
-        description: this.inventoryItemEditForm.controls['description'].value,
-        quantity: this.inventoryItemEditForm.controls['quantity'].value,
-      }
+    let changedData = this.utilityService.getDirtyValues(this.inventoryItemEditForm);
+
+    if (this.inventoryItemEditForm.controls['quantity'].dirty) {
+      changedData['quantity'] = +changedData['quantity'];
+    }
+    this.inventoryService.editInventoryItem(this.inventoryItem.id, changedData
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
