@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from 'src/app/services/admin.service';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-faq',
@@ -18,8 +19,9 @@ export class HelpFaqComponent implements OnInit {
   /**
    * constructor
    * @param {AdminService} adminService service that provides admin functionalities
+   * @param {AuthService} authService service that provides authentication functionalities
    */
-  constructor(public adminService: AdminService) {
+  constructor(public adminService: AdminService, public authService : AuthService) {
   }
 
   /**
@@ -28,7 +30,11 @@ export class HelpFaqComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.getGlobalSettings().subscribe(
       (data) => {
-        this.content = data.find(x => x.key === "static.faq")?.value ?? "";
+        if(this.authService.isAdmin()) {
+          this.content = data.find(x => x.key === "static.faq_admin")?.value ?? "";
+        } else{
+          this.content = data.find(x => x.key === "static.faq")?.value ?? "";
+        }
       });
   }
 }
