@@ -3,12 +3,16 @@ import { HttpClient } from "@angular/common/http";
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
+import * as moment from "moment";
 
 import { Room } from "../types/room";
 import { RoomId } from "../types/aliases/room-id";
 import { RoomTimespan } from "../types/room-timespan";
-import { TimespanId } from "../types/aliases/timespan-id";
 import { Appointment } from "../types/appointment";
+import { TimespanId } from "../types/aliases/timespan-id";
+import { SeriesId } from "../types/aliases/series-id";
+import { RoomTimespanType } from "../types/enums/timespan-type";
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
 import { PagedResponse } from '../types/paged-response';
 
 @Injectable({
@@ -59,24 +63,23 @@ export class RoomService {
   }
 
   /**
-   * Gets a single timespan
+   * Get data of room to easily display room calendar
    *
-   * @param {RoomId} roomId id of room
-   * @param {TimespanId} timeslotId id of timespan
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {string|null} date date contained in week the calendar should be shown
    */
-  public getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
-    if (roomId === null) {
+  public getRoomCalendar(roomId: RoomId, date: number|null = null)
+    : Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
+    if(roomId === null) {
       throw ParseArgumentException;
     }
 
-    if (timeslotId === null) {
-      throw ParseArgumentException;
-    }
+    const dateString = date === null ? '' : `?date=${date}`;
 
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getTimeslot
-      .replace(':id', roomId).replace(':timeslotId', timeslotId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
+      .replace(':id', roomId)}${dateString}`;
 
-    return this.httpClient.get<RoomTimespan>(apiURL);
+    return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
   }
 
   /**
@@ -131,107 +134,9 @@ export class RoomService {
     return this.httpClient.delete<Room>(apiURL);
   }
 
-  /**
-   * Creates timeslot where room is available, room is now bookable in this timeslot
-   *
-   * @param {RoomTimespan} timeslot time
+  /*
+  Timeslot management
    */
-  public createAvailableTimeslot(timeslot: RoomTimespan): Observable<RoomTimespan> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
-    const requestBody = {
-      timeslot: timeslot,
-    };
-
-    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
-    //TODO not timeslot param but parameters of timeslot
-  }
-
-  /**
-   * Creates timeslot where room is unavailable, room is now not bookable in the timeslot
-   *
-   * @param {RoomTimespan} timeslot time
-   */
-  public createUnavailableTimeslot(timeslot: RoomTimespan): Observable<RoomTimespan> {
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot}`;
-    const requestBody = {
-      timeslot: timeslot,
-    };
-
-    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
-  }
-
-  /**
-   * Deletes an available timeslot
-   *
-   * @param {TimespanId} timespanId id of timeslot
-   */
-  public deleteAvailableTimeslot(timespanId: TimespanId): Observable<RoomTimespan> {
-    if(timespanId === null) {
-      throw ParseArgumentException;
-    }
-
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
-      .replace(':timeslot_id', timespanId)}`;
-
-    return this.httpClient.delete<RoomTimespan>(apiURL);
-  }
-
-  /**
-   * Deletes an unavailable timeslot
-   *
-   * @param {TimespanId} timespanId id of timeslot
-   */
-  public deleteUnavailableTimeslot(timespanId: TimespanId): Observable<RoomTimespan> {
-    if(timespanId === null) {
-      throw ParseArgumentException;
-    }
-
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
-      .replace(':timeslot_id', timespanId)}`;
-
-    return this.httpClient.delete<RoomTimespan>(apiURL);
-  }
-
-  /**
-   * Get data of room to easily display room calendar
-   *
-   * @param {RoomId} roomId id of room for which the calendar should be shown
-   * @param {string|null} date date contained in week the calendar should be shown
-   */
-  public getRoomCalendar(roomId: RoomId, date: number|null = null)
-    : Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
-    if(roomId === null) {
-      throw ParseArgumentException;
-    }
-
-    const dateString = date === null ? '' : `?date=${date}`;
-
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
-      .replace(':id', roomId)}${dateString}`;
-
-    return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
-  }
-
-  /**
-   * Get data of room to easily display calendar of availabilities
-   *
-   * @param {RoomId} roomId id of room for which the calendar should be shown
-   * @param {number|null} date date contained in week the calendar should be shown
-   */
-  public getAvailabilityCalendar(roomId: RoomId, date: number|null = null)
-    : Observable<string[][]> {
-    if (roomId === null) {
-      throw ParseArgumentException;
-    }
-
-    const dateString = date === null ? '' : `?date=${date}`;
-
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
-      .replace(':id', roomId)}${dateString}`;
-
-    return this.httpClient.get<string[][]>(apiURL);
-  }
-
   /**
    * Get array of all available timeslots of a room
    *
@@ -245,7 +150,7 @@ export class RoomService {
     offset: number = 0
   ): Observable<PagedResponse<RoomTimespan>> {
     let apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllAvailableTimeslotsForRoom
-        .replace(':roomId', <string>roomId)}?limit=${limit}&offset=${offset}`;
+      .replace(':roomId', <string>roomId)}?limit=${limit}&offset=${offset}`;
 
     return this.httpClient.get<PagedResponse<RoomTimespan>>(apiURL);
   }
@@ -269,11 +174,193 @@ export class RoomService {
   }
 
   /**
-   * Converts RoomTimespan to Appointment
+   * Get data of room to easily display calendar of availabilities
    *
-   * @param {RoomTimespan} timespan timespan to convert
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {number|null} date date contained in week the calendar should be shown
    */
-  public timespanToAppointment(timespan: RoomTimespan): Appointment {
-    return <Appointment>timespan;
+  public getAvailabilityCalendar(roomId: RoomId, date: number|null = null)
+    : Observable<string[][]> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    const dateString = date === null ? '' : `?date=${date}`;
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
+      .replace(':id', roomId)}${dateString}`;
+
+    return this.httpClient.get<string[][]>(apiURL);
+  }
+
+  /**
+   * Gets a single timeslot
+   *
+   * @param {RoomId} roomId id of room
+   * @param {TimespanId} timeslotId id of timeslot
+   */
+  public getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (timeslotId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getTimeslot
+      .replace(':id', roomId).replace(':timeslotId', timeslotId)}`;
+
+    return this.httpClient.get<RoomTimespan>(apiURL);
+  }
+
+  /**
+   * Creates a new timeslot
+   *
+   * @param {Room} room room of the timeslot
+   * @param {moment.Moment} start start of the timeslot
+   * @param {moment.Moment} end end of the timeslot
+   * @param {RoomTimespanType} type type of the time slot
+   */
+  public createTimeslot(
+    room : Room,
+    start: moment.Moment,
+    end: moment.Moment,
+    type: RoomTimespanType
+  ): Observable<RoomTimespan> {
+    if (room.id === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslot
+      .replace(':roomId', room.id)}`;
+    const requestBody = {
+      start: start.toISOString(),
+      end: end.toISOString(),
+      type,
+    };
+
+    return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
+  }
+
+  /**
+   * Creates a new series of timeslots
+   *
+   * @param {Room} room room of the timeslot series
+   * @param {moment.Moment} start start of the first timeslot in the series
+   * @param {moment.Moment} end end of the first timeslot in the series
+   * @param {RoomTimespanType} type type of the time slot
+   * @param timeSlotRecurrence recurrence of the timeslot series
+   * @param {number} amount 2-2048, amount of timeslots wanted for the series
+   */
+  public createTimeslotSeries(
+    room: Room,
+    start: moment.Moment,
+    end: moment.Moment,
+    type: RoomTimespanType,
+    timeSlotRecurrence: TimeSlotRecurrence,
+    amount: number
+  ): Observable<RoomTimespan[]> {
+    if (room.id === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.createTimeslotSeries
+      .replace(':roomId', room.id)}`;
+    const requestBody = {
+      start: start.toISOString(),
+      end: end.toISOString(),
+      type,
+      timeSlotRecurrence,
+      amount,
+    };
+
+    return this.httpClient.post<RoomTimespan[]>(apiURL, requestBody);
+  }
+
+  /**
+   * Edits a timeslot
+   *
+   * @param {RoomId} roomId id of room
+   * @param {TimespanId} timeslotId id of the timeslot to be edited
+   * @param {object} changedData changed values
+   */
+  public editTimeslot(roomId: RoomId, timeslotId: TimespanId, changedData: object): Observable<RoomTimespan> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (timeslotId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.updateTimeslot
+      .replace(':roomId', roomId).replace(':timeslotId', timeslotId)}`;
+
+    return this.httpClient.patch<RoomTimespan>(apiURL, changedData);
+  }
+
+  /**
+   * Edits a series of timeslots
+   *
+   * @param {RoomId} roomId id of room
+   * @param {SeriesId} seriesId id of a series of timeslots to be edited
+   * @param {object} changedData changed values
+   */
+  public editTimeslotSeries(roomId: RoomId, seriesId: SeriesId, changedData: object): Observable<RoomTimespan[]> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (seriesId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.updateTimeslotSeries
+      .replace(':roomId', roomId).replace(':seriesId', seriesId)}`;
+
+    return this.httpClient.patch<RoomTimespan[]>(apiURL, changedData);
+  }
+
+  /**
+   * Deletes a timeslot
+   *
+   * @param {RoomId} roomId id of room
+   * @param {TimespanId} timeslotId id of a timeslot to be deleted
+   */
+  public deleteTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<void> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (timeslotId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
+      .replace(':roomId', roomId).replace(':timeslotId', timeslotId)}`;
+
+    return this.httpClient.delete<void>(apiURL);
+  }
+
+  /**
+   * Deletes a series of timeslots
+   *
+   * @param {RoomId} roomId id of room
+   * @param {SeriesId} seriesId id of a series of timeslots to be deleted
+   */
+  public deleteTimeslotSeries(roomId: RoomId, seriesId: SeriesId): Observable<void> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (seriesId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslotSeries
+      .replace(':roomId', roomId).replace(':seriesId', seriesId)}`;
+
+    return this.httpClient.delete<void>(apiURL);
   }
 }
