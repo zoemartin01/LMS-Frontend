@@ -106,8 +106,6 @@ export class UserDeleteComponent implements OnInit {
       this.adminService.deleteUser(this.user.id).subscribe({
         next: () => {
           this.activeModal.close('deleted');
-          this.router.navigateByUrl("/");
-          localStorage.clear();
         },
         error: error => {
           console.error('There was an error!', error);
