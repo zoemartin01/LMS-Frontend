@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
 import { OrderDeleteComponent } from "../delete/order-delete.component";
 import { OrderEditComponent } from "../edit/order-edit.component";
 
+import { AuthService } from "../../../services/auth.service";
 import { OrderService } from "../../../services/order.service";
 
 import { Order } from "../../../types/order";
@@ -47,16 +49,18 @@ export class OrderViewComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
-  public dirty: boolean = true;
+  public dirty: boolean = false;
+  public canInteract: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public orderService: OrderService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public orderService: OrderService, public authService: AuthService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
     this.orderViewForm.disable();
   }
 
@@ -74,6 +78,7 @@ export class OrderViewComponent implements OnInit {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
+        this.canInteract = (this.order.status === OrderStatus.pending || this.authService.isAdmin());
 
         if (res.item !== null) {
           this.orderViewForm.controls['itemName'].setValue(res.item.name);
@@ -117,6 +122,17 @@ export class OrderViewComponent implements OnInit {
         return;
       }
 
+      if (result !== 'aborted') {
+        this.getOrderData();
+        this.dirty = true;
+      }
+    });
+  }
+
+  public openInventoryOrderForm(): void {
+    const modal = this.modalService.open(InventoryOrderComponent);
+    modal.componentInstance.order.id = this.order.id;
+    modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getOrderData();
         this.dirty = true;
