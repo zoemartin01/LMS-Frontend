@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-hwlab-rules',
-  template: '<div markdown [data]="content"></div>',
+  template: '<div markdown [data]="content" class="markdown"></div>',
 })
 
 /**
