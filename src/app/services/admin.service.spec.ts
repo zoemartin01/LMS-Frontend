@@ -324,9 +324,9 @@ describe('AdminService', () => {
   });
 
   it('should get all whitelist retailers', () => {
-    service.getWhitelistRetailers().subscribe(
+    /*service.getWhitelistRetailers().subscribe(
       res => {
-        /*expect(res).toEqual([
+        expect(res).toEqual([
           {
             "id": "deaf3c7f-9ce7-400d-96db-9d5602706ba2",
             "name": "McGlynn and Sons",
@@ -363,13 +363,13 @@ describe('AdminService', () => {
               }
             ]
           }
-        ]);*/
+        ]);
       }
     );
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`);
 
-    /*expect(mockRequest.request.method).toBe('GET');
+    expect(mockRequest.request.method).toBe('GET');
 
     mockRequest.flush([
       {
