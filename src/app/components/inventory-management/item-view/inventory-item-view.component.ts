@@ -4,12 +4,12 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
 import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
+import { OrderRequestComponent } from "../../order-management/request/order-request.component";
 
+import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import {OrderRequestComponent} from "../../order-management/request/order-request.component";
-import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-inventory-item-view',
