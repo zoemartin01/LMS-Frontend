@@ -27,11 +27,14 @@
 </div>
 
 <div class="modal-footer">
-  <a (click)="openInventoryItemEditForm()">
+  <a *ngIf="authService.isAdmin()" (click)="openInventoryItemEditForm()">
     <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
   </a>
-  <a (click)="openInventoryItemDeletionDialog()">
+  <a *ngIf="authService.isAdmin()" (click)="openInventoryItemDeletionDialog()">
     <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+  </a>
+  <a (click)="openOrderCreationForm()">
+    <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
   </a>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')">
     Close

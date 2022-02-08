@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
@@ -37,9 +36,8 @@ export class InventoryItemDeleteComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
-   * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal,  private route: ActivatedRoute) {
+  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal) {
     this.inventoryItemDeleteForm.disable();
   }
 
