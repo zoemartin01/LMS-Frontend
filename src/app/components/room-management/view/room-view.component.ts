@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomDeleteComponent } from "../delete/room-delete.component";
@@ -45,12 +45,14 @@ export class RoomViewComponent implements OnInit {
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {Router} router router providing navigation
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public roomService: RoomService,
     private route: ActivatedRoute,
+    private router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal
   ) {
@@ -80,6 +82,14 @@ export class RoomViewComponent implements OnInit {
         console.error('There was an error!', error);
       }
     })
+  }
+
+  /**
+   * Opens page to view and edit available and unavailable timeslots
+   */
+  public openTimeslotPage() {
+    this.activeModal.close(this.dirty ? 'dirty' : 'aborted');
+    this.router.navigateByUrl(`/room/${this.room.id}/timeslots`);
   }
 
   /**

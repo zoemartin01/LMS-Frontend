@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
@@ -106,6 +106,8 @@ export class UserDeleteComponent implements OnInit {
       this.adminService.deleteUser(this.user.id).subscribe({
         next: () => {
           this.activeModal.close('deleted');
+          this.router.navigateByUrl("/");
+          localStorage.clear();
         },
         error: error => {
           console.error('There was an error!', error);

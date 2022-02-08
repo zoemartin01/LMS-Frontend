@@ -1,30 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { RoomTimeslotsComponent } from './room-timeslots.component';
+import { TimeslotViewComponent } from './timeslot-view.component';
 
-describe('RoomTimeslotsComponent', () => {
-  let component: RoomTimeslotsComponent;
-  let fixture: ComponentFixture<RoomTimeslotsComponent>;
+describe('TimeslotViewComponent', () => {
+  let component: TimeslotViewComponent;
+  let fixture: ComponentFixture<TimeslotViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        RoomTimeslotsComponent,
+        TimeslotViewComponent,
       ],
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        FormsModule,
       ],
-    })
-    .compileComponents();
-  });
+      providers: [
+        NgbActiveModal,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RoomTimeslotsComponent);
+    fixture = TestBed.createComponent(TimeslotViewComponent);
     component = fixture.componentInstance;
   });
 

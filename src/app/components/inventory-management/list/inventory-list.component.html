@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col text-left">
-    <a (click)="openInventoryItemCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create Item</a>
+    <a *ngIf="authService.isAdmin()" (click)="openInventoryItemCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Create Item</a>
   </div>
 </div>
 
@@ -33,7 +33,7 @@
           <a *ngIf="authService.isAdmin()" (click)="openItemDeletionDialog(inventoryItem.id)">
             <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
           </a>
-          <a (click)="openOrderCreationForm(inventoryItem.name)">
+          <a (click)="openOrderCreationForm(inventoryItem.name, inventoryItem.id)">
             <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
           </a>
         </td>

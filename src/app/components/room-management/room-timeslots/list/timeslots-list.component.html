@@ -1,0 +1,108 @@
+<div class="row">
+  <h1 class="display-3 text-center">All Timeslots</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page">All Timeslots</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="./calendar">Room Timeslots Overview</a>
+  </li>
+</ul>
+
+<div class="form-inline col-sm-11 mx-auto py-3">
+  <div class="form-group">
+    <div class="input-group justify-content-center">
+      <div class="col-sm-4 form-group kit-rounded">
+        <label for="room" class="control-label">Room</label>
+        <div class="input-group">
+          <select class="form-select" (change)="changeRoom(roomSelect.value)" #roomSelect id="room">
+            <option disabled [selected]="room.id === null">Select Room</option>
+            <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
+              {{ oneRoom.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Available Timeslots</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th class="col-sm-2">Date</th>
+        <th class="col-sm-2">Time</th>
+        <th class="col">Recurrence</th>
+        <th class="col">Last Date</th>
+        <th class="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let availableTimeslot of availableTimeslots.data | paginate: { id: 'available', itemsPerPage: availableTimeslots.pageSize, currentPage: availableTimeslots.page, totalItems: availableTimeslots.total }">
+        <td class="col-sm-2">{{ availableTimeslot.start?.format("DD.MM.YYYY") }}</td>
+        <td class="col-sm-2">
+          {{ availableTimeslot.start?.format("HH:mm") }} - {{ availableTimeslot.end?.format("HH:mm") }}
+        </td>
+        <td class="col">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][availableTimeslot.timeSlotRecurrence]}}</td>
+        <td class="col">{{ availableTimeslot.maxStart ? availableTimeslot.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+        <td class="d-flex justify-content-end">
+          <a [routerLink]="['./calendar', { id: availableTimeslot.room.id, date: availableTimeslot.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+            <i class="bi bi-calendar2-week-fill"></i>
+          </a>
+          <a (click)="openTimeslotView(availableTimeslot.id)" type="button" class="btn btn-secondary mx-1">
+            <i class="bi bi-eye-fill"></i>
+          </a>
+          <a (click)="openTimeslotDeletionDialog(availableTimeslot.id)" type="button" class="btn btn-danger mx-1">
+            <i class="bi bi-trash-fill"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAvailableTimeslots($event)" id="available"></pagination-controls>
+  </div>
+</div>
+
+<div class="row">
+  <h2 class="display-5">Unavailable Timeslots</h2>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th class="col-sm-2">Date</th>
+        <th class="col-sm-2">Time</th>
+        <th class="col">Recurrence</th>
+        <th class="col">Last Date</th>
+        <th class="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let unavailableTimeslot of unavailableTimeslots.data | paginate: { id: 'unavailable', itemsPerPage: unavailableTimeslots.pageSize, currentPage: unavailableTimeslots.page, totalItems: unavailableTimeslots.total }">
+        <td class="col-sm-2">{{ unavailableTimeslot.start?.format("DD.MM.YYYY") }}</td>
+        <td class="col-sm-2">
+          {{ unavailableTimeslot.start?.format("HH:mm") }} - {{ unavailableTimeslot.end?.format("HH:mm") }}
+        </td>
+        <td class="col">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][unavailableTimeslot.timeSlotRecurrence]}}</td>
+        <td class="col">{{ unavailableTimeslot.maxStart ? unavailableTimeslot.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+        <td class="d-flex justify-content-end">
+          <a [routerLink]="['./calendar', { id: unavailableTimeslot.room.id, date: unavailableTimeslot.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+            <i class="bi bi-calendar2-week-fill"></i>
+          </a>
+          <a (click)="openTimeslotView(unavailableTimeslot.id)" type="button" class="btn btn-secondary mx-1">
+            <i class="bi bi-eye-fill"></i>
+          </a>
+          <a (click)="openTimeslotDeletionDialog(unavailableTimeslot.id)" type="button" class="btn btn-danger mx-1">
+            <i class="bi bi-trash-fill"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="getAvailableTimeslots($event)" id="unavailable"></pagination-controls>
+  </div>
+</div>

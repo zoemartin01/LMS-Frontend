@@ -7,7 +7,8 @@
     <div class="form-group">
       <label for="itemName" class="my-1">Item Name</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Item Name" id="itemName" formControlName="itemName">
+        <input type="text" class="form-control" placeholder="Item Name" id="itemName" formControlName="itemName"
+               autocomplete="itemName">
       </div>
     </div>
     <div class="form-group">
@@ -37,7 +38,8 @@
 </div>
 
 <div class="modal-footer">
-  <a (click)="openOrderEditForm()"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
-  <a (click)="openOrderDeletionDialog()"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
-  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Close</button>
+  <a *ngIf="canInteract && this.order.status !== 4 && this.order.status !== 5" (click)="openOrderEditForm()"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
+  <a *ngIf="canInteract" (click)="openOrderDeletionDialog()"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+  <a *ngIf="canInteract && this.order.status === 3" (click)="openInventoryOrderForm()"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check"></i></button></a>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')">Close</button>
 </div>

@@ -46,6 +46,20 @@
                    formControlName="static.lab_rules" (change)="onFileSelected($event, 'static.lab_rules')">
           </div>
         </div>
+        <div class="form-group">
+          <label for="faq" class="my-1">Visitor FAQ</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="faq" accept=".md, .txt"
+                   formControlName="static.faq" (change)="onFileSelected($event, 'static.faq')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="faq_admin" class="my-1">Admin FAQ</label>
+          <div class="input-group">
+            <input type="file" class="file-upload" id="faq_admin" accept=".md, .txt"
+                   formControlName="static.faq_admin" (change)="onFileSelected($event, 'static.faq_admin')">
+          </div>
+        </div>
         <br>
         <div class="row">
           <div class="col text-center">

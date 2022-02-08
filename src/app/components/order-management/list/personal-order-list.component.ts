@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
+import { OrderDeleteComponent } from "../delete/order-delete.component";
 import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";
 import { OrderViewComponent } from "../view/order-view.component";
-import { OrderDeleteComponent } from "../delete/order-delete.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { OrderService } from "../../../services/order.service";
@@ -13,6 +14,7 @@ import { UserService } from "../../../services/user.service";
 
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
 import { PagedList } from "../../../types/paged-list";
 
 @Component({
@@ -188,6 +190,21 @@ export class PersonalOrderListComponent implements OnInit {
   }
 
   /**
+   * Opens form to create order
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public openInventoryOrderForm(orderId: OrderId): void {
+    const modal = this.modalService.open(InventoryOrderComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAcceptedOrders(this.acceptedOrders.page);
+      }
+    });
+  }
+
+  /**
    * Helper method to get name of item
    *
    * @param {Order} order order
@@ -197,5 +214,19 @@ export class PersonalOrderListComponent implements OnInit {
       throw ParseArgumentException;
     }
     return ((order.item === null) ? order.itemName : order.item.name);
+  }
+
+  /**
+   * Helper method to make button statements more readable
+   *
+   * @param {Order} order order to check
+   */
+  public canEditAccepted(order: Order): boolean {
+    if (order.status === OrderStatus.pending ||
+      (this.authService.isAdmin() && order.status !== 4 && order.status !== 5)
+    ) {
+      return true;
+    }
+    return false;
   }
 }

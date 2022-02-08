@@ -52,7 +52,7 @@ export class RoomCreateComponent {
         }
       });
     } else {
-      console.log('Invalid form data')
+      console.error('Invalid form data')
     }
   }
 }

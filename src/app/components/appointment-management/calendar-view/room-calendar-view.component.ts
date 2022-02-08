@@ -132,6 +132,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.roomService.getRoomsData().subscribe({
       next: (rooms: PagedResponse<Room>) => {
         this.rooms = rooms.data;
+        this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
       },
       error: error => {
         console.error('There was an error!', error);

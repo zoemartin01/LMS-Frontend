@@ -8,12 +8,12 @@ import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/white
 import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
 import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
-import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -23,8 +23,6 @@ import { UtilityService } from "../../../services/utility.service";
 
 /**
  * Component for global settings page
- *
- *
  */
 export class GlobalSettingsComponent implements OnInit {
   public whitelistRetailers: PagedList<WhitelistRetailer> = new PagedList<WhitelistRetailer>();
@@ -38,6 +36,8 @@ export class GlobalSettingsComponent implements OnInit {
     "static.homepage": new FormControl(''),
     "static.safety_instructions": new FormControl(''),
     "static.lab_rules": new FormControl(''),
+    "static.faq": new FormControl(''),
+    "static.faq_admin": new FormControl(''),
   });
 
   /**
@@ -116,16 +116,18 @@ export class GlobalSettingsComponent implements OnInit {
     if (this.globalSettingsForm.valid) {
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        if (key == 'recording.auto_delete') {
-          changedFields.push({
-            key,
-            value: this.globalSettingsForm.controls[key].value * 86400000,
-          });
-        } else {
-          changedFields.push({
-            key,
-            value: this.globalSettingsForm.controls[key].value,
-          });
+        if (this.globalSettingsForm.controls[key].value != "") {
+          if (key == 'recording.auto_delete') {
+            changedFields.push({
+              key,
+              value: this.globalSettingsForm.controls[key].value * 86400000,
+            });
+          } else {
+            changedFields.push({
+              key,
+              value: this.globalSettingsForm.controls[key].value,
+            });
+          }
         }
       }
 
