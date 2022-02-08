@@ -44,7 +44,8 @@
         </div>
         <br>
         <div class="alert alert-danger" role="alert"
-             *ngIf="timeslotCreateForm.controls['startHour'].value >= timeslotCreateForm.controls['endHour'].value">
+             *ngIf="(timeslotCreateForm.controls['startHour'].value >= timeslotCreateForm.controls['endHour'].value)
+             && +timeslotCreateForm.controls['endHour'].value !== 0">
           End of appointment needs to be be after start!
         </div>
         <div class="row">

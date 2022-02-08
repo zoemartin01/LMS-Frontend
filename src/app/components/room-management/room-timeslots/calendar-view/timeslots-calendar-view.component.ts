@@ -110,7 +110,6 @@ export class TimeslotsCalendarViewComponent implements OnInit {
       this.roomService.getAvailabilityCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
         next: (res: string[][]) => {
           this.calendar = res;
-          console.log(this.calendar);
         },
         error: error => {
           console.error('There was an error!', error);

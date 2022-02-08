@@ -149,7 +149,7 @@ export class AppointmentCreateComponent implements OnInit {
         this.hasError = true;
         this.hasErrorMessage = 'Please accept the safety instructions and the hwlab rules.';
       }
-      console.log('Invalid form data')
+      console.error('Invalid form data')
     }
   }
 }

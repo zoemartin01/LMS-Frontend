@@ -124,7 +124,7 @@ export class TimeslotCreateComponent implements OnInit {
         });
       }
     } else {
-      console.log('Invalid form data')
+      console.error('Invalid form data')
     }
   }
 }

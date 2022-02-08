@@ -88,7 +88,6 @@ export class AdminAppointmentListComponent implements OnInit {
               return appointment;
             }
           );
-          console.log(res);
         },
         error: (error) => {
           console.error('There was an error!', error);

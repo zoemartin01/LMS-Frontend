@@ -7,9 +7,9 @@ import { RoomService } from "../../../../services/room.service";
 
 import { RoomTimespan } from "../../../../types/room-timespan";
 import { TimespanId } from "../../../../types/aliases/timespan-id";
+import { RoomId } from "../../../../types/aliases/room-id";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
 import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
-import {RoomId} from "../../../../types/aliases/room-id";
 
 @Component({
   selector: 'app-timeslot-edit',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from 'moment';
 
@@ -14,9 +15,8 @@ import { UserService } from '../../../../services/user.service';
 import { RoomTimespan } from "../../../../types/room-timespan";
 import { TimespanId } from "../../../../types/aliases/timespan-id";
 import { Room } from "../../../../types/room";
-import { PagedList } from 'src/app/types/paged-list';
-import {PagedResponse} from "../../../../types/paged-response";
-import {ActivatedRoute} from "@angular/router";
+import { PagedList } from '../../../../types/paged-list';
+import { PagedResponse } from "../../../../types/paged-response";
 
 @Component({
   selector: 'app-timeslots-list',
