@@ -47,6 +47,9 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
    * Inits page
    */
   ngOnInit(): void {
+    this.doneRecordings.pageSize = 3;
+    this.scheduledRecordings.pageSize = 3;
+
     this.getFinishedRecordings(this.doneRecordings.page);
     this.getScheduledRecordings(this.scheduledRecordings.page);
   }
