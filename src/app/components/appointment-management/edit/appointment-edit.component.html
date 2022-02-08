@@ -47,6 +47,10 @@
             </div>
           </div>
         </div>
+        <div class="alert alert-danger mt-2" role="alert" *ngIf="timeslotConflict">
+          <b>Error:</b><br>
+          {{ timeslotConflictMessage }}<br>
+        </div>
       </form>
       <form *ngIf="isRecurring" [formGroup]="recurringAppointmentEditForm" (keyup.enter)="editAppointment()">
         <div class="form-group">

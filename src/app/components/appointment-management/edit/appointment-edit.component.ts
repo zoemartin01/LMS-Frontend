@@ -70,6 +70,8 @@ export class AppointmentEditComponent implements OnInit {
   public isRecurring: boolean = false;
   public seriesConflict = false;
   public force = false;
+  public timeslotConflict = false;
+  public timeslotConflictMessage = '';
 
   /**
    * Constructor
@@ -158,6 +160,11 @@ export class AppointmentEditComponent implements OnInit {
         this.closeForm.emit(true);
       },
       error: error => {
+        if (error.status === 409) {
+          this.timeslotConflict = true;
+          this.timeslotConflictMessage = error.error.message;
+        }
+
         console.error('There was an error!', error);
       }
     });
