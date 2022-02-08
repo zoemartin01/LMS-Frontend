@@ -92,9 +92,9 @@ export class OrderRequestComponent implements OnInit {
    */
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {
-      const itemName = this.requestOrderForm.value.itemName;
-      const quantity = this.requestOrderForm.value.quantity;
-      const url = this.requestOrderForm.value.url;
+      const itemName = this.requestOrderForm.controls['itemName'].value;
+      const quantity = this.requestOrderForm.controls['quantity'].value;
+      const url = this.requestOrderForm.controls['url'].value;
       this.orderService.requestOrder(itemName, quantity, url
       ).subscribe({
         next: (orderRequest: Order) => {
