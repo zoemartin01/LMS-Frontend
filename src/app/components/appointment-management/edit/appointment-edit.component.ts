@@ -11,6 +11,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -77,9 +78,11 @@ export class AppointmentEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    */
   constructor(
     public appointmentService: AppointmentService,
+    public utilityService: UtilityService,
   ) {
   }
 
@@ -174,7 +177,7 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointmentSeries(): Promise<void> {
-    let changedData: { [key: string]: any} =  this.getDirtyValues(this.recurringAppointmentEditForm);
+    let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringAppointmentEditForm);
 
     if (this.force) {
       changedData['force'] = this.force;
@@ -202,28 +205,5 @@ export class AppointmentEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-  }
-
-  /**
-   * Gets all values of a form that are marked with a dirty bit
-   *
-   * @param {FormGroup} form form
-   */
-  public getDirtyValues(form: FormGroup) {
-    let dirtyValues: { [key: string]: any} = {};
-
-    Object.keys(form.controls)
-      .forEach(key => {
-        let currentControl = form.controls[key];
-
-        if (currentControl.dirty) {
-          if ((<FormGroup>currentControl).controls)
-            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
-          else
-            dirtyValues[key] = currentControl.value;
-        }
-      });
-
-    return dirtyValues;
   }
 }

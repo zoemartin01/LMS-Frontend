@@ -53,10 +53,10 @@
     <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
   </a>
   <a (click)="openUserDeletionDialog()">
-    <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+    <button type="button" class="btn btn-danger" *ngIf="user.id !== authService.getUserId()"><i class="bi bi-trash-fill"></i></button>
   </a>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')"
-          *ngIf="user.id !== authService.getUserId()">
+          >
     Close
   </button>
 </div>

@@ -10,6 +10,7 @@ import { TimespanId } from "../../../../types/aliases/timespan-id";
 import { RoomId } from "../../../../types/aliases/room-id";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
 import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
+import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-timeslot-edit',
@@ -63,9 +64,11 @@ export class TimeslotEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    */
   constructor(
     public roomService: RoomService,
+    public utilityService: UtilityService,
   ) {
     this.timeslotEditForm.controls['type'].disable();
   }
@@ -162,7 +165,7 @@ export class TimeslotEditComponent implements OnInit {
    * Changes data of single timeslot
    */
   public async editTimeslotSeries(): Promise<void> {
-    let changedData: { [key: string]: any} =  this.getDirtyValues(this.recurringTimeslotEditForm);
+    let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringTimeslotEditForm);
 
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
       || this.timeslotEditForm.controls['endHour'].dirty) {
@@ -182,28 +185,5 @@ export class TimeslotEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
-  }
-
-  /**
-   * Gets all values of a form that are marked with a dirty bit
-   *
-   * @param {FormGroup} form form
-   */
-  public getDirtyValues(form: FormGroup) {
-    let dirtyValues: { [key: string]: any} = {};
-
-    Object.keys(form.controls)
-      .forEach(key => {
-        let currentControl = form.controls[key];
-
-        if (currentControl.dirty) {
-          if ((<FormGroup>currentControl).controls)
-            dirtyValues[key] = this.getDirtyValues(<FormGroup>currentControl);
-          else
-            dirtyValues[key] = currentControl.value;
-        }
-      });
-
-    return dirtyValues;
   }
 }
