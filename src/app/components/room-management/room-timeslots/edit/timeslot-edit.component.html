@@ -1,7 +1,16 @@
 <div class="row justify-content-center">
   <div class="card">
     <div class="col-auto card-body">
-      <h5 class="card-title">Edit Appointment</h5>
+      <h5 class="card-title">Edit Timeslot</h5>
+      <form (keyup.enter)="editTimeslot()" [formGroup]="timeslotEditForm">
+        <div class="form-group">
+          <label for="type" class="my-1">Type</label>
+          <select class="form-select" id="type" formControlName="type">
+            <option value="2">available</option>
+            <option value="3">unavailable</option>
+          </select>
+        </div>
+      </form>
       <div class="form-group">
         <label for="date" class="control-label">Day</label>
         <div class="input-group">
@@ -15,7 +24,7 @@
           </button>
         </div>
       </div>
-      <form (keyup.enter)="editAppointment()" [formGroup]="appointmentEditForm">
+      <form (keyup.enter)="editTimeslot()" [formGroup]="timeslotEditForm">
         <div class="form-group">
           <label for="startTime" class="my-1">Start time</label>
           <div class="input-group">
@@ -35,24 +44,19 @@
         </div>
         <br>
         <div class="alert alert-danger" role="alert"
-             *ngIf="appointmentEditForm.controls['startHour'].value >= appointmentEditForm.controls['endHour'].value">
+             *ngIf="timeslotEditForm.controls['startHour'].value >= timeslotEditForm.controls['endHour'].value">
           End of appointment needs to be be after start!
         </div>
         <div class="row">
           <div class="col text-center">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="recurring" [checked]="isRecurring"
-                     (change)="isRecurring = !isRecurring" disabled>
+              <input type="checkbox" class="form-check-input" id="recurring" [checked]="isRecurring" disabled>
               <label class="form-check-label" for="recurring">Recurring Appointment</label>
             </div>
           </div>
         </div>
-        <div class="alert alert-danger mt-2" role="alert" *ngIf="timeslotConflict">
-          <b>Error:</b><br>
-          {{ timeslotConflictMessage }}<br>
-        </div>
       </form>
-      <form *ngIf="isRecurring" [formGroup]="recurringAppointmentEditForm" (keyup.enter)="editAppointment()">
+      <form (keyup.enter)="editTimeslot()" *ngIf="isRecurring" [formGroup]="recurringTimeslotEditForm">
         <div class="form-group">
           <label for="timeSlotRecurrence" class="my-1">Recurrence Frequency</label>
           <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
@@ -68,22 +72,12 @@
             <input class="form-control" type="number" id="amount" formControlName="amount" step="1" min="1" max="2048">
           </div>
         </div>
-        <br>
-        <div class="alert alert-warning" role="alert" *ngIf="seriesConflict">
-          <b>Warning:</b><br>
-          Your recurring appointment has some collisions with other appointments.<br>
-          <br>
-          <label class="form-check-label" for="force">
-            <input type="checkbox" class="form-check-input" id="force" [checked]="force" (change)="force = !force">
-            Create all appointments except for those that have collisions.
-          </label>
-        </div>
       </form>
       <br>
       <div class="row">
         <div class="col text-center">
-          <button (click)="editAppointment()" class="btn btn-primary" role="button">Save</button>
-          <button (click)="editAppointmentSeries()" class="btn btn-primary" role="button" *ngIf="isRecurring">
+          <button (click)="editTimeslot()" class="btn btn-primary" role="button">Save</button>
+          <button (click)="editTimeslotSeries()" class="btn btn-primary" role="button" *ngIf="isRecurring">
             Save recurring
           </button>
           <button (click)="closeForm.emit(false)" class="btn btn-secondary" role="button">Abort</button>

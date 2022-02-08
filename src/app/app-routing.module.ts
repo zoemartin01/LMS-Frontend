@@ -21,8 +21,9 @@ import { PersonalOrderListComponent } from './components/order-management/list/p
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RoomCalendarViewComponent } from "./components/appointment-management/calendar-view/room-calendar-view.component";
 import { RoomListComponent } from './components/room-management/list/room-list.component';
-import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { TimeslotsCalendarViewComponent } from './components/room-management/room-timeslots/calendar-view/timeslots-calendar-view.component';
+import { TimeslotsListComponent } from './components/room-management/room-timeslots/list/timeslots-list.component';
 import { UserListComponent } from './components/user-management/list/user-list.component';
 import { UserSettingsComponent } from './components/settings/user-settings/user-settings.component';
 
@@ -155,12 +156,21 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room/:id/edit-timeslots',
+    path: 'room/:id/timeslots',
     canActivate: [AuthGuard, AdminGuard],
-    component: RoomTimeslotsComponent,
+    component: TimeslotsListComponent,
     pathMatch: 'full',
     data: {
-      title: 'Edit Timeslots'
+      title: 'Timeslots'
+    }
+  },
+  {
+    path: 'room/:id/timeslots/calendar',
+    canActivate: [AuthGuard, AdminGuard],
+    component: TimeslotsCalendarViewComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Timeslots Calendar'
     }
   },
 

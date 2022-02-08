@@ -19,7 +19,9 @@ import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor
 import { AdminAppointmentListComponent } from "./components/appointment-management/admin-list/admin-appointment-list.component";
 import { AdminOrderListComponent } from './components/order-management/admin-list/admin-order-list.component';
 import { AppComponent } from './app.component';
+import { AppointmentAcceptComponent } from './components/appointment-management/accept/appointment-accept.component';
 import { AppointmentCreateComponent } from "./components/appointment-management/create/appointment-create.component";
+import { AppointmentDeclineComponent } from './components/appointment-management/decline/appointment-decline.component';
 import { AppointmentDeleteComponent } from './components/appointment-management/delete/appointment-delete.component';
 import { AppointmentEditComponent } from "./components/appointment-management/edit/appointment-edit.component";
 import { AppointmentViewComponent } from "./components/appointment-management/view/appointment-view.component";
@@ -55,9 +57,14 @@ import { RoomCreateComponent } from './components/room-management/create/room-cr
 import { RoomDeleteComponent } from './components/room-management/delete/room-delete.component';
 import { RoomEditComponent } from './components/room-management/edit/room-edit.component';
 import { RoomListComponent } from './components/room-management/list/room-list.component';
-import { RoomTimeslotsComponent } from './components/room-management/room-timeslots/room-timeslots.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { TimeslotCreateComponent } from './components/room-management/room-timeslots/create/timeslot-create.component';
+import { TimeslotDeleteComponent } from './components/room-management/room-timeslots/delete/timeslot-delete.component';
+import { TimeslotEditComponent } from './components/room-management/room-timeslots/edit/timeslot-edit.component';
+import { TimeslotsCalendarViewComponent } from './components/room-management/room-timeslots/calendar-view/timeslots-calendar-view.component';
+import { TimeslotsListComponent } from './components/room-management/room-timeslots/list/timeslots-list.component';
+import { TimeslotViewComponent } from './components/room-management/room-timeslots/view/timeslot-view.component';
 import { UserAcceptComponent } from './components/user-management/accept/user-accept.component';
 import { UserDeclineComponent } from './components/user-management/decline/user-decline.component';
 import { UserDeleteComponent } from './components/user-management/delete/user-delete.component';
@@ -72,15 +79,15 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
 import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
-import { AppointmentAcceptComponent } from './components/appointment-management/accept/appointment-accept.component';
-import { AppointmentDeclineComponent } from './components/appointment-management/decline/appointment-decline.component';
 
 @NgModule({
   declarations: [
     AdminAppointmentListComponent,
     AdminOrderListComponent,
     AppComponent,
+    AppointmentAcceptComponent,
     AppointmentCreateComponent,
+    AppointmentDeclineComponent,
     AppointmentDeleteComponent,
     AppointmentEditComponent,
     AppointmentViewComponent,
@@ -116,9 +123,14 @@ import { AppointmentDeclineComponent } from './components/appointment-management
     RoomDeleteComponent,
     RoomEditComponent,
     RoomListComponent,
-    RoomTimeslotsComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    TimeslotCreateComponent,
+    TimeslotDeleteComponent,
+    TimeslotEditComponent,
+    TimeslotsCalendarViewComponent,
+    TimeslotsListComponent,
+    TimeslotViewComponent,
     UserAcceptComponent,
     UserDeclineComponent,
     UserDeleteComponent,
@@ -133,8 +145,6 @@ import { AppointmentDeclineComponent } from './components/appointment-management
     WhitelistRetailerDomainCreateComponent,
     WhitelistRetailerDomainDeleteComponent,
     WhitelistRetailerDomainEditComponent,
-    AppointmentAcceptComponent,
-    AppointmentDeclineComponent,
   ],
   imports: [
     AppRoutingModule,

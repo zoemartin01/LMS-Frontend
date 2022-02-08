@@ -1,0 +1,131 @@
+<div class="row">
+  <h1 class="display-3 text-center">Room Timeslots Overview</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="..">All Timeslots</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page">Room Timeslots Overview</a>
+  </li>
+</ul>
+
+<div [class]="action === '' ? ''  : 'calendar-wrapper'">
+  <div class="calendar">
+    <div class="form-inline col-sm-11 mx-auto py-3">
+      <div class="form-group">
+        <div class="input-group justify-content-center">
+          <div class="col-sm-4 form-group kit-rounded">
+            <label for="room" class="control-label">Room</label>
+            <div class="input-group">
+              <select class="form-select" (change)="changeRoom(roomSelect.value)" #roomSelect id="room">
+                <option disabled [selected]="room.id === null">Select Room</option>
+                <option value="{{ oneRoom.id }}" *ngFor="let oneRoom of rooms" [selected]="oneRoom.id === room.id">
+                  {{ oneRoom.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-sm-6 col-sm-offset-2 row kit-rounded">
+            <label for="week" class="control-label">Week</label>
+            <div class="input-group">
+              <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.subtract(7, 'days'))">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <input class="form-control" type="text" id="week" #weekInput [value]="weekText">
+              <input class="display-none" type="text" [positionTarget]="weekInput" placement="bottom"
+                     [(ngModel)]="weekField" ngbDatepicker #d="ngbDatepicker" (dateSelect)="handleDatepickerChange()">
+              <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                <i class="bi bi-calendar-week-fill"></i>
+              </button>
+              <button type="button" class="btn btn-rm arrows" (click)="setWeek(week.add(7, 'days'))">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <table class="table table-bordered cal-table">
+        <thead class="thead-dark">
+          <tr>
+            <th></th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Monday<br>
+              {{ getDayOfWeek(1).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Tuesday<br>
+              {{ getDayOfWeek(2).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Wednesday<br>
+              {{ getDayOfWeek(3).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Thursday<br>
+              {{ getDayOfWeek(4).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Friday<br>
+              {{ getDayOfWeek(5).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Saturday<br>
+              {{ getDayOfWeek(6).format("DD.MM") }}
+            </th>
+            <th [attr.colspan]="room.maxConcurrentBookings">
+              Sunday<br>
+              {{ getDayOfWeek(0).format("DD.MM") }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let timespans of calendar; index as i">
+            <td>{{ i }}:00 - {{ i + 1 }}:00</td>
+            <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
+              <td class="cal-grey" *ngIf="timespans[day] === null" (click)="openTimeslotCreationForm(day, i)">
+                <i class="bi bi-plus-lg"></i>
+              </td>
+              <td class="cal-green pointer"
+                  *ngIf="timespans[day] !== null && timespans[day].split(' ')[0] === 'available'">
+                <a (click)="openTimeslotEditForm(timespans[day].split(' ')[1])">
+                  <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                </a>
+                <a (click)="openTimeslotDeletionDialog(timespans[day].split(' ')[1])">
+                  <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                </a>
+                <a (click)="openTimeslotCreationForm(day, i)">
+                  <button type="button" class="btn"><i class="bi bi-plus-lg"></i></button>
+                </a>
+              </td>
+              <td class="cal-red"
+                  *ngIf="timespans[day] !== null && timespans[day].split(' ')[0] === 'unavailable'">
+                <a (click)="openTimeslotEditForm(timespans[day].split(' ')[1])">
+                  <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                </a>
+                <a (click)="openTimeslotDeletionDialog(timespans[day].split(' ')[1])">
+                  <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                </a>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <app-timeslot-view *ngIf="action === 'view'" [timeslotId]="currentTimeslotId" (closeForm)="closeSidebar($event)">
+    </app-timeslot-view>
+    <app-timeslot-edit *ngIf="action === 'edit'" [timeslotId]="currentTimeslotId" [roomId]="room.id"
+                       (closeForm)="closeSidebar($event)">
+    </app-timeslot-edit>
+    <app-timeslot-create *ngIf="action === 'create'" (closeForm)="closeSidebar($event)"
+                            [start]="timeslotCreationStart" [room]="room">
+    </app-timeslot-create>
+  </div>
+</div>
