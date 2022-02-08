@@ -95,8 +95,7 @@ export class OrderRequestComponent implements OnInit {
       const itemName = this.requestOrderForm.controls['itemName'].value;
       const quantity = this.requestOrderForm.controls['quantity'].value;
       const url = this.requestOrderForm.controls['url'].value;
-      this.orderService.requestOrder(itemName, quantity, url
-      ).subscribe({
+      this.orderService.requestOrder(itemName, quantity, url).subscribe({
         next: (orderRequest: Order) => {
           if (orderRequest.id !== null) {
             this.activeModal.close(`created ${orderRequest.id}`);
