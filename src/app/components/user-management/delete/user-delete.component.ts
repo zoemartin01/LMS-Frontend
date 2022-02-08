@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminService} from "../../../services/admin.service";
-import {UserService} from "../../../services/user.service";
+import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {AuthService} from "../../../services/auth.service";
-import {Router} from "@angular/router";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-delete',
@@ -44,7 +44,7 @@ export class UserDeleteComponent implements OnInit {
   /**
    * Constructor
    * @constructor
-   * @param router
+   * @param {Router} router router providing navigation
    * @param {AuthService} authService service providing authentication functionalities
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
