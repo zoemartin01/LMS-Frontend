@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
@@ -12,7 +13,6 @@ import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-edit',
