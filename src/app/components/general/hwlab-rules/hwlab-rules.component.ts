@@ -15,9 +15,16 @@ import { AdminService } from 'src/app/services/admin.service';
 export class HwlabRulesComponent implements OnInit {
   public content = "";
 
+  /**
+   * constructor
+   * @param {AdminService} adminService service that provides admin functionalities
+   */
   constructor(public adminService: AdminService) {
   }
 
+  /**
+   * Inits page
+   */
   ngOnInit(): void {
     this.adminService.getGlobalSettings().subscribe(
       (data) => {

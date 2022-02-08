@@ -1,117 +1,78 @@
 <div class="row justify-content-center">
   <div class="card">
     <div class="col-auto card-body">
-      <form (keyup.enter)="editAppointment()" [formGroup]="appointmentEditForm" (ngSubmit)="editAppointment()">
+      <h5 class="card-title">Edit Appointment</h5>
+      <div class="form-group">
+        <label for="date" class="control-label">Day</label>
+        <div class="input-group">
+          <input class="form-control" type="text" id="date" #dateInput [value]="dateText">
+          <input class="display-none" type="text" [positionTarget]="dateInput" placement="bottom"
+                 [(ngModel)]="dateField" ngbDatepicker #d="ngbDatepicker"
+                 (dateSelect)="handleDatepickerChange()">
+          <button class="btn btn-primary" type="button" (click)="d.toggle();
+          d.navigateTo({ year: +date.format('YYYY'), month: +date.format('MM') })">
+            <i class="bi bi-calendar-date-fill"></i>
+          </button>
+        </div>
+      </div>
+      <form (keyup.enter)="editAppointment()" [formGroup]="appointmentEditForm">
         <div class="form-group">
-          <label for="email" class="my-1">E-Mail Address</label>
+          <label for="startTime" class="my-1">Start time</label>
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupPrepend">@</span>
-            </div>
-            <input type="email" class="form-control" placeholder="E-Mail Address" aria-describedby="inputGroupPrepend"
-                   id="email" formControlName="email" autocomplete="email">
+            <input class="form-control" type="number" id="startTime" formControlName="startHour" step="1" min="0"
+                   max="23">
+            <span class="input-group-text">:</span>
+            <input class="form-control" type="text" value="00" disabled>
           </div>
         </div>
         <div class="form-group">
-          <label for="password" class="my-1">Password</label>
-          <input type="password" class="form-control" placeholder="Password" id="password"
-                 formControlName="password">
+          <label for="endTime" class="my-1">End time</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1" min="0" max="23">
+            <span class="input-group-text">:</span>
+            <input class="form-control" type="text" value="00" disabled>
+          </div>
         </div>
         <br>
+        <div class="alert alert-danger" role="alert"
+             *ngIf="appointmentEditForm.controls['startHour'].value >= appointmentEditForm.controls['endHour'].value">
+          End of appointment needs to be be after start!
+        </div>
         <div class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!appointmentEditForm.valid" role="button">Log in</button>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="recurring" [checked]="isRecurring"
+                     (change)="isRecurring = !isRecurring" disabled>
+              <label class="form-check-label" for="recurring">Recurring Appointment</label>
+            </div>
           </div>
         </div>
       </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="edit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-     aria-hidden="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Appointment</h5>
-        <a routerLink="/room-overview/145" class="btn-close" role="button"></a>
-      </div>
-      <div class="modal-body">
-        <form class="form-inline col-sm-6 mx-auto py-3">
-          <div class="form-group">
-            <label for="weekday" class="my-1">Weekday</label>
-            <div class="input-group">
-              <select class="form-select" id="weekday" name="weekday">
-                <option value="1"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 1">
-                  Monday
-                </option>
-                <option value="2"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 2">
-                  Tuesday
-                </option>
-                <option value="3"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 3">
-                  Wednesday
-                </option>
-                <option value="4"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 4">
-                  Thursday
-                </option>
-                <option value="5"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 5">
-                  Friday
-                </option>
-                <option value="6"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 6">
-                  Saturday
-                </option>
-                <option value="0"
-                        [selected]="appointment.start !== null && +appointment.start.format('e') === 0">
-                  Sunday
-                </option>
-              </select>
-            </div>
+      <form *ngIf="isRecurring" [formGroup]="recurringAppointmentEditForm" (keyup.enter)="editAppointment()">
+        <div class="form-group">
+          <label for="timeSlotRecurrence" class="my-1">Recurrence Frequency</label>
+          <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
+            <option value="2">daily</option>
+            <option value="3">weekly</option>
+            <option value="4">monthly</option>
+            <option value="5">yearly</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="endTime" class="my-1">Recurrence Amount</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="amount" formControlName="amount" step="1" min="1" max="2048">
           </div>
-          <div class="form-group">
-            <label for="startTime" class="my-1">Start time</label>
-            <div class="input-group">
-              <select class="form-select" id="startTime" name="startTime">
-                <option [value]="i" *ngFor="let i of startTimeSlots"
-                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
-                  {{ i }}:00
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="endTime" class="my-1">End time</label>
-            <div class="input-group">
-              <select class="form-select" id="endTime" name="endTime">
-                <option [value]="i" *ngFor="let i of endTimeSlots"
-                        [selected]="appointment.start !== null && +appointment.start.format('HH') === i">
-                  {{ i }}:00
-                </option>
-              </select>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col text-center">
-              <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" id="remember_me">
-                <label class="form-check-label" for="remember_me">Recurring Appointment</label>
-              </div>
-            </div>
-          </div>
-          <br>
-        </form>
-      </div>
-      <div class="modal-footer">
+        </div>
+      </form>
+      <br>
+      <div class="row">
         <div class="col text-center">
-          <a routerLink="#" class="btn btn-primary" role="button">Save</a>
-          <a routerLink="#" class="btn btn-primary" role="button">Save recurring</a>
-          <a routerLink="/room-overview/145" class="btn btn-danger" role="button">Abort</a>
+          <button (click)="editAppointment()" class="btn btn-primary" role="button">Save</button>
+          <button (click)="editAppointmentSeries()" class="btn btn-primary" role="button" *ngIf="isRecurring">
+            Save recurring
+          </button>
+          <button (click)="closeForm.emit(false)" class="btn btn-secondary" role="button">Abort</button>
         </div>
       </div>
     </div>
