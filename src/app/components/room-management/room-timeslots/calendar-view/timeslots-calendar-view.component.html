@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="display-3 text-center">Room Overview</h1>
+  <h1 class="display-3 text-center">Room Timeslots Overview</h1>
 </div>
 
 <ul class="nav nav-tabs">
@@ -7,7 +7,7 @@
     <a class="nav-link" routerLink="..">All Timeslots</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page">Room Overview</a>
+    <a class="nav-link active" aria-current="page">Room Timeslots Overview</a>
   </li>
 </ul>
 
@@ -98,6 +98,9 @@
                 <a (click)="openTimeslotDeletionDialog(timespans[day].split(' ')[1])">
                   <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
                 </a>
+                <a (click)="openTimeslotCreationForm(day, i)">
+                  <button type="button" class="btn"><i class="bi bi-plus-lg"></i></button>
+                </a>
               </td>
               <td class="cal-red"
                   *ngIf="timespans[day] !== null && timespans[day].split(' ')[0] === 'unavailable'">
@@ -118,7 +121,8 @@
   <div class="sidebar">
     <app-timeslot-view *ngIf="action === 'view'" [timeslotId]="currentTimeslotId" (closeForm)="closeSidebar($event)">
     </app-timeslot-view>
-    <app-timeslot-edit *ngIf="action === 'edit'" [timeslotId]="currentTimeslotId" (closeForm)="closeSidebar($event)">
+    <app-timeslot-edit *ngIf="action === 'edit'" [timeslotId]="currentTimeslotId" [roomId]="room.id"
+                       (closeForm)="closeSidebar($event)">
     </app-timeslot-edit>
     <app-timeslot-create *ngIf="action === 'create'" (closeForm)="closeSidebar($event)"
                             [start]="timeslotCreationStart" [room]="room">

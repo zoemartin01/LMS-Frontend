@@ -196,7 +196,6 @@ export class AppointmentEditComponent implements OnInit {
       },
       error: error => {
         if (error.status === 409) {
-          this.seriesConflict = false;
           this.seriesConflict = true;
         }
 

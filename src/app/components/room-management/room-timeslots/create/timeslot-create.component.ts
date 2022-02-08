@@ -43,8 +43,6 @@ export class TimeslotCreateComponent implements OnInit {
     year = 1990;
   };
   public isRecurring: boolean = false;
-  public seriesConflict = false;
-  public force = false;
 
   /**
    * Constructor
@@ -118,14 +116,9 @@ export class TimeslotCreateComponent implements OnInit {
           +this.recurringTimeslotCreateForm.controls['amount'].value
         ).subscribe({
           next: () => {
-            this.seriesConflict = false;
             this.closeForm.emit(true);
           },
           error: error => {
-            if (error.status === 409) {
-              this.seriesConflict = true;
-            }
-
             console.error('There was an error!', error);
           }
         });
