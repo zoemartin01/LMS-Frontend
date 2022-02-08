@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-inventory-item-edit',
@@ -18,9 +18,11 @@ import {UtilityService} from "../../../services/utility.service";
  */
 export class InventoryItemEditComponent implements OnInit {
   public inventoryItemEditForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(null, [
+      Validators.required, Validators.min(0)
+    ]),
   });
 
   public inventoryItem: InventoryItem = {
@@ -37,7 +39,11 @@ export class InventoryItemEditComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService,  public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -74,7 +80,10 @@ export class InventoryItemEditComponent implements OnInit {
     if (this.inventoryItemEditForm.controls['quantity'].dirty) {
       changedData['quantity'] = +changedData['quantity'];
     }
-    this.inventoryService.editInventoryItem(this.inventoryItem.id, changedData
+
+    this.inventoryService.editInventoryItem(
+      this.inventoryItem.id,
+      changedData
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');

@@ -121,20 +121,10 @@ export class InventoryOrderComponent implements OnInit {
    */
   public async inventoryOrder(): Promise<void> {
     this.inventoryService.getInventoryItemByName(this.inventoryOrderForm.controls['itemName'].value).subscribe({
+      // case: existing inventory item => edit
       next: res => {
         this.inventoryItem = res;
-        // case: no existing inventory item => create
-        if (this.inventoryItem === null) {
-          const name = this.inventoryOrderForm.value.itemName;
-          const description = '';
-          const quantity = this.inventoryOrderForm.value.quantity;
-          this.inventoryService.createInventoryItem(name, description, quantity).subscribe({
-            error: error => {
-              console.error('There was an error!', error);
-            },
-          });
-        //case: existing inventory item => edit
-        } else if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
+        if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
           this.inventoryService.editInventoryItem(
             this.inventoryItem.id, {quantity: (+this.inventoryItem.quantity + +this.order.quantity)}
           ).subscribe({
@@ -146,7 +136,7 @@ export class InventoryOrderComponent implements OnInit {
 
         // change order status to inventoried and update item name
         this.orderService.updateOrderData(this.order.id, {
-          itemName: this.inventoryOrderForm.value.itemName,
+          itemName: this.inventoryOrderForm.controls['itemName'].value,
           status: OrderStatus.inventoried,
         }).subscribe({
           next: () => {
@@ -155,10 +145,35 @@ export class InventoryOrderComponent implements OnInit {
           error: error => {
             console.error('There was an error!', error);
           }
-        })
+        });
       },
       error: error => {
-        console.error('There was an error!', error);
+        // case: no existing inventory item => create
+        if (error.status === 404) {
+          const name = this.inventoryOrderForm.controls['itemName'].value;
+          const description = '';
+          const quantity = this.inventoryOrderForm.controls['quantity'].value;
+          this.inventoryService.createInventoryItem(name, description, quantity).subscribe({
+            error: error => {
+              console.error('There was an error!', error);
+            },
+          });
+
+          // change order status to inventoried and update item name
+          this.orderService.updateOrderData(this.order.id, {
+            itemName: this.inventoryOrderForm.controls['itemName'].value,
+            status: OrderStatus.inventoried,
+          }).subscribe({
+            next: () => {
+              this.activeModal.close(`inventoried ${this.order.id}`)
+            },
+            error: error => {
+              console.error('There was an error!', error);
+            }
+          });
+        } else {
+          console.error('There was an error!', error);
+        }
       },
     });
   }

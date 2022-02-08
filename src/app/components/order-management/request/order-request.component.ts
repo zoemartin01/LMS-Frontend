@@ -77,7 +77,7 @@ export class OrderRequestComponent implements OnInit {
    * Checks url of item to order against urls of whitelisted retailers
    */
   public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
-    this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.value.url).subscribe({
+    this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.controls['url'].value).subscribe({
       next: res => {
         this.linkWarning = res.isWhitelisted;
       },
@@ -93,9 +93,9 @@ export class OrderRequestComponent implements OnInit {
   public async requestOrder(): Promise<void> {
     if (this.requestOrderForm.valid) {
       this.orderService.requestOrder(
-        this.requestOrderForm.value.itemName,
-        this.requestOrderForm.value.quantity,
-        this.requestOrderForm.value.url
+        this.requestOrderForm.controls['itemName'].value,
+        this.requestOrderForm.controls['quantity'].value,
+        this.requestOrderForm.controls['url'].value
       ).subscribe({
         next: (orderRequest: Order) => {
           if (orderRequest.id !== null) {
@@ -111,6 +111,7 @@ export class OrderRequestComponent implements OnInit {
     } else {
       this.requestOrderError = true;
       this.requestOrderErrorMessage = 'Invalid form values';
+      console.error('Invalid form values');
     }
   }
 }

@@ -37,6 +37,7 @@ export class GlobalSettingsComponent implements OnInit {
     "static.safety_instructions": new FormControl(''),
     "static.lab_rules": new FormControl(''),
     "static.faq": new FormControl(''),
+    "static.faq_admin": new FormControl(''),
   });
 
   /**
