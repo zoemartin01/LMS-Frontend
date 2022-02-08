@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TimespanId} from "../../../../types/aliases/timespan-id";
 
 @Component({
   selector: 'app-timeslot-edit',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timeslot-edit.component.scss']
 })
 export class TimeslotEditComponent implements OnInit {
+  @Input() timeslotId: TimespanId = '';
+  @Output() closeForm = new EventEmitter<boolean>();
 
   constructor() { }
 

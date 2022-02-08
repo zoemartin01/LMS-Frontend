@@ -61,11 +61,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <a class="nav-item" *ngIf="authService.isAdmin()">
-    <a (click)="openAppointmentEditForm()">
-      <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-   </a>
-  </a>
   <a (click)="openAppointmentDeletionDialog()">
     <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
   </a>

@@ -5,7 +5,6 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
-import { AppointmentEditComponent } from "../edit/appointment-edit.component";
 
 import { AppointmentService } from "../../../services/appointment.service";
 import { AuthService } from "../../../services/auth.service";
@@ -24,8 +23,6 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the appointment view page
- *
- *
  */
 export class AppointmentViewComponent implements OnInit {
   @Input() appointmentId: string = '';
@@ -119,21 +116,6 @@ export class AppointmentViewComponent implements OnInit {
         console.error('There was an error!', error);
       }
     })
-  }
-
-  /**
-   * Opens appointment edit form
-   */
-  public openAppointmentEditForm(): void {
-    const modal = this.modalService.open(AppointmentEditComponent);
-    modal.componentInstance.appointment.id = this.appointment.id;
-    modal.result.then((result) => {
-      if (result !== 'aborted') {
-        this.getAppointmentData();
-      }
-    });
-
-    this.closeForm.emit(true);
   }
 
   /**

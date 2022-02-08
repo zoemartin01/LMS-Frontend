@@ -50,7 +50,7 @@ export class AppointmentCreateComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
-#   */
+   */
   constructor(
     public appointmentService: AppointmentService,
   ) {

@@ -1,1 +1,61 @@
-<p>timeslot-delete works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Delete Timeslot</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="timeslotDeleteForm">
+    <div class="form-group row">
+      <div class="col">
+        <label for="type" class="my-1">Type</label>
+        <div class="input-group">
+          <select class="form-select" id="type" formControlName="type">
+            <option value="2">available</option>
+            <option value="3">unavailable</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="room" class="my-1">Room</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="Room" aria-describedby="inputGroupPrepend"
+               id="room" formControlName="room">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="date" class="my-1">Date</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="Date" aria-describedby="inputGroupPrepend"
+               id="date" formControlName="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startHour" class="my-1">Start</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="Start" aria-describedby="inputGroupPrepend"
+               id="startHour" formControlName="startHour">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="endHour" class="my-1">End</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="End" aria-describedby="inputGroupPrepend"
+               id="endHour" formControlName="endHour">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="timeSlotRecurrence" class="my-1">Recurrence</label>
+      <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
+        <option value="1">single</option>
+        <option value="2">daily</option>
+        <option value="3">weekly</option>
+        <option value="3">monthly</option>
+        <option value="3">yearly</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="deleteTimeslot()">Delete Single Timeslot</button>
+  <button *ngIf="timeslot.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteTimeslotSeries()">Delete Timeslot Series</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
+</div>

@@ -157,15 +157,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'room/:id',
-    canActivate: [AuthGuard, AdminGuard],
-    component: RoomViewComponent,
-    pathMatch: 'full',
-    data: {
-      title: 'View Room'
-    }
-  },
-  {
     path: 'room/:id/timeslots',
     canActivate: [AuthGuard, AdminGuard],
     component: TimeslotsListComponent,

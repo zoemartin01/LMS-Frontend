@@ -64,11 +64,16 @@ export const environment = {
     rooms: {
       getAllRooms: '/rooms',
       getSingleRoom: '/rooms/:id',
+      getTimeslot: '/rooms/:id/timeslot/:timeslotId',
       getRoomCalendar: '/rooms/:id/calendar',
+      getAvailabilityCalendar: '/rooms/:id/availability-calendar',
 
       createRoom: '/rooms',
       updateRoom: '/rooms/:id',
       deleteRoom: '/rooms/:id',
+
+      getAllAvailableTimeslotsForRoom: '/rooms/:roomId/timeslots/available',
+      getAllUnavailableTimeslotsForRoom: '/rooms/:roomId/timeslots/unavailable',
 
       createTimeslot: '/rooms/:roomId/timeslots',
       deleteTimeslot: '/rooms/:roomId/timeslots/:timeslotId',

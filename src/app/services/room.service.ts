@@ -59,6 +59,27 @@ export class RoomService {
   }
 
   /**
+   * Gets a single timespan
+   *
+   * @param {RoomId} roomId id of room
+   * @param {TimespanId} timeslotId id of timespan
+   */
+  public getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    if (timeslotId === null) {
+      throw ParseArgumentException;
+    }
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getTimeslot
+      .replace(':id', roomId).replace(':timeslotId', timeslotId)}`;
+
+    return this.httpClient.get<RoomTimespan>(apiURL);
+  }
+
+  /**
    * Creates room with data
    *
    * @param {string} name name of room
@@ -189,7 +210,62 @@ export class RoomService {
       .replace(':id', roomId)}${dateString}`;
 
     return this.httpClient.get<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }>(apiURL);
+  }
 
+  /**
+   * Get data of room to easily display calendar of availabilities
+   *
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {number|null} date date contained in week the calendar should be shown
+   */
+  public getAvailabilityCalendar(roomId: RoomId, date: number|null = null)
+    : Observable<string[][]> {
+    if (roomId === null) {
+      throw ParseArgumentException;
+    }
+
+    const dateString = date === null ? '' : `?date=${date}`;
+
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
+      .replace(':id', roomId)}${dateString}`;
+
+    return this.httpClient.get<string[][]>(apiURL);
+  }
+
+  /**
+   * Get array of all available timeslots of a room
+   *
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
+   */
+  public getAvailableTimeslots(
+    roomId: RoomId,
+    limit: number = 0,
+    offset: number = 0
+  ): Observable<PagedResponse<RoomTimespan>> {
+    let apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllAvailableTimeslotsForRoom
+        .replace(':roomId', <string>roomId)}?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<RoomTimespan>>(apiURL);
+  }
+
+  /**
+   * Get array of all unavailable timeslots of a room
+   *
+   * @param {RoomId} roomId id of room for which the calendar should be shown
+   * @param {number} limit maximum of loaded entities per request
+   * @param {number} offset start of loaded entities per request
+   */
+  public getUnavailableTimeslots(
+    roomId: RoomId,
+    limit: number = 0,
+    offset: number = 0
+  ): Observable<PagedResponse<RoomTimespan>> {
+    let apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAllUnavailableTimeslotsForRoom
+      .replace(':roomId', <string>roomId)}?limit=${limit}&offset=${offset}`;
+
+    return this.httpClient.get<PagedResponse<RoomTimespan>>(apiURL);
   }
 
   /**
