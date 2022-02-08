@@ -30,6 +30,8 @@ export class AppointmentCreateComponent implements OnInit {
   public appointmentCreateForm: FormGroup = new FormGroup({
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
+    safetyInstructions: new FormControl(false, Validators.requiredTrue),
+    hwlabRules: new FormControl(false, Validators.requiredTrue),
   });
   public recurringAppointmentCreateForm: FormGroup = new FormGroup({
     timeSlotRecurrence: new FormControl(''),
@@ -47,6 +49,8 @@ export class AppointmentCreateComponent implements OnInit {
   public force = false;
   public timeslotConflict = false;
   public timeslotConflictMessage = '';
+  public hasError = false;
+  public hasErrorMessage = '';
 
   /**
    * Constructor
@@ -97,6 +101,7 @@ export class AppointmentCreateComponent implements OnInit {
    */
   public async createAppointment(): Promise<void> {
     if (this.appointmentCreateForm.valid) {
+      this.hasError = false;
       const day = moment(this.date).minutes(0).seconds(0);
 
       if (!this.isRecurring) {
@@ -140,6 +145,10 @@ export class AppointmentCreateComponent implements OnInit {
         });
       }
     } else {
+      if (this.appointmentCreateForm.controls['safetyInstructions'].invalid || this.appointmentCreateForm.controls['hwlabRules'].invalid) {
+        this.hasError = true;
+        this.hasErrorMessage = 'Please accept the safety instructions and the hwlab rules.';
+      }
       console.log('Invalid form data')
     }
   }
