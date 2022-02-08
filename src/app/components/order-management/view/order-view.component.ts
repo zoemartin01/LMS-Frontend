@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {OrderDeleteComponent} from "../delete/order-delete.component";
-import {OrderEditComponent} from "../edit/order-edit.component";
+import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
+import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderEditComponent } from "../edit/order-edit.component";
 
-import {OrderService} from "../../../services/order.service";
+import { AuthService } from "../../../services/auth.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
-import {AuthService} from "../../../services/auth.service";
+import { Order } from "../../../types/order";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-order-view',
