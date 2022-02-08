@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AdminService } from "../../../services/admin.service";
-import { UserService } from "../../../services/user.service";
+import {AdminService} from "../../../services/admin.service";
+import {UserService} from "../../../services/user.service";
 
-import { User } from "../../../types/user";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {User} from "../../../types/user";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {AuthService} from "../../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-delete',
@@ -42,11 +44,13 @@ export class UserDeleteComponent implements OnInit {
   /**
    * Constructor
    * @constructor
+   * @param router
+   * @param {AuthService} authService service providing authentication functionalities
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public userService : UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public router : Router, public authService: AuthService, public userService: UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
     this.userDeleteForm.disable();
   }
 
@@ -76,6 +80,21 @@ export class UserDeleteComponent implements OnInit {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      this.userService.getUserDetails().subscribe({
+        next: res => {
+          this.user = res;
+
+          this.userDeleteForm.controls['firstName'].setValue(res.firstName);
+          this.userDeleteForm.controls['lastName'].setValue(res.lastName);
+          this.userDeleteForm.controls['email'].setValue(res.email);
+          this.userDeleteForm.controls['role'].setValue(res.role);
+          this.userDeleteForm.controls['notificationChannel'].setValue(res.notificationChannel);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
     }
   }
 
@@ -83,10 +102,12 @@ export class UserDeleteComponent implements OnInit {
    * Deletes user
    */
   public async deleteUser(): Promise<void> {
-    if (this.user.id != null) {
+    if (this.user.id != null && this.user.id != this.authService.getUserId()) {
       this.adminService.deleteUser(this.user.id).subscribe({
         next: () => {
           this.activeModal.close('deleted');
+          this.router.navigateByUrl("/");
+          localStorage.clear();
         },
         error: error => {
           console.error('There was an error!', error);
@@ -97,6 +118,8 @@ export class UserDeleteComponent implements OnInit {
     this.userService.deleteUser().subscribe({
       next: () => {
         this.activeModal.close('deleted');
+        this.router.navigateByUrl("/");
+        localStorage.clear();
       },
       error: error => {
         console.error('There was an error!', error);
