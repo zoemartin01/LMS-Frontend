@@ -1,8 +1,9 @@
 import * as moment from "moment";
 
-import { TimespanId } from "./aliases/timespan-id";
 import { Room } from "./room";
+import { TimespanId } from "./aliases/timespan-id";
 import { RoomTimespanType } from "./enums/timespan-type";
+import { SeriesId } from "./aliases/series-id";
 
 export interface RoomTimespan {
   id: TimespanId,
@@ -10,7 +11,8 @@ export interface RoomTimespan {
   start: moment.Moment|null,
   end: moment.Moment|null,
   type: RoomTimespanType,
-  timeSlotRecurrence: number, //@todo fix
+  timeSlotRecurrence: number,
+  seriesId: SeriesId,
   maxStart: moment.Moment|undefined,
   amount: number,
 }

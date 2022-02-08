@@ -1,13 +1,16 @@
 <div class="modal-header">
-  <h4 class="modal-title">View Appointment</h4>
+  <h4 class="modal-title">View Timeslot</h4>
 </div>
 <div class="modal-body">
-  <form [formGroup]="appointmentViewForm">
+  <form [formGroup]="timeslotViewForm">
     <div class="form-group row" *ngIf="authService.isAdmin()">
       <div class="col">
-        <label for="user" class="my-1">User</label>
+        <label for="type" class="my-1">Type</label>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="User" id="user" formControlName="user">
+          <select class="form-select" id="type" formControlName="type">
+            <option value="2">available</option>
+            <option value="3">unavailable</option>
+          </select>
         </div>
       </div>
     </div>
@@ -39,15 +42,6 @@
                id="endHour" formControlName="endHour">
       </div>
     </div>
-
-    <div class="form-group">
-      <label for="confirmationStatus" class="my-1">Confirmation Status</label>
-      <select class="form-select" id="confirmationStatus" formControlName="confirmationStatus">
-        <option value="1">pending</option>
-        <option value="2">accepted</option>
-        <option value="3">denied</option>
-      </select>
-    </div>
     <div class="form-group">
       <label for="timeSlotRecurrence" class="my-1">Recurrence</label>
       <select class="form-select" id="timeSlotRecurrence" formControlName="timeSlotRecurrence">
@@ -58,10 +52,16 @@
         <option value="3">yearly</option>
       </select>
     </div>
+    <div class="form-group" *ngIf="timeslot.timeSlotRecurrence !== 1">
+      <label for="amount" class="my-1">Amount</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="End" id="amount" formControlName="amount">
+      </div>
+    </div>
   </form>
 </div>
 <div class="modal-footer">
-  <a (click)="openAppointmentDeletionDialog()">
+  <a (click)="openTimeslotDeletionDialog()">
     <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
   </a>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')">
