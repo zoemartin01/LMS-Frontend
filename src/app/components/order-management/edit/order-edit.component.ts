@@ -141,8 +141,11 @@ export class OrderEditComponent implements OnInit {
    * Changes data of order
    */
   public async editOrder(): Promise<void> {
-    this.orderService.updateOrderData(this.order.id, this.utilityService.getDirtyValues(this.orderEditForm)
-    ).subscribe({
+    const changedData = this.utilityService.getDirtyValues(this.orderEditForm);
+    if (this.orderEditForm.controls['status'].dirty) {
+      changedData['status'] = +changedData['status'];
+    }
+    this.orderService.updateOrderData(this.order.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
