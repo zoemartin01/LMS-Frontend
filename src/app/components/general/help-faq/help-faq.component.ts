@@ -1,26 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from "../../../services/auth.service";
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
-  selector: 'app-help-faq',
-  templateUrl: './help-faq.component.html',
-  styleUrls: ['./help-faq.component.scss']
+  selector: 'app-faq',
+  template: '<div markdown [data]="content" class="markdown"></div>',
 })
 
 /**
- * Component for the help & faq page
- *
- *
+ * Component for the faq
+ * @typedef {Component} HelpFaqComponent
+ * @class
  */
-export class HelpFaqComponent {
+export class HelpFaqComponent implements OnInit {
+  public content = "";
 
   /**
-   * Constructor
-   * @constructor
-   * @param {AuthService} authService service providing appointment functionalities
+   * constructor
+   * @param {AdminService} adminService service that provides admin functionalities
    */
-  constructor(public authService: AuthService) {
+  constructor(public adminService: AdminService) {
   }
 
+  /**
+   * Inits page
+   */
+  ngOnInit(): void {
+    this.adminService.getGlobalSettings().subscribe(
+      (data) => {
+        this.content = data.find(x => x.key === "static.faq")?.value ?? "";
+      });
+  }
 }

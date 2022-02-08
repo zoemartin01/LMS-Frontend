@@ -20,8 +20,12 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  */
 export class UserEditComponent implements OnInit {
   public userEditForm: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+    firstName: new FormControl('', [
+      Validators.required,
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+    ]),
     email: new FormControl('', [
       Validators.email,
     ]),
@@ -30,8 +34,6 @@ export class UserEditComponent implements OnInit {
     role: new FormControl(0),
     notificationChannel: new FormControl(''),
   });
-  registerError: boolean = false;
-  registerErrorMessage: string = '';
   passwordConfirmationFails: boolean = false;
   public user: User = {
     id: null,
@@ -114,5 +116,13 @@ export class UserEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
+  }
+
+  /**
+   * Checks if password and password confirmation match
+   */
+  public checkPasswordConfirmation() {
+    this.passwordConfirmationFails = !(this.userEditForm.value.password === this.userEditForm.value.password_confirmation
+      || this.userEditForm.value.password_confirmation === '');
   }
 }
