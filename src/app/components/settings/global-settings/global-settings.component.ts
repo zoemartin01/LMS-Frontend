@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
-import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
-import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
-import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
+import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { GlobalSetting } from "../../../types/global-setting";
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
-import { PagedList } from 'src/app/types/paged-list';
-import { UtilityService } from "../../../services/utility.service";
+import {GlobalSetting} from "../../../types/global-setting";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
+import {PagedList} from 'src/app/types/paged-list';
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -38,6 +38,7 @@ export class GlobalSettingsComponent implements OnInit {
     "static.homepage": new FormControl(''),
     "static.safety_instructions": new FormControl(''),
     "static.lab_rules": new FormControl(''),
+    "static.faq": new FormControl(''),
   });
 
   /**
@@ -116,16 +117,18 @@ export class GlobalSettingsComponent implements OnInit {
     if (this.globalSettingsForm.valid) {
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        if (key == 'recording.auto_delete') {
-          changedFields.push({
-            key,
-            value: this.globalSettingsForm.controls[key].value * 86400000,
-          });
-        } else {
-          changedFields.push({
-            key,
-            value: this.globalSettingsForm.controls[key].value,
-          });
+        if (this.globalSettingsForm.controls[key].value != "") {
+          if (key == 'recording.auto_delete') {
+            changedFields.push({
+              key,
+              value: this.globalSettingsForm.controls[key].value * 86400000,
+            });
+          } else {
+            changedFields.push({
+              key,
+              value: this.globalSettingsForm.controls[key].value,
+            });
+          }
         }
       }
 
