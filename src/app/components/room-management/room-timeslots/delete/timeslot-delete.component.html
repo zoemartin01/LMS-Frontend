@@ -58,6 +58,6 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="deleteTimeslot()">Delete Single Timeslot</button>
-  <button *ngIf="timeslot.timeSlotRecurrence!==1" type="button" class="btn btn-danger" (click)="deleteTimeslotSeries()">Delete Timeslot Series</button>
+  <button *ngIf="timeslot.timeSlotRecurrence !== 1" type="button" class="btn btn-danger" (click)="deleteTimeslotSeries()">Delete Timeslot Series</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

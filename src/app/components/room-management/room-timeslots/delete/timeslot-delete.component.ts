@@ -68,7 +68,7 @@ export class TimeslotDeleteComponent implements OnInit {
    * Deletes timeslot
    */
   public async deleteTimeslot(): Promise<void> {
-    this.roomService.deleteAvailableTimeslot(this.timeslot.id).subscribe({
+    this.roomService.deleteTimeslot(this.timeslot.room.id, this.timeslot.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
@@ -82,7 +82,7 @@ export class TimeslotDeleteComponent implements OnInit {
    * Deletes timeslot series
    */
   public async deleteTimeslotSeries(): Promise<void> {
-    this.roomService.deleteAvailableTimeslot(this.timeslot.seriesId).subscribe({
+    this.roomService.deleteTimeslotSeries(this.timeslot.room.id, this.timeslot.seriesId).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
