@@ -27,7 +27,7 @@
                  formControlName="password_confirmation" autocomplete="password"
                  (change)="checkPasswordConfirmation()">
           <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails">
-            <b>Password confirmation has to match password</b><br>
+            <b>Password confirmation must match password</b><br>
           </div>
         </div>
         <br>
