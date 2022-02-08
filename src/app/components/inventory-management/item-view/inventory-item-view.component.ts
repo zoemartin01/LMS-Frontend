@@ -9,6 +9,7 @@ import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import {OrderRequestComponent} from "../../order-management/request/order-request.component";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-inventory-item-view',
@@ -37,11 +38,13 @@ export class InventoryItemViewComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {AuthService} authService service authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public inventoryService: InventoryService,
+    public authService: AuthService,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal
   ) {
@@ -101,6 +104,9 @@ export class InventoryItemViewComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens order creation form for inventory item
+   */
   public openOrderCreationForm(): void {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
