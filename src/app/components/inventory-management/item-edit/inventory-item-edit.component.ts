@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
@@ -35,9 +34,8 @@ export class InventoryItemEditComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
-   * @param {ActivatedRoute} route route that activated this component
    */
-  constructor(public inventoryService: InventoryService,  public activeModal: NgbActiveModal, private route: ActivatedRoute) {
+  constructor(public inventoryService: InventoryService,  public activeModal: NgbActiveModal) {
   }
 
   /**
