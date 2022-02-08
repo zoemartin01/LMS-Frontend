@@ -52,6 +52,12 @@
         <option value="3">yearly</option>
       </select>
     </div>
+    <div class="form-group" *ngIf="timeslot.timeSlotRecurrence !== 1">
+      <label for="amount" class="my-1">Amount</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="End" id="amount" formControlName="amount">
+      </div>
+    </div>
   </form>
 </div>
 <div class="modal-footer">

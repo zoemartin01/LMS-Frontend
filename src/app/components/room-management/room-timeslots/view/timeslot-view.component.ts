@@ -46,6 +46,7 @@ export class TimeslotViewComponent implements OnInit {
     endHour: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
+    amount: new FormControl(1, Validators.required),
   });
   public dirty: boolean = true;
 
@@ -91,6 +92,7 @@ export class TimeslotViewComponent implements OnInit {
         this.timeslotViewForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
         this.timeslotViewForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.timeslotViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+        this.timeslotViewForm.controls['amount'].setValue(res.amount);
       },
       error: error => {
         console.error('There was an error!', error);

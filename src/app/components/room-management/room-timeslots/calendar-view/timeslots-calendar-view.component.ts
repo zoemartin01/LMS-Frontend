@@ -201,6 +201,7 @@ export class TimeslotsCalendarViewComponent implements OnInit {
     this.action = '';
     const modal = this.modalService.open(TimeslotDeleteComponent);
     modal.componentInstance.timeslot.id = timeslotId;
+    modal.componentInstance.timeslot.room.id = this.room.id;
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.updateCalendar();

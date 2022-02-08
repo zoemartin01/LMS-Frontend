@@ -20,14 +20,13 @@ import { RoomTimespanType } from "../../../../types/enums/timespan-type";
  */
 export class TimeslotDeleteComponent implements OnInit {
   public timeslotDeleteForm: FormGroup = new FormGroup({
-    user: new FormControl('', Validators.required),
+    type: new FormControl('', Validators.required),
     room: new FormControl('', Validators.required),
     startHour: new FormControl('', Validators.required),
     endHour: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
     amount: new FormControl(1, Validators.required),
-    lastDate: new FormControl('', Validators.required),
   })
   public timeslot: RoomTimespan = {
     id: null,
@@ -110,6 +109,7 @@ export class TimeslotDeleteComponent implements OnInit {
         this.timeslotDeleteForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
         this.timeslotDeleteForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.timeslotDeleteForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+        this.timeslotDeleteForm.controls['amount'].setValue(res.amount);
       },
       error: error => {
         console.error('There was an error!', error);
