@@ -14,6 +14,8 @@ import { UserService } from "../../../services/user.service";
 import { Order } from "../../../types/order";
 import { OrderId } from "../../../types/aliases/order-id";
 import { PagedList } from "../../../types/paged-list";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {InventoryOrderComponent} from "../inventory-order/inventory-order.component";
 
 @Component({
   selector: 'app-personal-order-list',
@@ -188,6 +190,21 @@ export class PersonalOrderListComponent implements OnInit {
   }
 
   /**
+   * Opens form to create order
+   *
+   * @param {OrderId} orderId id of order
+   */
+  public openInventoryOrderForm(orderId: OrderId): void {
+    const modal = this.modalService.open(InventoryOrderComponent);
+    modal.componentInstance.order.id = orderId;
+    modal.result.then((result) => {
+      if (result !== 'aborted') {
+        this.getAcceptedOrders(this.acceptedOrders.page);
+      }
+    });
+  }
+
+  /**
    * Helper method to get name of item
    *
    * @param {Order} order order
@@ -197,5 +214,19 @@ export class PersonalOrderListComponent implements OnInit {
       throw ParseArgumentException;
     }
     return ((order.item === null) ? order.itemName : order.item.name);
+  }
+
+  /**
+   * Helper method to make button statements more readable
+   *
+   * @param {Order} order order to check
+   */
+  public canEditAccepted(order: Order): boolean {
+    if (order.status === OrderStatus.pending ||
+      (this.authService.isAdmin() && order.status !== 4 && order.status !== 5)
+    ) {
+      return true;
+    }
+    return false;
   }
 }
