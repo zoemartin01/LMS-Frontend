@@ -91,7 +91,7 @@ export class MessageBoxComponent implements OnInit {
     const pageSize = this.messages.pageSize;
     const offset = (page - 1) * pageSize;
 
-    this.messagingService.getMessages().subscribe({
+    this.messagingService.getMessages(pageSize, offset).subscribe({
       next: (res: PagedResponse<Message>) => {
         this.messages.parse(res, page);
       },
