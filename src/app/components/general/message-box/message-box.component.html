@@ -8,8 +8,8 @@
       <h5 class="card-title">{{ message.title }}</h5>
       <p class="card-text">{{ message.content }}</p>
       <div class="col text-center">
-        <a [routerLink]="message.correspondingUrl" class="btn btn-primary position-relative" role="button"
-        (click)="markMessageAsRead(message.id)" *ngIf="message.correspondingUrl !== null && message.correspondingUrlText !== null">
+        <a (click)="goToCorrespondingPage(message)" class="btn btn-primary position-relative" role="button"
+         *ngIf="message.correspondingUrl !== null && message.correspondingUrlText !== null">
           {{ message.correspondingUrlText }}
         </a><br>
         <button class="btn btn-secondary position-relative" *ngIf="!message.readStatus"

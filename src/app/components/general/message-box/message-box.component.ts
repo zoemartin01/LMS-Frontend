@@ -161,4 +161,16 @@ export class MessageBoxComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Goes to the corresponding page of the specified message and marks it as read
+   * 
+   * @param {string} url url to go to
+   */
+  public goToCorrespondingPage(message: Message): void {
+    if (message.correspondingUrl !== null) {
+      this.markMessageAsRead(message.id);
+      this.router.navigateByUrl(message.correspondingUrl);
+    }
+  }
 }
