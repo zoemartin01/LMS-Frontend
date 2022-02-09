@@ -54,7 +54,7 @@ export class LoginComponent {
           this.authService.setUserId(res.userId);
           this.authService.setUserRole(<UserRole><unknown>res.role);
 
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard').then(() => location.reload());
         },
         error: error => {
           this.loginError = true;
