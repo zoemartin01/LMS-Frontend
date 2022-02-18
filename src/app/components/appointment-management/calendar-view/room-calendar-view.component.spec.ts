@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Injectable } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -165,6 +165,28 @@ class MockRoomService {
       observer.next({ calendar, minTimeslot: 9 });
     });
   }
+
+  getRoomData(roomId: string): Observable<Room> {
+    return new Observable((observer) => {
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error({
+          error: {
+            error: {
+              message: 'Unknown error.',
+            }
+          }
+        });
+      }
+
+      observer.next({
+        "id": roomId,
+        "name": "Bacon",
+        "description": "Quaerat et quia deleniti.",
+        "maxConcurrentBookings": 2,
+        "autoAcceptBookings": true,
+      });
+    });
+  }
 }
 
 describe('RoomCalendarViewComponent - regular methods', () => {
@@ -214,14 +236,13 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     };
 
     const getRoomsMethod = spyOn(component, 'getRooms');
-    const updateCalendarMethod = spyOn(component, 'updateCalendar');
+    const changeRoomMethod = spyOn(component, 'changeRoom');
     const setWeekMethod = spyOn(component, 'setWeek');
 
     component.ngOnInit();
 
     expect(getRoomsMethod).toHaveBeenCalled();
-    expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
-    expect(updateCalendarMethod).toHaveBeenCalled();
+    expect(changeRoomMethod).toHaveBeenCalledWith('59f1589d-197c-4f53-bfc1-4c57aae14c42');
     expect(setWeekMethod).toHaveBeenCalled();
   });
 
@@ -292,7 +313,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(consoleError).toHaveBeenCalled();
   });
 
-  it('should change room id', () => {
+  it('should change room id', fakeAsync(() => {
     component.room.id = '59f1589d-197c-4f53-bfc1-4c57aae14c42';
     expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
 
@@ -300,9 +321,12 @@ describe('RoomCalendarViewComponent - regular methods', () => {
 
     component.changeRoom('a84f7b38-b78e-4e32-bff3-cfe3f263dba1');
 
+    tick();
+
     expect(component.room.id).toBe('a84f7b38-b78e-4e32-bff3-cfe3f263dba1');
+    expect(component.columnKeys).toEqual([0, 1]);
     expect(updateCalendarMethod).toHaveBeenCalled();
-  });
+  }));
 
   it('should check if object is an appointment', () => {
     expect(component.isAppointment({

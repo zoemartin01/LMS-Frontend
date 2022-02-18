@@ -70,8 +70,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.getRooms();
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
-        this.room.id = params['id'];
-        this.updateCalendar();
+        this.changeRoom(params['id']);
       }
 
       if (params['date'] !== undefined) {
@@ -132,7 +131,6 @@ export class RoomCalendarViewComponent implements OnInit {
     this.roomService.getRoomsData().subscribe({
       next: (rooms: PagedResponse<Room>) => {
         this.rooms = rooms.data;
-        this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
       },
       error: error => {
         console.error('There was an error!', error);
@@ -143,9 +141,17 @@ export class RoomCalendarViewComponent implements OnInit {
   /**
    * Gets all rooms
    */
-  public changeRoom(roomId: string): void {
-    this.room.id = roomId;
-    this.updateCalendar();
+  public async changeRoom(roomId: string): Promise<void> {
+    this.roomService.getRoomData(roomId).subscribe({
+      next: (room: Room) => {
+        this.room = room;
+        this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
+        this.updateCalendar();
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
