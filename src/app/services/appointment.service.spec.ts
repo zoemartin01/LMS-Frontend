@@ -28,7 +28,7 @@ describe('AppointmentService', () => {
   });
 
   it('should get all pending appointments', () => {
-    service.getAllAppointments(ConfirmationStatus.pending).subscribe(
+    service.getAllAppointments(0,0,ConfirmationStatus.pending).subscribe(
       res => {
         expect(res).toEqual({
           total: 5,
@@ -178,7 +178,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}?limit=0&offset=0&confirmationStatus=1`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -331,7 +331,7 @@ describe('AppointmentService', () => {
 
 
   it('should get all accepted appointments', () => {
-    service.getAllAppointments(ConfirmationStatus.accepted).subscribe(
+    service.getAllAppointments(0,0,ConfirmationStatus.accepted).subscribe(
       res => {
         expect(res).toEqual({
           total: 2,
@@ -397,7 +397,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}?limit=0&offset=0&confirmationStatus=2`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -466,7 +466,7 @@ describe('AppointmentService', () => {
 
 
   it('should get all declined appointments', () => {
-    service.getAllAppointments(ConfirmationStatus.denied).subscribe(
+    service.getAllAppointments(0,0,ConfirmationStatus.denied).subscribe(
       res => {
         expect(res).toEqual({
           total: 1,
@@ -503,7 +503,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}?limit=0&offset=0&confirmationStatus=3`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -542,7 +542,7 @@ describe('AppointmentService', () => {
   });
 
   it('should get all declined appointments', () => {
-    service.getAllAppointments(ConfirmationStatus.denied).subscribe(
+    service.getAllAppointments(0, 0, ConfirmationStatus.denied).subscribe(
       res => {
         expect(res).toEqual({
           total: 1,
@@ -579,7 +579,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}?limit=0&offset=0&confirmationStatus=3`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -656,7 +656,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}?limit=0&offset=0`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -696,7 +696,7 @@ describe('AppointmentService', () => {
 
 
   it('should get all appointments for one specific room', () => {
-    service.getAllAppointmentsForRoom("c7231328-203e-43f5-9ac1-d374d90484ac").subscribe(
+    service.getAllAppointmentsForRoom("c7231328-203e-43f5-9ac1-d374d90484ac",0,0).subscribe(
       res => {
         expect(res).toEqual({
           total: 1,
@@ -733,7 +733,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments}`.replace('id', 'c7231328-203e-43f5-9ac1-d374d90484ac'));
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments}?limit=0&offset=0`.replace(':id', 'c7231328-203e-43f5-9ac1-d374d90484ac'));
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -807,7 +807,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getSingleAppointment}`.replace('id', '3f7af855-ad57-4a4c-81e7-769ba90f9e76'));
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getSingleAppointment}`.replace(':id', '3f7af855-ad57-4a4c-81e7-769ba90f9e76'));
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -843,7 +843,7 @@ describe('AppointmentService', () => {
 
 
   it('should get all appointments of a specific series', () => {
-    service.getAllAppointmentsForSeries("eef5fadc-53d9-4a49-83be-e55b2f94bb8e").subscribe(
+    service.getAllAppointmentsForSeries("eef5fadc-53d9-4a49-83be-e55b2f94bb8e",0,0).subscribe(
       res => {
         expect(res).toEqual({
           total: 2,
@@ -909,7 +909,7 @@ describe('AppointmentService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments}`.replace('id', "eef5fadc-53d9-4a49-83be-e55b2f94bb8e"));
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getSeriesAppointments}?limit=0&offset=0`.replace(':id', "eef5fadc-53d9-4a49-83be-e55b2f94bb8e"));
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -973,6 +973,96 @@ describe('AppointmentService', () => {
             notificationChannel: 3
           }
         }]
+    });
+  });
+
+
+  it('should create an appointment', () => {
+    service.createAppointment({
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true
+      },
+      moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+    ).subscribe(
+      res => {
+        expect(res).toEqual(
+          {
+            id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
+            start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: null,
+            amount: 1,
+            timeSlotRecurrence: 1,
+            confirmationStatus: 2,
+            maxStart: moment(null, 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          });
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`);
+
+    expect(mockRequest.request.method).toBe('POST');
+    expect(mockRequest.request.body).toEqual({
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true
+      },
+      start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+    });
+
+    mockRequest.flush({
+      id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
+      start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      type: 1,
+      seriesId: null,
+      amount: 1,
+      timeSlotRecurrence: 1,
+      confirmationStatus: 3,
+      maxStart: moment(null, 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true
+      },
+      user: {
+        id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+        email: "admin@test.com",
+        firstName: "Admin",
+        lastName: "Admin",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
+      }
     });
   });
 });
