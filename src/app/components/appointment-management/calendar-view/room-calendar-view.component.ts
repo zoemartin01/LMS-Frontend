@@ -143,11 +143,16 @@ export class RoomCalendarViewComponent implements OnInit {
    * Gets all rooms
    */
   public async changeRoom(roomId: string): Promise<void> {
+    if (roomId === this.room.id) {
+      return;
+    }
+
     this.roomService.getRoomData(roomId).subscribe({
       next: (room: Room) => {
         this.room = room;
         this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
         this.updateCalendar();
+        history.pushState(null, '', `/room-overview/${this.room.id}`);
       },
       error: error => {
         console.error('There was an error!', error);
