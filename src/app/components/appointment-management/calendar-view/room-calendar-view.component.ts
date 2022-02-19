@@ -6,6 +6,7 @@ import * as moment from "moment";
 import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
 import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { SidebarWarningComponent } from "../sidebar-warning/sidebar-warning.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { RoomService } from "../../../services/room.service";
@@ -215,9 +216,13 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {number} slot slot in the calendar
    */
   public openAppointmentCreationForm(day: number, slot: number): void {
-    this.action = 'create';
-    this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
-      .hours(slot + this.minTimeslot));
+    if (this.action === '') {
+      this.action = 'create';
+      this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
+        .hours(slot + this.minTimeslot));
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -226,8 +231,12 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentView(appointmentId: TimespanId): void {
-    this.action = 'view';
-    this.currentAppointmentId = <string>appointmentId;
+    if (this.action === '') {
+      this.action = 'view';
+      this.currentAppointmentId = <string>appointmentId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -236,8 +245,19 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
-    this.action = 'edit';
-    this.currentAppointmentId = <string>appointmentId;
+    if (this.action === '') {
+      this.action = 'edit';
+      this.currentAppointmentId = <string>appointmentId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
+  }
+
+  /**
+   * Shows an error popup that sidebar is already opened
+   */
+  public showSidebarAlreadyOpenError() {
+    this.modalService.open(SidebarWarningComponent);
   }
 
   /**
