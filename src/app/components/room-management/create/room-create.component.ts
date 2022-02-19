@@ -18,7 +18,7 @@ export class RoomCreateComponent {
     name: new FormControl('', [
       Validators.required
     ]),
-    description: new FormControl('', Validators.required),
+    description: new FormControl(''),
     maxConcurrentBookings: new FormControl(1, [
       Validators.required,
       Validators.min(1),
