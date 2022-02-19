@@ -46,11 +46,11 @@ export class UserDeleteComponent implements OnInit {
    * @constructor
    * @param {Router} router router providing navigation
    * @param {AuthService} authService service providing authentication functionalities
-   * @param {AdminService} adminService service providing admin functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public router : Router, public authService: AuthService, public userService: UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public router: Router, public authService: AuthService, public userService: UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
     this.userDeleteForm.disable();
   }
 
@@ -106,6 +106,16 @@ export class UserDeleteComponent implements OnInit {
       this.adminService.deleteUser(this.user.id).subscribe({
         next: () => {
           this.activeModal.close('deleted');
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
+      return;
+    } else {
+      this.userService.deleteUser().subscribe({
+        next: () => {
+          this.activeModal.close('deleted');
           this.router.navigateByUrl("/");
           localStorage.clear();
         },
@@ -113,17 +123,6 @@ export class UserDeleteComponent implements OnInit {
           console.error('There was an error!', error);
         }
       });
-      return;
     }
-    this.userService.deleteUser().subscribe({
-      next: () => {
-        this.activeModal.close('deleted');
-        this.router.navigateByUrl("/");
-        localStorage.clear();
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    });
   }
 }

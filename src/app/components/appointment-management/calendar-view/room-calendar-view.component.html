@@ -101,7 +101,7 @@
           <td class="cal-red" [attr.rowspan]="getRowspan(timespans[day][column])"
               *ngIf="isAppointment(timespans[day][column]) && isConfirmed(timespans[day][column])">
             <a (click)="openAppointmentEditForm(getAppointmentId(timespans[day][column]))"
-               *ngIf="authService.isAdmin()">
+               *ngIf="authService.isAdmin() || authService.getUserId() === parseAppointment(timespans[day][column]).user.id">
               <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
             </a>
             <a (click)="openAppointmentDeletionDialog(getAppointmentId(timespans[day][column]))"

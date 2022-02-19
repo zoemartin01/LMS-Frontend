@@ -4,7 +4,9 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
 import { InventoryItemEditComponent } from "../item-edit/inventory-item-edit.component";
+import { OrderRequestComponent } from "../../order-management/request/order-request.component";
 
+import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
@@ -30,19 +32,22 @@ export class InventoryItemViewComponent implements OnInit {
     description: '',
     quantity: null,
   };
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {AuthService} authService service authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public inventoryService: InventoryService,
+    public authService: AuthService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal) {
+    private modalService: NgbModal
+  ) {
     this.inventoryItemViewForm.disable();
   }
 
@@ -80,6 +85,7 @@ export class InventoryItemViewComponent implements OnInit {
     modal.result.then((result) => {
       if (result !== 'aborted') {
         this.getInventoryItemData();
+        this.dirty = true;
       }
     });
   }
@@ -96,6 +102,15 @@ export class InventoryItemViewComponent implements OnInit {
         this.dirty = true;
       }
     });
+  }
+
+  /**
+   * Opens order creation form for inventory item
+   */
+  public openOrderCreationForm(): void {
+    const modal = this.modalService.open(OrderRequestComponent);
+    modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
+    modal.componentInstance.requestOrderForm.controls['itemName'].disable();
   }
 
 }

@@ -91,7 +91,7 @@ export class MessageBoxComponent implements OnInit {
     const pageSize = this.messages.pageSize;
     const offset = (page - 1) * pageSize;
 
-    this.messagingService.getMessages().subscribe({
+    this.messagingService.getMessages(pageSize, offset).subscribe({
       next: (res: PagedResponse<Message>) => {
         this.messages.parse(res, page);
       },
@@ -160,5 +160,17 @@ export class MessageBoxComponent implements OnInit {
         console.error('There was an error!', error);
       }
     });
+  }
+
+  /**
+   * Goes to the corresponding page of the specified message and marks it as read
+   * 
+   * @param {string} url url to go to
+   */
+  public goToCorrespondingPage(message: Message): void {
+    if (message.correspondingUrl !== null) {
+      this.markMessageAsRead(message.id);
+      this.router.navigateByUrl(message.correspondingUrl);
+    }
   }
 }

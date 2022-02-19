@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
@@ -39,7 +39,11 @@ export class InventoryItemEditComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -71,9 +75,15 @@ export class InventoryItemEditComponent implements OnInit {
    * Changes data of inventory item
    */
   public async editInventoryItemData(): Promise<void> {
+    let changedData = this.utilityService.getDirtyValues(this.inventoryItemEditForm);
+
+    if (this.inventoryItemEditForm.controls['quantity'].dirty) {
+      changedData['quantity'] = +changedData['quantity'];
+    }
+
     this.inventoryService.editInventoryItem(
       this.inventoryItem.id,
-      this.utilityService.getDirtyValues(this.inventoryItemEditForm)
+      changedData
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
