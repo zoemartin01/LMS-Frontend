@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { InventoryOrderComponent } from "../inventory-order/inventory-order.component";
+import { InventoryOrderComponent } from "../inventory/inventory-order.component";
 import { OrderDeleteComponent } from "../delete/order-delete.component";
 import { OrderEditComponent } from "../edit/order-edit.component";
 import { OrderRequestComponent } from "../request/order-request.component";

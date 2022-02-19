@@ -12,7 +12,7 @@ import { HelpFaqComponent } from './components/general/help-faq/help-faq.compone
 import { HomepageComponent } from './components/general/homepage/homepage.component';
 import { HwlabRulesComponent } from './components/general/hwlab-rules/hwlab-rules.component';
 import { InventoryListComponent } from './components/inventory-management/list/inventory-list.component';
-import { InventoryOrderComponent } from './components/order-management/inventory-order/inventory-order.component';
+import { InventoryOrderComponent } from './components/order-management/inventory/inventory-order.component';
 import { LivecamOverviewComponent } from './components/livecam/overview/livecam-overview.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { MessageBoxComponent } from './components/general/message-box/message-box.component';

@@ -2,6 +2,15 @@
   <h1 class="display-3 text-center">All Orders</h1>
 </div>
 
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/orders">My Orders</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page">All Orders</a>
+  </li>
+</ul>
+
 <div class="row">
   <div class="col text-left">
     <a (click)="openOrderCreationForm()" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Request Order</a>
