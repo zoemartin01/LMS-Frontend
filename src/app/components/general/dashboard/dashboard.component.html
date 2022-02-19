@@ -47,7 +47,6 @@
         <span *ngIf="authService.isAdmin()"> As admin you can manage order requests.</span></p>
       <div class="col text-center">
         <a routerLink="/orders" class="btn btn-primary" role="button">My Orders</a>
-        <a routerLink="/orders/request" class="btn btn-primary" role="button">New Order</a>
         <a routerLink="/orders/all" class="btn btn-secondary position-relative" role="button"
            *ngIf="authService.isAdmin()">
           All Orders
