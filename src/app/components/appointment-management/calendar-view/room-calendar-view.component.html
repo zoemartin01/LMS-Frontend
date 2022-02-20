@@ -92,8 +92,8 @@
             <td>{{ minTimeslot + i }}:00 - {{ minTimeslot + i + 1 }}:00</td>
             <ng-container *ngFor="let day of [0,1,2,3,4,5,6]">
             <ng-container *ngFor="let column of columnKeys">
-            <td class="cal-green pointer" *ngIf="timespans[day][column] === 'available'"
-                [attr.colspan]="room.maxConcurrentBookings - column"
+            <td class="cal-green pointer" *ngIf="parseString(timespans[day][column]).split(' ')[0] === 'available'"
+                [attr.colspan]="parseString(timespans[day][column]).split(' ')[0]"
                 (click)="openAppointmentCreationForm(day, i)">
               <i class="bi bi-plus-lg"></i>
             </td>

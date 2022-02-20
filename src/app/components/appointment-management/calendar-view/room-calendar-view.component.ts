@@ -196,6 +196,15 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
+   * Returns object typed as string
+   *
+   * @param {Appointment|string|null} object appointment
+   */
+  public parseString(object: Appointment|string|null): string {
+    return <string>object;
+  }
+
+  /**
    * Returns id of specified appointment
    *
    * @param {Appointment|string|null} object appointment
