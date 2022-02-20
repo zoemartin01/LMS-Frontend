@@ -1025,10 +1025,10 @@ describe('AppointmentService', () => {
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.createAppointment}`);
 
     expect(mockRequest.request.method).toBe('POST');
-    expect(mockRequest.request.body).toEqual({
+      expect(mockRequest.request.body).toEqual({
       roomId: "c7231328-203e-43f5-9ac1-d374d90484ac",
-      start: '2022-02-16T04:00:00.000Z',
-      end: '2022-02-16T05:00:00.000Z',
+      start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(),
+      end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(),
     });
 
     mockRequest.flush({
@@ -1061,8 +1061,10 @@ describe('AppointmentService', () => {
     });
   });
 
-//@TODO why tf 7, 8 equals 8, 9
+
   it('should create an appointment series', () => {
+    console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
+    console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(true));
     service.createAppointmentSeries({
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",
@@ -1145,8 +1147,8 @@ describe('AppointmentService', () => {
     expect(mockRequest.request.method).toBe('POST');
     expect(mockRequest.request.body).toEqual({
       roomId: "c7231328-203e-43f5-9ac1-d374d90484ac",
-      start: '2022-02-15T07:00:00.000Z',
-      end: '2022-02-15T08:00:00.000Z',
+      start: moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(),
+      end: moment("2022-02-15T09:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(),
       timeSlotRecurrence: TimeSlotRecurrence.weekly,
       amount: 2,
       force: false,
