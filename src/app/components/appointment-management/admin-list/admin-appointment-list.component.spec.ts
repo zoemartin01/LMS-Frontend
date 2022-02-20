@@ -15,6 +15,8 @@ import {UserRole} from "../../../types/enums/user-role";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {AppointmentService} from "../../../services/appointment.service";
+import {PagedList} from "../../../types/paged-list";
+import {Message} from "../../../types/message";
 
 
 class MockAppointmentService {
@@ -382,23 +384,29 @@ describe('AdminAppointmentListComponent', () => {
     expect(getDeniedAppointmentsMethod).toHaveBeenCalled();
   }));
 
-  it('should get all pending appointments', () => {
+  it('should get all pending appointments', fakeAsync(() => {
+    /*let pagedListMessages = new PagedList<Appointment>();
+    pagedListMessages.pageSize = 8;*/
+
     component.getPendingAppointments();
+    tick();
 
     expect(getPendingAppointmentsMethod).toHaveBeenCalled();
-  });
+  }));
 
-  it('should get all accepted appointments', () => {
+  it('should get all accepted appointments', fakeAsync(() => {
     component.getAcceptedAppointments();
+    tick();
 
     expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
-  });
+  }));
 
-  it('should get all denied appointments', () => {
+  it('should get all denied appointments', fakeAsync(() => {
     component.getDeniedAppointments();
+    tick();
 
     expect(getDeniedAppointmentsMethod).toHaveBeenCalled();
-  });
+  }));
 
 
   it('should update accepted appointments when accepted appointment is deleted', fakeAsync(() => {
@@ -475,7 +483,7 @@ describe('AdminAppointmentListComponent', () => {
   it('should not update pending and accepted appointments when appointment acceptation is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentDeletionDialog(
+    component.openAppointmentAcceptDialog(
       "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
     );
 
@@ -517,7 +525,115 @@ describe('AdminAppointmentListComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should show error message on get pending appointments error', fakeAsync(() => {
+  it('should update accepted appointments when accepted appointment is viewed and dirty', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'updated');
+
+    component.openAppointmentView(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should not update accepted appointments when accepted appointment is viewed and not dirty', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'aborted');
+
+    component.openAppointmentView(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getAcceptedAppointmentsMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should update declined appointments when declined appointment is viewed and dirty', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'updated');
+
+    component.openAppointmentView(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getDeniedAppointmentsMethod).toHaveBeenCalled();
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should not update declined appointments when declined appointment is viewed and dirty', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'aborted');
+
+    component.openAppointmentView(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getDeniedAppointmentsMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should update accepted and pending appointments when appointment is created', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'created');
+
+    component.openAppointmentCreationForm();
+
+    tick();
+
+    expect(getPendingAppointmentsMethod).toHaveBeenCalled();
+    expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should not update accepted and pending appointments when appointment creation is aborted', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'aborted');
+
+    component.openAppointmentCreationForm();
+
+    tick();
+
+    expect(getPendingAppointmentsMethod).not.toHaveBeenCalled();
+    expect(getAcceptedAppointmentsMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should update accepted appointments when appointment is edited', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'edited');
+
+    component.openAppointmentEditForm(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should not update accepted appointments when appointment edit is aborted', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'aborted');
+
+    component.openAppointmentEditForm(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
+
+    tick();
+
+    expect(getAcceptedAppointmentsMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+
+
+  /*it('should show error message on get pending appointments error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     component.getPendingAppointments();
@@ -525,5 +641,5 @@ describe('AdminAppointmentListComponent', () => {
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
-  }));
+  }));*/
 });
