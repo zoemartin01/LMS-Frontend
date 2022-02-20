@@ -410,7 +410,7 @@ describe('MessageBoxComponent - http functions', () => {
       appointments: 0,
       orders: 0,
       users: 0,
-    });
+  });
 
     component.getUnreadMessagesAmounts();
 
