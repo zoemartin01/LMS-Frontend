@@ -1,9 +1,10 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
+import {TestBed} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
 
-import { AdminService } from './admin.service';
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { environment } from "../../environments/environment";
+import {AdminService} from './admin.service';
+import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {environment} from "../../environments/environment";
+import {NotificationChannel} from "../types/enums/notification-channel";
 
 describe('AdminService', () => {
   let service: AdminService;
@@ -33,30 +34,40 @@ describe('AdminService', () => {
       res => {
         expect(res).toEqual([
           {
-            "key": "static.homepage",
-            "value": "Welcome to TECO",
-            "description": "Homepage Content (in Markdown)"
+            key: "user.max_recordings",
+            value: "5",
+            description: "Maximum Recordings per User"
           },
           {
-            "key": "static.safety_instructions",
-            "value": "Do not act unsafe!",
-            "description": "Static Safety Instructions (in Markdown)"
+            key: "recording.auto_delete",
+            value: "86400000",
+            description: "Time after a recording gets automatically deleted"
           },
           {
-            "key": "static.lab_rules",
-            "value": "Ring the bell only once!",
-            "description": "HWLab Rules (in Markdown)"
+            key: "static.homepage",
+            value: "Here could be the homepage, ask an admin to change the content of this page.",
+            description: "Homepage Content (in Markdown)"
           },
           {
-            "key": "user.max_recordings",
-            "value": "5",
-            "description": "Maximum Recordings per User"
+            key: "static.lab_rules",
+            value: "Here could be the lab rules, ask an admin to change the content of this page.",
+            description: "HWLab Rules (in Markdown)"
           },
           {
-            "key": "recording.auto_delete",
-            "value": "86400000",
-            "description": "Time after a recording gets automatically deleted"
-          }
+            key: "static.safety_instructions",
+            value: "Here could be the safety instructions, ask an admin to change the content of this page.",
+            description: "Static Safety Instructions (in Markdown)"
+          },
+          {
+            key: "static.faq",
+            value: "Here could be the FAQ, ask an admin to change the content of this page.",
+            description: "FAQ (in Markdown)"
+          },
+          {
+            key: "static.faq_admin",
+            value: "Here could be the admin FAQ, ask an admin to change the content of this page.",
+            description: "Admin FAQ (in Markdown)"
+          },
         ]);
       }
     );
@@ -67,30 +78,40 @@ describe('AdminService', () => {
 
     mockRequest.flush([
       {
-        "key": "static.homepage",
-        "value": "Welcome to TECO",
-        "description": "Homepage Content (in Markdown)"
+        key: "user.max_recordings",
+        value: "5",
+        description: "Maximum Recordings per User"
       },
       {
-        "key": "static.safety_instructions",
-        "value": "Do not act unsafe!",
-        "description": "Static Safety Instructions (in Markdown)"
+        key: "recording.auto_delete",
+        value: "86400000",
+        description: "Time after a recording gets automatically deleted"
       },
       {
-        "key": "static.lab_rules",
-        "value": "Ring the bell only once!",
-        "description": "HWLab Rules (in Markdown)"
+        key: "static.homepage",
+        value: "Here could be the homepage, ask an admin to change the content of this page.",
+        description: "Homepage Content (in Markdown)"
       },
       {
-        "key": "user.max_recordings",
-        "value": "5",
-        "description": "Maximum Recordings per User"
+        key: "static.lab_rules",
+        value: "Here could be the lab rules, ask an admin to change the content of this page.",
+        description: "HWLab Rules (in Markdown)"
       },
       {
-        "key": "recording.auto_delete",
-        "value": "86400000",
-        "description": "Time after a recording gets automatically deleted"
-      }
+        key: "static.safety_instructions",
+        value: "Here could be the safety instructions, ask an admin to change the content of this page.",
+        description: "Static Safety Instructions (in Markdown)"
+      },
+      {
+        key: "static.faq",
+        value: "Here could be the FAQ, ask an admin to change the content of this page.",
+        description: "FAQ (in Markdown)"
+      },
+      {
+        key: "static.faq_admin",
+        value: "Here could be the admin FAQ, ask an admin to change the content of this page.",
+        description: "Admin FAQ (in Markdown)"
+      },
     ]);
   });
 
@@ -98,14 +119,14 @@ describe('AdminService', () => {
     service.getUser('userXY').subscribe(
       res => {
         expect(res).toEqual({
-          "id": "userXY",
-          "email": "user@test.com",
-          "firstName": "user",
-          "lastName": "userson",
-          "role": 2,
-          "emailVerification": true,
-          "isActiveDirectory": false,
-          "notificationChannel": 4
+          id: "userXY",
+          email: "user@test.com",
+          firstName: "user",
+          lastName: "userson",
+          role: 2,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: NotificationChannel.emailAndMessageBox
         });
       }
     );
@@ -115,113 +136,182 @@ describe('AdminService', () => {
     expect(mockRequest.request.method).toBe('GET');
 
     mockRequest.flush({
-      "id": "userXY",
-      "email": "user@test.com",
-      "firstName": "user",
-      "lastName": "userson",
-      "role": 2,
-      "emailVerification": true,
-      "isActiveDirectory": false,
-      "notificationChannel": 4
+      id: "userXY",
+      email: "user@test.com",
+      firstName: "user",
+      lastName: "userson",
+      role: 2,
+      emailVerification: true,
+      isActiveDirectory: false,
+      notificationChannel: NotificationChannel.emailAndMessageBox
     });
   });
 
-  it('should get all users', () => {
-    /*service.getUsers().subscribe(
+  it('should get all pending users', () => {
+    service.getPendingUsers(0, 0).subscribe(
       res => {
-        expect(res).toEqual([
-          {
-            "id": "userXY",
-            "email": "user@test.com",
-            "firstName": "user",
-            "lastName": "userson",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 4
-          },
-          {
-            "id": "userXYZ",
-            "email": "user2@test.com",
-            "firstName": "user2",
-            "lastName": "usersonson",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 2
-          }
-        ]);
+        expect(res).toEqual(
+          {total: 2, data: [
+              {
+                id: "userXY",
+                email: "user@test.com",
+                firstName: "user",
+                lastName: "userson",
+                role: 1,
+                emailVerification: true,
+                isActiveDirectory: false,
+                notificationChannel: 4
+              },
+              {
+                id:"userXYZ",
+                email: "user2@test.com",
+                firstName: "user2",
+                lastName: "usersonson",
+                role: 1,
+                emailVerification: true,
+                isActiveDirectory: false,
+                notificationChannel: 2
+              }
+            ]});
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.getAllUsers}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.getAllPendingUsers}` + `?limit=0&offset=0`);
 
     expect(mockRequest.request.method).toBe('GET');
 
-    mockRequest.flush([
-      {
-        "id": "userXY",
-        "email": "user@test.com",
-        "firstName": "user",
-        "lastName": "userson",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 4
+    mockRequest.flush(
+      {total: 2, data: [
+          {
+            id: "userXY",
+            email: "user@test.com",
+            firstName: "user",
+            lastName: "userson",
+            role: 1,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 4
+          },
+          {
+            id:"userXYZ",
+            email: "user2@test.com",
+            firstName: "user2",
+            lastName: "usersonson",
+            role: 1,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 2
+          }
+        ]});
+  });
+
+  it('should get all accepted users', () => {
+    service.getAcceptedUsers(0,0).subscribe(
+      res => {
+        expect(res).toEqual(
+          {total: 2, data: [
+          {
+            id: "userXY",
+            email: "user@test.com",
+            firstName: "user",
+            lastName: "userson",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 4
+          },
+          {
+            id:"userXYZ",
+            email: "user2@test.com",
+            firstName: "user2",
+            lastName: "usersonson",
+            role: 3,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 2
+          }
+        ]});
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.getAllAcceptedUsers}` + `?limit=0&offset=0`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush(
+      {total: 2, data: [{
+        id: "userXY",
+        email: "user@test.com",
+        firstName: "user",
+        lastName: "userson",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 4
       },
       {
-        "id": "userXYZ",
-        "email": "user2@test.com",
-        "firstName": "user2",
-        "lastName": "usersonson",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 2
+        id:"userXYZ",
+        email: "user2@test.com",
+        firstName: "user2",
+        lastName: "usersonson",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 2
       }
-    ]);*/
+    ]});
   });
 
   it('should update global settings', () => {
     service.updateGlobalSettings([
       {
-        "key": "static.lab_rules",
-        "value": "Do not burn down",
-        "description": "HWLab Rules (in Markdown)"
+        key: "user.max_recordings",
+        value: "5",
+        description: "Maximum Recordings per User"
       },
       {
-        "key": "user.max_recordings",
-        "value": "5",
-        "description": "Maximum Recordings per User"
-      },
+        key: "recording.auto_delete",
+        value: "69420",
+        description: "Time after a recording gets automatically deleted"
+      }
     ]).subscribe(
       res => {
         expect(res).toEqual([
           {
-            "key": "static.homepage",
-            "value": "Welcome at TECO!",
-            "description": "Homepage Content (in Markdown)"
+            key: "user.max_recordings",
+            value: "5",
+            description: "Maximum Recordings per User"
           },
           {
-            "key": "static.safety_instructions",
-            "value": "DO NOT ENTER ANY ROOM WITH A PRIMENUMBER!",
-            "description": "Static Safety Instructions (in Markdown)"
+            key: "recording.auto_delete",
+            value: "69420",
+            description: "Time after a recording gets automatically deleted"
           },
           {
-            "key": "static.lab_rules",
-            "value": "Do not burn down",
-            "description": "HWLab Rules (in Markdown)"
+            key: "static.homepage",
+            value: "Here could be the homepage, ask an admin to change the content of this page.",
+            description: "Homepage Content (in Markdown)"
           },
           {
-            "key": "user.max_recordings",
-            "value": "5",
-            "description": "Maximum Recordings per User"
+            key: "static.lab_rules",
+            value: "Here could be the lab rules, ask an admin to change the content of this page.",
+            description: "HWLab Rules (in Markdown)"
           },
           {
-            "key": "recording.auto_delete",
-            "value": "86400000",
-            "description": "Time after a recording gets automatically deleted"
-          }
+            key: "static.safety_instructions",
+            value: "Here could be the safety instructions, ask an admin to change the content of this page.",
+            description: "Static Safety Instructions (in Markdown)"
+          },
+          {
+            key: "static.faq",
+            value: "Here could be the FAQ, ask an admin to change the content of this page.",
+            description: "FAQ (in Markdown)"
+          },
+          {
+            key: "static.faq_admin",
+            value: "Here could be the admin FAQ, ask an admin to change the content of this page.",
+            description: "Admin FAQ (in Markdown)"
+          },
         ]);
       }
     );
@@ -230,62 +320,72 @@ describe('AdminService', () => {
 
     expect(mockRequest.request.body).toEqual([
       {
-        "key": "static.lab_rules",
-        "value": "Do not burn down",
-        "description": "HWLab Rules (in Markdown)"
+        key: "user.max_recordings",
+        value: "5",
+        description: "Maximum Recordings per User"
       },
       {
-        "key": "user.max_recordings",
-        "value": "5",
-        "description": "Maximum Recordings per User"
-      },
+        key: "recording.auto_delete",
+        value: "69420",
+        description: "Time after a recording gets automatically deleted"
+      }
     ]);
     expect(mockRequest.request.method).toBe('PATCH');
 
     mockRequest.flush([
       {
-        "key": "static.homepage",
-        "value": "Welcome at TECO!",
-        "description": "Homepage Content (in Markdown)"
+        key: "user.max_recordings",
+        value: "5",
+        description: "Maximum Recordings per User"
       },
       {
-        "key": "static.safety_instructions",
-        "value": "DO NOT ENTER ANY ROOM WITH A PRIMENUMBER!",
-        "description": "Static Safety Instructions (in Markdown)"
+        key: "recording.auto_delete",
+        value: "69420",
+        description: "Time after a recording gets automatically deleted"
       },
       {
-        "key": "static.lab_rules",
-        "value": "Do not burn down",
-        "description": "HWLab Rules (in Markdown)"
+        key: "static.homepage",
+        value: "Here could be the homepage, ask an admin to change the content of this page.",
+        description: "Homepage Content (in Markdown)"
       },
       {
-        "key": "user.max_recordings",
-        "value": "5",
-        "description": "Maximum Recordings per User"
+        key: "static.lab_rules",
+        value: "Here could be the lab rules, ask an admin to change the content of this page.",
+        description: "HWLab Rules (in Markdown)"
       },
       {
-        "key": "recording.auto_delete",
-        "value": "86400000",
-        "description": "Time after a recording gets automatically deleted"
-      }
+        key: "static.safety_instructions",
+        value: "Here could be the safety instructions, ask an admin to change the content of this page.",
+        description: "Static Safety Instructions (in Markdown)"
+      },
+      {
+        key: "static.faq",
+        value: "Here could be the FAQ, ask an admin to change the content of this page.",
+        description: "FAQ (in Markdown)"
+      },
+      {
+        key: "static.faq_admin",
+        value: "Here could be the admin FAQ, ask an admin to change the content of this page.",
+        description: "Admin FAQ (in Markdown)"
+      },
     ]);
   });
 
   it('should update an user with specific id', () => {
     service.updateUser('userXY', {
-      "email": "user@test.teco.com",
-      "role": 3,
+      email: "user@test.teco.com",
+      role: 3,
     }).subscribe(
       res => {
         expect(res).toEqual({
-          "id": "userXY",
-          "email": "user@test.teco.com",
-          "firstName": "user",
-          "lastName": "userson",
-          "role": 3,
-          "emailVerification": true,
-          "isActiveDirectory": false,
-          "notificationChannel": 4
+          id: "userXY",
+          email: "user@test.teco.com",
+          firstName: "user",
+          lastName: "userson",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
         });
       }
     );
@@ -293,20 +393,20 @@ describe('AdminService', () => {
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.updateUser.replace(':id', 'userXY')}`);
 
     expect(mockRequest.request.body).toEqual({
-      "email": "user@test.teco.com",
-      "role": 3,
+      email: "user@test.teco.com",
+      role: 3,
     });
     expect(mockRequest.request.method).toBe('PATCH');
 
     mockRequest.flush({
-      "id": "userXY",
-      "email": "user@test.teco.com",
-      "firstName": "user",
-      "lastName": "userson",
-      "role": 3,
-      "emailVerification": true,
-      "isActiveDirectory": false,
-      "notificationChannel": 4
+      id: "userXY",
+      email: "user@test.teco.com",
+      firstName: "user",
+      lastName: "userson",
+      role: 3,
+      emailVerification: true,
+      isActiveDirectory: false,
+      notificationChannel: 3
     });
   });
 
@@ -324,91 +424,93 @@ describe('AdminService', () => {
   });
 
   it('should get all whitelist retailers', () => {
-    /*service.getWhitelistRetailers().subscribe(
+    service.getWhitelistRetailers(0,0).subscribe(
       res => {
-        expect(res).toEqual([
+        expect(res).toEqual(
+          {total: 2, data: [
           {
-            "id": "deaf3c7f-9ce7-400d-96db-9d5602706ba2",
-            "name": "McGlynn and Sons",
-            "domains": [
+            id: "deaf3c7f-9ce7-400d-96db-9d5602706ba2",
+            name: "McGlynn and Sons",
+            domains: [
               {
-                "id": "227ffc6a-2953-41d7-abea-c4046720f62a",
-                "domain": "jordan.biz"
+                id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+                domain: "jordan.biz"
               },
               {
-                "id": "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-                "domain": "lacey.biz"
+                id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+                domain: "lacey.biz"
               },
               {
-                "id": "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-                "domain": "louisa.org"
+                id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
+                domain: "louisa.org"
               }
             ]
           },
           {
-            "id": "6b01d1a9-0712-46a9-baef-03edc9f7b128",
-            "name": "Dare Group",
-            "domains": [
+            id: "6b01d1a9-0712-46a9-baef-03edc9f7b128",
+            name: "Dare Group",
+            domains: [
               {
-                "id": "987f5291-e2cc-4ecc-9731-55b64bbeba44",
-                "domain": "roma.biz"
+                id: "987f5291-e2cc-4ecc-9731-55b64bbeba44",
+                domain: "roma.biz"
               },
               {
-                "id": "3c902fdf-1d62-4ecf-bf16-b75108134929",
-                "domain": "diana.net"
+                id: "3c902fdf-1d62-4ecf-bf16-b75108134929",
+                domain: "diana.net"
               },
               {
-                "id": "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
-                "domain": "noelia.biz"
+                id: "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
+                domain: "noelia.biz"
               }
             ]
           }
-        ]);
+        ]});
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.getWhitelistRetailers}` + `?limit=0&offset=0`);
 
     expect(mockRequest.request.method).toBe('GET');
 
-    mockRequest.flush([
+    mockRequest.flush(
+      {total: 2, data: [
       {
-        "id": "deaf3c7f-9ce7-400d-96db-9d5602706ba2",
-        "name": "McGlynn and Sons",
-        "domains": [
+        id: "deaf3c7f-9ce7-400d-96db-9d5602706ba2",
+        name: "McGlynn and Sons",
+        domains: [
           {
-            "id": "227ffc6a-2953-41d7-abea-c4046720f62a",
-            "domain": "jordan.biz"
+            id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+            domain: "jordan.biz"
           },
           {
-            "id": "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            "domain": "lacey.biz"
+            id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+            domain: "lacey.biz"
           },
           {
-            "id": "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-            "domain": "louisa.org"
+            id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
+            domain: "louisa.org"
           }
         ]
       },
       {
-        "id": "6b01d1a9-0712-46a9-baef-03edc9f7b128",
-        "name": "Dare Group",
-        "domains": [
+        id: "6b01d1a9-0712-46a9-baef-03edc9f7b128",
+        name: "Dare Group",
+        domains: [
           {
-            "id": "987f5291-e2cc-4ecc-9731-55b64bbeba44",
-            "domain": "roma.biz"
+            id: "987f5291-e2cc-4ecc-9731-55b64bbeba44",
+            domain: "roma.biz"
           },
           {
-            "id": "3c902fdf-1d62-4ecf-bf16-b75108134929",
-            "domain": "diana.net"
+            id: "3c902fdf-1d62-4ecf-bf16-b75108134929",
+            domain: "diana.net"
           },
           {
-            "id": "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
-            "domain": "noelia.biz"
+            id: "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
+            domain: "noelia.biz"
           }
         ]
       }
-    ]);*/
+    ]});
   });
 
   it('should get a whitelist retailer with specific id', () => {
@@ -416,20 +518,20 @@ describe('AdminService', () => {
       res => {
         expect(res).toEqual(
           {
-            "id": "retailerExampleID",
-            "name": "McGlynn and Sons and daughters",
-            "domains": [
+            id: "retailerExampleID",
+            name: "McGlynn and Sons and daughters",
+            domains: [
               {
-                "id": "227ffc6a-2953-41d7-abea-c4046720f62a",
-                "domain": "jordan.biz"
+                id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+                domain: "jordan.biz"
               },
               {
-                "id": "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-                "domain": "lacey.biz"
+                id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+                domain: "lacey.biz"
               },
               {
-                "id": "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-                "domain": "louisa.org"
+                id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
+                domain: "louisa.org"
               }
             ]
           }
@@ -442,20 +544,20 @@ describe('AdminService', () => {
     expect(mockRequest.request.method).toBe('GET');
 
     mockRequest.flush({
-      "id": "retailerExampleID",
-      "name": "McGlynn and Sons and daughters",
-      "domains": [
+      id: "retailerExampleID",
+      name: "McGlynn and Sons and daughters",
+      domains: [
         {
-          "id": "227ffc6a-2953-41d7-abea-c4046720f62a",
-          "domain": "jordan.biz"
+          id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+          domain: "jordan.biz"
         },
         {
-          "id": "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          "domain": "lacey.biz"
+          id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+          domain: "lacey.biz"
         },
         {
-          "id": "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-          "domain": "louisa.org"
+          id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
+          domain: "louisa.org"
         }
       ]
     });
@@ -465,16 +567,16 @@ describe('AdminService', () => {
     service.createWhitelistRetailer(['domain.1.test', 'domain.2.test'], 'retailerExampleName').subscribe(
       res => {
         expect(res).toEqual({
-            "id": "1dcf5601-db83-44fd-bd69-23fd28a5141b",
-            "name": "retailerExampleName",
-            "domains": [
+            id: "1dcf5601-db83-44fd-bd69-23fd28a5141b",
+            name: "retailerExampleName",
+            domains: [
               {
-                "id": "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
-                "domain": "domain.1.test"
+                id: "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
+                domain: "domain.1.test"
               },
               {
-                "id": "7573995e-2586-4714-912e-c8e70a050b63",
-                "domain": "domain.2.test"
+                id: "7573995e-2586-4714-912e-c8e70a050b63",
+                domain: "domain.2.test"
               }
             ]
           }
@@ -492,16 +594,16 @@ describe('AdminService', () => {
 
 
     mockRequest.flush({
-      "id": "1dcf5601-db83-44fd-bd69-23fd28a5141b",
-      "name": "retailerExampleName",
-      "domains": [
+      id: "1dcf5601-db83-44fd-bd69-23fd28a5141b",
+      name: "retailerExampleName",
+      domains: [
         {
-          "id": "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
-          "domain": "domain.1.test"
+          id: "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
+          domain: "domain.1.test"
         },
         {
-          "id": "7573995e-2586-4714-912e-c8e70a050b63",
-          "domain": "domain.2.test"
+          id: "7573995e-2586-4714-912e-c8e70a050b63",
+          domain: "domain.2.test"
         }
       ]
     });
@@ -513,16 +615,16 @@ describe('AdminService', () => {
     }).subscribe(
       res => {
         expect(res).toEqual({
-            "id": "retailerExampleID",
-            "name": "retailerExampleName",
-            "domains": [
+            id: "retailerExampleID",
+            name: "retailerExampleName",
+            domains: [
               {
-                "id": "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
-                "domain": "domain.1.test"
+                id: "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
+                domain: "domain.1.test"
               },
               {
-                "id": "7573995e-2586-4714-912e-c8e70a050b63",
-                "domain": "domain.2.test"
+                id: "7573995e-2586-4714-912e-c8e70a050b63",
+                domain: "domain.2.test"
               }
             ]
           }
@@ -538,16 +640,16 @@ describe('AdminService', () => {
     });
 
     mockRequest.flush({
-      "id": "retailerExampleID",
-      "name": "retailerExampleName",
-      "domains": [
+      id: "retailerExampleID",
+      name: "retailerExampleName",
+      domains: [
         {
-          "id": "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
-          "domain": "domain.1.test"
+          id: "87fb921b-fe81-48f1-aaea-97c7d4aa88d3",
+          domain: "domain.1.test"
         },
         {
-          "id": "7573995e-2586-4714-912e-c8e70a050b63",
-          "domain": "domain.2.test"
+          id: "7573995e-2586-4714-912e-c8e70a050b63",
+          domain: "domain.2.test"
         }
       ]
     });
