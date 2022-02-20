@@ -114,8 +114,11 @@ describe('MessagingService', () => {
         expect(res).toEqual({
           sum: 20,
           appointments: 5,
+          appointments_admin: 0,
           orders: 7,
+          orders_admin: 0,
           users: 2,
+          settings: 0,
         });
       }
     );
@@ -128,8 +131,11 @@ describe('MessagingService', () => {
     mockRequest.flush({
       sum: 20,
       appointments: 5,
+      appointments_admin: 0,
       orders: 7,
+      orders_admin: 0,
       users: 2,
+      settings: 0,
     });
   });
 

@@ -76,8 +76,11 @@ class MockMessagingService {
       const unreadMessages: UnreadMessages = {
         sum: 12,
         appointments: 3,
+        appointments_admin: 0,
         orders: 1,
+        orders_admin: 0,
         users: 5,
+        settings: 0,
       };
 
       observer.next(unreadMessages);
@@ -161,8 +164,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -171,13 +177,16 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
   });
 
-  /*it('should init page with notification channel email and message box', () => {
+  it('should init page with notification channel email and message box', () => {
     app.authService.setAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDI1NTE0NjksInVzZXJJZCI6IjI4NDY4OWJmLTFjNzItNGNmYS1iZjA0LTQ3OTUyYzgzOTc3OSIsImlhdCI6MTY0MjU1MDI2OX0.iyLvkH0dvYH9NrB7C2AZUNromKVR1t1ZQqGoKnx0m4g');
     app.authService.setRefreshToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyODQ2ODliZi0xYzcyLTRjZmEtYmYwNC00Nzk1MmM4Mzk3NzkiLCJpYXQiOjE2NDI1NDg1ODR9.JsdrEASBRnD4HbZC6Iuri96tC_4Pc_AUXUeiBpgJXBM');
     app.authService.setUserRole(UserRole.visitor);
@@ -189,8 +198,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -199,8 +211,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeTrue();
   });
@@ -217,8 +232,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -227,8 +245,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeTrue();
   });
@@ -245,8 +266,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -255,8 +279,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
   });
@@ -273,8 +300,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -283,11 +313,14 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
-  });*/
+  });
 
   it('should show error message on get user error', () => {
     localStorage.setItem('throwError', 'true');
@@ -295,8 +328,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -306,8 +342,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -320,8 +359,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 
@@ -331,8 +373,11 @@ describe('AppComponent', () => {
     expect(app.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(app.showMessageBox).toBeFalse();
 

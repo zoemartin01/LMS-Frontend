@@ -9,10 +9,10 @@ import { DashboardComponent } from './dashboard.component';
 import { MessagingService } from "../../../services/messaging.service";
 import { UserService } from "../../../services/user.service";
 
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { UnreadMessages } from "../../../types/unread-messages";
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockMessagingService {
   public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
@@ -30,8 +30,11 @@ class MockMessagingService {
       const unreadMessages: UnreadMessages = {
         sum: 12,
         appointments: 3,
+        appointments_admin: 0,
         orders: 1,
+        orders_admin: 0,
         users: 5,
+        settings: 0,
       };
 
       observer.next(unreadMessages);
@@ -107,8 +110,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -117,8 +123,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeTrue();
   });
@@ -129,8 +138,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -139,8 +151,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeTrue();
   });
@@ -151,8 +166,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -161,8 +179,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
   });
@@ -173,8 +194,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -183,8 +207,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
   });*/
@@ -195,8 +222,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -206,8 +236,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -220,8 +253,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -231,8 +267,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 

@@ -73,8 +73,11 @@ class MockMessagingService {
       const unreadMessages: UnreadMessages = {
         sum: 12,
         appointments: 3,
+        appointments_admin: 0,
         orders: 1,
+        orders_admin: 0,
         users: 5,
+        settings: 0,
       };
 
       observer.next(unreadMessages);
@@ -411,8 +414,11 @@ describe('MessageBoxComponent - http functions', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
 
     component.getUnreadMessagesAmounts();
@@ -422,8 +428,11 @@ describe('MessageBoxComponent - http functions', () => {
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
   }));
 
