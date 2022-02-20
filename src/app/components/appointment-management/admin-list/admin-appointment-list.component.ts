@@ -10,7 +10,6 @@ import { AppointmentEditComponent } from "../edit/appointment-edit.component";
 import { AppointmentViewComponent } from "../view/appointment-view.component";
 
 import { AppointmentService } from '../../../services/appointment.service';
-import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 
 import { Appointment } from "../../../types/appointment";
@@ -39,13 +38,11 @@ export class AdminAppointmentListComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
-   * @param {AuthService} authService service providing authentication functionalities
    * @param {UserService} userService service providing user functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public appointmentService: AppointmentService,
-    public authService: AuthService,
     public userService: UserService, private modalService: NgbModal) {
   }
 
