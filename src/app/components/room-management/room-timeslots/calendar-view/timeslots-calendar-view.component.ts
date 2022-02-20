@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
+import { SidebarWarningComponent } from "../../../appointment-management/sidebar-warning/sidebar-warning.component";
 import { TimeslotDeleteComponent } from "../delete/timeslot-delete.component";
 
 import { AuthService } from "../../../../services/auth.service";
@@ -155,9 +156,13 @@ export class TimeslotsCalendarViewComponent implements OnInit {
    * @param {number} slot slot in the calendar
    */
   public openTimeslotCreationForm(day: number, slot: number): void {
-    this.action = 'create';
-    this.timeslotCreationStart = moment(moment(this.week).add(day, 'days')
-      .hours(slot));
+    if (this.action === '') {
+      this.action = 'create';
+      this.timeslotCreationStart = moment(moment(this.week).add(day, 'days')
+        .hours(slot));
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -166,8 +171,12 @@ export class TimeslotsCalendarViewComponent implements OnInit {
    * @param {TimespanId} timeslotId id of timeslot
    */
   public openTimeslotView(timeslotId: TimespanId): void {
-    this.action = 'view';
-    this.currentTimeslotId = <string>timeslotId;
+    if (this.action === '') {
+      this.action = 'view';
+      this.currentTimeslotId = <string>timeslotId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -176,8 +185,19 @@ export class TimeslotsCalendarViewComponent implements OnInit {
    * @param {TimespanId} timeslotId id of timeslot
    */
   public openTimeslotEditForm(timeslotId: TimespanId): void {
-    this.action = 'edit';
-    this.currentTimeslotId = <string>timeslotId;
+    if (this.action === '') {
+      this.action = 'edit';
+      this.currentTimeslotId = <string>timeslotId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
+  }
+
+  /**
+   * Shows an error popup that sidebar is already opened
+   */
+  public showSidebarAlreadyOpenError() {
+    this.modalService.open(SidebarWarningComponent);
   }
 
   /**

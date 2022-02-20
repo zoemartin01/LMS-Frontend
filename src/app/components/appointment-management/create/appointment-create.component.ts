@@ -103,12 +103,15 @@ export class AppointmentCreateComponent implements OnInit {
     if (this.appointmentCreateForm.valid) {
       this.hasError = false;
       const day = moment(this.date).minutes(0).seconds(0);
+      const endHour = +this.appointmentCreateForm.controls['endHour'].value;
 
       if (!this.isRecurring) {
         this.appointmentService.createAppointment(
           this.room,
           moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours())
+          endHour === 0
+            ? moment(day).add(1, 'day').hours(0)
+            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
         ).subscribe({
           next: () => {
             this.closeForm.emit(true);
@@ -126,7 +129,9 @@ export class AppointmentCreateComponent implements OnInit {
         this.appointmentService.createAppointmentSeries(
           this.room,
           moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.appointmentCreateForm.controls['endHour'].value, 'HH:mm').hours()),
+          endHour === 0
+            ? moment(day).add(1, 'day').hours(0)
+            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
           +this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
           +this.recurringAppointmentCreateForm.value.amount,
           this.force
