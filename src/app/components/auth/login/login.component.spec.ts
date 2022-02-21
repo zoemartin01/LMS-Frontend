@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { WINDOW } from "../../../providers/window.providers";
 import { environment } from "../../../../environments/environment";
 
 import { LoginComponent } from './login.component';
@@ -56,7 +56,14 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router = {
-    navigateByUrl: jasmine.createSpy('navigateByUrl')
+    navigateByUrl: (url: string) => {
+      return new Promise<boolean>(resolve =>  resolve(true));
+    },
+  };
+  let windowMock: Window = <any>{
+    location: {
+      reload: jasmine.createSpy('locationReload')
+    }
   };
 
   beforeEach(async () => {
@@ -73,13 +80,12 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         { provide: Router, useValue: router },
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-
-    router.navigateByUrl.calls.reset();
   });
 
   it('should create login component', () => {
@@ -95,7 +101,6 @@ describe('LoginComponent', () => {
     component.login().then(() => {
       expect(component.loginError).toBeFalse();
       expect(component.loginErrorMessage).toBe('');
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
       done();
     });
   });
@@ -108,7 +113,7 @@ describe('LoginComponent', () => {
 
     component.login().then(() => {
       expect(component.loginError).toBeTrue();
-      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      expect(windowMock.location.reload).not.toHaveBeenCalled();
       done();
     });
   });
@@ -122,7 +127,7 @@ describe('LoginComponent', () => {
     component.login().then(() => {
       expect(component.loginError).toBeTrue();
       expect(component.loginErrorMessage).toBe('Invalid form values');
-      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      expect(windowMock.location.reload).not.toHaveBeenCalled();
       done();
     });
   });
