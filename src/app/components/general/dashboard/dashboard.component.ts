@@ -26,8 +26,11 @@ export class DashboardComponent implements OnInit {
   public unreadMessages: UnreadMessages = {
     sum: 0,
     appointments: 0,
+    appointments_admin: 0,
     orders: 0,
+    orders_admin: 0,
     users: 0,
+    settings: 0,
   };
   public showMessageBox: boolean = false;
 
