@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { environment } from "../../environments/environment";
 
 import { UserService } from './user.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {environment} from "../../environments/environment";
-import {NotificationChannel} from "../types/enums/notification-channel";
-import {User} from "../types/user";
-import {UserRole} from "../types/enums/user-role";
+
+import { User } from "../types/user";
+import { NotificationChannel } from "../types/enums/notification-channel";
 
 describe('UserService', () => {
   let service: UserService;
@@ -15,13 +14,13 @@ describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HttpClientTestingModule,
       ],
       providers: [
         UserService,
       ],
     });
+
     service = TestBed.inject(UserService);
     httpMock = TestBed.inject(HttpTestingController)
   });
@@ -46,7 +45,7 @@ describe('UserService', () => {
       }
     );
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.getSingleUser.replace(':id', 'userXY')}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_settings.getCurrentUser}`);
 
     expect(mockRequest.request.method).toBe('GET');
 
@@ -77,43 +76,44 @@ describe('UserService', () => {
   });
 
   it('should update current user', () => {
-      service.editUserData({
-        email: "user@test.teco.com",
-        role: 3,
-      }).subscribe(
-        res => {
-          expect(res).toEqual({
-            id: "userXY",
-            email: "user@test.teco.com",
-            firstName: "user",
-            lastName: "userson",
-            role: 3,
-            emailVerification: true,
-            isActiveDirectory: false,
-            notificationChannel: 3
-          });
-        }
-      );
+    service.editUserData({
+      email: "user@test.teco.com",
+      role: 3,
+    }).subscribe(
+      res => {
+        expect(res).toEqual({
+          id: "userXY",
+          email: "user@test.teco.com",
+          firstName: "user",
+          lastName: "userson",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        });
+      }
+    );
 
-      const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.updateUser.replace(':id', 'userXY')}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_settings.updateCurrentUser}`);
 
-      expect(mockRequest.request.body).toEqual({
-        email: "user@test.teco.com",
-        role: 3,
-      });
-      expect(mockRequest.request.method).toBe('PATCH');
-
-      mockRequest.flush({
-        id: "userXY",
-        email: "user@test.teco.com",
-        firstName: "user",
-        lastName: "userson",
-        role: 3,
-        emailVerification: true,
-        isActiveDirectory: false,
-        notificationChannel: 3
-      });
+    expect(mockRequest.request.body).toEqual({
+      email: "user@test.teco.com",
+      role: 3,
     });
+    expect(mockRequest.request.method).toBe('PATCH');
+
+    mockRequest.flush({
+      id: "userXY",
+      email: "user@test.teco.com",
+      firstName: "user",
+      lastName: "userson",
+      role: 3,
+      emailVerification: true,
+      isActiveDirectory: false,
+      notificationChannel: 3
+    });
+    });
+
   it('should register new user', () => {
     service.register('user', 'userson','user@test.teco.com', 'bestPassword123').subscribe(
       res => {
@@ -146,7 +146,7 @@ describe('UserService', () => {
       email: "user@test.teco.com",
       firstName: "user",
       lastName: "userson",
-      role: 0,
+      role: 1,
       emailVerification: false,
       isActiveDirectory: false,
       notificationChannel: 2
@@ -192,7 +192,7 @@ describe('UserService', () => {
   it('should delete current user', () => {
     service.deleteUser().subscribe();
 
-    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_management.deleteUser.replace(':id', 'userXY')}`);
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.user_settings.deleteCurrentUser}`);
 
     expect(mockRequest.request.method).toBe('DELETE');
 
