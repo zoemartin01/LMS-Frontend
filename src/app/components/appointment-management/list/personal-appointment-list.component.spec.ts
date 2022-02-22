@@ -375,7 +375,7 @@ describe('PersonalAppointmentListComponent', () => {
 
   it('should update appointments when appointment is created', fakeAsync(() => {
     //@TODO is it "updated"
-    localStorage.setItem('returnVal', 'updated');
+    localStorage.setItem('returnVal', 'created');
 
     component.openAppointmentCreationForm();
 
@@ -386,7 +386,7 @@ describe('PersonalAppointmentListComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should not update appointments when appointment deletion is aborted', fakeAsync(() => {
+  it('should not update appointments when appointment creation is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openAppointmentCreationForm();
@@ -398,23 +398,25 @@ describe('PersonalAppointmentListComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should update appointments when appointment is created', fakeAsync(() => {
-    //@TODO is it "updated"
+  it('should update appointments when appointment is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
 
-    component.openAppointmentCreationForm();
+    component.openAppointmentView(
+      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
+    );
 
     tick();
 
     expect(getAllAppointmentsForCurrentUserMethod).toHaveBeenCalled();
-
     localStorage.removeItem('returnVal');
   }));
 
-  it('should not update appointments when appointment deletion is aborted', fakeAsync(() => {
+  it('should not update appointments when appointment is viewed and not dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentCreationForm();
+    component.openAppointmentView(
+      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
+    );
 
     tick();
 
