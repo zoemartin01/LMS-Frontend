@@ -99,6 +99,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.weekField.year = +this.week.format("YYYY");
 
     this.updateCalendar();
+    this.closeSidebar(false);
   }
 
   /**
@@ -152,6 +153,7 @@ export class RoomCalendarViewComponent implements OnInit {
         this.room = room;
         this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
         this.updateCalendar();
+        this.closeSidebar(false);
         history.pushState(null, '', `/room-overview/${this.room.id}`);
       },
       error: error => {
@@ -166,6 +168,15 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public getDayOfWeek(dayOfWeek: number): moment.Moment {
     return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
+  }
+
+  /**
+   * Checks if object is a string
+   *
+   * @param {Appointment|string|null} object object
+   */
+  public isString(object: Appointment|string|null): boolean {
+    return typeof object === 'string';
   }
 
   /**
@@ -193,6 +204,15 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public parseAppointment(object: Appointment|string|null): Appointment {
     return <Appointment>object;
+  }
+
+  /**
+   * Returns object typed as string
+   *
+   * @param {Appointment|string|null} object appointment
+   */
+  public parseString(object: Appointment|string|null): string {
+    return <string>object;
   }
 
   /**

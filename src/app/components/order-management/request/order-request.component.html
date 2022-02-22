@@ -10,23 +10,29 @@
         <input type="text" class="form-control" list="itemOptions" id="itemName" placeholder="Item Name"
                formControlName="itemName">
         <datalist id="itemOptions">
-          <option *ngFor="let item of existingItems" [value] ="item.name"></option>
+          <option *ngFor="let item of existingItems" [value]="item.name"></option>
         </datalist>
       </div>
     </div>
     <div class="form-group row">
       <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
       <div class="input-group">
-        <input type="number" class="form-control"  placeholder="Quantity" min="1" id="quantity"
+        <input type="number" class="form-control" placeholder="Quantity" min="1" id="quantity"
                formControlName="quantity">
       </div>
     </div>
     <div class="form-group row">
-      <label for="url" class="col-sm-3 col-form-label w-100">URL <span class="badge bg-warning d-inline" *ngIf="!linkWarning">URL is not whitelisted</span></label>
+      <label for="url" class="col-sm-3 col-form-label">URL</label>
       <div class="input-group">
-        <input type="text" class="form-control"  placeholder="https://..." id="url"
+        <input type="text" class="form-control" placeholder="https://..." id="url"
                formControlName="url" (keyup)="checkUrlAgainstWhitelistedRetailers()">
       </div>
+    </div>
+    <br>
+    <div class="alert alert-warning" role="alert" *ngIf="linkWarning">
+      URL is not whitelisted
+      <a class="alert-link" href="javascript:void(0)" (click)="openWhitelistRetailerList()">See whitelisted
+        retailers</a>
     </div>
     <div class="alert alert-danger" role="alert" *ngIf="requestOrderError">
       <b>Creation failed:</b><br>
@@ -37,6 +43,7 @@
 
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" [disabled]="!requestOrderForm.valid"
-          (click)="requestOrder()">Request</button>
+          (click)="requestOrder()">Request
+  </button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

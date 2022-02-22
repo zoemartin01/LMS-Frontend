@@ -35,6 +35,8 @@ export class RoomEditComponent implements OnInit {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
+  public maxBookingsConflict = false;
+  public maxBookingsConflictMessage = '';
 
   /**
    * Constructor
@@ -91,6 +93,11 @@ export class RoomEditComponent implements OnInit {
         this.activeModal.close('edited');
       },
       error: error => {
+        if (error.status === 409) {
+          this.maxBookingsConflict = true;
+          this.maxBookingsConflictMessage = error.error.message;
+        }
+
         console.error('There was an error!', error);
       }
     });

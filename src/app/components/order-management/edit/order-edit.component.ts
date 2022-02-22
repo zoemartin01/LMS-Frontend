@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerUserListComponent } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
@@ -63,6 +65,7 @@ export class OrderEditComponent implements OnInit {
    * @param {AdminService} adminService service providing admin functionalities
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public orderService: OrderService,
@@ -70,7 +73,8 @@ export class OrderEditComponent implements OnInit {
     public authService: AuthService,
     public adminService: AdminService,
     public utilityService: UtilityService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal
   ) {
     if (!(this.authService.isAdmin())) {
       this.orderEditForm.controls['status'].disable();
@@ -135,6 +139,13 @@ export class OrderEditComponent implements OnInit {
         console.error('There was an error!', error);
       }
     })
+  }
+
+  /**
+   * Opens whitelist retailer user list popup
+   */
+  public async openWhitelistRetailerList(): Promise<void> {
+    this.modalService.open(WhitelistRetailerUserListComponent);
   }
 
   /**
