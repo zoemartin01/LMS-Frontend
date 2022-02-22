@@ -1,10 +1,11 @@
-import {TestBed} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientModule } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
-import {AdminService} from './admin.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {environment} from "../../environments/environment";
-import {NotificationChannel} from "../types/enums/notification-channel";
+import { AdminService } from './admin.service';
+
+import { NotificationChannel } from "../types/enums/notification-channel";
 
 describe('AdminService', () => {
   let service: AdminService;
