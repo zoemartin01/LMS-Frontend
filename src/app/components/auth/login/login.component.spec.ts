@@ -12,6 +12,7 @@ import { LoginComponent } from './login.component';
 import { AuthService } from '../../../services/auth.service';
 
 import { UserRole } from "../../../types/enums/user-role";
+import Spy = jasmine.Spy;
 
 class MockAuthService {
   public login(email: string, password: string, isActiveDirectory: boolean) {
@@ -55,6 +56,7 @@ class MockAuthService {
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let locationReload: Spy;
   let router = {
     navigateByUrl: (url: string) => {
       return new Promise<boolean>(resolve =>  resolve(true));
@@ -62,7 +64,7 @@ describe('LoginComponent', () => {
   };
   let windowMock: Window = <any>{
     location: {
-      reload: jasmine.createSpy('locationReload')
+      reload: () => {},
     }
   };
 
@@ -86,6 +88,9 @@ describe('LoginComponent', () => {
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+
+    locationReload = spyOn(windowMock.location, 'reload');
+    locationReload.calls.reset();
   });
 
   it('should create login component', () => {
@@ -113,7 +118,7 @@ describe('LoginComponent', () => {
 
     component.login().then(() => {
       expect(component.loginError).toBeTrue();
-      expect(windowMock.location.reload).not.toHaveBeenCalled();
+      expect(locationReload).not.toHaveBeenCalled();
       done();
     });
   });
@@ -127,7 +132,7 @@ describe('LoginComponent', () => {
     component.login().then(() => {
       expect(component.loginError).toBeTrue();
       expect(component.loginErrorMessage).toBe('Invalid form values');
-      expect(windowMock.location.reload).not.toHaveBeenCalled();
+      expect(locationReload).not.toHaveBeenCalled();
       done();
     });
   });
