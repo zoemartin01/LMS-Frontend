@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerUserListComponent } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 import { AdminService } from "../../../services/admin.service";
 import { InventoryService } from "../../../services/inventory.service";
@@ -43,12 +45,14 @@ export class OrderRequestComponent implements OnInit {
    * @param {AdminService} adminService service providing admin functionalities
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public orderService: OrderService,
     public adminService: AdminService,
     public inventoryService: InventoryService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal
   ) {
   }
 
@@ -79,12 +83,19 @@ export class OrderRequestComponent implements OnInit {
   public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.controls['url'].value).subscribe({
       next: res => {
-        this.linkWarning = res.isWhitelisted;
+        this.linkWarning = !res.isWhitelisted;
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
+  }
+
+  /**
+   * Opens whitelist retailer user list popup
+   */
+  public async openWhitelistRetailerList(): Promise<void> {
+    this.modalService.open(WhitelistRetailerUserListComponent);
   }
 
   /**
