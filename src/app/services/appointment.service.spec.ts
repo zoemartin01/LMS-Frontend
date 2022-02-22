@@ -1,11 +1,12 @@
-import {TestBed} from '@angular/core/testing';
-
-import {AppointmentService} from './appointment.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {environment} from "../../environments/environment";
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { environment } from "../../environments/environment";
 import * as moment from "moment";
-import {ConfirmationStatus} from "../types/enums/confirmation-status";
-import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
+
+import { AppointmentService } from './appointment.service';
+
+import { ConfirmationStatus } from "../types/enums/confirmation-status";
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
 
 describe('AppointmentService', () => {
   let service: AppointmentService;
@@ -330,7 +331,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should get all accepted appointments', () => {
     service.getAllAppointments(0, 0, ConfirmationStatus.accepted).subscribe(
       res => {
@@ -365,7 +365,6 @@ describe('AppointmentService', () => {
                 notificationChannel: 3
               }
             },
-
             {
               id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
               start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -433,7 +432,6 @@ describe('AppointmentService', () => {
             notificationChannel: 3
           }
         },
-
         {
           id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
           start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -465,7 +463,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should get all declined appointments', () => {
     service.getAllAppointments(0, 0, ConfirmationStatus.denied).subscribe(
       res => {
@@ -617,7 +614,6 @@ describe('AppointmentService', () => {
         }]
     });
   });
-
 
   it('should get all appointments of current User', () => {
     service.getAllAppointmentsForCurrentUser().subscribe(
@@ -695,7 +691,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should get all appointments for one specific room', () => {
     service.getAllAppointmentsForRoom("c7231328-203e-43f5-9ac1-d374d90484ac", 0, 0).subscribe(
       res => {
@@ -772,7 +767,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should get all data of one specific room', () => {
     service.getAppointmentData("3f7af855-ad57-4a4c-81e7-769ba90f9e76").subscribe(
       res => {
@@ -842,7 +836,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should get all appointments of a specific series', () => {
     service.getAllAppointmentsForSeries("eef5fadc-53d9-4a49-83be-e55b2f94bb8e", 0, 0).subscribe(
       res => {
@@ -877,7 +870,6 @@ describe('AppointmentService', () => {
                 notificationChannel: 3
               }
             },
-
             {
               id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
               start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -945,7 +937,6 @@ describe('AppointmentService', () => {
             notificationChannel: 3
           }
         },
-
         {
           id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
           start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -976,7 +967,6 @@ describe('AppointmentService', () => {
         }]
     });
   });
-
 
   it('should create an appointment', () => {
     service.createAppointment({
@@ -1061,7 +1051,6 @@ describe('AppointmentService', () => {
     });
   });
 
-
   it('should create an appointment series', () => {
     console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(true));
@@ -1108,35 +1097,34 @@ describe('AppointmentService', () => {
               notificationChannel: 3
             }
           },
-
-            {
-              id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-              start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 2,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 2,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
-            }]
+          {
+            id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+            start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 2,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 2,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }]
         );
       }
     )
@@ -1182,37 +1170,35 @@ describe('AppointmentService', () => {
         notificationChannel: 3
       }
     },
-
-      {
-        id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-        start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        type: 1,
-        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-        amount: 2,
-        timeSlotRecurrence: 3,
-        confirmationStatus: 2,
-        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        room: {
-          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-          name: "Test room",
-          description: "room to test",
-          maxConcurrentBookings: 1,
-          autoAcceptBookings: true
-        },
-        user: {
-          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-          email: "admin@test.com",
-          firstName: "Admin",
-          lastName: "Admin",
-          role: 3,
-          emailVerification: true,
-          isActiveDirectory: false,
-          notificationChannel: 3
-        }
-      }]);
+    {
+      id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+      start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      type: 1,
+      seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+      amount: 2,
+      timeSlotRecurrence: 3,
+      confirmationStatus: 2,
+      maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true
+      },
+      user: {
+        id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+        email: "admin@test.com",
+        firstName: "Admin",
+        lastName: "Admin",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
+      }
+    }]);
   });
-
 
   it('should update an appointment', () => {
     service.editAppointment(
@@ -1331,35 +1317,34 @@ describe('AppointmentService', () => {
               notificationChannel: 3
             }
           },
-
-            {
-              id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-              start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 2,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 2,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
-            }]);
+          {
+            id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+            start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 2,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 2,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }]);
       }
     );
 
@@ -1399,34 +1384,33 @@ describe('AppointmentService', () => {
         notificationChannel: 3
       }
     },
-
-      {
-        id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-        start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        type: 1,
-        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-        amount: 2,
-        timeSlotRecurrence: 3,
-        confirmationStatus: 2,
-        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-        room: {
-          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-          name: "Test room",
-          description: "room to test",
-          maxConcurrentBookings: 1,
-          autoAcceptBookings: true
-        },
-        user: {
-          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-          email: "admin@test.com",
-          firstName: "Admin",
-          lastName: "Admin",
-          role: 3,
-          emailVerification: true,
-          isActiveDirectory: false,
-          notificationChannel: 3
-        }
-      }]);
+    {
+      id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+      start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      type: 1,
+      seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+      amount: 2,
+      timeSlotRecurrence: 3,
+      confirmationStatus: 2,
+      maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true
+      },
+      user: {
+        id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+        email: "admin@test.com",
+        firstName: "Admin",
+        lastName: "Admin",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
+      }
+    }]);
   });
 });
