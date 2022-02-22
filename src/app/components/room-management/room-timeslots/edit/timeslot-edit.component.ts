@@ -147,8 +147,10 @@ export class TimeslotEditComponent implements OnInit {
 
       changedData['start'] = day.hours(moment(this.timeslotEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
-      changedData['end'] = day.hours(moment(this.timeslotEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).toISOString();
+      const endHour = +this.timeslotEditForm.controls['endHour'].value;
+      changedData['end'] = endHour === 24
+        ? moment(day).add(1, 'day').hours(0).toISOString()
+        : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
 
     this.roomService.editTimeslot(this.timeslot.room.id, this.timeslot.id, changedData).subscribe({
@@ -173,8 +175,10 @@ export class TimeslotEditComponent implements OnInit {
 
       changedData['start'] = day.hours(moment(this.timeslotEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
-      changedData['end'] = day.hours(moment(this.timeslotEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).toISOString();
+      const endHour = +this.timeslotEditForm.controls['endHour'].value;
+      changedData['end'] = endHour === 24
+        ? moment(day).add(1, 'day').hours(0).toISOString()
+        : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
 
     this.roomService.editTimeslotSeries(this.timeslot.room.id, this.timeslot.seriesId, changedData).subscribe({

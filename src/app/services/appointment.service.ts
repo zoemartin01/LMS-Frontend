@@ -7,7 +7,6 @@ import { environment } from "../../environments/environment";
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Room } from "../types/room";
-import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
 import { PagedResponse } from '../types/paged-response';
@@ -59,24 +58,6 @@ export class AppointmentService {
   public getAllAppointmentsForCurrentUser(limit: number = 0, offset: number = 0,): Observable<PagedResponse<Appointment>> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getCurrentUserAppointments}` +
     `?limit=${limit}&offset=${offset}`;
-
-    return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
-  }
-
-  /**
-   * Retrieves all appointments for specified room
-   *
-   * @param {RoomId} roomId id of room to retrieve appointments
-   * @param limit maximum of loaded entities per request
-   * @param offset start of loaded entities per request
-   */
-  public getAllAppointmentsForRoom(roomId: RoomId, limit: number = 0, offset: number = 0): Observable<PagedResponse<Appointment>> {
-    if (roomId === null) {
-      throw ParseArgumentException;
-    }
-
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.getRoomAppointments
-      .replace(':id', roomId)}?limit=${limit}&offset=${offset}`;
 
     return this.httpClient.get<PagedResponse<Appointment>>(apiURL);
   }

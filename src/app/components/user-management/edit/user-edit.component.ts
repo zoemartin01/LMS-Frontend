@@ -70,28 +70,18 @@ export class UserEditComponent implements OnInit {
   public async getUserData(): Promise<void> {
     this.adminService.getUser(this.user.id).subscribe({
       next: res => {
-        this.updateUserEditForm(res);
+        this.user = res;
+
+        this.userEditForm.controls['firstName'].setValue(this.user.firstName);
+        this.userEditForm.controls['lastName'].setValue(this.user.lastName);
+        this.userEditForm.controls['email'].setValue(this.user.email);
+        this.userEditForm.controls['role'].setValue(this.user.role);
+        this.userEditForm.controls['notificationChannel'].setValue(this.user.notificationChannel);
       },
       error: error => {
         console.error('There was an error!', error);
       }
     })
-  }
-
-  /**
-   * Helper method to update the user edit form
-   *
-   * @param  {User} user user to be edited
-   * @private
-   */
-  private updateUserEditForm(user: User) {
-    this.user = user;
-
-    this.userEditForm.controls['firstName'].setValue(user.firstName);
-    this.userEditForm.controls['lastName'].setValue(user.lastName);
-    this.userEditForm.controls['email'].setValue(user.email);
-    this.userEditForm.controls['role'].setValue(user.role);
-    this.userEditForm.controls['notificationChannel'].setValue(user.notificationChannel);
   }
 
   /**

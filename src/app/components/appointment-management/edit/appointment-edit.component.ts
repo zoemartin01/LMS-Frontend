@@ -154,8 +154,10 @@ export class AppointmentEditComponent implements OnInit {
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
-      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).toISOString();
+      const endHour = +this.appointmentEditForm.controls['endHour'].value;
+      changedData['end'] = endHour === 24
+        ? moment(day).add(1, 'day').hours(0).toISOString()
+        : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
 
     this.appointmentService.editAppointment(this.appointment.id, changedData).subscribe({
@@ -189,8 +191,10 @@ export class AppointmentEditComponent implements OnInit {
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
-      changedData['end'] = day.hours(moment(this.appointmentEditForm.controls['endHour'].value, 'HH:mm')
-        .hours()).toISOString();
+      const endHour = +this.appointmentEditForm.controls['endHour'].value;
+      changedData['end'] = endHour === 24
+        ? moment(day).add(1, 'day').hours(0).toISOString()
+        : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
 
     this.appointmentService.editAppointmentSeries(this.appointment.seriesId, changedData).subscribe({

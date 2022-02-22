@@ -6,6 +6,7 @@ import * as moment from "moment";
 import { AppointmentAcceptComponent } from "../accept/appointment-accept.component";
 import { AppointmentDeclineComponent } from "../decline/appointment-decline.component";
 import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
+import { SidebarWarningComponent } from "../sidebar-warning/sidebar-warning.component";
 
 import { AuthService } from "../../../services/auth.service";
 import { RoomService } from "../../../services/room.service";
@@ -70,8 +71,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.getRooms();
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
-        this.room.id = params['id'];
-        this.updateCalendar();
+        this.changeRoom(params['id']);
       }
 
       if (params['date'] !== undefined) {
@@ -99,6 +99,7 @@ export class RoomCalendarViewComponent implements OnInit {
     this.weekField.year = +this.week.format("YYYY");
 
     this.updateCalendar();
+    this.closeSidebar(false);
   }
 
   /**
@@ -132,7 +133,6 @@ export class RoomCalendarViewComponent implements OnInit {
     this.roomService.getRoomsData().subscribe({
       next: (rooms: PagedResponse<Room>) => {
         this.rooms = rooms.data;
-        this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
       },
       error: error => {
         console.error('There was an error!', error);
@@ -143,9 +143,23 @@ export class RoomCalendarViewComponent implements OnInit {
   /**
    * Gets all rooms
    */
-  public changeRoom(roomId: string): void {
-    this.room.id = roomId;
-    this.updateCalendar();
+  public async changeRoom(roomId: string): Promise<void> {
+    if (roomId === this.room.id) {
+      return;
+    }
+
+    this.roomService.getRoomData(roomId).subscribe({
+      next: (room: Room) => {
+        this.room = room;
+        this.columnKeys = Array.from(Array(this.room.maxConcurrentBookings).keys());
+        this.updateCalendar();
+        this.closeSidebar(false);
+        history.pushState(null, '', `/room-overview/${this.room.id}`);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -154,6 +168,15 @@ export class RoomCalendarViewComponent implements OnInit {
    */
   public getDayOfWeek(dayOfWeek: number): moment.Moment {
     return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
+  }
+
+  /**
+   * Checks if object is a string
+   *
+   * @param {Appointment|string|null} object object
+   */
+  public isString(object: Appointment|string|null): boolean {
+    return typeof object === 'string';
   }
 
   /**
@@ -184,6 +207,15 @@ export class RoomCalendarViewComponent implements OnInit {
   }
 
   /**
+   * Returns object typed as string
+   *
+   * @param {Appointment|string|null} object appointment
+   */
+  public parseString(object: Appointment|string|null): string {
+    return <string>object;
+  }
+
+  /**
    * Returns id of specified appointment
    *
    * @param {Appointment|string|null} object appointment
@@ -209,9 +241,13 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {number} slot slot in the calendar
    */
   public openAppointmentCreationForm(day: number, slot: number): void {
-    this.action = 'create';
-    this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
-      .hours(slot + this.minTimeslot));
+    if (this.action === '') {
+      this.action = 'create';
+      this.appointmentCreationStart = moment(moment(this.week).add(day, 'days')
+        .hours(slot + this.minTimeslot));
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -220,8 +256,12 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentView(appointmentId: TimespanId): void {
-    this.action = 'view';
-    this.currentAppointmentId = <string>appointmentId;
+    if (this.action === '') {
+      this.action = 'view';
+      this.currentAppointmentId = <string>appointmentId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
   }
 
   /**
@@ -230,8 +270,19 @@ export class RoomCalendarViewComponent implements OnInit {
    * @param {TimespanId} appointmentId id of appointment
    */
   public openAppointmentEditForm(appointmentId: TimespanId): void {
-    this.action = 'edit';
-    this.currentAppointmentId = <string>appointmentId;
+    if (this.action === '') {
+      this.action = 'edit';
+      this.currentAppointmentId = <string>appointmentId;
+    } else {
+      this.showSidebarAlreadyOpenError();
+    }
+  }
+
+  /**
+   * Shows an error popup that sidebar is already opened
+   */
+  public showSidebarAlreadyOpenError() {
+    this.modalService.open(SidebarWarningComponent);
   }
 
   /**

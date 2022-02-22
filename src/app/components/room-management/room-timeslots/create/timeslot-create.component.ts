@@ -91,12 +91,15 @@ export class TimeslotCreateComponent implements OnInit {
   public async createTimeslot(): Promise<void> {
     if (this.timeslotCreateForm.valid) {
       const day = moment(this.date).minutes(0).seconds(0);
+      const endHour = +this.timeslotCreateForm.controls['endHour'].value;
 
       if (!this.isRecurring) {
         this.roomService.createTimeslot(
           this.room,
           moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.timeslotCreateForm.controls['endHour'].value, 'HH:mm').hours()),
+          endHour === 0
+            ? moment(day).add(1, 'day').hours(0)
+            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
           +this.timeslotCreateForm.controls['type'].value
         ).subscribe({
           next: () => {
@@ -110,7 +113,9 @@ export class TimeslotCreateComponent implements OnInit {
         this.roomService.createTimeslotSeries(
           this.room,
           moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          moment(day).hours(moment(this.timeslotCreateForm.controls['endHour'].value, 'HH:mm').hours()),
+          endHour === 0
+            ? moment(day).add(1, 'day').hours(0)
+            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
           +this.timeslotCreateForm.controls['type'].value,
           +this.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].value,
           +this.recurringTimeslotCreateForm.controls['amount'].value

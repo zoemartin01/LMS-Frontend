@@ -19,11 +19,17 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="url" class="my-1">URL <span class="badge bg-warning d-inline" *ngIf="!linkWarning">URL is not whitelisted</span></label>
+      <label for="url" class="my-1">URL</label>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="URL" id="url" formControlName="url" autocomplete="url"
                (keyup)="checkUrlAgainstWhitelistedRetailers()">
       </div>
+    </div>
+    <br>
+    <div class="alert alert-warning" role="alert" *ngIf="!linkWarning">
+      URL is not whitelisted
+      <a class="alert-link" href="javascript:void(0)" (click)="openWhitelistRetailerList()">See whitelisted
+        retailers</a>
     </div>
     <div class="form-group">
       <label for="status" class="my-1">Order Status</label>

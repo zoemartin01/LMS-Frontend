@@ -8,14 +8,21 @@
       <h5 class="card-title">Appointments</h5>
       <p class="card-text">You can book appointments to use rooms of TECO.</p>
       <div class="col text-center">
-        <a routerLink="/appointments" class="btn btn-primary" role="button">My Appointments</a>
+        <a routerLink="/appointments" class="btn btn-primary position-relative" role="button">
+          My Appointments
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.appointments !== 0">
+            {{ unreadMessages.appointments }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
         <a routerLink="/room-overview" class="btn btn-primary" role="button">Room Overview</a>
         <a routerLink="/appointments/all" class="btn btn-secondary position-relative" role="button"
            *ngIf="authService.isAdmin()">
           All Appointments
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                *ngIf="unreadMessages.appointments !== 0">
-            {{ unreadMessages.appointments }}
+                *ngIf="unreadMessages.appointments_admin !== 0">
+            {{ unreadMessages.appointments_admin }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
@@ -46,13 +53,20 @@
       <p class="card-text">If you need something you can request an order.<br>
         <span *ngIf="authService.isAdmin()"> As admin you can manage order requests.</span></p>
       <div class="col text-center">
-        <a routerLink="/orders" class="btn btn-primary" role="button">My Orders</a>
+        <a routerLink="/orders" class="btn btn-primary position-relative" role="button">
+          My Orders
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.orders !== 0">
+            {{ unreadMessages.orders }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
         <a routerLink="/orders/all" class="btn btn-secondary position-relative" role="button"
            *ngIf="authService.isAdmin()">
           All Orders
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                *ngIf="unreadMessages.orders !== 0">
-            {{ unreadMessages.orders }}
+                *ngIf="unreadMessages.orders_admin !== 0">
+            {{ unreadMessages.orders_admin }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
@@ -104,7 +118,14 @@
         <span *ngIf="authService.isAdmin()">As admin additionally you can change the application's settings.</span>
       </p>
       <div class="col text-center">
-        <a routerLink="/settings" class="btn btn-primary" role="button">Account Settings</a>
+        <a routerLink="/settings" class="btn btn-primary position-relative" role="button">
+          Account Settings
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="unreadMessages.settings !== 0">
+            {{ unreadMessages.settings }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
         <span *ngIf="authService.isAdmin()">
           <a routerLink="/application-settings" class="btn btn-secondary" role="button">Application Settings</a>
         </span>

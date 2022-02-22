@@ -59,6 +59,7 @@ import { RoomEditComponent } from './components/room-management/edit/room-edit.c
 import { RoomListComponent } from './components/room-management/list/room-list.component';
 import { RoomViewComponent } from './components/room-management/view/room-view.component';
 import { SafetyInstructionsComponent } from './components/general/safety-instructions/safety-instructions.component';
+import { SidebarWarningComponent } from './components/appointment-management/sidebar-warning/sidebar-warning.component';
 import { TimeslotCreateComponent } from './components/room-management/room-timeslots/create/timeslot-create.component';
 import { TimeslotDeleteComponent } from './components/room-management/room-timeslots/delete/timeslot-delete.component';
 import { TimeslotEditComponent } from './components/room-management/room-timeslots/edit/timeslot-edit.component';
@@ -79,6 +80,7 @@ import { WhitelistRetailerViewComponent } from './components/settings/whitelist-
 import { WhitelistRetailerDomainCreateComponent } from './components/settings/whitelist-retailer/domain-create/whitelist-retailer-domain-create.component';
 import { WhitelistRetailerDomainDeleteComponent } from './components/settings/whitelist-retailer/domain-delete/whitelist-retailer-domain-delete.component';
 import { WhitelistRetailerDomainEditComponent } from './components/settings/whitelist-retailer/domain-edit/whitelist-retailer-domain-edit.component';
+import { WhitelistRetailerUserListComponent } from './components/order-management/whitelist-retailer-user-list/whitelist-retailer-user-list.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +127,7 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     RoomListComponent,
     RoomViewComponent,
     SafetyInstructionsComponent,
+    SidebarWarningComponent,
     TimeslotCreateComponent,
     TimeslotDeleteComponent,
     TimeslotEditComponent,
@@ -145,6 +148,7 @@ import { WhitelistRetailerDomainEditComponent } from './components/settings/whit
     WhitelistRetailerDomainCreateComponent,
     WhitelistRetailerDomainDeleteComponent,
     WhitelistRetailerDomainEditComponent,
+    WhitelistRetailerUserListComponent,
   ],
   imports: [
     AppRoutingModule,
