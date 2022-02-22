@@ -8,7 +8,9 @@ describe('WhitelistRetailerUserListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WhitelistRetailerUserListComponent ]
+      declarations: [
+        WhitelistRetailerUserListComponent,
+      ],
     })
     .compileComponents();
   });
@@ -16,7 +18,6 @@ describe('WhitelistRetailerUserListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerUserListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

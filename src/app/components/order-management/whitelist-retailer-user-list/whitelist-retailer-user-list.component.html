@@ -1,30 +1,30 @@
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Whitelisted retailers</h4>
-      </div>
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Whitelisted retailers</h4>
+  </div>
 
-      <div class="modal-body">
-        <table class="table table-striped">
-          <thead class="thead-dark">
-          <tr>
-            <th class="col">Retailer</th>
-            <th class="col">Domains</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let whitelistRetailer of whitelistRetailers.data">
-            <td class="col">{{ whitelistRetailer.name }}</td>
-            <td class="col">
-              <ng-container *ngFor="let whitelistRetailerDomain of whitelistRetailer.domains">
-                {{ whitelistRetailerDomain.domain }} <br>
-              </ng-container>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="modal-body">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th class="col">Retailer</th>
+        <th class="col">Domains</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let whitelistRetailer of whitelistRetailers.data">
+        <td class="col">{{ whitelistRetailer.name }}</td>
+        <td class="col">
+          <ng-container *ngFor="let whitelistRetailerDomain of whitelistRetailer.domains">
+            {{ whitelistRetailerDomain.domain }} <br>
+          </ng-container>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="activeModal.close('closed')">Close</button>
-      </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('closed')">Close</button>
+  </div>
 </div>

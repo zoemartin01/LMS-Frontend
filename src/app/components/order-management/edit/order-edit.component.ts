@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { WhitelistRetailerUserListComponent } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
@@ -13,7 +15,6 @@ import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {WhitelistRetailerUserListComponent} from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 @Component({
   selector: 'app-edit',
