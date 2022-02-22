@@ -95,6 +95,10 @@ describe('InventoryService', () => {
     });
   });
 
+  it('should throw exception when trying to get an inventory item with id null', () => {
+    expect(() => service.getInventoryItemData(null)).toThrow(ParseArgumentException);
+  });
+
   it('should get inventory item by name', () => {
     service.getInventoryItemByName("Fantastic Concrete Pizza").subscribe(
       res => {

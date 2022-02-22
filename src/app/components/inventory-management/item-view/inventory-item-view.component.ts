@@ -112,5 +112,4 @@ export class InventoryItemViewComponent implements OnInit {
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
   }
-
 }
