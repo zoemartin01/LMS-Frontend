@@ -18,9 +18,10 @@ import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockMessagingService {
-  getMessages(): Observable<Message[]> {
+  getMessages(limit: number = 0, offset: number = 0): Observable<PagedResponse<Message>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -32,12 +33,14 @@ class MockMessagingService {
         });
       }
 
-      const messages: Message[] = [
+      let pagedListMessages = new PagedList<Message>();
+
+      pagedListMessages.data = [
         {
           id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
           title: 'Verify Email to confirm account',
           content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-          correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
           correspondingUrlText: 'Verify Email',
           readStatus: false,
         },
@@ -45,13 +48,13 @@ class MockMessagingService {
           id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
           title: 'Verify Email to confirm account',
           content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-          correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
           correspondingUrlText: 'Verify Email',
           readStatus: false,
         },
       ];
 
-      observer.next(messages);
+      observer.next(pagedListMessages);
     });
   }
 
@@ -70,8 +73,11 @@ class MockMessagingService {
       const unreadMessages: UnreadMessages = {
         sum: 12,
         appointments: 3,
+        appointments_admin: 0,
         orders: 1,
+        orders_admin: 0,
         users: 5,
+        settings: 0,
       };
 
       observer.next(unreadMessages);
@@ -94,7 +100,7 @@ class MockMessagingService {
         id: messageId,
         title: 'Verify Email to confirm account',
         content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+        correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
         correspondingUrlText: 'Verify Email',
         readStatus: changedData.readStatus,
       };
@@ -330,7 +336,7 @@ describe('MessageBoxComponent - calls of getters', () => {
       id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
       title: 'Verify Email to confirm account',
       content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-      correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
       correspondingUrlText: 'Verify Email',
       readStatus: false,
     });
@@ -351,7 +357,7 @@ describe('MessageBoxComponent - calls of getters', () => {
       id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
       title: 'Verify Email to confirm account',
       content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-      correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
       correspondingUrlText: 'Verify Email',
       readStatus: false,
     });
@@ -404,23 +410,31 @@ describe('MessageBoxComponent - http functions', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get unread messages amounts', () => {
+  it('should get unread messages amounts', fakeAsync(() => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
 
     component.getUnreadMessagesAmounts();
 
+    tick();
+
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
-  });
+  }));
 
   it('should show error message on get unread messages amounts error', () => {
     localStorage.setItem('throwError', 'true');
@@ -432,33 +446,34 @@ describe('MessageBoxComponent - http functions', () => {
     localStorage.setItem('throwError', 'false');
   });
 
-  it('should get messages', () => {
+  it('should get messages', (done: DoneFn) => {
     let pagedListMessages = new PagedList<Message>();
     pagedListMessages.pageSize = 8;
 
-    //expect(component.messages).toEqual(pagedListMessages);
+    component.getMessages(1).then(() => {
+      pagedListMessages.data = [
+        {
+          id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
+          title: 'Verify Email to confirm account',
+          content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+          correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrlText: 'Verify Email',
+          readStatus: false,
+        },
+        {
+          id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
+          title: 'Verify Email to confirm account',
+          content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+          correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+          correspondingUrlText: 'Verify Email',
+          readStatus: false,
+        },
+      ];
 
-    component.getMessages();
+      expect(component.messages).toEqual(pagedListMessages);
 
-    pagedListMessages.data = [
-      {
-        id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
-        title: 'Verify Email to confirm account',
-        content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
-        correspondingUrlText: 'Verify Email',
-        readStatus: false,
-      },
-      {
-        id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
-        title: 'Verify Email to confirm account',
-        content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
-        correspondingUrl: ' http://localhost:4200/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
-        correspondingUrlText: 'Verify Email',
-        readStatus: false,
-      },
-    ];
-    //expect(component.messages).toEqual(pagedListMessages);
+      done();
+    });
   });
 
   it('should show error message on get messages error', () => {
@@ -469,5 +484,31 @@ describe('MessageBoxComponent - http functions', () => {
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
+  });
+
+  it('should go to corresponding page if corresponding url is not null', () => {
+    component.goToCorrespondingPage({
+      id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
+      title: 'Verify Email to confirm account',
+      content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+      correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrlText: 'Verify Email',
+      readStatus: false,
+    });
+
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp');
+  });
+
+  it('should do nothing if corresponding url is null', () => {
+    component.goToCorrespondingPage({
+      id: '312d8319-c253-4ee4-8771-a4a8d4a2f411',
+      title: 'Verify Email to confirm account',
+      content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
+      correspondingUrl: '/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp',
+      correspondingUrlText: 'Verify Email',
+      readStatus: false,
+    });
+
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/register/verify-email/2fe76781-912d-4cb4-a84c-a0dccf12d74e/ywayp');
   });
 });

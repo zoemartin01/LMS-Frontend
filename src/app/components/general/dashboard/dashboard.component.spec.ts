@@ -1,41 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { WINDOW } from "../../../providers/window.providers";
 import { Observable } from 'rxjs';
+import { WINDOW } from "../../../providers/window.providers";
 
 import { DashboardComponent } from './dashboard.component';
 
-import { MessagingService } from "../../../services/messaging.service";
 import { UserService } from "../../../services/user.service";
 
-import { UnreadMessages } from "../../../types/unread-messages";
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 
-class MockMessagingService {
-  public getUnreadMessagesAmounts(): Observable<UnreadMessages> {
-    return new Observable((observer) => {
-      if (localStorage.getItem('throwError') === 'true') {
-        observer.error({
-          error: {
-            error: {
-              message: 'Unknown Error.',
-            }
-          }
-        });
-      }
+class MockWebSocket {
+  public path: string = '';
+  public onmessage: ((this: WebSocket, ev: MessageEvent) => any) = () => {};
 
-      const unreadMessages: UnreadMessages = {
-        sum: 12,
-        appointments: 3,
-        orders: 1,
-        users: 5,
-      };
-
-      observer.next(unreadMessages);
-    });
+  constructor(path: string) {
+    this.path = path;
   }
 }
 
@@ -74,7 +56,13 @@ describe('DashboardComponent', () => {
   let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
-    let windowMock: Window = <any>{ };
+    let windowMock: Window = <any>{
+      location: {
+        protocol: 'https:',
+        hostname: 'HOST',
+      }
+    };
+
     await TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
@@ -84,9 +72,9 @@ describe('DashboardComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
         { provide: WINDOW, useFactory: (() => { return windowMock; }) },
+        { provide: WebSocket, useFactory: MockWebSocket },
       ],
     }).compileComponents();
 
@@ -97,28 +85,40 @@ describe('DashboardComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  /*it('should init page with notification channel email and message box', () => {
+  it('should init page with notification channel email and message box', () => {
     localStorage.setItem('testNotificationChannel', NotificationChannel.emailAndMessageBox.toString());
 
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
     component.ngOnInit();
 
+    if (component.websocket.onmessage) {
+      component.websocket.onmessage(new MessageEvent<any>('any', {
+        data: '{"sum":12,"appointments":3,"appointments_admin":0,"orders":1,"orders_admin":0,"users":5,"settings":0}'
+      }));
+    }
+
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeTrue();
   });
@@ -129,65 +129,101 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
     component.ngOnInit();
 
+    if (component.websocket.onmessage) {
+      component.websocket.onmessage(new MessageEvent<any>('any', {
+        data: '{"sum":12,"appointments":3,"appointments_admin":0,"orders":1,"orders_admin":0,"users":5,"settings":0}'
+      }));
+    }
+
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeTrue();
   });
 
-  it('should try to init page with notification channel email only and get redirected to dashboard', () => {
+  it('should try to init page with notification channel email only', () => {
     localStorage.setItem('testNotificationChannel', NotificationChannel.emailOnly.toString());
 
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
     component.ngOnInit();
 
+    if (component.websocket.onmessage) {
+      component.websocket.onmessage(new MessageEvent<any>('any', {
+        data: '{"sum":12,"appointments":3,"appointments_admin":0,"orders":1,"orders_admin":0,"users":5,"settings":0}'
+      }));
+    }
+
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
   });
 
-  it('should try to init page with notification channel none and get redirected to dashboard', () => {
+  it('should try to init page with notification channel none', () => {
     localStorage.setItem('testNotificationChannel', NotificationChannel.none.toString());
 
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
     component.ngOnInit();
 
+    if (component.websocket.onmessage) {
+      component.websocket.onmessage(new MessageEvent<any>('any', {
+        data: '{"sum":12,"appointments":3,"appointments_admin":0,"orders":1,"orders_admin":0,"users":5,"settings":0}'
+      }));
+    }
+
     expect(component.unreadMessages).toEqual({
       sum: 12,
       appointments: 3,
+      appointments_admin: 0,
       orders: 1,
+      orders_admin: 0,
       users: 5,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
-  });*/
+  });
 
   it('should show error message on get user error', () => {
     localStorage.setItem('throwError', 'true');
@@ -195,8 +231,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -206,8 +245,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -220,8 +262,11 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
@@ -231,12 +276,14 @@ describe('DashboardComponent', () => {
     expect(component.unreadMessages).toEqual({
       sum: 0,
       appointments: 0,
+      appointments_admin: 0,
       orders: 0,
+      orders_admin: 0,
       users: 0,
+      settings: 0,
     });
     expect(component.showMessageBox).toBeFalse();
 
     localStorage.setItem('throwError', 'false');*/
   });
-    //@todo test websocket
 });

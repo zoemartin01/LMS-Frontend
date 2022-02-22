@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { WINDOW } from '../../../providers/window.providers';
 
 import { AuthService } from "../../../services/auth.service";
 
@@ -36,10 +37,12 @@ export class LoginComponent {
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
    * @param {Router} router router providing navigation
+   * @param {Window} window window provider
    */
   constructor(
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    @Inject(WINDOW) private window: Window) {
   }
 
   /**
@@ -54,7 +57,7 @@ export class LoginComponent {
           this.authService.setUserId(res.userId);
           this.authService.setUserRole(<UserRole><unknown>res.role);
 
-          this.router.navigateByUrl('/dashboard').then(() => location.reload());
+          this.router.navigateByUrl('/dashboard').then(() => this.window.location.reload());
         },
         error: error => {
           this.loginError = true;

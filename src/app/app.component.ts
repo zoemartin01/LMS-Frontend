@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { WINDOW } from './providers/window.providers';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 
 import { AuthService } from "./services/auth.service";
-import { MessagingService } from "./services/messaging.service";
 import { UserService } from "./services/user.service";
 
 import { User } from "./types/user";
@@ -33,22 +32,22 @@ export class AppComponent implements OnInit {
     settings: 0,
   };
   public showMessageBox: boolean = false;
+  public websocket: WebSocket;
 
   /**
    * Constructor
    * @constructor
    * @param {AuthService} authService service providing authentication functionalities
-   * @param {MessagingService} messagingService service providing messaging functionalities
    * @param {UserService} userService service providing user functionalities
    * @param {Router} router router providing navigation
    * @param {Window} window window provider
    */
   constructor(
     public authService: AuthService,
-    public messagingService: MessagingService,
     private userService: UserService,
     private router: Router,
     @Inject(WINDOW) private window: Window) {
+    this.websocket = new WebSocket(this.unreadMessagesWebSocketPath());
   }
 
   /**
@@ -56,9 +55,7 @@ export class AppComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
-      const ws = new WebSocket(this.unreadMessagesWebSocketPath());
-
-      ws.onmessage = (event) => {
+      this.websocket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
           this.unreadMessages = data;
