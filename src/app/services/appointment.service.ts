@@ -7,7 +7,6 @@ import { environment } from "../../environments/environment";
 import { Appointment } from "../types/appointment";
 import { TimespanId } from "../types/aliases/timespan-id";
 import { Room } from "../types/room";
-import { RoomId } from "../types/aliases/room-id";
 import { ConfirmationStatus } from "../types/enums/confirmation-status";
 import { SeriesId } from "../types/aliases/series-id";
 import { PagedResponse } from '../types/paged-response';
