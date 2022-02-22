@@ -86,6 +86,11 @@ export class GlobalSettingsComponent implements OnInit {
         +globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value
       ) / 86400000
     );
+    this.globalSettingsForm.controls['static.homepage'].setValue('');
+    this.globalSettingsForm.controls['static.lab_rules'].setValue('');
+    this.globalSettingsForm.controls['static.faq'].setValue('');
+    this.globalSettingsForm.controls['static.faq_admin'].setValue('');
+    this.globalSettingsForm.controls['static.safety_instructions'].setValue('');
   }
 
   /**
