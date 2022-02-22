@@ -284,8 +284,7 @@ class MockAppointmentService {
       } else {
         observer.next(undefined);
       }
-    })
-      ;
+    });
   }
 }
 
