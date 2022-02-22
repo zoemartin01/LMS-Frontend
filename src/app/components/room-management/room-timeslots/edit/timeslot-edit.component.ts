@@ -148,7 +148,7 @@ export class TimeslotEditComponent implements OnInit {
       changedData['start'] = day.hours(moment(this.timeslotEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
       const endHour = +this.timeslotEditForm.controls['endHour'].value;
-      changedData['end'] = endHour === 0
+      changedData['end'] = endHour === 24
         ? moment(day).add(1, 'day').hours(0).toISOString()
         : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
@@ -176,7 +176,7 @@ export class TimeslotEditComponent implements OnInit {
       changedData['start'] = day.hours(moment(this.timeslotEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
       const endHour = +this.timeslotEditForm.controls['endHour'].value;
-      changedData['end'] = endHour === 0
+      changedData['end'] = endHour === 24
         ? moment(day).add(1, 'day').hours(0).toISOString()
         : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }

@@ -28,7 +28,7 @@
         <div class="form-group">
           <label for="endTime" class="my-1">End time</label>
           <div class="input-group">
-            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1" min="0" max="23">
+            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1" min="1" max="24">
             <span class="input-group-text">:</span>
             <input class="form-control" type="text" value="00" disabled>
           </div>
@@ -50,26 +50,6 @@
         <div class="alert alert-danger mt-2" role="alert" *ngIf="timeslotConflict">
           <b>Error:</b><br>
           {{ timeslotConflictMessage }}<br>
-        </div>
-        <br>
-        <div class="row">
-          <div class="form-group text-center">
-            <label class="form-check-label" for="safetyInstructions">
-              <input type="checkbox" class="form-check-input" id="safetyInstructions"
-                     formControlName="safetyInstructions">
-              I have read and agree to the <a routerLink="/safety-instructions">Safety Introductions of Hardware Lab</a>
-            </label>
-          </div>
-          <div class="form-group text-center">
-            <label class="form-check-label" for="hwlabRules">
-              <input type="checkbox" class="form-check-input" id="hwlabRules" formControlName="hwlabRules">
-              I have read and agree to the <a routerLink="/hwlab-rules">Rules of Hardware Lab</a>
-            </label>
-          </div>
-        </div>
-        <div class="alert alert-danger mt-2" role="alert"
-             *ngIf="hasError">
-          {{ hasErrorMessage }}
         </div>
       </form>
       <form (keyup.enter)="createAppointment()" *ngIf="isRecurring" [formGroup]="recurringAppointmentCreateForm">
@@ -97,6 +77,27 @@
             <input type="checkbox" class="form-check-input" id="force" [checked]="force" (change)="force = !force">
             Create all appointments except for those that have collisions.
           </label>
+        </div>
+      </form>
+      <form (keyup.enter)="createAppointment()" [formGroup]="appointmentCreateForm">
+        <div class="row">
+          <div class="form-group text-center">
+            <label class="form-check-label" for="safetyInstructions">
+              <input type="checkbox" class="form-check-input" id="safetyInstructions"
+                     formControlName="safetyInstructions">
+              I have read and agree to the <a href="/safety-instructions" target="_blank">Safety Introductions of Hardware Lab</a>
+            </label>
+          </div>
+          <div class="form-group text-center">
+            <label class="form-check-label" for="hwlabRules">
+              <input type="checkbox" class="form-check-input" id="hwlabRules" formControlName="hwlabRules">
+              I have read and agree to the <a href="/hwlab-rules" target="_blank">Rules of Hardware Lab</a>
+            </label>
+          </div>
+        </div>
+        <div class="alert alert-danger mt-2" role="alert"
+             *ngIf="hasError">
+          {{ hasErrorMessage }}
         </div>
       </form>
       <br>
