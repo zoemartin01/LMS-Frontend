@@ -1,4 +1,5 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -12,7 +13,6 @@ import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
 import { PagedList } from "../../../types/paged-list";
 import { PagedResponse } from "../../../types/paged-response";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 class MockInventoryService {
   getInventoryItems(limit: number = 0, offset: number = 0): Observable<PagedResponse<InventoryItem>> {
