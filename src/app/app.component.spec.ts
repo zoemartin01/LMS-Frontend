@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { LoadingBarModule } from "@ngx-loading-bar/core";
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 import {} from 'jasmine';
@@ -15,7 +16,6 @@ import { UserService } from "./services/user.service";
 import { User } from "./types/user";
 import { UserRole } from "./types/enums/user-role";
 import { NotificationChannel } from "./types/enums/notification-channel";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 class MockWebSocket {
   public path: string = '';
