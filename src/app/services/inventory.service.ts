@@ -48,7 +48,8 @@ export class InventoryService {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getSingleItem.replace(':id', inventoryItemId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getSingleItem
+      .replace(':id', inventoryItemId)}`;
 
     return this.httpClient.get<InventoryItem>(apiURL);
   }
@@ -81,7 +82,8 @@ export class InventoryService {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.updateItem.replace(':id', inventoryItemId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.updateItem
+      .replace(':id', inventoryItemId)}`;
 
     return this.httpClient.patch<InventoryItem>(apiURL, changedData);
   }
@@ -95,16 +97,15 @@ export class InventoryService {
     if (inventoryItemId === null) {
       throw ParseArgumentException;
     }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem.replace(':id', inventoryItemId)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.deleteItem
+      .replace(':id', inventoryItemId)}`;
 
     return this.httpClient.delete<InventoryItem>(apiURL);
   }
 
   public getInventoryItemByName(inventoryItemName: string): Observable<InventoryItem> {
-    if (inventoryItemName === null) {
-      throw ParseArgumentException;
-    }
-    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName.replace(':name', inventoryItemName)}`;
+    const apiURL = `${environment.baseUrl}${environment.apiRoutes.inventory_item.getByName
+      .replace(':name', inventoryItemName)}`;
 
     return this.httpClient.get<InventoryItem>(apiURL);
   }

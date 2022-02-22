@@ -24,7 +24,6 @@ export class InventoryItemEditComponent implements OnInit {
       Validators.required, Validators.min(0)
     ]),
   });
-
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
@@ -68,7 +67,7 @@ export class InventoryItemEditComponent implements OnInit {
       error: error => {
         console.error('There was an error!', error);
       }
-    })
+    });
   }
 
   /**
