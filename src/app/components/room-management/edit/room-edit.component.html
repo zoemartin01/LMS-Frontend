@@ -35,6 +35,10 @@
         <label class="form-check-label" for="autoAcceptBookings">Automatic Accept Bookings</label>
       </div>
     </div>
+    <div class="alert alert-danger mt-2" role="alert" *ngIf="maxBookingsConflict">
+      <b>Error:</b><br>
+      {{ maxBookingsConflictMessage }}<br>
+    </div>
   </form>
 </div>
 <div class="modal-footer">
