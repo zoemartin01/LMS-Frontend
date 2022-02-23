@@ -8,6 +8,8 @@ import { WINDOW_PROVIDERS } from "../providers/window.providers";
 import { LivecamService } from './livecam.service';
 
 import { VideoResolution } from '../types/enums/video-resolution';
+import {ParseArgumentException} from "@angular/cli/models/parser";
+//import mock = jest.mock;
 
 describe('LivecamService', () => {
   let service: LivecamService;
@@ -95,6 +97,26 @@ describe('LivecamService', () => {
         statusText: 'No Content',
       }
     );
+  });
+
+  it('should download a recording with a specific id', () => {
+    const expectedResult: ArrayBuffer = new ArrayBuffer(8)
+
+    service.downloadRecording('exampleRecordingID').subscribe(
+      res => {
+        expect(res).toEqual(expectedResult);
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording.replace(':id', 'exampleRecordingID')}`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush(expectedResult);
+  });
+
+  it('should throw exception when trying to download recording with id null', () => {
+    expect(() => service.downloadRecording(null)).toThrow(ParseArgumentException);
   });
 
   it('should get a recordings data', () => {

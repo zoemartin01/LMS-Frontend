@@ -9,6 +9,7 @@ import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
 import { WINDOW } from '../providers/window.providers';
 import { PagedResponse } from '../types/paged-response';
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root',
@@ -66,12 +67,13 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to download
    */
   public downloadRecording(recordingId: RecordingId): Observable<ArrayBuffer> {
+    if (recordingId === null) throw ParseArgumentException;
+
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`.replace(
         ':id',
-        recordingId!
+        recordingId
       );
-    if (recordingId === null) throw new Error('recordingId cannot be null');
 
     apiURL.replace(':id', recordingId);
     return this.httpClient.get(apiURL, { responseType: 'arraybuffer' });
