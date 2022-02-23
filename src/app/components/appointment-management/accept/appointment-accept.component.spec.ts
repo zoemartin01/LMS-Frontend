@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {AppointmentAcceptComponent} from './appointment-accept.component';
 import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
@@ -12,9 +12,13 @@ import * as moment from "moment";
 import {UserRole} from "../../../types/enums/user-role";
 import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
+import {AppointmentService} from "../../../services/appointment.service";
+import {FormsModule, NgControl, ReactiveFormsModule} from "@angular/forms";
+import {MessageId} from "../../../types/aliases/message-id";
+import {TimespanId} from "../../../types/aliases/timespan-id";
 
 class MockAppointmentService {
-  public getAllAppointments(limit: number = 0, offset: number = 0, confirmationStatus: ConfirmationStatus | undefined = undefined): Observable<PagedResponse<Appointment>> {
+  public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -55,51 +59,32 @@ class MockAppointmentService {
           notificationChannel: 3
         }
       }
+      observer.next(appointment);
     });
   }
-}
 
-class MockModalService {
-  close(): { componentInstance: { appointment: Appointment | null }, result: Promise<string> } {
-    return {
-      componentInstance: {
-        appointment: {
-          id: null,
-          user: {
-            id: null,
-            firstName: '',
-            lastName: '',
-            email: '',
-            role: UserRole.unknown,
-            notificationChannel: NotificationChannel.unknown,
-            emailVerification: true,
-            isActiveDirectory: false,
-          },
-          room: {
-            id: null,
-            name: '',
-            description: '',
-            maxConcurrentBookings: 1,
-            autoAcceptBookings: null,
-          },
-          start: null,
-          end: null,
-          type: RoomTimespanType.appointment,
-          seriesId: null,
-          timeSlotRecurrence: 1,
-          maxStart: undefined,
-          amount: 1,
-          confirmationStatus: ConfirmationStatus.unknown,
-        },
-      },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
-    };
-  };
+  acceptAppointmentRequest(appointmentId: TimespanId): Observable<void> {
+    return new Observable((observer) => {
+      if (appointmentId === '312d8319-c253-4ee4-8771-a4a8d4a2f411') {
+        observer.error({
+          error: {
+            error: {
+              message: 'Appointment not found.',
+            }
+          }
+        });
+      }
+
+      observer.next();
+    });
+  }
 }
 
 describe('AppointmentAcceptComponent', () => {
   let component: AppointmentAcceptComponent;
   let fixture: ComponentFixture<AppointmentAcceptComponent>;
+  let acceptAppointmentMethod: jasmine.Spy<any>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -109,17 +94,41 @@ describe('AppointmentAcceptComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
+        FormsModule,
+        NgbModule,
+        ReactiveFormsModule,
       ],
       providers: [
         NgbActiveModal,
+        {provide: AppointmentService, useClass: MockAppointmentService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppointmentAcceptComponent);
     component = fixture.componentInstance;
+    acceptAppointmentMethod = spyOn(component, 'acceptAppointment');
+    acceptAppointmentMethod.calls.reset();
+
   });
+
+  //@TODO dont really know what to test
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should accept a pending appointment', fakeAsync(() => {
+    component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+    component.getAppointmentData();
+    tick();
+    console.log(component.appointment);
+
+    let closeModal = spyOn(component.activeModal, 'close');
+    tick();
+    component.acceptAppointment()
+    tick();
+    console.log(component.appointment.id);
+    expect(acceptAppointmentMethod).toHaveBeenCalled();
+    expect(closeModal).toHaveBeenCalledWith('accepted');
+  }));
 });

@@ -385,8 +385,9 @@ describe('AdminAppointmentListComponent', () => {
   it('should get all pending appointments', fakeAsync(() => {
     let pagedListPendingAppointments = new PagedList<Appointment>();
     pagedListPendingAppointments.pageSize = 10;
-
+    component.pendingAppointments.pageSize = 10;
     component.getPendingAppointments();
+    tick();
 
     pagedListPendingAppointments.data = [
       {
@@ -533,7 +534,7 @@ describe('AdminAppointmentListComponent', () => {
 
     tick();
     //@TODO component.pendingAppointments empty :(
-    //expect(component.pendingAppointments).toEqual(pagedListPendingAppointments);
+    expect(component.pendingAppointments).toEqual(pagedListPendingAppointments);
 
     expect(getPendingAppointmentsMethod).toHaveBeenCalled();
   }));
@@ -775,7 +776,7 @@ describe('AdminAppointmentListComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-
+//@TODO Doesnt work
   /*it('should show error message on get pending appointments error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
