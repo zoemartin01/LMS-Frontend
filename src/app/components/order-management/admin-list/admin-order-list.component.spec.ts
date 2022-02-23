@@ -19,11 +19,8 @@ describe('AdminOrderListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AdminOrderListComponent);
     component = fixture.componentInstance;
   });

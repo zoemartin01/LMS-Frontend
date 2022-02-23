@@ -21,11 +21,8 @@ describe('RoomDeleteComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(RoomDeleteComponent);
     component = fixture.componentInstance;
   });

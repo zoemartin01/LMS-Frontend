@@ -19,11 +19,8 @@ describe('UserListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
   });

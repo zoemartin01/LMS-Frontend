@@ -24,11 +24,8 @@ describe('LivecamDeleteComponent', () => {
         NgbActiveModal,
         WINDOW_PROVIDERS,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LivecamDeleteComponent);
     component = fixture.componentInstance;
   });

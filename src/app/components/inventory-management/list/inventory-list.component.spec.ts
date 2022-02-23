@@ -90,11 +90,8 @@ describe('InventoryListComponent', () => {
         { provide: InventoryService, useClass: MockInventoryService },
         { provide: NgbModal, useClass: MockModalService },
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(InventoryListComponent);
     component = fixture.componentInstance;
   });

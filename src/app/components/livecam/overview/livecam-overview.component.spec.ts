@@ -24,11 +24,8 @@ describe('LivecamOverviewComponent', () => {
       providers: [
         WINDOW_PROVIDERS,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LivecamOverviewComponent);
     component = fixture.componentInstance;
   });

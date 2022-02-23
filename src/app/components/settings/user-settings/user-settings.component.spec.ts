@@ -24,11 +24,8 @@ describe('UserSettingsComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserSettingsComponent);
     component = fixture.componentInstance;
   });

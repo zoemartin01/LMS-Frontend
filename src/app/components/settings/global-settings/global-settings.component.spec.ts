@@ -26,11 +26,8 @@ describe('GlobalSettingsComponent', () => {
       providers: [
         AdminService,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(GlobalSettingsComponent);
     component = fixture.componentInstance;
   });

@@ -19,11 +19,8 @@ describe('RoomListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(RoomListComponent);
     component = fixture.componentInstance;
   });

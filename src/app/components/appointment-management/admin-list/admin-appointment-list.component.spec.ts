@@ -19,11 +19,8 @@ describe('AdminAppointmentListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AdminAppointmentListComponent);
     component = fixture.componentInstance;
   });
