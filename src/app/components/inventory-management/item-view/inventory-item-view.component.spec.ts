@@ -154,14 +154,13 @@ describe('InventoryItemViewComponent', () => {
   it('should open inventory item deletion form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
-    const getInventoryItemDataMethod = spyOn(component, 'getInventoryItemData');
+    const closeModalMethod = spyOn(component.activeModal, 'close');
 
     component.openInventoryItemDeletionDialog();
 
     tick();
 
-    expect(getInventoryItemDataMethod).toHaveBeenCalled();
-    expect(component.dirty).toBeTrue();
+    expect(closeModalMethod).toHaveBeenCalledWith('dirty');
 
     localStorage.removeItem('returnVal');
   }));
