@@ -21,11 +21,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerDeleteComponent);
     component = fixture.componentInstance;
   });

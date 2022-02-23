@@ -24,14 +24,10 @@ describe('WhitelistRetailerCreateComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerCreateComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

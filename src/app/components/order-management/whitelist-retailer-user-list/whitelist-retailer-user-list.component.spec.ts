@@ -21,11 +21,8 @@ describe('WhitelistRetailerUserListComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerUserListComponent);
     component = fixture.componentInstance;
   });

@@ -24,11 +24,8 @@ describe('OrderRequestComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(OrderRequestComponent);
     component = fixture.componentInstance;
   });
