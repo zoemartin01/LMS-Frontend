@@ -730,7 +730,7 @@ describe('AdminService', () => {
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.updateDomainOfWhitelistRetailer
       .replace(':id', 'retailerExampleID')
-      .replace(':domainId', 'retailerExampleId')}`);
+      .replace(':domainId', 'domainExampleId')}`);
 
     expect(mockRequest.request.method).toBe('PATCH');
 
@@ -749,11 +749,11 @@ describe('AdminService', () => {
   });
 
   it('should delete a domain of a whitelisted retailer with a specific id', () => {
-    service.deleteDomainOfWhitelistRetailer('retailerExampleID', 'exampleDomainID').subscribe();
+    service.deleteDomainOfWhitelistRetailer('retailerExampleID', 'domainExampleID').subscribe();
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.deleteDomainOfWhitelistRetailer
       .replace(':id', 'retailerExampleID')
-      .replace(':domainId', 'retailerExampleId')}`);
+      .replace(':domainId', 'domainExampleID')}`);
 
     expect(mockRequest.request.method).toBe('DELETE');
 
@@ -764,11 +764,11 @@ describe('AdminService', () => {
   });
 
   it('should throw exception when trying to delete a domain of a whitelisted retailer with id null', () => {
-    expect(() => service.editDomainOfWhitelistRetailer(null, '', {})).toThrow(ParseArgumentException);
+    expect(() => service.deleteDomainOfWhitelistRetailer(null, '')).toThrow(ParseArgumentException);
   });
 
   it('should throw exception when trying to delete a domain of a whitelisted retailer with domain id null', () => {
-    expect(() => service.editDomainOfWhitelistRetailer('', null, {})).toThrow(ParseArgumentException);
+    expect(() => service.deleteDomainOfWhitelistRetailer('', null)).toThrow(ParseArgumentException);
   });
 
   it('should accept user request', () => {
@@ -776,13 +776,13 @@ describe('AdminService', () => {
 
     service.acceptUserRequest('userXY');
 
-    expect(updateUserMethod).toHaveBeenCalledWith({ id: "userXY", changedData: { role: 2 }});
+    expect(updateUserMethod).toHaveBeenCalledWith( "userXY", { role: 2 });
   });
 
   it('should decline user request', () => {
     const deleteUserMethod = spyOn(service, 'deleteUser');
 
-    service.deleteUser('userXY');
+    service.declineUserRequest('userXY');
 
     expect(deleteUserMethod).toHaveBeenCalledWith('userXY');
   });
