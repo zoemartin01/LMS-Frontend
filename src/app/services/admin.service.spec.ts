@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 import { AdminService } from './admin.service';
 
 import { NotificationChannel } from "../types/enums/notification-channel";
+import {ParseArgumentException} from "@angular/cli/models/parser";
 
 describe('AdminService', () => {
   let service: AdminService;
@@ -146,6 +147,10 @@ describe('AdminService', () => {
       isActiveDirectory: false,
       notificationChannel: NotificationChannel.emailAndMessageBox
     });
+  });
+
+  it('should throw exception when trying to get an user with id null', () => {
+    expect(() => service.getUser(null)).toThrow(ParseArgumentException);
   });
 
   it('should get all pending users', () => {
@@ -411,6 +416,10 @@ describe('AdminService', () => {
     });
   });
 
+  it('should throw exception when trying to edit an user with id null', () => {
+    expect(() => service.updateUser(null, {})).toThrow(ParseArgumentException);
+  });
+
   it('should delete an user with specific id', () => {
     service.deleteUser('userXY').subscribe();
 
@@ -422,6 +431,10 @@ describe('AdminService', () => {
       status: 204,
       statusText: "No Content",
     });
+  });
+
+  it('should throw exception when trying to delete an user with id null', () => {
+    expect(() => service.deleteUser(null)).toThrow(ParseArgumentException);
   });
 
   it('should get all whitelist retailers', () => {
@@ -564,6 +577,10 @@ describe('AdminService', () => {
     });
   });
 
+  it('should throw exception when trying to get a whitelisted retailer with id null', () => {
+    expect(() => service.getWhitelistRetailerData(null)).toThrow(ParseArgumentException);
+  });
+
   it('should create a whitelist retailer with given data', () => {
     service.createWhitelistRetailer(['domain.1.test', 'domain.2.test'], 'retailerExampleName').subscribe(
       res => {
@@ -654,5 +671,149 @@ describe('AdminService', () => {
         }
       ]
     });
+  });
+
+  it('should throw exception when trying to edit an whitelisted retailer with id null', () => {
+    expect(() => service.editWhitelistRetailerData(null, {})).toThrow(ParseArgumentException);
+  });
+
+  it('should delete whitelisted retailer with specific id', () => {
+    service.deleteWhitelistRetailer('retailerExampleID').subscribe();
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.deleteWhitelistRetailer.replace(':id', 'retailerExampleID')}`);
+
+    expect(mockRequest.request.method).toBe('DELETE');
+
+    mockRequest.flush({}, {
+      status: 204,
+      statusText: "No Content",
+    });
+  });
+
+  it('should throw exception when trying to delete a whitelisted retailer with id null', () => {
+    expect(() => service.deleteWhitelistRetailer(null)).toThrow(ParseArgumentException);
+  });
+
+  it('should add a domain to a whitelisted retailer', () => {
+    service.addDomainToWhitelistRetailer('retailerExampleID', 'domain.2.test').subscribe(
+      res => {
+        expect(res).toEqual({
+          id: "retailerExampleID",
+          domain: "domain.2.test",
+        });
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.addDomainToWhitelistRetailer.replace(':id', 'retailerExampleID')}`);
+
+    expect(mockRequest.request.method).toBe('POST');
+
+    mockRequest.flush({
+      id: "retailerExampleID",
+      domain: "domain.2.test",
+    })
+  });
+
+  it('should throw exception when trying to add a domain to a whitelisted retailer with id null', () => {
+    expect(() => service.addDomainToWhitelistRetailer(null, '')).toThrow(ParseArgumentException);
+  });
+
+  it('should edit a domain of a whitelisted retailer', () => {
+    service.editDomainOfWhitelistRetailer('retailerExampleID', 'domainExampleId', {domain: 'domain.2.test'}).subscribe(
+      res => {
+        expect(res).toEqual({
+          id: "domainExampleID",
+          domain: "domain.2.test",
+        });
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.updateDomainOfWhitelistRetailer
+      .replace(':id', 'retailerExampleID')
+      .replace(':domainId', 'retailerExampleId')}`);
+
+    expect(mockRequest.request.method).toBe('PATCH');
+
+    mockRequest.flush({
+      id: "domainExampleID",
+      domain: "domain.2.test",
+    })
+  });
+
+  it('should throw exception when trying to edit a domain of a whitelisted retailer with retailer id null', () => {
+    expect(() => service.editDomainOfWhitelistRetailer(null, '', {})).toThrow(ParseArgumentException);
+  });
+
+  it('should throw exception when trying to edit a domain of a whitelisted retailer with domain id null', () => {
+    expect(() => service.editDomainOfWhitelistRetailer('', null, {})).toThrow(ParseArgumentException);
+  });
+
+  it('should delete a domain of a whitelisted retailer with a specific id', () => {
+    service.deleteDomainOfWhitelistRetailer('retailerExampleID', 'exampleDomainID').subscribe();
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.deleteDomainOfWhitelistRetailer
+      .replace(':id', 'retailerExampleID')
+      .replace(':domainId', 'retailerExampleId')}`);
+
+    expect(mockRequest.request.method).toBe('DELETE');
+
+    mockRequest.flush({}, {
+      status: 204,
+      statusText: "No Content",
+    });
+  });
+
+  it('should throw exception when trying to delete a domain of a whitelisted retailer with id null', () => {
+    expect(() => service.editDomainOfWhitelistRetailer(null, '', {})).toThrow(ParseArgumentException);
+  });
+
+  it('should throw exception when trying to delete a domain of a whitelisted retailer with domain id null', () => {
+    expect(() => service.editDomainOfWhitelistRetailer('', null, {})).toThrow(ParseArgumentException);
+  });
+
+  it('should accept user request', () => {
+    const updateUserMethod = spyOn(service, 'updateUser');
+
+    service.acceptUserRequest('userXY');
+
+    expect(updateUserMethod).toHaveBeenCalledWith({ id: "userXY", changedData: { role: 2 }});
+  });
+
+  it('should decline user request', () => {
+    const deleteUserMethod = spyOn(service, 'deleteUser');
+
+    service.deleteUser('userXY');
+
+    expect(deleteUserMethod).toHaveBeenCalledWith('userXY');
+  });
+
+  it('should check domain against whitelist and post true with whitelisted domain', () => {
+    service.checkDomainAgainstWhitelist('domain.test').subscribe(
+      res => {
+        expect(res).toEqual({isWhitelisted: true});
+      });
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`);
+
+    expect(mockRequest.request.method).toBe('POST');
+
+    mockRequest.flush({
+      isWhitelisted: true
+    })
+  });
+
+  it('should check domain against whitelist and post false with whitelisted domain', () => {
+    service.checkDomainAgainstWhitelist('domain.test').subscribe(
+      res => {
+        expect(res).toEqual({isWhitelisted: false});
+      });
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.admin_settings.checkDomainAgainstWhitelist}`);
+
+    expect(mockRequest.request.method).toBe('POST');
+
+    mockRequest.flush({
+      isWhitelisted: false
+    })
   });
 });
