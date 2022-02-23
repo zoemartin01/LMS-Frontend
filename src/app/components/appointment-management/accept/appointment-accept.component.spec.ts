@@ -116,7 +116,7 @@ describe('AppointmentAcceptComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
+//@TODO not working yet
   it('should accept a pending appointment', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
     component.getAppointmentData();
