@@ -26,11 +26,10 @@ import { UserRole } from "../../../types/enums/user-role";
 export class OrderViewComponent implements OnInit {
   public orderViewForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(0),
     url: new FormControl(''),
     status: new FormControl(0),
   });
-
   public order: Order = {
     id: null,
     itemName: null,
@@ -48,7 +47,7 @@ export class OrderViewComponent implements OnInit {
       isActiveDirectory: false,
     },
     status: OrderStatus.unknown,
-  }
+  };
   public dirty: boolean = false;
   public canInteract: boolean = false;
 
@@ -121,14 +120,12 @@ export class OrderViewComponent implements OnInit {
         this.activeModal.close('dirty');
         return;
       }
-
-      if (result !== 'aborted') {
-        this.getOrderData();
-        this.dirty = true;
-      }
     });
   }
 
+  /**
+   * Opens inventory order dialog
+   */
   public openInventoryOrderForm(): void {
     const modal = this.modalService.open(InventoryOrderComponent);
     modal.componentInstance.order.id = this.order.id;
