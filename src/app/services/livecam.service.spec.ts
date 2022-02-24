@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
@@ -95,6 +96,26 @@ describe('LivecamService', () => {
         statusText: 'No Content',
       }
     );
+  });
+
+  it('should download a recording with a specific id', () => {
+    const expectedResult: ArrayBuffer = new ArrayBuffer(8)
+
+    service.downloadRecording('exampleRecordingID').subscribe(
+      res => {
+        expect(res).toEqual(expectedResult);
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording.replace(':id', 'exampleRecordingID')}`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush(expectedResult);
+  });
+
+  it('should throw exception when trying to download recording with id null', () => {
+    expect(() => service.downloadRecording(null)).toThrow(ParseArgumentException);
   });
 
   it('should get a recordings data', () => {
