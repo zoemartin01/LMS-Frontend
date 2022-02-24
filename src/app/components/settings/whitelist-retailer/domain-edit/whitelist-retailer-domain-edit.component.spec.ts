@@ -22,9 +22,7 @@ describe('WhitelistRetailerDomainEditComponent', () => {
         NgbActiveModal,
       ],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerDomainEditComponent);
     component = fixture.componentInstance;
   });

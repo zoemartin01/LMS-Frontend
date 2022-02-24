@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
@@ -97,6 +98,26 @@ describe('LivecamService', () => {
     );
   });
 
+  it('should download a recording with a specific id', () => {
+    const expectedResult: ArrayBuffer = new ArrayBuffer(8)
+
+    service.downloadRecording('exampleRecordingID').subscribe(
+      res => {
+        expect(res).toEqual(expectedResult);
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording.replace(':id', 'exampleRecordingID')}`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush(expectedResult);
+  });
+
+  it('should throw exception when trying to download recording with id null', () => {
+    expect(() => service.downloadRecording(null)).toThrow(ParseArgumentException);
+  });
+
   it('should get a recordings data', () => {
     const id = '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f';
 
@@ -138,31 +159,31 @@ describe('LivecamService', () => {
 
   it('should get all recordings', () => {
     service.getFinishedRecordings().subscribe((res: any) => {
-      expect(res.length).toBe(2);
-      expect(res).toEqual([
-        {
-          id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
-          user: {
-            id: '284689bf-1c72-4cfa-bf04-47952c839779',
-          },
-          start: '2018-08-01T00:00:00.000Z',
-          end: '2018-08-01T01:00:00.000Z',
-          resolution: VideoResolution.V1080,
-          bitrate: 1000,
-          size: 0,
-        },
-        {
-          id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
-          user: {
-            id: '284689bf-1c72-4cfa-bf04-47952c839779',
-          },
-          start: '2018-08-01T00:00:00.000Z',
-          end: '2018-08-01T01:00:00.000Z',
-          resolution: VideoResolution.V1080,
-          bitrate: 1000,
-          size: 1000,
-        },
-      ]);
+      expect(res).toEqual(
+        { length: 2, data: [
+            {
+              id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
+              user: {
+                id: '284689bf-1c72-4cfa-bf04-47952c839779',
+              },
+              start: '2018-08-01T00:00:00.000Z',
+              end: '2018-08-01T01:00:00.000Z',
+              resolution: VideoResolution.V1080,
+              bitrate: 1000,
+              size: 0,
+            },
+            {
+              id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
+              user: {
+                id: '284689bf-1c72-4cfa-bf04-47952c839779',
+              },
+              start: '2018-08-01T00:00:00.000Z',
+              end: '2018-08-01T01:00:00.000Z',
+              resolution: VideoResolution.V1080,
+              bitrate: 1000,
+              size: 1000,
+            },
+          ]});
     });
 
     const mockRequest = httpMock.expectOne(
@@ -171,7 +192,7 @@ describe('LivecamService', () => {
 
     expect(mockRequest.request.method).toBe('GET');
 
-    mockRequest.flush([
+    mockRequest.flush({ length: 2, data: [
       {
         id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
         user: {
@@ -194,36 +215,35 @@ describe('LivecamService', () => {
         bitrate: 1000,
         size: 1000,
       },
-    ]);
+    ]});
   });
 
   it('should get all scheduled recordings', () => {
     service.getAllScheduledRecordings().subscribe((res: any) => {
-      expect(res.length).toBe(2);
-      expect(res).toEqual([
-        {
-          id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
-          user: {
-            id: '284689bf-1c72-4cfa-bf04-47952c839779',
+      expect(res).toEqual({ length: 2, data: [
+          {
+            id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
+            user: {
+              id: '284689bf-1c72-4cfa-bf04-47952c839779',
+            },
+            start: '2018-08-01T00:00:00.000Z',
+            end: '2018-08-01T01:00:00.000Z',
+            resolution: VideoResolution.V1080,
+            bitrate: 1000,
+            size: 0,
           },
-          start: '2018-08-01T00:00:00.000Z',
-          end: '2018-08-01T01:00:00.000Z',
-          resolution: VideoResolution.V1080,
-          bitrate: 1000,
-          size: 0,
-        },
-        {
-          id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
-          user: {
-            id: '284689bf-1c72-4cfa-bf04-47952c839779',
+          {
+            id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
+            user: {
+              id: '284689bf-1c72-4cfa-bf04-47952c839779',
+            },
+            start: '2018-08-01T00:00:00.000Z',
+            end: '2018-08-01T01:00:00.000Z',
+            resolution: VideoResolution.V1080,
+            bitrate: 1000,
+            size: 1000,
           },
-          start: '2018-08-01T00:00:00.000Z',
-          end: '2018-08-01T01:00:00.000Z',
-          resolution: VideoResolution.V1080,
-          bitrate: 1000,
-          size: 1000,
-        },
-      ]);
+        ]});
     });
 
     const mockRequest = httpMock.expectOne(
@@ -232,45 +252,30 @@ describe('LivecamService', () => {
 
     expect(mockRequest.request.method).toBe('GET');
 
-    mockRequest.flush([
-      {
-        id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
-        user: {
-          id: '284689bf-1c72-4cfa-bf04-47952c839779',
-        },
-        start: '2018-08-01T00:00:00.000Z',
-        end: '2018-08-01T01:00:00.000Z',
-        resolution: VideoResolution.V1080,
-        bitrate: 1000,
-        size: 0,
-      },
-      {
-        id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
-        user: {
-          id: '284689bf-1c72-4cfa-bf04-47952c839779',
-        },
-        start: '2018-08-01T00:00:00.000Z',
-        end: '2018-08-01T01:00:00.000Z',
-        resolution: VideoResolution.V1080,
-        bitrate: 1000,
-        size: 1000,
-      },
-    ]);
+    mockRequest.flush(
+      { length: 2, data: [
+          {
+            id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
+            user: {
+              id: '284689bf-1c72-4cfa-bf04-47952c839779',
+            },
+            start: '2018-08-01T00:00:00.000Z',
+            end: '2018-08-01T01:00:00.000Z',
+            resolution: VideoResolution.V1080,
+            bitrate: 1000,
+            size: 0,
+          },
+          {
+            id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f80',
+            user: {
+              id: '284689bf-1c72-4cfa-bf04-47952c839779',
+            },
+            start: '2018-08-01T00:00:00.000Z',
+            end: '2018-08-01T01:00:00.000Z',
+            resolution: VideoResolution.V1080,
+            bitrate: 1000,
+            size: 1000,
+          },
+        ]});
   });
-
-  /*it('should get the live stream feed', () => {
-    service.getLiveStreamFeed().subscribe((res: any) => {
-      url: 'ws://localhost:8080/livecam/feed';
-    });
-
-    const mockRequest = httpMock.expectOne(
-      `${environment.baseUrl}${environment.apiRoutes.livecam.streamFeed}`
-    );
-
-    expect(mockRequest.request.method).toBe('GET');
-
-    mockRequest.flush({
-      url: 'ws://localhost:8080/livecam/feed',
-    });
-  });*/
 });

@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 import { Recording } from '../types/recording';
 import { RecordingId } from '../types/aliases/recording-id';
@@ -66,12 +67,13 @@ export class LivecamService {
    * @param {RecordingId} recordingId id of the recording to download
    */
   public downloadRecording(recordingId: RecordingId): Observable<ArrayBuffer> {
+    if (recordingId === null) throw ParseArgumentException;
+
     const apiURL =
       `${environment.baseUrl}${environment.apiRoutes.livecam.downloadRecording}`.replace(
         ':id',
-        recordingId!
+        recordingId
       );
-    if (recordingId === null) throw new Error('recordingId cannot be null');
 
     apiURL.replace(':id', recordingId);
     return this.httpClient.get(apiURL, { responseType: 'arraybuffer' });

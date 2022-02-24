@@ -97,9 +97,9 @@ export class InventoryItemViewComponent implements OnInit {
     const modal = this.modalService.open(InventoryItemDeleteComponent);
     modal.componentInstance.inventoryItem.id = this.inventoryItem.id;
     modal.result.then((result) => {
-      if (result !== 'aborted') {
-        this.getInventoryItemData();
-        this.dirty = true;
+      if (result === 'deleted') {
+        this.activeModal.close('dirty');
+        return;
       }
     });
   }
@@ -112,5 +112,4 @@ export class InventoryItemViewComponent implements OnInit {
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
   }
-
 }

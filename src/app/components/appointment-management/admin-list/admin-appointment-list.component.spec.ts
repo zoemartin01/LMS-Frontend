@@ -352,8 +352,7 @@ describe('AdminAppointmentListComponent', () => {
         {provide: AppointmentService, useClass: MockAppointmentService},
         {provide: NgbModal, useClass: MockModalService},
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdminAppointmentListComponent);
     component = fixture.componentInstance;

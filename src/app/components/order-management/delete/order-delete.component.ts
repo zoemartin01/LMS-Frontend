@@ -21,7 +21,7 @@ import { UserRole } from "../../../types/enums/user-role";
 export class OrderDeleteComponent implements OnInit {
   public orderDeleteForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(0),
     url: new FormControl(''),
     status: new FormControl(0),
   });

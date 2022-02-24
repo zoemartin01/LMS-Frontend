@@ -26,7 +26,7 @@
       </div>
     </div>
     <br>
-    <div class="alert alert-warning" role="alert" *ngIf="!linkWarning">
+    <div class="alert alert-warning" role="alert" *ngIf="!isWhitelisted">
       URL is not whitelisted
       <a class="alert-link" href="javascript:void(0)" (click)="openWhitelistRetailerList()">See whitelisted
         retailers</a>

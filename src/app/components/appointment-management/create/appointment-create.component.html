@@ -103,7 +103,8 @@
       <br>
       <div class="row">
         <div class="col text-center">
-          <button (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
+          <button [disabled]="!appointmentCreateForm.valid || (isRecurring && !recurringAppointmentCreateForm.valid)"
+                  (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
           <button (click)="closeForm.emit(false)" class="btn btn-secondary" role="button">Abort</button>
         </div>
       </div>

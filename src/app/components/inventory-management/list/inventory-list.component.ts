@@ -75,10 +75,6 @@ export class InventoryListComponent implements OnInit {
       if (result.split(' ')[0] === 'created') {
         this.openInventoryItemViewForm(result.split(' ')[1]);
       }
-
-      if (result !== 'aborted') {
-        this.getInventory();
-      }
     });
   }
 
@@ -86,6 +82,7 @@ export class InventoryListComponent implements OnInit {
    * Opens form to create order
    *
    * @param {string} inventoryItemName name of item to order
+   * @param {InventoryItemId} inventoryItemId name of item to order
    */
   public openOrderCreationForm(inventoryItemName: string, inventoryItemId: InventoryItemId): void {
     const modal = this.modalService.open(OrderRequestComponent);
@@ -94,10 +91,6 @@ export class InventoryListComponent implements OnInit {
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
         this.openInventoryItemViewForm(inventoryItemId);
-      }
-
-      if (result !== 'aborted') {
-        this.getInventory();
       }
     });
   }

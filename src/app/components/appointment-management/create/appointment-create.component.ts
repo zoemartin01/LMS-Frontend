@@ -6,7 +6,6 @@ import * as moment from "moment";
 import { AppointmentService } from "../../../services/appointment.service";
 
 import { Room } from "../../../types/room";
-import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-appointment-create',
@@ -34,8 +33,8 @@ export class AppointmentCreateComponent implements OnInit {
     hwlabRules: new FormControl(false, Validators.requiredTrue),
   });
   public recurringAppointmentCreateForm: FormGroup = new FormGroup({
-    timeSlotRecurrence: new FormControl(''),
-    amount: new FormControl(''),
+    timeSlotRecurrence: new FormControl('', Validators.required),
+    amount: new FormControl(1, [Validators.required, Validators.min(2)]),
   });
   public date: moment.Moment = moment();
   public dateText: string = '';
@@ -70,8 +69,6 @@ export class AppointmentCreateComponent implements OnInit {
 
     this.appointmentCreateForm.controls['startHour'].setValue(this.date.format('HH'));
     this.appointmentCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours').format('HH'));
-    this.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
-    this.recurringAppointmentCreateForm.controls['amount'].setValue(1);
   }
 
   /**
@@ -100,7 +97,7 @@ export class AppointmentCreateComponent implements OnInit {
    * Opens appointment creation form
    */
   public async createAppointment(): Promise<void> {
-    if (this.appointmentCreateForm.valid) {
+    if (this.appointmentCreateForm.valid && (!this.isRecurring || this.recurringAppointmentCreateForm.valid)) {
       this.hasError = false;
       const day = moment(this.date).minutes(0).seconds(0);
       const endHour = +this.appointmentCreateForm.controls['endHour'].value;

@@ -24,11 +24,8 @@ describe('RoomEditComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(RoomEditComponent);
     component = fixture.componentInstance;
   });

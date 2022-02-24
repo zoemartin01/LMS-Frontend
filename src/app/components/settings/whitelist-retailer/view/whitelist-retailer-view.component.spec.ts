@@ -21,11 +21,8 @@ describe('WhitelistRetailerViewComponent', () => {
       providers: [
         NgbActiveModal,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WhitelistRetailerViewComponent);
     component = fixture.componentInstance;
   });

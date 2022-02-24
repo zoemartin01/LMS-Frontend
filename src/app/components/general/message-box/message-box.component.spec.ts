@@ -218,22 +218,20 @@ describe('MessageBoxComponent - calls of updatePage', () => {
     expect(router.navigateByUrl).not.toHaveBeenCalledWith('/dashboard');
   });
 
-  it('should try to init page with notification channel email only and get redirected to dashboard', () => {
+  it('should try to init page with notification channel email only', () => {
     localStorage.setItem('testNotificationChannel', NotificationChannel.emailOnly.toString());
 
     component.ngOnInit();
 
     expect(updatePageMethod).not.toHaveBeenCalled();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
   });
 
-  it('should try to init page with notification channel none and get redirected to dashboard', () => {
+  it('should try to init page with notification channel none', () => {
     localStorage.setItem('testNotificationChannel', NotificationChannel.none.toString());
 
     component.ngOnInit();
 
     expect(updatePageMethod).not.toHaveBeenCalled();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
   });
 
   it('should show error message on init error', () => {

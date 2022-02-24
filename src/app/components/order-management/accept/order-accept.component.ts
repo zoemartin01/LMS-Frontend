@@ -20,7 +20,7 @@ import { OrderStatus } from "../../../types/enums/order-status";
 export class OrderAcceptComponent implements OnInit {
   public orderAcceptForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(0),
     url: new FormControl(''),
     status: new FormControl(0),
   });

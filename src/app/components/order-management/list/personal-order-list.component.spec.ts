@@ -19,11 +19,8 @@ describe('PersonalOrderListComponent', () => {
         NgxPaginationModule,
         RouterTestingModule,
       ],
-    })
-    .compileComponents();
-  });
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(PersonalOrderListComponent);
     component = fixture.componentInstance;
   });

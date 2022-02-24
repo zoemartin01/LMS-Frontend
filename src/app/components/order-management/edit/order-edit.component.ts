@@ -29,7 +29,7 @@ export class OrderEditComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
   public orderEditForm: FormGroup = new FormGroup({
     itemName: new FormControl('', Validators.required),
-    quantity: new FormControl(null,[
+    quantity: new FormControl(0,[
       Validators.required,
       Validators.min(1),
     ]),
@@ -54,7 +54,7 @@ export class OrderEditComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   }
-  public linkWarning: boolean = false;
+  public isWhitelisted: boolean = true;
 
   /**
    * Constructor
@@ -74,7 +74,7 @@ export class OrderEditComponent implements OnInit {
     public adminService: AdminService,
     public utilityService: UtilityService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal
+    public modalService: NgbModal
   ) {
     if (!(this.authService.isAdmin())) {
       this.orderEditForm.controls['status'].disable();
@@ -133,7 +133,7 @@ export class OrderEditComponent implements OnInit {
   public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
     this.adminService.checkDomainAgainstWhitelist(this.orderEditForm.controls['url'].value).subscribe({
       next: res => {
-        this.linkWarning = res.isWhitelisted;
+        this.isWhitelisted = res.isWhitelisted;
       },
       error: error => {
         console.error('There was an error!', error);
