@@ -26,7 +26,7 @@ export class OrderRequestComponent implements OnInit {
     itemName: new FormControl('', [
       Validators.required,
     ]),
-    quantity: new FormControl(null,[
+    quantity: new FormControl(0,[
       Validators.required,
       Validators.min(1),
     ]),
@@ -34,7 +34,7 @@ export class OrderRequestComponent implements OnInit {
       Validators.required,
     ]),
   });
-  public linkWarning: boolean = false;
+  public isWhitelisted: boolean = true;
   requestOrderError: boolean = false;
   requestOrderErrorMessage: string = '';
 
@@ -52,7 +52,7 @@ export class OrderRequestComponent implements OnInit {
     public adminService: AdminService,
     public inventoryService: InventoryService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal
+    public modalService: NgbModal
   ) {
   }
 
@@ -83,7 +83,7 @@ export class OrderRequestComponent implements OnInit {
   public async checkUrlAgainstWhitelistedRetailers(): Promise<void> {
     this.adminService.checkDomainAgainstWhitelist(this.requestOrderForm.controls['url'].value).subscribe({
       next: res => {
-        this.linkWarning = !res.isWhitelisted;
+        this.isWhitelisted = res.isWhitelisted;
       },
       error: error => {
         console.error('There was an error!', error);
