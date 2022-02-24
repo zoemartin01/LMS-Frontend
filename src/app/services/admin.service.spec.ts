@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { HttpClientModule } from "@angular/common/http";
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import { environment } from "../../environments/environment";
 
 import { AdminService } from './admin.service';
 
 import { NotificationChannel } from "../types/enums/notification-channel";
-import {ParseArgumentException} from "@angular/cli/models/parser";
 
 describe('AdminService', () => {
   let service: AdminService;
