@@ -23,7 +23,7 @@ import { UserRole } from "../../../types/enums/user-role";
 export class InventoryOrderComponent implements OnInit {
   public inventoryOrderForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(0),
     url: new FormControl(''),
     status: new FormControl(0),
   });
@@ -44,13 +44,13 @@ export class InventoryOrderComponent implements OnInit {
       isActiveDirectory: false,
     },
     status: OrderStatus.unknown,
-  }
+  };
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
     description: '',
     quantity: null,
-  }
+  };
   existingItems: InventoryItem[] = [];
 
   /**
@@ -126,7 +126,7 @@ export class InventoryOrderComponent implements OnInit {
         this.inventoryItem = res;
         if (this.inventoryItem.quantity !== null && this.order.quantity !== null){
           this.inventoryService.editInventoryItem(
-            this.inventoryItem.id, {quantity: (+this.inventoryItem.quantity + +this.order.quantity)}
+            this.inventoryItem.id, { quantity: (+this.inventoryItem.quantity + +this.order.quantity) }
           ).subscribe({
             error: error => {
               console.error('There was an error!', error);

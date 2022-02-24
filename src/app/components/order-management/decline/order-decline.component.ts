@@ -21,7 +21,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 export class OrderDeclineComponent implements OnInit {
   public orderDeclineForm: FormGroup = new FormGroup({
     itemName: new FormControl(''),
-    quantity: new FormControl(null),
+    quantity: new FormControl(0),
     url: new FormControl(''),
     status: new FormControl(0),
   });

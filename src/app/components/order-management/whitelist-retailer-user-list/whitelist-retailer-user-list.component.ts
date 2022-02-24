@@ -34,7 +34,7 @@ export class WhitelistRetailerUserListComponent implements OnInit {
    * Inits page
    */
   ngOnInit(): void {
-    this.getWhitelistRetailers(this.whitelistRetailers.page);
+    this.getWhitelistRetailers();
   }
 
   /**
