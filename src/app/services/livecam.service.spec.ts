@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ParseArgumentException } from "@angular/cli/models/parser";
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
@@ -8,8 +9,6 @@ import { WINDOW_PROVIDERS } from "../providers/window.providers";
 import { LivecamService } from './livecam.service';
 
 import { VideoResolution } from '../types/enums/video-resolution';
-import {ParseArgumentException} from "@angular/cli/models/parser";
-//import mock = jest.mock;
 
 describe('LivecamService', () => {
   let service: LivecamService;

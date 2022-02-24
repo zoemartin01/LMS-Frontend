@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 import { Recording } from '../types/recording';
 import { RecordingId } from '../types/aliases/recording-id';
 import { VideoResolution } from '../types/enums/video-resolution';
 import { WINDOW } from '../providers/window.providers';
 import { PagedResponse } from '../types/paged-response';
-import {ParseArgumentException} from "@angular/cli/models/parser";
 
 @Injectable({
   providedIn: 'root',
