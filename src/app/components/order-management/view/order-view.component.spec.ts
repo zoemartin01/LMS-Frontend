@@ -309,7 +309,7 @@ describe('OrderViewComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should open order edit form', fakeAsync(() => {
+  it('should open inventory order form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'inventoried 045fcd70-d323-4de2-894e-a10772b23457');
 
     const getOrderDataMethod = spyOn(component, 'getOrderData');
