@@ -121,13 +121,10 @@ describe('AppointmentAcceptComponent', () => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
     component.getAppointmentData();
     tick();
-    console.log(component.appointment);
-
     let closeModal = spyOn(component.activeModal, 'close');
     tick();
     component.acceptAppointment()
     tick();
-    console.log(component.appointment.id);
     expect(acceptAppointmentMethod).toHaveBeenCalled();
     expect(closeModal).toHaveBeenCalledWith('accepted');
   }));
