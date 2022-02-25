@@ -75,7 +75,7 @@ describe('MessageDeleteComponent', () => {
   });
 
   it('should delete message', (done: DoneFn) => {
-    component.message = {
+      component.message = {
       id: 'b16a9b6a-aa07-41a6-ab5a-c972c2894458',
       title: 'Verify Email to confirm account',
       content: 'You need to click on this link to confirm your account or go to  http://localhost:4200/register/verify-email and enter user-ID: 2fe76781-912d-4cb4-a84c-a0dccf12d74e and token: ywayp.',
