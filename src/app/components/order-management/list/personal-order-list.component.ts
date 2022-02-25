@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryOrderComponent } from "../inventory/inventory-order.component";
@@ -55,6 +54,13 @@ export class PersonalOrderListComponent implements OnInit {
     this.acceptedOrders.pageSize = 3;
     this.declinedOrders.pageSize = 3;
 
+    this.updatePage();
+  }
+
+  /**
+   * Updates page
+   */
+  public updatePage() {
     this.getPendingOrders(this.pendingOrders.page);
     this.getAcceptedOrders(this.acceptedOrders.page);
     this.getDeclinedOrders(this.declinedOrders.page);
@@ -123,7 +129,6 @@ export class PersonalOrderListComponent implements OnInit {
     })
   }
 
-
   /**
    * Opens form to create order
    */
@@ -132,12 +137,6 @@ export class PersonalOrderListComponent implements OnInit {
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
         this.openOrderView(result.split(' ')[1]);
-      }
-
-      if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
       }
     });
   }
@@ -152,9 +151,7 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -169,9 +166,7 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -186,9 +181,7 @@ export class PersonalOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -214,10 +207,9 @@ export class PersonalOrderListComponent implements OnInit {
    * @param {Order} order order
    */
   public getItemName(order: Order) {
-    if (order === null) {
-      throw ParseArgumentException;
-    }
-    return ((order.item === null) ? order.itemName : order.item.name);
+    return order.item === null
+      ? order.itemName
+      : order.item.name;
   }
 
   /**
@@ -226,11 +218,7 @@ export class PersonalOrderListComponent implements OnInit {
    * @param {Order} order order to check
    */
   public canEditAccepted(order: Order): boolean {
-    if (order.status === OrderStatus.pending ||
-      (this.authService.isAdmin() && order.status !== 4 && order.status !== 5)
-    ) {
-      return true;
-    }
-    return false;
+    return order.status === OrderStatus.pending ||
+      (this.authService.isAdmin() && order.status !== OrderStatus.inventoried && order.status !== OrderStatus.sentBack);
   }
 }
