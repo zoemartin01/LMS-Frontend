@@ -53,6 +53,7 @@ class MockInventoryService {
 describe('InventoryItemDeleteComponent', () => {
   let component: InventoryItemDeleteComponent;
   let fixture: ComponentFixture<InventoryItemDeleteComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -71,6 +72,9 @@ describe('InventoryItemDeleteComponent', () => {
 
     fixture = TestBed.createComponent(InventoryItemDeleteComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -115,6 +119,8 @@ describe('InventoryItemDeleteComponent', () => {
 
     tick();
 
+    expect(consoleError).toHaveBeenCalled();
+
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
@@ -148,6 +154,7 @@ describe('InventoryItemDeleteComponent', () => {
 
     component.deleteInventoryItem();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('deleted');
 
     localStorage.removeItem('throwError');

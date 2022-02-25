@@ -120,8 +120,11 @@ describe('InventoryItemViewComponent', () => {
       quantity: null,
     });
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',

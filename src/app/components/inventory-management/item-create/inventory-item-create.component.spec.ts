@@ -38,6 +38,7 @@ class MockInventoryService {
 describe('InventoryItemCreateComponent', () => {
   let component: InventoryItemCreateComponent;
   let fixture: ComponentFixture<InventoryItemCreateComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -59,6 +60,9 @@ describe('InventoryItemCreateComponent', () => {
 
     fixture = TestBed.createComponent(InventoryItemCreateComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -88,6 +92,7 @@ describe('InventoryItemCreateComponent', () => {
 
     component.createInventoryItem();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
 
     localStorage.removeItem('throwError');
@@ -100,6 +105,7 @@ describe('InventoryItemCreateComponent', () => {
 
     component.createInventoryItem();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
   });
 });
