@@ -129,8 +129,11 @@ describe('InventoryListComponent', () => {
     let pagedList = new PagedList<InventoryItem>();
     expect(component.inventory).toEqual(pagedList);
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventory).toEqual(pagedList);
 
     localStorage.removeItem('throwError');

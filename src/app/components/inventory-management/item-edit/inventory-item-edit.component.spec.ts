@@ -60,6 +60,7 @@ class MockInventoryService {
 describe('InventoryItemEditComponent', () => {
   let component: InventoryItemEditComponent;
   let fixture: ComponentFixture<InventoryItemEditComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -81,6 +82,9 @@ describe('InventoryItemEditComponent', () => {
 
     fixture = TestBed.createComponent(InventoryItemEditComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -121,6 +125,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
@@ -162,6 +167,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.editInventoryItemData();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');
