@@ -109,7 +109,7 @@ export class AppointmentDeclineComponent implements OnInit {
   public async declineAppointment(): Promise<void> {
     this.appointmentService.declineAppointmentRequest(this.appointment.id).subscribe({
       next: () => {
-        this.activeModal.close('accepted');
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
@@ -123,7 +123,7 @@ export class AppointmentDeclineComponent implements OnInit {
   public async declineAppointmentSeries(): Promise<void> {
     this.appointmentService.declineAppointmentSeriesRequest(this.appointment.seriesId).subscribe({
       next: () => {
-        this.activeModal.close('accepted');
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
