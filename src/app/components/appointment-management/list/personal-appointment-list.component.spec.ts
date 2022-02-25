@@ -14,6 +14,7 @@ import {NotificationChannel} from "../../../types/enums/notification-channel";
 import {RoomTimespanType} from "../../../types/enums/timespan-type";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppointmentService} from "../../../services/appointment.service";
+import {PagedList} from "../../../types/paged-list";
 
 class MockAppointmentService {
   public getAllAppointmentsForCurrentUser(): Observable<PagedResponse<Appointment>> {
@@ -68,7 +69,7 @@ class MockAppointmentService {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 1,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -237,7 +238,7 @@ class MockAppointmentService {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 3,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -292,7 +293,7 @@ class MockModalService {
           type: RoomTimespanType.appointment,
           seriesId: null,
           timeSlotRecurrence: 1,
-          maxStart: undefined,
+          maxStart: null,
           amount: 1,
           confirmationStatus: ConfirmationStatus.unknown,
         },
@@ -302,7 +303,7 @@ class MockModalService {
   };
 }
 
-describe('PersonalAppointmentListComponent', () => {
+describe('PersonalAppointmentListComponent method calls', () => {
   let component: PersonalAppointmentListComponent;
   let fixture: ComponentFixture<PersonalAppointmentListComponent>;
   let consoleError: jasmine.Spy<any>;
@@ -374,7 +375,6 @@ describe('PersonalAppointmentListComponent', () => {
   }));
 
   it('should update appointments when appointment is created', fakeAsync(() => {
-    //@TODO is it "updated"
     localStorage.setItem('returnVal', 'created');
 
     component.openAppointmentCreationForm();
@@ -423,5 +423,280 @@ describe('PersonalAppointmentListComponent', () => {
     expect(getAllAppointmentsForCurrentUserMethod).not.toHaveBeenCalled();
 
     localStorage.removeItem('returnVal');
+  }));
+});
+describe('PersonalAppointmentListComponent method calls', () => {
+  let component: PersonalAppointmentListComponent;
+  let fixture: ComponentFixture<PersonalAppointmentListComponent>;
+  let consoleError: jasmine.Spy<any>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        PersonalAppointmentListComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        NgxPaginationModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        NgbActiveModal,
+        {provide: AppointmentService, useClass: MockAppointmentService},
+        {provide: NgbModal, useClass: MockModalService},
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PersonalAppointmentListComponent);
+    component = fixture.componentInstance;
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
+  });
+  it('should get all appointments', fakeAsync(() => {
+    let pagedListAppointments = new PagedList<Appointment>();
+    pagedListAppointments.pageSize = 10;
+    component.appointments.pageSize = 10;
+    component.getAllAppointmentsForCurrentUser();
+    pagedListAppointments.total = 8;
+    pagedListAppointments.data = [
+      {
+        id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+        start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 4,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 1,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
+        start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: null,
+        amount: 1,
+        timeSlotRecurrence: 1,
+        confirmationStatus: 1,
+        maxStart: null,
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+        start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 4,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 1,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "1415b732-328a-46a4-abcb-c1493252a9cc",
+        start: moment("2022-02-28T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-28T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 4,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 1,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "a229732c-32a3-4aee-b678-3b52f6b8a4a0",
+        start: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-03-07T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 4,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 1,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+        start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 2,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 2,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+
+      {
+        id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+        start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+        amount: 2,
+        timeSlotRecurrence: 3,
+        confirmationStatus: 2,
+        maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      },
+      {
+        id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
+        start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+        type: 1,
+        seriesId: null,
+        amount: 1,
+        timeSlotRecurrence: 1,
+        confirmationStatus: 3,
+        maxStart: null,
+        room: {
+          id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+          name: "Test room",
+          description: "room to test",
+          maxConcurrentBookings: 1,
+          autoAcceptBookings: true
+        },
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        }
+      }
+    ];
+
+    tick();
+    expect(component.appointments).toEqual(pagedListAppointments);
+  }));
+
+  it('should show error message on get appointments error', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.getAllAppointmentsForCurrentUser();
+    tick();
+    expect(consoleError).toHaveBeenCalled();
+
+    localStorage.setItem('throwError', 'false');
   }));
 });

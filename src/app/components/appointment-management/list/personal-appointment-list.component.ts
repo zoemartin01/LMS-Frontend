@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import * as moment from 'moment';
 
-import { AppointmentService } from "../../../services/appointment.service";
-import { AuthService } from "../../../services/auth.service";
+import {AppointmentService} from "../../../services/appointment.service";
+import {AuthService} from "../../../services/auth.service";
 
-import { AppointmentCreateComponent } from "../create/appointment-create.component";
-import { AppointmentDeleteComponent } from "../delete/appointment-delete.component";
-import { AppointmentViewComponent } from "../view/appointment-view.component";
+import {AppointmentCreateComponent} from "../create/appointment-create.component";
+import {AppointmentDeleteComponent} from "../delete/appointment-delete.component";
+import {AppointmentViewComponent} from "../view/appointment-view.component";
 
-import { Appointment } from "../../../types/appointment";
-import { TimespanId } from "../../../types/aliases/timespan-id";
-import { PagedList } from "../../../types/paged-list";
+import {Appointment} from "../../../types/appointment";
+import {TimespanId} from "../../../types/aliases/timespan-id";
+import {PagedList} from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-appointment-list',
@@ -50,7 +50,6 @@ export class PersonalAppointmentListComponent implements OnInit {
   public async getAllAppointmentsForCurrentUser(page: number = this.appointments.page): Promise<void> {
     const pageSize = this.appointments.pageSize;
     const offset = (page - 1) * pageSize;
-
     this.appointmentService.getAllAppointmentsForCurrentUser(pageSize, offset).subscribe({
       next: res => {
         this.appointments.parse(

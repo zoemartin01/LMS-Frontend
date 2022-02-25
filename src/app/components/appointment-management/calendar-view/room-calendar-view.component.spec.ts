@@ -104,7 +104,7 @@ class MockRoomService {
             confirmationStatus: 2,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -133,7 +133,7 @@ class MockRoomService {
             confirmationStatus: 1,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -337,7 +337,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 2,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -370,7 +370,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 0,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -398,7 +398,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 1,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -426,7 +426,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 2,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -454,7 +454,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -485,7 +485,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -518,7 +518,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -549,7 +549,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -682,7 +682,7 @@ describe('RoomCalendarViewComponent - http methods', () => {
             confirmationStatus: 2,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -711,7 +711,7 @@ describe('RoomCalendarViewComponent - http methods', () => {
             confirmationStatus: 1,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
