@@ -120,7 +120,6 @@ describe('InventoryItemDeleteComponent', () => {
     tick();
 
     expect(consoleError).toHaveBeenCalled();
-
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
