@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ParseArgumentException } from "@angular/cli/models/parser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryOrderComponent } from "../inventory/inventory-order.component";
@@ -49,6 +48,13 @@ export class AdminOrderListComponent implements OnInit {
     this.acceptedOrders.pageSize = 3;
     this.declinedOrders.pageSize = 3;
 
+    this.updatePage();
+  }
+
+  /**
+   * Updates page
+   */
+  public updatePage() {
     this.getPendingOrders(this.pendingOrders.page);
     this.getAcceptedOrders(this.acceptedOrders.page);
     this.getDeclinedOrders(this.declinedOrders.page);
@@ -126,12 +132,6 @@ export class AdminOrderListComponent implements OnInit {
       if (result.split(' ')[0] === 'created') {
         this.openOrderView(result.split(' ')[1]);
       }
-
-      if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
-      }
     });
   }
 
@@ -145,9 +145,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -162,9 +160,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -179,9 +175,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page);
-        this.getAcceptedOrders(this.acceptedOrders.page);
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -196,8 +190,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page)
-        this.getAcceptedOrders(this.acceptedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -212,8 +205,7 @@ export class AdminOrderListComponent implements OnInit {
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getPendingOrders(this.pendingOrders.page)
-        this.getDeclinedOrders(this.declinedOrders.page);
+        this.updatePage();
       }
     });
   }
@@ -239,9 +231,8 @@ export class AdminOrderListComponent implements OnInit {
    * @param {Order} order order
    */
   public getItemName(order: Order) {
-    if (order === null) {
-      throw ParseArgumentException;
-    }
-    return ((order.item === null) ? order.itemName : order.item.name);
+    return order.item === null
+      ? order.itemName
+      : order.item.name;
   }
 }
