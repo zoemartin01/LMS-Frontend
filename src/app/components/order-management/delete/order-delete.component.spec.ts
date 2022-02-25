@@ -92,6 +92,7 @@ class MockOrderService {
 describe('OrderDeleteComponent', () => {
   let component: OrderDeleteComponent;
   let fixture: ComponentFixture<OrderDeleteComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -110,6 +111,9 @@ describe('OrderDeleteComponent', () => {
 
     fixture = TestBed.createComponent(OrderDeleteComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -245,6 +249,7 @@ describe('OrderDeleteComponent', () => {
 
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
       id: "045fcd70-d323-4de2-894e-a10772b23457",
       itemName: null,
@@ -299,6 +304,7 @@ describe('OrderDeleteComponent', () => {
 
     component.deleteOrder();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');

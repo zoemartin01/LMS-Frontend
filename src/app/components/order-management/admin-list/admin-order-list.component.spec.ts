@@ -291,8 +291,11 @@ describe('AdminOrderListComponent', () => {
     expect(component.acceptedOrders.pageSize).toEqual(environment.defaultPageSize);
     expect(component.declinedOrders.pageSize).toEqual(environment.defaultPageSize);
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.pendingOrders.pageSize).toEqual(3);
     expect(component.acceptedOrders.pageSize).toEqual(3);
     expect(component.declinedOrders.pageSize).toEqual(3);

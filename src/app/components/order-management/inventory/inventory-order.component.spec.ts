@@ -230,6 +230,7 @@ class MockInventoryService {
 describe('InventoryOrderComponent', () => {
   let component: InventoryOrderComponent;
   let fixture: ComponentFixture<InventoryOrderComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -251,6 +252,9 @@ describe('InventoryOrderComponent', () => {
 
     fixture = TestBed.createComponent(InventoryOrderComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -386,6 +390,7 @@ describe('InventoryOrderComponent', () => {
 
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
       id: "045fcd70-d323-4de2-894e-a10772b23457",
       itemName: null,
@@ -471,13 +476,13 @@ describe('InventoryOrderComponent', () => {
 
     tick();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: "920b8cc7-364f-4255-9540-09093f1e167a",
       name: "Fantastic Concrete Pizza",
       description: "Cum exercitationem est.",
       quantity: 49691,
     });
-
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
@@ -497,13 +502,13 @@ describe('InventoryOrderComponent', () => {
 
     tick();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
@@ -523,13 +528,13 @@ describe('InventoryOrderComponent', () => {
 
     tick();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');

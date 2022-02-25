@@ -178,6 +178,7 @@ class MockAdminService {
 describe('OrderRequestComponent', () => {
   let component: OrderRequestComponent;
   let fixture: ComponentFixture<OrderRequestComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -201,6 +202,9 @@ describe('OrderRequestComponent', () => {
 
     fixture = TestBed.createComponent(OrderRequestComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -235,6 +239,7 @@ describe('OrderRequestComponent', () => {
 
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.existingItems).toEqual([]);
 
     localStorage.removeItem('throwError');
@@ -259,6 +264,7 @@ describe('OrderRequestComponent', () => {
 
     component.checkUrlAgainstWhitelistedRetailers();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.isWhitelisted).toBeTrue();
 
     localStorage.removeItem('throwError');
@@ -295,6 +301,7 @@ describe('OrderRequestComponent', () => {
 
     component.requestOrder();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
@@ -309,6 +316,7 @@ describe('OrderRequestComponent', () => {
 
     component.requestOrder();
 
+    expect(consoleError).toHaveBeenCalledWith('Invalid form values');
     expect(modalClose).not.toHaveBeenCalled();
   }));
 });
