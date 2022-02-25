@@ -262,7 +262,11 @@ describe('WhitelistRetailerUserListComponent', () => {
     expect(component.whitelistRetailers.page).toBe(1);
     expect(component.whitelistRetailers.data).toEqual([]);
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
+
+    expect(consoleError).toHaveBeenCalled();
 
     expect(component.whitelistRetailers.total).toBe(0);
     expect(component.whitelistRetailers.page).toBe(1);

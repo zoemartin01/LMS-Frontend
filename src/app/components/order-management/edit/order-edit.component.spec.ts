@@ -185,6 +185,7 @@ class MockAdminService {
 describe('OrderEditComponent', () => {
   let component: OrderEditComponent;
   let fixture: ComponentFixture<OrderEditComponent>;
+  let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -209,6 +210,9 @@ describe('OrderEditComponent', () => {
 
     fixture = TestBed.createComponent(OrderEditComponent);
     component = fixture.componentInstance;
+
+    consoleError = spyOn(console, 'error');
+    consoleError.calls.reset();
   });
 
   it('should create', () => {
@@ -375,6 +379,7 @@ describe('OrderEditComponent', () => {
 
     component.ngOnInit();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
       id: "045fcd70-d323-4de2-894e-a10772b23457",
       itemName: null,
@@ -422,6 +427,7 @@ describe('OrderEditComponent', () => {
 
     component.checkUrlAgainstWhitelistedRetailers();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(component.isWhitelisted).toBeTrue();
 
     localStorage.removeItem('throwError');
@@ -462,6 +468,7 @@ describe('OrderEditComponent', () => {
 
     component.editOrder();
 
+    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');
