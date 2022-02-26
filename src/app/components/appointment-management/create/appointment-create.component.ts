@@ -118,7 +118,6 @@ export class AppointmentCreateComponent implements OnInit {
               this.timeslotConflict = true;
               this.timeslotConflictMessage = error.error.message;
             }
-
             console.error('There was an error!', error);
           }
         });
@@ -141,7 +140,6 @@ export class AppointmentCreateComponent implements OnInit {
             if (error.status === 409) {
               this.seriesConflict = true;
             }
-
             console.error('There was an error!', error);
           }
         });
