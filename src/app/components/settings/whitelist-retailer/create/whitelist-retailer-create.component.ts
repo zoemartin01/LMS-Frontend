@@ -50,8 +50,8 @@ export class WhitelistRetailerCreateComponent {
    */
   public async createWhitelistRetailer(): Promise<void> {
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
-      next: () => {
-        this.activeModal.close('created');
+      next: (whitelistRetailer: WhitelistRetailer) => {
+        this.activeModal.close(`created ${whitelistRetailer.id}`);
       },
       error: error => {
         console.error('There was an error!', error);
