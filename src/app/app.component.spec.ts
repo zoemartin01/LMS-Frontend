@@ -363,38 +363,7 @@ describe('AppComponent', () => {
     });
     expect(app.showMessageBox).toBeFalse();
 
-    localStorage.setItem('throwError', 'false');
-  });
-
-  it('should show error message on get unread messages error', () => {
-    /*localStorage.setItem('throwError', 'true');
-
-    expect(app.unreadMessages).toEqual({
-      sum: 0,
-      appointments: 0,
-      appointments_admin: 0,
-      orders: 0,
-      orders_admin: 0,
-      users: 0,
-      settings: 0,
-    });
-    expect(app.showMessageBox).toBeFalse();
-
-    app.getUnreadMessagesAmounts();
-
-    expect(consoleError).toHaveBeenCalled();
-    expect(app.unreadMessages).toEqual({
-      sum: 0,
-      appointments: 0,
-      appointments_admin: 0,
-      orders: 0,
-      orders_admin: 0,
-      users: 0,
-      settings: 0,
-    });
-    expect(app.showMessageBox).toBeFalse();
-
-    localStorage.setItem('throwError', 'false');*/
+    localStorage.removeItem('throwError');
   });
 
   it('should logout user', (done: DoneFn) => {
@@ -442,6 +411,6 @@ describe('AppComponent', () => {
       done();
     });
 
-    localStorage.setItem('throwError', 'false');
+    localStorage.removeItem('throwError');
   });
 });
