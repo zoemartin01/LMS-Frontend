@@ -253,7 +253,7 @@ describe('DashboardComponent', () => {
     });
     expect(component.showMessageBox).toBeFalse();
 
-    localStorage.setItem('throwError', 'false');
+    localStorage.removeItem('throwError');
   });
 
   it('should show error message on get unread messages error', () => {
@@ -284,6 +284,6 @@ describe('DashboardComponent', () => {
     });
     expect(component.showMessageBox).toBeFalse();
 
-    localStorage.setItem('throwError', 'false');*/
+     localStorage.removeItem('throwError');*/
   });
 });
