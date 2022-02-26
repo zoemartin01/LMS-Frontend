@@ -217,8 +217,8 @@ export class GlobalSettingsComponent implements OnInit {
         this.globalSettingsForm.controls[staticPageName].setValue(
           fileContents
         );
-      fileReader.readAsText(file);
       };
+      fileReader.readAsText(file);
     } else {
       console.error('File must be a markdown file');
     }
