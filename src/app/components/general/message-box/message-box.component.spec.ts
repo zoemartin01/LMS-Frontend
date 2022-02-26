@@ -243,7 +243,7 @@ describe('MessageBoxComponent - calls of updatePage', () => {
     expect(updatePageMethod).not.toHaveBeenCalled();
     expect(router.navigateByUrl).not.toHaveBeenCalledWith('/dashboard');
 
-    localStorage.setItem('throwError', 'false');
+    localStorage.removeItem('throwError');
   });
 
   it('should mark message as read', () => {
@@ -441,7 +441,7 @@ describe('MessageBoxComponent - http functions', () => {
 
     expect(consoleError).toHaveBeenCalled();
 
-    localStorage.setItem('throwError', 'false');
+    localStorage.removeItem('throwError');
   });
 
   it('should get messages', (done: DoneFn) => {
@@ -481,7 +481,7 @@ describe('MessageBoxComponent - http functions', () => {
 
     expect(consoleError).toHaveBeenCalled();
 
-    localStorage.setItem('throwError', 'false');
+    localStorage.removeItem('throwError');
   });
 
   it('should go to corresponding page if corresponding url is not null', () => {

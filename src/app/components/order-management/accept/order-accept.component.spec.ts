@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -141,7 +141,7 @@ describe('OrderAcceptComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page with linked item', () => {
+  it('should init page with linked item', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -164,6 +164,8 @@ describe('OrderAcceptComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+
+    tick();
 
     expect(component.order).toEqual({
       "id": "045fcd70-d323-4de2-894e-a10772b23457",
@@ -193,9 +195,9 @@ describe('OrderAcceptComponent', () => {
     expect(component.orderAcceptForm.controls['quantity'].value).toBe(10);
     expect(component.orderAcceptForm.controls['url'].value).toBe('conrad.de/pizza');
     expect(component.orderAcceptForm.controls['status'].value).toBe(3);
-  });
+  }));
 
-  it('should init page whith item name', () => {
+  it('should init page with item name', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -218,6 +220,8 @@ describe('OrderAcceptComponent', () => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
     component.ngOnInit();
+
+    tick();
 
     expect(component.order).toEqual({
       "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
@@ -242,9 +246,9 @@ describe('OrderAcceptComponent', () => {
     expect(component.orderAcceptForm.controls['quantity'].value).toBe(42962);
     expect(component.orderAcceptForm.controls['url'].value).toBe('https://clementine.biz');
     expect(component.orderAcceptForm.controls['status'].value).toBe(1);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.order).toEqual({
@@ -269,6 +273,8 @@ describe('OrderAcceptComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
@@ -296,7 +302,7 @@ describe('OrderAcceptComponent', () => {
     expect(component.orderAcceptForm.controls['status'].value).toBe(0);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should edit order', fakeAsync(() => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
