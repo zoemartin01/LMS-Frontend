@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
       ? this.window.location.hostname + environment.baseUrl
       : environment.baseUrl.replace(/http(s)?:\/\//g, '');
     const token = localStorage.getItem('accessToken');
-    return `${protocol}//${host}${environment.apiRoutes.messages.getCurrentUserUnreadMessagesAmounts}?token=${token}`;
+    return `${protocol}//${host}${environment.apiRoutes.messages.registerMessageWebsocket}?token=${token}`;
   }
 
   /**
