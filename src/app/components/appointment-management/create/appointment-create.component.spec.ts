@@ -1,16 +1,15 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {AppointmentCreateComponent} from './appointment-create.component';
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {Appointment} from "../../../types/appointment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {SeriesId} from "../../../types/aliases/series-id";
-import {Room} from "../../../types/room";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
-import {AppointmentService} from "../../../services/appointment.service";
+
+import { AppointmentCreateComponent } from './appointment-create.component';
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Room } from "../../../types/room";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 class MockAppointmentService {
   createAppointment(
@@ -81,7 +80,7 @@ describe('AppointmentCreateComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
@@ -98,9 +97,13 @@ describe('AppointmentCreateComponent method calls', () => {
   it('should init page with date and picked day time', fakeAsync(() => {
     component.date = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
     let setDateMethod = spyOn(component, 'setDate');
+
     component.ngOnInit();
+
     tick();
+
     expect(setDateMethod).toHaveBeenCalledWith(moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     expect(+component.appointmentCreateForm.controls['startHour'].value).toEqual(13);
     expect(+component.appointmentCreateForm.controls['endHour'].value).toEqual(14);
@@ -111,7 +114,9 @@ describe('AppointmentCreateComponent method calls', () => {
     component.dateField.year = 2022;
     component.dateField.month = 4;
     component.dateField.day = 8;
+
     let setDateMethod = spyOn(component, 'setDate');
+
     component.handleDatepickerChange();
 
     expect(setDateMethod).toHaveBeenCalledWith(moment(`${component.dateField.year}-${component.dateField.month}-${component.dateField.day}`));
@@ -120,16 +125,20 @@ describe('AppointmentCreateComponent method calls', () => {
   it('should create appointment', fakeAsync(() => {
     component.isRecurring = false;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
     component.ngOnInit();
     component.createAppointment();
+
     expect(component.createAppointment).toHaveBeenCalled();
   }));
 
   it('should create appointment series', fakeAsync(() => {
     component.isRecurring = true;
     component.start = moment("2022-02-14T14:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
     component.ngOnInit();
     component.createAppointment();
+
     expect(component.createAppointment).toHaveBeenCalled();
   }));
 });
@@ -137,7 +146,6 @@ describe('AppointmentCreateComponent method calls', () => {
 describe('AppointmentCreateComponent', () => {
   let component: AppointmentCreateComponent;
   let fixture: ComponentFixture<AppointmentCreateComponent>;
-  //let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -150,20 +158,21 @@ describe('AppointmentCreateComponent', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppointmentCreateComponent);
     component = fixture.componentInstance;
-    /*consoleError = spyOn(console, 'error');
-    consoleError.calls.reset();*/
   });
 
   it('should set attributes correctly when set date is called', fakeAsync(() => {
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
     component.setDate(component.start);
+
     tick();
+
     expect(component.date).toEqual(moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     expect(component.dateText).toEqual("14.02.2022");
     expect(component.dateField.day).toEqual(14);
@@ -172,94 +181,119 @@ describe('AppointmentCreateComponent', () => {
   }));
 
   it('should create appointment', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.isRecurring = false;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
 
-    tick();
     component.createAppointment();
+
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should create appointment series', fakeAsync(() => {
-    7
-    let closeForm = spyOn(component.closeForm, 'emit');
-    //let createAppointmentSeriesServiceMethod = spyOn(component.appointmentService, 'createAppointmentSeries');
     component.isRecurring = true;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+    //let createAppointmentSeriesServiceMethod = spyOn(component.appointmentService, 'createAppointmentSeries');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
+    component.createAppointment();
 
     tick();
-    component.createAppointment();
-    tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
     //expect(createAppointmentSeriesServiceMethod).toHaveBeenCalled();
   }));
 
   it('should show warning, that safety instructions and the hwlab rules have to be accepted', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.isRecurring = true;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(false);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
+    component.createAppointment();
 
     tick();
-    component.createAppointment();
-    tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.hasError).toEqual(true);
     expect(component.hasErrorMessage).toEqual('Please accept the safety instructions and the hwlab rules.');
   }));
 
-
   it('should show warning, that safety instructions and the hwlab rules have to be accepted', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.isRecurring = true;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(false);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
+    component.createAppointment();
 
     tick();
-    component.createAppointment();
-    tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.hasError).toEqual(true);
     expect(component.hasErrorMessage).toEqual('Please accept the safety instructions and the hwlab rules.');
   }));
 
   it('should show error message on accept appointment series booking conflict error', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     localStorage.setItem('throwTimeSlotConflictError', 'true');
+
     component.isRecurring = true;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
+    component.createAppointment();
 
     tick();
-    component.createAppointment();
-    tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.seriesConflict).toEqual(true);
 
@@ -267,19 +301,25 @@ describe('AppointmentCreateComponent', () => {
   }));
 
   it('should show error message on accept appointment booking conflict error', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     localStorage.setItem('throwTimeSlotConflictError', 'true');
+
     component.isRecurring = false;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+
+    tick();
+
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
 
+    component.createAppointment();
 
     tick();
-    component.createAppointment();
-    tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.timeslotConflict).toEqual(true);
     expect(component.timeslotConflictMessage).toEqual('Your booking conflicts with to many other bookings.');

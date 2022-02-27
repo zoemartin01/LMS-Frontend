@@ -1,22 +1,23 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgxPaginationModule} from "ngx-pagination";
-
-import {AdminAppointmentListComponent} from './admin-appointment-list.component';
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../types/paged-response";
-import {Appointment} from "../../../types/appointment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {AppointmentService} from "../../../services/appointment.service";
-import {PagedList} from "../../../types/paged-list";
 
+import { AdminAppointmentListComponent } from './admin-appointment-list.component';
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockAppointmentService {
   public getAllAppointments(limit: number = 0, offset: number = 0, confirmationStatus: ConfirmationStatus | undefined = undefined): Observable<PagedResponse<Appointment>> {
@@ -32,215 +33,211 @@ class MockAppointmentService {
       }
 
       const pendingAppointments: PagedResponse<Appointment> = {
-          total: 5,
-          data: [
-            {
-              id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
-              start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 4,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 1,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
+        total: 5,
+        data: [
+          {
+            id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+            start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 4,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 1,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
             },
-            {
-              id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
-              start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: null,
-              amount: 1,
-              timeSlotRecurrence: 1,
-              confirmationStatus: 1,
-              maxStart: moment("2022-02-25T15:22:07.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
-            },
-            {
-              id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-              start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 4,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 1,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
-            },
-            {
-              id: "1415b732-328a-46a4-abcb-c1493252a9cc",
-              start: moment("2022-02-28T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-02-28T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 4,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 1,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
-            },
-            {
-              id: "a229732c-32a3-4aee-b678-3b52f6b8a4a0",
-              start: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              end: moment("2022-03-07T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              type: 1,
-              seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-              amount: 4,
-              timeSlotRecurrence: 3,
-              confirmationStatus: 1,
-              maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-              room: {
-                id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                name: "Test room",
-                description: "room to test",
-                maxConcurrentBookings: 1,
-                autoAcceptBookings: true
-              },
-              user: {
-                id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                email: "admin@test.com",
-                firstName: "Admin",
-                lastName: "Admin",
-                role: 3,
-                emailVerification: true,
-                isActiveDirectory: false,
-                notificationChannel: 3
-              }
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
             }
-          ]
-        }
-      ;
-
-      const acceptedAppointments: PagedResponse<Appointment> =
-        {
-          total: 2,
-          data:
-            [
-              {
-                id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
-                start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                type: 1,
-                seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-                amount: 2,
-                timeSlotRecurrence: 3,
-                confirmationStatus: 2,
-                maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                room: {
-                  id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                  name: "Test room",
-                  description: "room to test",
-                  maxConcurrentBookings: 1,
-                  autoAcceptBookings: true
-                },
-                user: {
-                  id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                  email: "admin@test.com",
-                  firstName: "Admin",
-                  lastName: "Admin",
-                  role: 3,
-                  emailVerification: true,
-                  isActiveDirectory: false,
-                  notificationChannel: 3
-                }
-              },
-
-              {
-                id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
-                start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                type: 1,
-                seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
-                amount: 2,
-                timeSlotRecurrence: 3,
-                confirmationStatus: 2,
-                maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-                room: {
-                  id: "c7231328-203e-43f5-9ac1-d374d90484ac",
-                  name: "Test room",
-                  description: "room to test",
-                  maxConcurrentBookings: 1,
-                  autoAcceptBookings: true
-                },
-                user: {
-                  id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-                  email: "admin@test.com",
-                  firstName: "Admin",
-                  lastName: "Admin",
-                  role: 3,
-                  emailVerification: true,
-                  isActiveDirectory: false,
-                  notificationChannel: 3
-                }
-              }]
+          },
+          {
+            id: "3f7af855-ad57-4a4c-81e7-769ba90f9e76",
+            start: moment("2022-02-16T05:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-16T06:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: null,
+            amount: 1,
+            timeSlotRecurrence: 1,
+            confirmationStatus: 1,
+            maxStart: moment("2022-02-25T15:22:07.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          },
+          {
+            id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+            start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 4,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 1,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          },
+          {
+            id: "1415b732-328a-46a4-abcb-c1493252a9cc",
+            start: moment("2022-02-28T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-28T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 4,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 1,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          },
+          {
+            id: "a229732c-32a3-4aee-b678-3b52f6b8a4a0",
+            start: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-03-07T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 4,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 1,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }]
         };
+
+      const acceptedAppointments: PagedResponse<Appointment> = {
+        total: 2,
+        data: [
+          {
+            id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+            start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 2,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 2,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          },
+          {
+            id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
+            start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            end: moment("2022-02-21T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            type: 1,
+            seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+            amount: 2,
+            timeSlotRecurrence: 3,
+            confirmationStatus: 2,
+            maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+            room: {
+              id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+              name: "Test room",
+              description: "room to test",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: true
+            },
+            user: {
+              id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }]
+        };
+
       const deniedAppointments: PagedResponse<Appointment> = {
         total: 1,
         data: [
@@ -348,8 +345,8 @@ describe('AdminAppointmentListComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -364,7 +361,6 @@ describe('AdminAppointmentListComponent method calls', () => {
     getDeniedAppointmentsMethod = spyOn(component, 'getDeniedAppointments');
     getDeniedAppointmentsMethod.calls.reset();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -382,12 +378,15 @@ describe('AdminAppointmentListComponent method calls', () => {
 
   it('should get all pending appointments', fakeAsync(() => {
     component.getPendingAppointments();
+
     tick();
+
     expect(getPendingAppointmentsMethod).toHaveBeenCalled();
   }));
 
   it('should get all accepted appointments', fakeAsync(() => {
     component.getAcceptedAppointments();
+
     tick();
 
     expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
@@ -395,6 +394,7 @@ describe('AdminAppointmentListComponent method calls', () => {
 
   it('should get all denied appointments', fakeAsync(() => {
     component.getDeniedAppointments();
+
     tick();
 
     expect(getDeniedAppointmentsMethod).toHaveBeenCalled();
@@ -404,9 +404,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update accepted appointments when accepted appointment is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
-    component.openAppointmentDeletionDialog(
-      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
-    );
+    component.openAppointmentDeletionDialog("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
@@ -418,9 +416,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should not update accepted appointments when accepted appointment deletion is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentDeletionDialog(
-      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
-    );
+    component.openAppointmentDeletionDialog("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
@@ -432,9 +428,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update declined appointments when declined appointment is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
-    component.openAppointmentDeletionDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentDeletionDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -446,9 +440,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should not update declined appointments when declined appointment deletion is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentDeletionDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentDeletionDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -460,9 +452,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update pending and accepted appointments when pending appointment is accepted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'accepted');
 
-    component.openAppointmentAcceptDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentAcceptDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -475,9 +465,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should not update pending and accepted appointments when appointment acceptation is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentAcceptDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentAcceptDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -490,9 +478,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update pending and declined appointments when pending appointment is declined', fakeAsync(() => {
     localStorage.setItem('returnVal', 'accepted');
 
-    component.openAppointmentDeclineDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentDeclineDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -505,9 +491,7 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should not update pending and declined appointments when appointment decline is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentDeclineDialog(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentDeclineDialog("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -520,22 +504,19 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update accepted appointments when accepted appointment is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
 
-    component.openAppointmentView(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentView("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
     expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+
     localStorage.removeItem('returnVal');
   }));
 
   it('should not update accepted appointments when accepted appointment is viewed and not dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentView(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentView("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -547,22 +528,19 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update declined appointments when declined appointment is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
 
-    component.openAppointmentView(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentView("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
     expect(getDeniedAppointmentsMethod).toHaveBeenCalled();
+
     localStorage.removeItem('returnVal');
   }));
 
   it('should not update declined appointments when declined appointment is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentView(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentView("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -577,8 +555,10 @@ describe('AdminAppointmentListComponent method calls', () => {
     component.openAppointmentCreationForm();
 
     tick();
+
     expect(getPendingAppointmentsMethod).toHaveBeenCalled();
     expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+
     localStorage.removeItem('returnVal');
   }));
 
@@ -588,6 +568,7 @@ describe('AdminAppointmentListComponent method calls', () => {
     component.openAppointmentCreationForm();
 
     tick();
+
     expect(getPendingAppointmentsMethod).not.toHaveBeenCalled();
     expect(getAcceptedAppointmentsMethod).not.toHaveBeenCalled();
 
@@ -597,22 +578,19 @@ describe('AdminAppointmentListComponent method calls', () => {
   it('should update accepted appointments when appointment is edited', fakeAsync(() => {
     localStorage.setItem('returnVal', 'edited');
 
-    component.openAppointmentEditForm(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentEditForm("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
     expect(getAcceptedAppointmentsMethod).toHaveBeenCalled();
+
     localStorage.removeItem('returnVal');
   }));
 
   it('should not update accepted appointments when appointment edit is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentEditForm(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentEditForm("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -625,7 +603,6 @@ describe('AdminAppointmentListComponent method calls', () => {
 describe('AdminAppointmentListComponent attribute checks', () => {
   let component: AdminAppointmentListComponent;
   let fixture: ComponentFixture<AdminAppointmentListComponent>;
-
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -642,8 +619,8 @@ describe('AdminAppointmentListComponent attribute checks', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -652,11 +629,14 @@ describe('AdminAppointmentListComponent attribute checks', () => {
   });
 
   it('should get all pending appointments', fakeAsync(() => {
-    let pagedListPendingAppointments = new PagedList<Appointment>();
-    pagedListPendingAppointments.pageSize = 10;
     component.pendingAppointments.pageSize = 10;
+
     component.getPendingAppointments();
 
+    tick();
+
+    let pagedListPendingAppointments = new PagedList<Appointment>();
+    pagedListPendingAppointments.pageSize = 10;
     pagedListPendingAppointments.total = 5;
     pagedListPendingAppointments.data = [
       {
@@ -801,16 +781,18 @@ describe('AdminAppointmentListComponent attribute checks', () => {
       }
     ];
 
-    tick();
     expect(component.pendingAppointments).toEqual(pagedListPendingAppointments);
   }));
 
   it('should get all accepted appointments', fakeAsync(() => {
-    let pagedListAcceptedAppointments = new PagedList<Appointment>();
-    pagedListAcceptedAppointments.pageSize = 10;
     component.acceptedAppointments.pageSize = 10;
+
     component.getAcceptedAppointments();
 
+    tick();
+
+    let pagedListAcceptedAppointments = new PagedList<Appointment>();
+    pagedListAcceptedAppointments.pageSize = 10;
     pagedListAcceptedAppointments.total = 2;
     pagedListAcceptedAppointments.data = [
       {
@@ -841,7 +823,6 @@ describe('AdminAppointmentListComponent attribute checks', () => {
           notificationChannel: 3
         }
       },
-
       {
         id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
         start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -871,16 +852,18 @@ describe('AdminAppointmentListComponent attribute checks', () => {
         }
       }];
 
-    tick();
     expect(component.acceptedAppointments).toEqual(pagedListAcceptedAppointments);
   }));
 
   it('should get all accepted appointments', fakeAsync(() => {
-    let pagedListDeniedAppointments = new PagedList<Appointment>();
-    pagedListDeniedAppointments.pageSize = 10;
     component.deniedAppointments.pageSize = 10;
+
     component.getDeniedAppointments();
 
+    tick();
+
+    let pagedListDeniedAppointments = new PagedList<Appointment>();
+    pagedListDeniedAppointments.pageSize = 10;
     pagedListDeniedAppointments.total = 1;
     pagedListDeniedAppointments.data = [
       {
@@ -912,16 +895,18 @@ describe('AdminAppointmentListComponent attribute checks', () => {
         }
       }];
 
-    tick();
     expect(component.deniedAppointments).toEqual(pagedListDeniedAppointments);
   }));
 
   it('should show error message on get pending appointments error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     let consoleError = spyOn(console, 'error');
 
     component.getPendingAppointments();
+
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -929,10 +914,13 @@ describe('AdminAppointmentListComponent attribute checks', () => {
 
   it('should show error message on get accepted appointments error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     let consoleError = spyOn(console, 'error');
 
     component.getAcceptedAppointments();
+
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -940,10 +928,13 @@ describe('AdminAppointmentListComponent attribute checks', () => {
 
   it('should show error message on get denied appointments error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     let consoleError = spyOn(console, 'error');
 
     component.getDeniedAppointments();
+
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');

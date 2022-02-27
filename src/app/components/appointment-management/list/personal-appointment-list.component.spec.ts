@@ -1,20 +1,22 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgxPaginationModule} from "ngx-pagination";
-
-import {PersonalAppointmentListComponent} from './personal-appointment-list.component';
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../types/paged-response";
-import {Appointment} from "../../../types/appointment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppointmentService} from "../../../services/appointment.service";
-import {PagedList} from "../../../types/paged-list";
+
+import { PersonalAppointmentListComponent } from './personal-appointment-list.component';
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockAppointmentService {
   public getAllAppointmentsForCurrentUser(): Observable<PagedResponse<Appointment>> {
@@ -200,7 +202,6 @@ class MockAppointmentService {
                 notificationChannel: 3
               }
             },
-
             {
               id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
               start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -258,8 +259,8 @@ class MockAppointmentService {
               }
             }
           ]
-        }
-      ;
+        };
+
       observer.next(appointments);
     });
   }
@@ -321,8 +322,8 @@ describe('PersonalAppointmentListComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -349,9 +350,7 @@ describe('PersonalAppointmentListComponent method calls', () => {
   it('should update appointments when appointment is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
-    component.openAppointmentDeletionDialog(
-      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
-    );
+    component.openAppointmentDeletionDialog("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
@@ -363,9 +362,7 @@ describe('PersonalAppointmentListComponent method calls', () => {
   it('should not update appointments when appointment deletion is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentDeletionDialog(
-      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
-    );
+    component.openAppointmentDeletionDialog("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
@@ -401,22 +398,19 @@ describe('PersonalAppointmentListComponent method calls', () => {
   it('should update appointments when appointment is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
 
-    component.openAppointmentView(
-      "c3a70a44-374c-46a9-be05-a3f6ef4e39a5"
-    );
+    component.openAppointmentView("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
     expect(getAllAppointmentsForCurrentUserMethod).toHaveBeenCalled();
+
     localStorage.removeItem('returnVal');
   }));
 
   it('should not update appointments when appointment is viewed and not dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
 
-    component.openAppointmentView(
-      "3f7af855-ad57-4a4c-81e7-769ba90f9e76"
-    );
+    component.openAppointmentView("3f7af855-ad57-4a4c-81e7-769ba90f9e76");
 
     tick();
 
@@ -425,6 +419,7 @@ describe('PersonalAppointmentListComponent method calls', () => {
     localStorage.removeItem('returnVal');
   }));
 });
+
 describe('PersonalAppointmentListComponent method calls', () => {
   let component: PersonalAppointmentListComponent;
   let fixture: ComponentFixture<PersonalAppointmentListComponent>;
@@ -442,8 +437,8 @@ describe('PersonalAppointmentListComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -452,11 +447,16 @@ describe('PersonalAppointmentListComponent method calls', () => {
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
+
   it('should get all appointments', fakeAsync(() => {
+    component.appointments.pageSize = 10;
+
+    component.getAllAppointmentsForCurrentUser();
+
+    tick();
+
     let pagedListAppointments = new PagedList<Appointment>();
     pagedListAppointments.pageSize = 10;
-    component.appointments.pageSize = 10;
-    component.getAllAppointmentsForCurrentUser();
     pagedListAppointments.total = 8;
     pagedListAppointments.data = [
       {
@@ -627,7 +627,6 @@ describe('PersonalAppointmentListComponent method calls', () => {
           notificationChannel: 3
         }
       },
-
       {
         id: "e401b04a-3688-49d8-b36a-f38e1942ff3f",
         start: moment("2022-02-21T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -686,7 +685,6 @@ describe('PersonalAppointmentListComponent method calls', () => {
       }
     ];
 
-    tick();
     expect(component.appointments).toEqual(pagedListAppointments);
   }));
 
@@ -694,7 +692,9 @@ describe('PersonalAppointmentListComponent method calls', () => {
     localStorage.setItem('throwError', 'true');
 
     component.getAllAppointmentsForCurrentUser();
+
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');

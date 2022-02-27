@@ -1,16 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
+import * as moment from "moment";
 
 import { AppointmentDeleteComponent } from './appointment-delete.component';
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {Appointment} from "../../../types/appointment";
-import * as moment from "moment";
-import {AppointmentService} from "../../../services/appointment.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SeriesId} from "../../../types/aliases/series-id";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { SeriesId } from "../../../types/aliases/series-id";
 
 class MockAppointmentService {
   public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -26,7 +28,6 @@ class MockAppointmentService {
       }
 
       const appointment: Appointment = {
-
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
         end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -109,7 +110,7 @@ describe('AppointmentDeleteComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
@@ -129,33 +130,17 @@ describe('AppointmentDeleteComponent method calls', () => {
 
   it('should get appointment to init page',fakeAsync(() =>{
     component.ngOnInit();
+
     tick();
+
     expect(getAppointmentDataMethod).toHaveBeenCalled();
   }));
-
-  it('should delete appointment', fakeAsync(() => {
-    component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
-    component.getAppointmentData();
-    tick();
-    component.deleteAppointment()
-    tick();
-    expect(deleteAppointmentMethod).toHaveBeenCalled();
-  }));
-
-  it('should delete appointment series', fakeAsync(() => {
-    component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
-    component.getAppointmentData();
-    tick();
-    component.deleteAppointmentSeries()
-    tick();
-    expect(deleteAppointmentSeriesMethod).toHaveBeenCalled();
-  }));
 });
+
 describe('AppointmentDeleteComponent', () => {
   let component: AppointmentDeleteComponent;
   let fixture: ComponentFixture<AppointmentDeleteComponent>;
   let consoleError: jasmine.Spy<any>;
-
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -171,7 +156,7 @@ describe('AppointmentDeleteComponent', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
@@ -183,21 +168,29 @@ describe('AppointmentDeleteComponent', () => {
 
   it('should delete an appointment', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.getAppointmentData();
     tick();
+
     let closeModal = spyOn(component.activeModal, 'close');
+
     component.deleteAppointment()
     tick();
+
     expect(closeModal).toHaveBeenCalledWith('deleted');
   }));
 
   it('should delete an appointment series', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.getAppointmentData();
     tick();
+
     let closeModal = spyOn(component.activeModal, 'close');
+
     component.deleteAppointmentSeries()
     tick();
+
     expect(closeModal).toHaveBeenCalledWith('deleted');
   }));
 
@@ -206,6 +199,7 @@ describe('AppointmentDeleteComponent', () => {
 
     component.getAppointmentData();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -216,6 +210,7 @@ describe('AppointmentDeleteComponent', () => {
 
     component.deleteAppointment();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -226,6 +221,7 @@ describe('AppointmentDeleteComponent', () => {
 
     component.deleteAppointmentSeries();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');

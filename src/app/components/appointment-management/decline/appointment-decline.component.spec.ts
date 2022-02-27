@@ -1,16 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
+import * as moment from "moment";
 
 import { AppointmentDeclineComponent } from './appointment-decline.component';
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {Appointment} from "../../../types/appointment";
-import * as moment from "moment";
-import {SeriesId} from "../../../types/aliases/series-id";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AppointmentService} from "../../../services/appointment.service";
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { SeriesId } from "../../../types/aliases/series-id";
 
 class MockAppointmentService {
   public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -26,7 +28,6 @@ class MockAppointmentService {
       }
 
       const appointment: Appointment = {
-
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
         end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -73,6 +74,7 @@ class MockAppointmentService {
       observer.next();
     });
   }
+
   declineAppointmentSeriesRequest(seriesId: SeriesId): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
@@ -96,6 +98,7 @@ describe('AppointmentDeclineComponent method calls', () => {
   let declineAppointmentMethod: jasmine.Spy<any>;
   let declineAppointmentSeriesMethod: jasmine.Spy<any>;
   let getAppointmentDataMethod: jasmine.Spy<any>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -110,7 +113,7 @@ describe('AppointmentDeclineComponent method calls', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
@@ -124,8 +127,6 @@ describe('AppointmentDeclineComponent method calls', () => {
     getAppointmentDataMethod.calls.reset();
   });
 
-  //@TODO dont really know what to test
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -133,25 +134,8 @@ describe('AppointmentDeclineComponent method calls', () => {
   it('should get appointment to init page',fakeAsync(() =>{
     component.ngOnInit();
     tick();
+
     expect(getAppointmentDataMethod).toHaveBeenCalled();
-  }));
-
-  it('should decline a pending appointment', fakeAsync(() => {
-    component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
-    component.getAppointmentData();
-    tick();
-    component.declineAppointment()
-    tick();
-    expect(declineAppointmentMethod).toHaveBeenCalled();
-  }));
-
-  it('should decline a pending appointment series', fakeAsync(() => {
-    component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
-    component.getAppointmentData();
-    tick();
-    component.declineAppointmentSeries()
-    tick();
-    expect(declineAppointmentSeriesMethod).toHaveBeenCalled();
   }));
 });
 
@@ -159,7 +143,6 @@ describe('AppointmentdeclineComponent', () => {
   let component: AppointmentDeclineComponent;
   let fixture: ComponentFixture<AppointmentDeclineComponent>;
   let consoleError: jasmine.Spy<any>;
-
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -175,7 +158,7 @@ describe('AppointmentdeclineComponent', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
       ],
     }).compileComponents();
 
@@ -187,21 +170,29 @@ describe('AppointmentdeclineComponent', () => {
 
   it('should decline a pending appointment', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.getAppointmentData();
     tick();
+
     let closeModal = spyOn(component.activeModal, 'close');
+
     component.declineAppointment()
     tick();
+
     expect(closeModal).toHaveBeenCalledWith('declined');
   }));
 
   it('should decline a pending appointment series', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.getAppointmentData();
     tick();
+
     let closeModal = spyOn(component.activeModal, 'close');
+
     component.declineAppointmentSeries()
     tick();
+
     expect(closeModal).toHaveBeenCalledWith('declined');
   }));
 
@@ -210,6 +201,7 @@ describe('AppointmentdeclineComponent', () => {
 
     component.getAppointmentData();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -220,6 +212,7 @@ describe('AppointmentdeclineComponent', () => {
 
     component.declineAppointment();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -230,6 +223,7 @@ describe('AppointmentdeclineComponent', () => {
 
     component.declineAppointmentSeries();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
