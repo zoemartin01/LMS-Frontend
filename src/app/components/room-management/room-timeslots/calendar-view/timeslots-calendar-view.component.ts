@@ -6,7 +6,6 @@ import * as moment from "moment";
 import { SidebarWarningComponent } from "../../../appointment-management/sidebar-warning/sidebar-warning.component";
 import { TimeslotDeleteComponent } from "../delete/timeslot-delete.component";
 
-import { AuthService } from "../../../../services/auth.service";
 import { RoomService } from "../../../../services/room.service";
 
 import { TimespanId } from "../../../../types/aliases/timespan-id";
@@ -31,7 +30,7 @@ export class TimeslotsCalendarViewComponent implements OnInit {
     autoAcceptBookings: null,
   };
   public rooms: Room[] = [];
-  public calendar: string[][] = [];
+  public calendar: (string|null)[][] = [];
   public action: string = '';
   public currentTimeslotId: TimespanId = '';
   public timeslotCreationStart: moment.Moment|null = null;
@@ -48,13 +47,11 @@ export class TimeslotsCalendarViewComponent implements OnInit {
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
    * @param {ActivatedRoute} route route that activated this component
-   * @param {AuthService} authService service providing authentication functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public roomService: RoomService,
     private route: ActivatedRoute,
-    public authService: AuthService,
     private modalService: NgbModal) {
   }
 
@@ -65,8 +62,7 @@ export class TimeslotsCalendarViewComponent implements OnInit {
     this.getRooms();
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
-        this.room.id = params['id'];
-        this.updateCalendar();
+        this.changeRoom(params['id']);
       }
 
       if (params['date'] !== undefined) {
@@ -94,6 +90,7 @@ export class TimeslotsCalendarViewComponent implements OnInit {
     this.weekField.year = +this.week.format("YYYY");
 
     this.updateCalendar();
+    this.closeSidebar(false);
   }
 
   /**
@@ -109,7 +106,7 @@ export class TimeslotsCalendarViewComponent implements OnInit {
   public async updateCalendar(): Promise<void> {
     if (this.room.id) {
       this.roomService.getAvailabilityCalendar(this.room.id, moment(this.week.format()).unix()).subscribe({
-        next: (res: string[][]) => {
+        next: (res: (string|null)[][]) => {
           this.calendar = res;
         },
         error: error => {
@@ -136,9 +133,22 @@ export class TimeslotsCalendarViewComponent implements OnInit {
   /**
    * Gets all rooms
    */
-  public changeRoom(roomId: string): void {
-    this.room.id = roomId;
-    this.updateCalendar();
+  public async changeRoom(roomId: string): Promise<void> {
+    if (roomId === this.room.id) {
+      return;
+    }
+
+    this.roomService.getRoomData(roomId).subscribe({
+      next: (room: Room) => {
+        this.room = room;
+        this.updateCalendar();
+        this.closeSidebar(false);
+        history.pushState(null, '', `/room/${this.room.id}/timeslots/calendar`);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   /**
@@ -147,6 +157,15 @@ export class TimeslotsCalendarViewComponent implements OnInit {
    */
   public getDayOfWeek(dayOfWeek: number): moment.Moment {
     return moment(this.week).add((dayOfWeek + 6) % 7, 'days');
+  }
+
+  /**
+   * Returns object typed as string
+   *
+   * @param {string|null} object appointment
+   */
+  public parseString(object: string|null): string {
+    return <string>object;
   }
 
   /**

@@ -180,7 +180,7 @@ export class RoomService {
    * @param {number|null} date date contained in week the calendar should be shown
    */
   public getAvailabilityCalendar(roomId: RoomId, date: number|null = null)
-    : Observable<string[][]> {
+    : Observable<(string|null)[][]> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -190,7 +190,7 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
       .replace(':id', roomId)}${dateString}`;
 
-    return this.httpClient.get<string[][]>(apiURL);
+    return this.httpClient.get<(string|null)[][]>(apiURL);
   }
 
   /**

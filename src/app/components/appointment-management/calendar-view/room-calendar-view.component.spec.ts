@@ -651,7 +651,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(component.parseAppointment(appointment)).toEqual(appointment);
   });
 
-  it('should parse object as appointment', () => {
+  it('should parse object as string', () => {
     expect(typeof component.parseString("kldjgkjlrkjlfdgkjldfgkjl")).toEqual("string");
   });
 
