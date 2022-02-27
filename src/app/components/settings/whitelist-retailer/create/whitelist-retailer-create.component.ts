@@ -101,8 +101,8 @@ export class WhitelistRetailerCreateComponent {
         const index = this.domains.indexOf(whitelistRetailerDomain, 0);
         if (index > -1) {
           this.domains.splice(index, 1);
+          this.dirty = true;
         }
-        this.dirty = true;
       }
     });
   }
