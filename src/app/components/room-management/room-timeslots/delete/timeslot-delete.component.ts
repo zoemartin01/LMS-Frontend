@@ -42,7 +42,7 @@ export class TimeslotDeleteComponent implements OnInit {
     type: RoomTimespanType.unknown,
     seriesId: null,
     timeSlotRecurrence: 1,
-    maxStart: undefined,
+    maxStart: null,
     amount: 1,
   };
 

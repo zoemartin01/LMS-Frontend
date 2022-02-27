@@ -14,6 +14,11 @@ import { RoomService } from "../../../services/room.service";
 
 import { Appointment } from "../../../types/appointment";
 import { Room } from "../../../types/room";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { PagedResponse } from "../../../types/paged-response";
 
 @Injectable()
 export class ActivatedRouteStub {
@@ -31,17 +36,8 @@ export class ActivatedRouteStub {
   }
 }
 
-class MockModalService {
-  open(id: string): { componentInstance: { appointment: Appointment|null }, result: Promise<string> } {
-    return {
-      componentInstance: { appointment: null },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
-    };
-  };
-}
-
 class MockRoomService {
-  getRoomsData(): Observable<Room[]> {
+  getRoomsData(limit: number = 0, offset: number = 0): Observable<PagedResponse<Room>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -53,31 +49,34 @@ class MockRoomService {
         });
       }
 
-      const rooms: Room[] = [
-        {
-          "id": "2f1dd587-8625-4b9f-995c-f35e6a9997e9",
-          "name": "Bacon",
-          "description": "Quaerat et quia deleniti.",
-          "maxConcurrentBookings": 1,
-          "autoAcceptBookings": true,
-        },
-        {
-          "id": "afbb3847-99d4-4798-9648-72ce15b2f951",
-          "name": "Keyboard",
-          "description": "Commodi a consequatur in sapiente et.",
-          "maxConcurrentBookings": 1,
-          "autoAcceptBookings": true,
-        },
-        {
-          "id": "c8456ea3-91c2-4e57-893c-991e2fa27a26",
-          "name": "Eggs",
-          "description": "Eddible ellipsoids",
-          "maxConcurrentBookings": 6,
-          "autoAcceptBookings": true,
-        },
-      ];
+      const pagedResponse: PagedResponse<Room> = {
+        total: 3,
+        data: [
+          {
+            "id": "2f1dd587-8625-4b9f-995c-f35e6a9997e9",
+            "name": "Bacon",
+            "description": "Quaerat et quia deleniti.",
+            "maxConcurrentBookings": 1,
+            "autoAcceptBookings": true,
+          },
+          {
+            "id": "afbb3847-99d4-4798-9648-72ce15b2f951",
+            "name": "Keyboard",
+            "description": "Commodi a consequatur in sapiente et.",
+            "maxConcurrentBookings": 1,
+            "autoAcceptBookings": true,
+          },
+          {
+            "id": "c8456ea3-91c2-4e57-893c-991e2fa27a26",
+            "name": "Eggs",
+            "description": "Eddible ellipsoids",
+            "maxConcurrentBookings": 6,
+            "autoAcceptBookings": true,
+          },
+        ]
+      };
 
-      observer.next(rooms);
+      observer.next(pagedResponse);
     });
   }
 
@@ -104,7 +103,7 @@ class MockRoomService {
             confirmationStatus: 2,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -133,7 +132,7 @@ class MockRoomService {
             confirmationStatus: 1,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -189,6 +188,44 @@ class MockRoomService {
   }
 }
 
+class MockModalService {
+  open(): { componentInstance: { appointment: Appointment | null }, result: Promise<string> } {
+    return {
+      componentInstance: {
+        appointment: {
+          id: null,
+          user: {
+            id: null,
+            firstName: '',
+            lastName: '',
+            email: '',
+            role: UserRole.unknown,
+            notificationChannel: NotificationChannel.unknown,
+            emailVerification: true,
+            isActiveDirectory: false,
+          },
+          room: {
+            id: null,
+            name: '',
+            description: '',
+            maxConcurrentBookings: 1,
+            autoAcceptBookings: null,
+          },
+          start: null,
+          end: null,
+          type: RoomTimespanType.appointment,
+          seriesId: null,
+          timeSlotRecurrence: 1,
+          maxStart: null,
+          amount: 1,
+          confirmationStatus: ConfirmationStatus.unknown,
+        },
+      },
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+    };
+  };
+}
+
 describe('RoomCalendarViewComponent - regular methods', () => {
   let component: RoomCalendarViewComponent;
   let fixture: ComponentFixture<RoomCalendarViewComponent>;
@@ -211,10 +248,10 @@ describe('RoomCalendarViewComponent - regular methods', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: RoomService, useClass: MockRoomService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: NgbModal, useValue: MockModalService },
+        { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -233,6 +270,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
   it('should init page with params', () => {
     mockActivatedRoute.testParams = {
       id: '59f1589d-197c-4f53-bfc1-4c57aae14c42',
+      date: '2022-02-26',
     };
 
     const getRoomsMethod = spyOn(component, 'getRooms');
@@ -296,14 +334,19 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(component.minTimeslot).toBe(0);
   });
 
-  it('should show error when calendar update fails', () => {
+  it('should show error when calendar update fails', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.room.id = '59f1589d-197c-4f53-bfc1-4c57aae14c42';
 
     component.updateCalendar();
 
+    tick();
+
     expect(consoleError).toHaveBeenCalled();
-  });
+
+    localStorage.removeItem('throwError');
+  }));
 
   it('should show error when getting rooms fails', () => {
     localStorage.setItem('throwError', 'true');
@@ -311,10 +354,13 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     component.getRooms();
 
     expect(consoleError).toHaveBeenCalled();
+
+    localStorage.removeItem('throwError');
   });
 
   it('should change room id', fakeAsync(() => {
     component.room.id = '59f1589d-197c-4f53-bfc1-4c57aae14c42';
+
     expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
 
     const updateCalendarMethod = spyOn(component, 'updateCalendar');
@@ -328,6 +374,102 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(updateCalendarMethod).toHaveBeenCalled();
   }));
 
+  it('should do nothing when trying to change room id to current', fakeAsync(() => {
+    component.room.id = '59f1589d-197c-4f53-bfc1-4c57aae14c42';
+    expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
+
+    const updateCalendarMethod = spyOn(component, 'updateCalendar');
+
+    component.changeRoom('59f1589d-197c-4f53-bfc1-4c57aae14c42');
+
+    tick();
+
+    expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
+    expect(component.columnKeys).toEqual([0]);
+    expect(updateCalendarMethod).not.toHaveBeenCalled();
+  }));
+
+  it('should show error when trying to get room data after room change', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.room.id = '59f1589d-197c-4f53-bfc1-4c57aae14c42';
+    expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
+
+    const updateCalendarMethod = spyOn(component, 'updateCalendar');
+
+    component.changeRoom('a84f7b38-b78e-4e32-bff3-cfe3f263dba1');
+
+    tick();
+
+    expect(component.room.id).toBe('59f1589d-197c-4f53-bfc1-4c57aae14c42');
+    expect(component.columnKeys).toEqual([0]);
+    expect(updateCalendarMethod).not.toHaveBeenCalled();
+
+    localStorage.removeItem('throwError');
+  }));
+
+  it('should return specified day of week', () => {
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(0).toISOString()).toBe("2022-01-07T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(1).toISOString()).toBe("2022-01-01T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(2).toISOString()).toBe("2022-01-02T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(3).toISOString()).toBe("2022-01-03T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(4).toISOString()).toBe("2022-01-04T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(5).toISOString()).toBe("2022-01-05T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(6).toISOString()).toBe("2022-01-06T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(7).toISOString()).toBe("2022-01-07T00:00:00.000Z");
+
+    component.week = moment("2022-01-01T00:00:00.000Z");
+    expect(component.getDayOfWeek(47).toISOString()).toBe("2022-01-05T00:00:00.000Z");
+  });
+
+  it('should check if object is a string', () => {
+    expect(component.isString({
+      id: "410cda0c-1027-4681-b578-61e3822534bc",
+      start: moment("2022-01-28T09:00:00.000Z"),
+      end: moment("2022-01-28T12:00:00.000Z"),
+      type: 1,
+      confirmationStatus: 2,
+      seriesId: null,
+      timeSlotRecurrence: 1,
+      maxStart: null,
+      amount: 1,
+      room: {
+        id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
+        name: "algorithms",
+        description: "Quidem laudantium deleniti eum.",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: false
+      },
+      user: {
+        id: "540618e7-98c8-4830-8917-0f52787360d6",
+        email: "admin@test.com",
+        firstName: "Admin",
+        lastName: "Admin",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
+      }
+    })).toBeFalse();
+    expect(component.isString('')).toBeTrue();
+    expect(component.isString(null)).toBeFalse();
+  });
+
   it('should check if object is an appointment', () => {
     expect(component.isAppointment({
       id: "410cda0c-1027-4681-b578-61e3822534bc",
@@ -337,7 +479,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 2,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -370,7 +512,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 0,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -398,7 +540,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 1,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -426,7 +568,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 2,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -454,7 +596,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -485,7 +627,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -509,6 +651,10 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(component.parseAppointment(appointment)).toEqual(appointment);
   });
 
+  it('should parse object as appointment', () => {
+    expect(typeof component.parseString("kldjgkjlrkjlfdgkjldfgkjl")).toEqual("string");
+  });
+
   it('should return id of appointment', () => {
     expect(component.getAppointmentId({
       id: "410cda0c-1027-4681-b578-61e3822534bc",
@@ -518,7 +664,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -549,7 +695,7 @@ describe('RoomCalendarViewComponent - regular methods', () => {
       confirmationStatus: 3,
       seriesId: null,
       timeSlotRecurrence: 1,
-      maxStart: undefined,
+      maxStart: null,
       amount: 1,
       room: {
         id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -584,6 +730,16 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(component.appointmentCreationStart).not.toBeNull();
   });
 
+  it('should try to open appointment creation form when sidebar is already open', () => {
+    component.action = 'edit';
+    component.currentAppointmentId = '7d083749-e35a-4de5-a4f2-889a6cf9ca5a';
+
+    component.openAppointmentCreationForm(3,5);
+
+    expect(component.action).toBe('edit');
+    expect(component.currentAppointmentId).toBe('7d083749-e35a-4de5-a4f2-889a6cf9ca5a');
+  });
+
   it('should open appointment view', () => {
     component.action = '';
     component.currentAppointmentId = '';
@@ -592,6 +748,16 @@ describe('RoomCalendarViewComponent - regular methods', () => {
 
     expect(component.action).toBe('view');
     expect(component.currentAppointmentId).toBe('410cda0c-1027-4681-b578-61e3822534bc');
+  });
+
+  it('should try to open appointment view when sidebar is already open', () => {
+    component.action = 'edit';
+    component.currentAppointmentId = '7d083749-e35a-4de5-a4f2-889a6cf9ca5a';
+
+    component.openAppointmentView('410cda0c-1027-4681-b578-61e3822534bc');
+
+    expect(component.action).toBe('edit');
+    expect(component.currentAppointmentId).toBe('7d083749-e35a-4de5-a4f2-889a6cf9ca5a');
   });
 
   it('should open appointment edit form', () => {
@@ -604,25 +770,73 @@ describe('RoomCalendarViewComponent - regular methods', () => {
     expect(component.currentAppointmentId).toBe('410cda0c-1027-4681-b578-61e3822534bc');
   });
 
-  //@todo Adrian add modal tests
-  /*it('should open appointment deletion dialog', fakeAsync(() => {
+  it('should try to open appointment edit form when sidebar is already open', () => {
+    component.action = 'edit';
+    component.currentAppointmentId = '7d083749-e35a-4de5-a4f2-889a6cf9ca5a';
+
+    component.openAppointmentEditForm('410cda0c-1027-4681-b578-61e3822534bc');
+
+    expect(component.action).toBe('edit');
+    expect(component.currentAppointmentId).toBe('7d083749-e35a-4de5-a4f2-889a6cf9ca5a');
+  });
+
+  it('should close sidebar and update calendar', () => {
+    component.action = 'edit';
+    component.currentAppointmentId = 'bla';
+    component.appointmentCreationStart = moment("2022-01-28T09:00:00.000Z");
+
+    expect(component.action).toBe('edit');
+    expect(component.currentAppointmentId).toBe('bla');
+    expect(component.appointmentCreationStart.toISOString()).toBe(moment("2022-01-28T09:00:00.000Z").toISOString());
+
+    component.closeSidebar(true);
+
+    expect(component.action).toBe('');
+    expect(component.currentAppointmentId).toBe('');
+    expect(component.appointmentCreationStart).toBeNull();
+  });
+
+  it('should open appointment deletion dialog', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
-    component.action = 'xxx';
+    const updateCalendarMethod = spyOn(component, 'updateCalendar');
 
-    expect(component.action).toBe('xxx');
-
-    let updateCalendarMethod = spyOn(component, 'updateCalendar');
-
-    component.openAppointmentDeletionDialog('410cda0c-1027-4681-b578-61e3822534bc');
+    component.openAppointmentDeletionDialog("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
 
     tick();
 
-    expect(component.action).toBe('');
     expect(updateCalendarMethod).toHaveBeenCalled();
 
     localStorage.removeItem('returnVal');
-  }));*/
+  }));
+
+  it('should open appointment accept dialog', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'accepted');
+
+    const updateCalendarMethod = spyOn(component, 'updateCalendar');
+
+    component.acceptAppointmentRequest("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
+
+    tick();
+
+    expect(updateCalendarMethod).toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
+
+  it('should open appointment decline dialog', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'declined');
+
+    const updateCalendarMethod = spyOn(component, 'updateCalendar');
+
+    component.declineAppointmentRequest("c3a70a44-374c-46a9-be05-a3f6ef4e39a5");
+
+    tick();
+
+    expect(updateCalendarMethod).toHaveBeenCalled();
+
+    localStorage.removeItem('returnVal');
+  }));
 });
 
 describe('RoomCalendarViewComponent - http methods', () => {
@@ -647,10 +861,10 @@ describe('RoomCalendarViewComponent - http methods', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: RoomService, useClass: MockRoomService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: NgbModal, useValue: MockModalService },
+        { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -682,7 +896,7 @@ describe('RoomCalendarViewComponent - http methods', () => {
             confirmationStatus: 2,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -711,7 +925,7 @@ describe('RoomCalendarViewComponent - http methods', () => {
             confirmationStatus: 1,
             seriesId: null,
             timeSlotRecurrence: 1,
-            maxStart: undefined,
+            maxStart: null,
             amount: 1,
             room: {
               id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
@@ -747,10 +961,14 @@ describe('RoomCalendarViewComponent - http methods', () => {
     });
   });
 
-  it('should get rooms', () => {
+  it('should get rooms', fakeAsync(() => {
+    expect(component.rooms).toEqual([]);
+
     component.getRooms();
 
-    const rooms: Room[] = [
+    tick();
+
+    expect(component.rooms).toEqual([
       {
         "id": "2f1dd587-8625-4b9f-995c-f35e6a9997e9",
         "name": "Bacon",
@@ -772,8 +990,6 @@ describe('RoomCalendarViewComponent - http methods', () => {
         "maxConcurrentBookings": 6,
         "autoAcceptBookings": true,
       },
-    ];
-
-    //expect(component.rooms).toEqual(rooms);
-  });
+    ]);
+  }));
 });

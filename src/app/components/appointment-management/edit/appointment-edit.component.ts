@@ -57,7 +57,7 @@ export class AppointmentEditComponent implements OnInit {
     type: RoomTimespanType.appointment,
     seriesId: null,
     timeSlotRecurrence: 1,
-    maxStart: undefined,
+    maxStart: null,
     amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
   };

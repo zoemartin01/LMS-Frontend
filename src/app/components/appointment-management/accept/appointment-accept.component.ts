@@ -56,7 +56,7 @@ export class AppointmentAcceptComponent implements OnInit {
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
     timeSlotRecurrence: TimeSlotRecurrence.unknown,
-    maxStart: undefined,
+    maxStart: null,
     amount: 1,
   };
 

@@ -68,7 +68,8 @@ export class AppointmentCreateComponent implements OnInit {
     this.setDate(this.start ?? moment());
 
     this.appointmentCreateForm.controls['startHour'].setValue(this.date.format('HH'));
-    this.appointmentCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours').format('HH'));
+    this.appointmentCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours')
+      .format('HH'));
   }
 
   /**
@@ -147,10 +148,12 @@ export class AppointmentCreateComponent implements OnInit {
         });
       }
     } else {
-      if (this.appointmentCreateForm.controls['safetyInstructions'].invalid || this.appointmentCreateForm.controls['hwlabRules'].invalid) {
+      if (this.appointmentCreateForm.controls['safetyInstructions'].invalid
+        || this.appointmentCreateForm.controls['hwlabRules'].invalid) {
         this.hasError = true;
         this.hasErrorMessage = 'Please accept the safety instructions and the hwlab rules.';
       }
+
       console.error('Invalid form data')
     }
   }

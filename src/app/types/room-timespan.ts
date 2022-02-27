@@ -13,6 +13,6 @@ export interface RoomTimespan {
   type: RoomTimespanType,
   timeSlotRecurrence: number,
   seriesId: SeriesId,
-  maxStart: moment.Moment|undefined,
+  maxStart: moment.Moment|null,
   amount: number,
 }
