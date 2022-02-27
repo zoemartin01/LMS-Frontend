@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -219,7 +219,7 @@ describe('OrderEditComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page with linked item', () => {
+  it('should init page with linked item', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -243,6 +243,8 @@ describe('OrderEditComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+
+    tick();
 
     expect(component.order).toEqual({
       "id": "045fcd70-d323-4de2-894e-a10772b23457",
@@ -286,9 +288,9 @@ describe('OrderEditComponent', () => {
     expect(component.orderEditForm.controls['quantity'].value).toBe(10);
     expect(component.orderEditForm.controls['url'].value).toBe('conrad.de/pizza');
     expect(component.orderEditForm.controls['status'].value).toBe(3);
-  });
+  }));
 
-  it('should init page whith item name', () => {
+  it('should init page whith item name', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -312,6 +314,8 @@ describe('OrderEditComponent', () => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
     component.ngOnInit();
+
+    tick();
 
     expect(component.order).toEqual({
       "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
@@ -350,7 +354,7 @@ describe('OrderEditComponent', () => {
     expect(component.orderEditForm.controls['quantity'].value).toBe(42962);
     expect(component.orderEditForm.controls['url'].value).toBe('https://clementine.biz');
     expect(component.orderEditForm.controls['status'].value).toBe(1);
-  });
+  }));
 
   it('should throw error on page init', () => {
     localStorage.setItem('throwError', 'true');
