@@ -53,7 +53,7 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
-    this.getWhitelistRetailers(this.whitelistRetailers.page);
+    this.getWhitelistRetailers();
   }
 
   /**
@@ -167,7 +167,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }
@@ -182,7 +182,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }
@@ -197,7 +197,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }
