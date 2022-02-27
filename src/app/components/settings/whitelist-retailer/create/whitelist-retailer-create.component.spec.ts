@@ -1,13 +1,15 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { WhitelistRetailerCreateComponent } from './whitelist-retailer-create.component';
-import {AdminService} from "../../../../services/admin.service";
-import {Observable} from "rxjs";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 class MockAdminService {
   createWhitelistRetailer(domains: String[], name: String): Observable<WhitelistRetailer> {
@@ -157,26 +159,4 @@ describe('WhitelistRetailerCreateComponent', () => {
 
     localStorage.removeItem('returnVal');
   }));
-
-  it('should not remove domain if domain name is not valid', fakeAsync(() => {
-    localStorage.setItem('returnVal', 'deleted');
-
-    const consoleError = spyOn(console, 'error');
-
-    component.dirty = false;
-    component.domains = [
-      'domain.test',
-      'domain.2.test'
-    ]
-
-    component.openWhitelistRetailerDomainDeletionDialog('false.domain.test');
-    tick();
-
-    expect(component.dirty).toEqual(false);
-    //expect(consoleError).toHaveBeenCalled();
-
-    localStorage.removeItem('returnVal');
-  }));
-
-
 });

@@ -103,7 +103,6 @@ export class WhitelistRetailerCreateComponent {
           this.domains.splice(index, 1);
           this.dirty = true;
         }
-        //Error? TODO @Adrian was machen wir hier ahhhhhh
       }
     });
   }
