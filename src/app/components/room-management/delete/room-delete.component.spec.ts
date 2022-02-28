@@ -61,7 +61,6 @@ describe('RoomDeleteComponent method calls', () => {
   let component: RoomDeleteComponent;
   let fixture: ComponentFixture<RoomDeleteComponent>;
   let deleteRoomMethod: jasmine.Spy<any>;
-  let deleteRoomSeriesMethod: jasmine.Spy<any>;
   let getRoomDataMethod: jasmine.Spy<any>;
 
   beforeEach(async () => {
@@ -128,6 +127,25 @@ describe('RoomDeleteComponent', () => {
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
+
+  it('should get room to init page and set component attributes', fakeAsync(() => {
+    component.ngOnInit();
+
+    tick();
+    const room: Room = {
+      id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+      name: "Test room",
+      description: "room to test",
+      maxConcurrentBookings: 1,
+      autoAcceptBookings: true
+    }
+    expect(component.room).toEqual(room);
+    expect(component.roomDeleteForm.controls['name'].value).toEqual(room.name);
+    expect(component.roomDeleteForm.controls['description'].value).toEqual(room.description);
+    expect(component.roomDeleteForm.controls['maxConcurrentBookings'].value).toEqual(room.maxConcurrentBookings);
+    expect(component.roomDeleteForm.controls['autoAcceptBookings'].value).toEqual(room.autoAcceptBookings);
+
+  }));
 
   it('should delete an Room', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
