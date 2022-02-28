@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 @Component({
   selector: 'app-domain-delete',
