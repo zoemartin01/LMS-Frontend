@@ -96,6 +96,8 @@ export class WhitelistRetailerCreateComponent {
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;
+    modal.componentInstance.name = this.retailerCreateForm.value.name;
+
     modal.result.then((result) => {
       if (result !== 'aborted') {
         const index = this.domains.indexOf(whitelistRetailerDomain, 0);
