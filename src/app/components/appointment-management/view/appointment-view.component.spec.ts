@@ -8,7 +8,6 @@ import {TimespanId} from "../../../types/aliases/timespan-id";
 import {Observable} from "rxjs";
 import {Appointment} from "../../../types/appointment";
 import * as moment from "moment";
-import {SeriesId} from "../../../types/aliases/series-id";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppointmentService} from "../../../services/appointment.service";
 import {UserRole} from "../../../types/enums/user-role";

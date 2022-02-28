@@ -1,6 +1,5 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
 import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {AppointmentEditComponent} from './appointment-edit.component';
@@ -8,8 +7,6 @@ import {TimespanId} from "../../../types/aliases/timespan-id";
 import {Observable} from "rxjs";
 import {Appointment} from "../../../types/appointment";
 import * as moment from "moment";
-import {SeriesId} from "../../../types/aliases/series-id";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppointmentService} from "../../../services/appointment.service";
 import {Room} from "../../../types/room";
 import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
