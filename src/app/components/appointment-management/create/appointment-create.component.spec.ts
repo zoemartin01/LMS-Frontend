@@ -109,6 +109,13 @@ describe('AppointmentCreateComponent method calls', () => {
     expect(+component.appointmentCreateForm.controls['endHour'].value).toEqual(14);
   }));
 
+  it('should call setDateMethod with current date', fakeAsync(() => {
+    let setDateMethod = spyOn(component, 'setDate');
+    component.ngOnInit();
+    tick();
+    expect(setDateMethod).toHaveBeenCalledWith(moment(undefined));
+  }));
+
   it('should handle change of datepicker', fakeAsync(() => {
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
     component.dateField.year = 2022;
