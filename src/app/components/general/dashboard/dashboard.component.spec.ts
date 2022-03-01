@@ -255,35 +255,4 @@ describe('DashboardComponent', () => {
 
     localStorage.removeItem('throwError');
   });
-
-  it('should show error message on get unread messages error', () => {
-    /*localStorage.setItem('throwError', 'true');
-
-    expect(component.unreadMessages).toEqual({
-      sum: 0,
-      appointments: 0,
-      appointments_admin: 0,
-      orders: 0,
-      orders_admin: 0,
-      users: 0,
-      settings: 0,
-    });
-    expect(component.showMessageBox).toBeFalse();
-
-    component.getUnreadMessagesAmounts();
-
-    expect(consoleError).toHaveBeenCalled();
-    expect(component.unreadMessages).toEqual({
-      sum: 0,
-      appointments: 0,
-      appointments_admin: 0,
-      orders: 0,
-      orders_admin: 0,
-      users: 0,
-      settings: 0,
-    });
-    expect(component.showMessageBox).toBeFalse();
-
-     localStorage.removeItem('throwError');*/
-  });
 });

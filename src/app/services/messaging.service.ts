@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
+
+import { WINDOW } from "../providers/window.providers";
 
 import { Message } from "../types/message";
 import { MessageId } from "../types/aliases/message-id";
@@ -18,7 +20,7 @@ import { PagedResponse } from '../types/paged-response';
  * @class
  */
 export class MessagingService {
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, @Inject(WINDOW) private window: Window) {
   }
 
   /**
@@ -84,5 +86,18 @@ export class MessagingService {
    */
   public markMessageAsUnread(messageId: MessageId): Observable<Message> {
     return this.updateMessage(messageId, { readStatus: false });
+  }
+
+  /**
+   * Gets the live stream feed
+   */
+  public unreadMessagesWebSocketPath(): string {
+    const isSSL = this.window.location.protocol === 'https:';
+    const protocol = isSSL ? 'wss:' : 'ws:';
+    const host = environment.production
+      ? this.window.location.hostname + environment.baseUrl
+      : environment.baseUrl.replace(/http(s)?:\/\//g, '');
+    const token = localStorage.getItem('accessToken');
+    return `${protocol}//${host}${environment.apiRoutes.messages.registerMessageWebsocket}?token=${token}`;
   }
 }
