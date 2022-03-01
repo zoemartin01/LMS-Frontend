@@ -1,19 +1,21 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {AppointmentViewComponent} from './appointment-view.component';
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {Appointment} from "../../../types/appointment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AppointmentService} from "../../../services/appointment.service";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
+
+import { AppointmentViewComponent } from './appointment-view.component';
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 
 class MockAppointmentService {
   public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -55,7 +57,8 @@ class MockAppointmentService {
           isActiveDirectory: false,
           notificationChannel: 3
         }
-      }
+      };
+
       observer.next(appointment);
     });
   }
@@ -102,8 +105,6 @@ class MockModalService {
 describe('AppointmentViewComponent method calls', () => {
   let component: AppointmentViewComponent;
   let fixture: ComponentFixture<AppointmentViewComponent>;
-  let viewAppointmentMethod: jasmine.Spy<any>;
-  let viewAppointmentSeriesMethod: jasmine.Spy<any>;
   let getAppointmentDataMethod: jasmine.Spy<any>;
 
   beforeEach(async () => {
@@ -119,10 +120,9 @@ describe('AppointmentViewComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: AppointmentService, useClass: MockAppointmentService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
-        {provide: NgbModal, useClass: MockModalService},
-
       ],
     }).compileComponents();
 
@@ -146,7 +146,9 @@ describe('AppointmentViewComponent method calls', () => {
 
   it('should close when appointment is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
+
     let closeForm = spyOn(component.closeForm, 'emit');
+
     component.openAppointmentDeletionDialog();
     tick();
 
@@ -157,6 +159,7 @@ describe('AppointmentViewComponent method calls', () => {
 
   it('should update appointment when appointment is not deleted but dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
+
     component.openAppointmentDeletionDialog();
     tick();
 
@@ -169,7 +172,6 @@ describe('AppointmentViewComponent method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openAppointmentDeletionDialog();
-
     tick();
 
     expect(getAppointmentDataMethod).not.toHaveBeenCalled();
@@ -196,8 +198,8 @@ describe('AppointmentViewComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: AppointmentService, useClass: MockAppointmentService },
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
       ],
     }).compileComponents();
 
@@ -220,6 +222,7 @@ describe('AppointmentViewComponent', () => {
 
   it('should set attributes to correct values after ngOnInit', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     const testAppointment: Appointment = {
       id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
       start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -262,7 +265,5 @@ describe('AppointmentViewComponent', () => {
     expect(component.appointmentViewForm.controls['endHour'].value).toEqual(testAppointment.end?.format('HH:mm'));
     expect(component.appointmentViewForm.controls['confirmationStatus'].value).toEqual(testAppointment.confirmationStatus);
     expect(component.appointmentViewForm.controls['timeSlotRecurrence'].value).toEqual(testAppointment.timeSlotRecurrence);
-
   }));
-
 });

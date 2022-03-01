@@ -455,6 +455,7 @@ describe('OrderEditComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editOrder();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('edited');
   }));

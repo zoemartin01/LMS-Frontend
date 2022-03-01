@@ -111,8 +111,10 @@ describe('AppointmentCreateComponent method calls', () => {
 
   it('should call setDateMethod with current date', fakeAsync(() => {
     let setDateMethod = spyOn(component, 'setDate');
+
     component.ngOnInit();
     tick();
+
     expect(setDateMethod).toHaveBeenCalledWith(moment(undefined));
   }));
 

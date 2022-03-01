@@ -1,16 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {AppointmentEditComponent} from './appointment-edit.component';
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {Appointment} from "../../../types/appointment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {AppointmentService} from "../../../services/appointment.service";
-import {Room} from "../../../types/room";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
 
+import { AppointmentEditComponent } from './appointment-edit.component';
+
+import { AppointmentService } from "../../../services/appointment.service";
+
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
+import { Room } from "../../../types/room";
 
 class MockAppointmentService {
   public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -26,7 +27,6 @@ class MockAppointmentService {
       }
 
       const appointmentSeries: Appointment = {
-
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
         end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -56,7 +56,6 @@ class MockAppointmentService {
       }
 
       const appointment: Appointment = {
-
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a52",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
         end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -84,6 +83,7 @@ class MockAppointmentService {
           notificationChannel: 3
         }
       }
+
       if (appointmentId === "c3a70a44-374c-46a9-be05-a3f6ef4e39a52") {
         observer.next(appointment);
       } else {
@@ -112,8 +112,8 @@ class MockAppointmentService {
           }
         });
       }
-      const appointment: Appointment = {
 
+      const appointment: Appointment = {
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
         end: moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -141,6 +141,7 @@ class MockAppointmentService {
           notificationChannel: 3
         }
       }
+
       observer.next(appointment);
     });
   }
@@ -166,6 +167,7 @@ class MockAppointmentService {
           error: {}
         });
       }
+
       const appointments: Appointment[] = [
         {
           id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
@@ -222,7 +224,8 @@ class MockAppointmentService {
             isActiveDirectory: false,
             notificationChannel: 3
           }
-        }]
+        }];
+
       observer.next(appointments);
     });
   }
@@ -244,8 +247,8 @@ describe('AppointmentEditComponent method calls', () => {
         NgbModule,
       ],
       providers: [
+        { provide: AppointmentService, useClass: MockAppointmentService },
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
       ],
     }).compileComponents();
 
@@ -263,8 +266,10 @@ describe('AppointmentEditComponent method calls', () => {
 
   it('should set component attributes when init page ', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.ngOnInit();
     tick();
+
     const testAppointment: Appointment = {
       id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
       start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -293,6 +298,7 @@ describe('AppointmentEditComponent method calls', () => {
         notificationChannel: 3
       }
     };
+
     expect(component.appointment).toEqual(testAppointment);
     expect(component.appointment.start).toEqual(moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     expect(component.appointment.end).toEqual(moment("2022-02-14T16:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
@@ -310,8 +316,10 @@ describe('AppointmentEditComponent method calls', () => {
 
   /*it('should call setDateMethod with current date', fakeAsync(() => {
     let setDateMethod = spyOn(component, 'setDate');
+
     component.ngOnInit();
     tick();
+
     expect(setDateMethod).toHaveBeenCalledWith(moment(undefined));
   }));*/
 
@@ -319,33 +327,18 @@ describe('AppointmentEditComponent method calls', () => {
     component.dateField.year = 2022;
     component.dateField.month = 4;
     component.dateField.day = 8;
+
     let setDateMethod = spyOn(component, 'setDate');
+
     component.handleDatepickerChange();
 
     expect(setDateMethod).toHaveBeenCalledWith(moment(`${component.dateField.year}-${component.dateField.month}-${component.dateField.day}`));
-  }));
-
-  it('should edit appointment', fakeAsync(() => {
-    component.isRecurring = false;
-    component.ngOnInit();
-    tick();
-    component.editAppointment();
-    tick();
-    expect(editAppointmentMethod).toHaveBeenCalled();
-  }));
-
-  it('should edit appointment series', fakeAsync(() => {
-    component.isRecurring = true;
-    component.ngOnInit();
-    component.editAppointmentSeries();
-    expect(editAppointmentSeriesMethod).toHaveBeenCalled();
   }));
 });
 
 describe('AppointmentEditComponent', () => {
   let component: AppointmentEditComponent;
   let fixture: ComponentFixture<AppointmentEditComponent>;
-  //let consoleError: jasmine.Spy<any>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -357,15 +350,13 @@ describe('AppointmentEditComponent', () => {
         NgbModule,
       ],
       providers: [
+        { provide: AppointmentService, useClass: MockAppointmentService },
         NgbActiveModal,
-        {provide: AppointmentService, useClass: MockAppointmentService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppointmentEditComponent);
     component = fixture.componentInstance;
-    /*consoleError = spyOn(console, 'error');
-    consoleError.calls.reset();*/
   });
 
 
@@ -373,8 +364,8 @@ describe('AppointmentEditComponent', () => {
     component.appointment.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
 
     component.setDate(component.appointment.start);
-
     tick();
+
     expect(component.date).toEqual(moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     expect(component.dateText).toEqual("14.02.2022");
     expect(component.dateField.day).toEqual(14);
@@ -385,45 +376,55 @@ describe('AppointmentEditComponent', () => {
   it('should edit appointment', fakeAsync(() => {
     let closeForm = spyOn(component.closeForm, 'emit');
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
     component.ngOnInit();
+    tick();
+
     component.appointmentEditForm.controls['startHour'].setValue(7);
     component.appointmentEditForm.controls['startHour'].markAsDirty();
     component.appointmentEditForm.controls['endHour'].setValue(17);
     component.appointmentEditForm.controls['endHour'].markAsDirty();
 
-
-    tick();
     component.editAppointment();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should edit appointment series', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a52";
 
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+    tick();
+
     component.force = true;
     component.appointmentEditForm.controls['startHour'].setValue(7);
     component.appointmentEditForm.controls['startHour'].markAsDirty();
     component.recurringAppointmentEditForm.controls['amount'].setValue(2);
     component.recurringAppointmentEditForm.controls['amount'].markAsDirty();
-    tick();
+
     component.editAppointmentSeries();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should handle edit appointment with end hour 24', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+    tick();
+
     component.appointmentEditForm.controls['endHour'].setValue(24);
     component.appointmentEditForm.controls['endHour'].markAsDirty();
 
-    tick();
     component.editAppointment();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
@@ -432,23 +433,31 @@ describe('AppointmentEditComponent', () => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a52";
 
     component.ngOnInit();
+    tick();
+
     component.force = true;
     component.appointmentEditForm.controls['endHour'].setValue(24);
     component.appointmentEditForm.controls['endHour'].markAsDirty();
     component.recurringAppointmentEditForm.controls['amount'].setValue(2);
     component.recurringAppointmentEditForm.controls['amount'].markAsDirty();
-    tick();
+
     component.editAppointmentSeries();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
 
   it('should show error message on edit appointment series booking conflict error', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     localStorage.setItem('throwTimeSlotConflictError', 'true');
+
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a52";
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
+    tick();
+
     component.force = true;
     component.appointmentEditForm.controls['startHour'].setValue(7);
     component.appointmentEditForm.controls['startHour'].markAsDirty();
@@ -457,9 +466,9 @@ describe('AppointmentEditComponent', () => {
     component.recurringAppointmentEditForm.controls['amount'].setValue(2);
     component.recurringAppointmentEditForm.controls['amount'].markAsDirty();
 
-    tick();
     component.editAppointmentSeries();
     tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.seriesConflict).toEqual(true);
 
@@ -467,28 +476,35 @@ describe('AppointmentEditComponent', () => {
   }));
 
   it('should show error message on edit appointment booking conflict error', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     localStorage.setItem('throwTimeSlotConflictError', 'true');
+
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a52";
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
     tick();
 
     component.appointmentEditForm.controls['startHour'].setValue(5);
     component.appointmentEditForm.controls['startHour'].markAsDirty();
 
-
     component.editAppointment();
     tick();
+
     expect(closeForm).not.toHaveBeenCalled();
     expect(component.timeslotConflict).toEqual(true);
     expect(component.timeslotConflictMessage).toEqual('Your booking conflicts with to many other bookings.');
+
     localStorage.setItem('throwTimeSlotConflictError', 'false');
   }));
 
   it('should show error message on get appointment error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
-    let consoleError = spyOn(console, 'error');
+
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a52";
+
+    let consoleError = spyOn(console, 'error');
+
     component.getAppointmentData();
     tick();
 
