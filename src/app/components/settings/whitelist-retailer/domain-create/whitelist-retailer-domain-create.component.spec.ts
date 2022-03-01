@@ -140,6 +140,26 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     localStorage.removeItem('throwError');
   }));
 
+  it('should not try to get whitelist retailer data when id is null', fakeAsync(() => {
+    expect(component.whitelistRetailer).toEqual({
+      id: null,
+      name: '',
+      domains: [],
+    });
+
+    const consoleError = spyOn(console, 'error');
+
+    component.ngOnInit();
+    tick();
+
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(component.whitelistRetailer).toEqual({
+      id: null,
+      name: '',
+      domains: [],
+    });
+  }))
+
   it('should add domain to whitelist retailer', fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('louisa.org');
     component.whitelistRetailer.id = 'retailerExampleID';
@@ -169,6 +189,25 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
 
     localStorage.removeItem('throwError');
   }));
+
+  it('should return domain if domain has to be added to a not yet existing whitelist retailer', fakeAsync(() => {
+    component.domainCreateForm.controls['domain'].setValue('russianwarshipgofuckyourself.club');
+
+    expect(component.whitelistRetailer).toEqual({
+      id: null,
+      name: '',
+      domains: [],
+    });
+
+    const modalClose = spyOn(component.activeModal, 'close');
+    const consoleError = spyOn(console, 'error');
+
+    component.addDomainToWhitelistRetailer();
+    tick();
+
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(modalClose).toHaveBeenCalledWith(component.domainCreateForm.value.domain);
+  }))
 
   it('should throw an error when trying to add an empty domain to a whitelisted retailer', fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('');
