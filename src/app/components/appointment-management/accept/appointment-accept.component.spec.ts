@@ -127,8 +127,6 @@ describe('AppointmentAcceptComponent method calls', () => {
     getAppointmentDataMethod.calls.reset();
   });
 
-  //@TODO dont really know what to test
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
