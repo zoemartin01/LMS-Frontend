@@ -52,7 +52,7 @@ export class RoomViewComponent implements OnInit {
   constructor(
     public roomService: RoomService,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal
   ) {

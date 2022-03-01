@@ -164,17 +164,7 @@ describe('RoomViewComponent', () => {
   let component: RoomViewComponent;
   let fixture: ComponentFixture<RoomViewComponent>;
   let locationReload: Spy;
-  let router = {
-    navigateByUrl: (url: string) => {
-      return new Promise<boolean>(resolve => resolve(true));
-    },
-  };
-  let windowMock: Window = <any>{
-    location: {
-      reload: () => {
-      },
-    }
-  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -190,19 +180,11 @@ describe('RoomViewComponent', () => {
       providers: [
         NgbActiveModal,
         {provide: RoomService, useClass: MockRoomService},
-        {provide: Router, useValue: router},
-        {
-          provide: WINDOW, useFactory: (() => {
-            return windowMock;
-          })
-        },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoomViewComponent);
     component = fixture.componentInstance;
-    locationReload = spyOn(windowMock.location, 'reload');
-    locationReload.calls.reset();
   });
 
   it('should get room to init page and set component attributes', fakeAsync(() => {
@@ -238,19 +220,32 @@ describe('RoomViewComponent', () => {
 
     localStorage.setItem('throwError', 'false');
   }));
-//@TODO howw
 
-/*  it('should open timeslot page', fakeAsync(() => {
+  it('should open timeslot page', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
-    let closeForm = spyOn(component.activeModal, 'close');
+    let activeModal = spyOn(component.activeModal, 'close');
+    let router = spyOn(component.router, 'navigateByUrl');
 
     component.getRoomData();
     tick();
     component.openTimeslotPage();
-    expect(component.activeModal)
+    tick();
+    expect(activeModal).toHaveBeenCalledWith('aborted');
+    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots');
+  }));
 
-    expect(closeForm).toHaveBeenCalledWith('aborted');
-  }));*/
+  it('should open timeslot page and close activeModal with dirty', fakeAsync(() => {
+    component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+    component.dirty = true;
+    let activeModal = spyOn(component.activeModal, 'close');
+    let router = spyOn(component.router, 'navigateByUrl');
 
+    component.getRoomData();
+    tick();
+    component.openTimeslotPage();
+    tick();
+    expect(activeModal).toHaveBeenCalledWith('dirty');
+    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots');
+  }));
 });
