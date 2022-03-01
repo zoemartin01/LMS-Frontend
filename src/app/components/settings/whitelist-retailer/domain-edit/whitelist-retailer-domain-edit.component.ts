@@ -37,10 +37,9 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -56,17 +55,17 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
   public async getWhitelistRetailerData(): Promise<void> {
     if (this.whitelistRetailer.id === null) {
       this.domainEditForm.controls['domain'].setValue(this.domain);
-      return;
+    } else {
+      this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
+        next: res => {
+          this.whitelistRetailer = res;
+          this.domainEditForm.controls['domain'].setValue(res.domains.filter((whitelistRetailerDomain: WhitelistRetailerDomain) => whitelistRetailerDomain.id == this.whitelistRetailerDomain.id)[0].domain);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
     }
-    this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
-      next: res => {
-        this.whitelistRetailer = res;
-        this.domainEditForm.controls['domain'].setValue(res.domains.filter((whitelistRetailerDomain: WhitelistRetailerDomain) => whitelistRetailerDomain.id == this.whitelistRetailerDomain.id)[0].domain);
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
   }
 
   /**

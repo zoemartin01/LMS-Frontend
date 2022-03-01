@@ -131,7 +131,7 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     tick();
 
     expect(component.whitelistRetailer).toEqual({
-      id:     component.whitelistRetailer.id = 'retailerExampleID',
+      id: 'retailerExampleID',
       name: '',
       domains: [],
     });
@@ -158,7 +158,7 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
       name: '',
       domains: [],
     });
-  }))
+  }));
 
   it('should add domain to whitelist retailer', fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('louisa.org');
@@ -207,7 +207,7 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
 
     expect(consoleError).not.toHaveBeenCalled();
     expect(modalClose).toHaveBeenCalledWith(component.domainCreateForm.value.domain);
-  }))
+  }));
 
   it('should throw an error when trying to add an empty domain to a whitelisted retailer', fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('');
