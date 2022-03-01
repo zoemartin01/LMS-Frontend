@@ -32,10 +32,9 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -66,10 +65,6 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    */
   public async addDomainToWhitelistRetailer(): Promise<void> {
     if (this.domainCreateForm.valid) {
-      if (this.whitelistRetailer.id === null) {
-        this.activeModal.close(this.domainCreateForm.value.domain);
-        return;
-      }
       this.adminService.addDomainToWhitelistRetailer(
         this.whitelistRetailer.id,
         this.domainCreateForm.value.domain
@@ -83,6 +78,8 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      console.error('Domain can not be empty!');
     }
   }
 }
