@@ -8,7 +8,6 @@ import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/white
 import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
 import { AdminService } from "../../../services/admin.service";
-import { UtilityService } from "../../../services/utility.service";
 
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
@@ -43,11 +42,10 @@ export class GlobalSettingsComponent implements OnInit {
   /**
    * Constructor
    * @constructor
-   * @param {UtilityService} utilityService service providing utility functionality
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public utilityService: UtilityService, public adminService: AdminService, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, private modalService: NgbModal) {
   }
 
   /**
@@ -55,7 +53,7 @@ export class GlobalSettingsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getGlobalSettings();
-    this.getWhitelistRetailers(this.whitelistRetailers.page);
+    this.getWhitelistRetailers();
   }
 
   /**
@@ -153,8 +151,8 @@ export class GlobalSettingsComponent implements OnInit {
   public openWhitelistRetailerCreationForm(): void {
     const modal = this.modalService.open(WhitelistRetailerCreateComponent);
     modal.result.then((result) => {
-      if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+      if (result.split(' ')[0] === 'created') {
+        this.openWhitelistRetailerView(result.split(' ')[1]);
       }
     });
   }
@@ -169,7 +167,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }
@@ -184,7 +182,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }
@@ -199,7 +197,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.componentInstance.whitelistRetailer.id = whitelistRetailerId;
     modal.result.then((result) => {
       if (result !== 'aborted') {
-        this.getWhitelistRetailers(this.whitelistRetailers.page);
+        this.getWhitelistRetailers();
       }
     });
   }

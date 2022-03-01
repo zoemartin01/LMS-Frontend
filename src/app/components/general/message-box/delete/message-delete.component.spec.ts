@@ -44,7 +44,7 @@ describe('MessageDeleteComponent', () => {
       ],
       providers: [
         NgbActiveModal,
-        {provide: MessagingService, useClass: MockMessagingService},
+        { provide: MessagingService, useClass: MockMessagingService },
       ],
     }).compileComponents();
 

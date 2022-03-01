@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as moment from "moment";
+
 import { AppointmentService } from "../../../services/appointment.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+
 import { Appointment } from "../../../types/appointment";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import * as moment from "moment";
 
 @Component({
   selector: 'app-decline',
@@ -56,7 +58,7 @@ export class AppointmentDeclineComponent implements OnInit {
     seriesId: null,
     confirmationStatus: ConfirmationStatus.unknown,
     timeSlotRecurrence: TimeSlotRecurrence.unknown,
-    maxStart: undefined,
+    maxStart: null,
     amount: 1,
   };
 
@@ -109,7 +111,7 @@ export class AppointmentDeclineComponent implements OnInit {
   public async declineAppointment(): Promise<void> {
     this.appointmentService.declineAppointmentRequest(this.appointment.id).subscribe({
       next: () => {
-        this.activeModal.close('accepted');
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
@@ -123,7 +125,7 @@ export class AppointmentDeclineComponent implements OnInit {
   public async declineAppointmentSeries(): Promise<void> {
     this.appointmentService.declineAppointmentSeriesRequest(this.appointment.seriesId).subscribe({
       next: () => {
-        this.activeModal.close('accepted');
+        this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);

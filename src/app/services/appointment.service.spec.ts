@@ -72,7 +72,7 @@ describe('AppointmentService', () => {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 1,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -224,7 +224,7 @@ describe('AppointmentService', () => {
           amount: 1,
           timeSlotRecurrence: 1,
           confirmationStatus: 1,
-          maxStart: undefined,
+          maxStart: null,
           room: {
             id: "c7231328-203e-43f5-9ac1-d374d90484ac",
             name: "Test room",
@@ -478,7 +478,7 @@ describe('AppointmentService', () => {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 3,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -517,7 +517,7 @@ describe('AppointmentService', () => {
           amount: 1,
           timeSlotRecurrence: 1,
           confirmationStatus: 3,
-          maxStart: undefined,
+          maxStart: null,
           room: {
             id: "c7231328-203e-43f5-9ac1-d374d90484ac",
             name: "Test room",
@@ -554,7 +554,7 @@ describe('AppointmentService', () => {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 3,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -593,7 +593,7 @@ describe('AppointmentService', () => {
           amount: 1,
           timeSlotRecurrence: 1,
           confirmationStatus: 3,
-          maxStart: undefined,
+          maxStart: null,
           room: {
             id: "c7231328-203e-43f5-9ac1-d374d90484ac",
             name: "Test room",
@@ -630,7 +630,7 @@ describe('AppointmentService', () => {
               amount: 1,
               timeSlotRecurrence: 1,
               confirmationStatus: 3,
-              maxStart: undefined,
+              maxStart: null,
               room: {
                 id: "c7231328-203e-43f5-9ac1-d374d90484ac",
                 name: "Test room",
@@ -669,7 +669,7 @@ describe('AppointmentService', () => {
           amount: 1,
           timeSlotRecurrence: 1,
           confirmationStatus: 3,
-          maxStart: undefined,
+          maxStart: null,
           room: {
             id: "c7231328-203e-43f5-9ac1-d374d90484ac",
             name: "Test room",
@@ -704,7 +704,7 @@ describe('AppointmentService', () => {
             amount: 1,
             timeSlotRecurrence: 1,
             confirmationStatus: 3,
-            maxStart: undefined,
+            maxStart: null,
             room: {
               id: "c7231328-203e-43f5-9ac1-d374d90484ac",
               name: "Test room",
@@ -739,7 +739,7 @@ describe('AppointmentService', () => {
       amount: 1,
       timeSlotRecurrence: 1,
       confirmationStatus: 3,
-      maxStart: undefined,
+      maxStart: null,
       room: {
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",
@@ -914,7 +914,7 @@ describe('AppointmentService', () => {
             amount: 1,
             timeSlotRecurrence: 1,
             confirmationStatus: 2,
-            maxStart: undefined,
+            maxStart: null,
             room: {
               id: "c7231328-203e-43f5-9ac1-d374d90484ac",
               name: "Test room",
@@ -954,7 +954,7 @@ describe('AppointmentService', () => {
       amount: 1,
       timeSlotRecurrence: 1,
       confirmationStatus: 2,
-      maxStart: undefined,
+      maxStart: null,
       room: {
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",
@@ -1143,7 +1143,7 @@ describe('AppointmentService', () => {
             amount: 1,
             timeSlotRecurrence: 1,
             confirmationStatus: 2,
-            maxStart: undefined,
+            maxStart: null,
             room: {
               id: "c7231328-203e-43f5-9ac1-d374d90484ac",
               name: "Test room",
@@ -1182,7 +1182,7 @@ describe('AppointmentService', () => {
       amount: 1,
       timeSlotRecurrence: 1,
       confirmationStatus: 2,
-      maxStart: undefined,
+      maxStart: null,
       room: {
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",

@@ -50,8 +50,8 @@ export class WhitelistRetailerCreateComponent {
    */
   public async createWhitelistRetailer(): Promise<void> {
     this.adminService.createWhitelistRetailer(this.domains, this.retailerCreateForm.value.name).subscribe({
-      next: () => {
-        this.activeModal.close('created');
+      next: (whitelistRetailer: WhitelistRetailer) => {
+        this.activeModal.close(`created ${whitelistRetailer.id}`);
       },
       error: error => {
         console.error('There was an error!', error);
@@ -96,13 +96,15 @@ export class WhitelistRetailerCreateComponent {
   openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain: string) {
     const modal = this.modalService.open(WhitelistRetailerDomainDeleteComponent);
     modal.componentInstance.domain = whitelistRetailerDomain;
+    modal.componentInstance.name = this.retailerCreateForm.value.name;
+
     modal.result.then((result) => {
       if (result !== 'aborted') {
         const index = this.domains.indexOf(whitelistRetailerDomain, 0);
         if (index > -1) {
           this.domains.splice(index, 1);
+          this.dirty = true;
         }
-        this.dirty = true;
       }
     });
   }

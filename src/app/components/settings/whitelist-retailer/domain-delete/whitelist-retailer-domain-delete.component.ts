@@ -30,7 +30,8 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
     id: null,
     domain: '',
   }
-  public domain : string = '';
+  public domain: string = '';
+  public name: string = '';
 
   /**
    * Constructor
@@ -57,23 +58,25 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
   public async getWhitelistRetailerData(): Promise<void> {
     if (this.whitelistRetailer.id === null) {
       this.domainDeleteForm.controls['domain'].setValue(this.domain);
+      this.domainDeleteForm.controls['name'].setValue(this.name);
       return;
+    } else {
+      this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
+        next: res => {
+          this.whitelistRetailer = res;
+          this.domainDeleteForm.controls['name'].setValue(res.name);
+          this.domainDeleteForm.controls['domain'].setValue(res.domains
+            .filter(
+              (whitelistRetailerDomain: WhitelistRetailerDomain) => {
+                return whitelistRetailerDomain.id == this.whitelistRetailerDomain.id;
+              })[0].domain
+          );
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      })
     }
-    this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
-      next: res => {
-        this.whitelistRetailer = res;
-        this.domainDeleteForm.controls['name'].setValue(res.name);
-        this.domainDeleteForm.controls['domain'].setValue(res.domains
-          .filter(
-            (whitelistRetailerDomain: WhitelistRetailerDomain) => {
-              return whitelistRetailerDomain.id == this.whitelistRetailerDomain.id;
-            })[0].domain
-        );
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
   }
 
   /**

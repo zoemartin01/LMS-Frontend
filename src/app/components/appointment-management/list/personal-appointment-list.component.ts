@@ -21,8 +21,6 @@ import { PagedList } from "../../../types/paged-list";
 
 /**
  * Component for the personal appointments list page
- *
- *
  */
 export class PersonalAppointmentListComponent implements OnInit {
   public appointments: PagedList<Appointment> = new PagedList<Appointment>();
@@ -50,7 +48,6 @@ export class PersonalAppointmentListComponent implements OnInit {
   public async getAllAppointmentsForCurrentUser(page: number = this.appointments.page): Promise<void> {
     const pageSize = this.appointments.pageSize;
     const offset = (page - 1) * pageSize;
-
     this.appointmentService.getAllAppointmentsForCurrentUser(pageSize, offset).subscribe({
       next: res => {
         this.appointments.parse(
