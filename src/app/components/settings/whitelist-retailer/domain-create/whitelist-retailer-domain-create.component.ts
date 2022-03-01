@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
 
@@ -32,10 +32,9 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -83,6 +82,8 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      console.error('Domain can not be empty!');
     }
   }
 }

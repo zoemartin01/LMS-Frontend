@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
 
@@ -37,10 +37,9 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
-   * @param {NgbModal} modalService service providing modal functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
     this.domainDeleteForm.disable();
 
   }
@@ -56,11 +55,7 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * Gets whitelist retailer data
    */
   public async getWhitelistRetailerData(): Promise<void> {
-    if (this.whitelistRetailer.id === null) {
-      this.domainDeleteForm.controls['domain'].setValue(this.domain);
-      this.domainDeleteForm.controls['name'].setValue(this.name);
-      return;
-    } else {
+    if (this.whitelistRetailer.id !== null) {
       this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
         next: res => {
           this.whitelistRetailer = res;
@@ -76,6 +71,9 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
           console.error('There was an error!', error);
         }
       })
+    } else {
+      this.domainDeleteForm.controls['name'].setValue(this.name);
+      this.domainDeleteForm.controls['domain'].setValue(this.domain);
     }
   }
 
