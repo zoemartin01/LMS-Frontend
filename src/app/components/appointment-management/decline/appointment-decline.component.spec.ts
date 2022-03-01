@@ -112,8 +112,8 @@ describe('AppointmentDeclineComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -157,8 +157,8 @@ describe('AppointmentdeclineComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

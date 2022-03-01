@@ -344,9 +344,9 @@ describe('AdminAppointmentListComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -618,9 +618,9 @@ describe('AdminAppointmentListComponent attribute checks', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

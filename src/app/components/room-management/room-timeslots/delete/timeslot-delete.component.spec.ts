@@ -1,18 +1,20 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {TimespanId} from "../../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {RoomTimespan} from "../../../../types/room-timespan";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {Room} from "../../../../types/room";
-import {RoomTimespanType} from "../../../../types/enums/timespan-type";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RoomService} from "../../../../services/room.service";
-import {RoomId} from "../../../../types/aliases/room-id";
-import {TimeslotDeleteComponent} from "./timeslot-delete.component";
+
+import { TimeslotDeleteComponent } from "./timeslot-delete.component";
+
+import { RoomService } from "../../../../services/room.service";
+
+import { RoomTimespan } from "../../../../types/room-timespan";
+import { TimespanId } from "../../../../types/aliases/timespan-id";
+import { RoomTimespanType } from "../../../../types/enums/timespan-type";
+import { Room } from "../../../../types/room";
+import { RoomId } from "../../../../types/aliases/room-id";
 
 class MockRoomService {
   public getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
@@ -22,8 +24,8 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -41,9 +43,10 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
+          autoAcceptBookings: false,
         }
-      }
+      };
+
       observer.next(timeslot);
     });
   }
@@ -55,8 +58,8 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -74,9 +77,10 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
@@ -88,8 +92,8 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -107,9 +111,10 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
@@ -142,9 +147,11 @@ class MockModalService {
           seriesId: null,
           maxStart: null,
           amount: 1,
-        }
+        },
       },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
     };
   };
 }
@@ -167,9 +174,9 @@ describe('TimeslotDeleteComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: RoomService},
-        {provide: NgbModal, useClass: MockModalService},
 
       ],
     }).compileComponents();
@@ -179,7 +186,6 @@ describe('TimeslotDeleteComponent method calls', () => {
     getTimeslotDataMethod = spyOn(component, 'getTimeslotData');
     getTimeslotDataMethod.calls.reset();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -211,8 +217,8 @@ describe('TimeslotDeleteComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
       ],
     }).compileComponents();
 
@@ -251,8 +257,8 @@ describe('TimeslotDeleteComponent', () => {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: false
-      }
+        autoAcceptBookings: false,
+      },
     };
 
     component.ngOnInit();
@@ -272,6 +278,7 @@ describe('TimeslotDeleteComponent', () => {
 
   it('should delete timeslot', fakeAsync(() => {
     let closeForm = spyOn(component.activeModal, 'close');
+
     component.timeslot.id = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.timeslot.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
@@ -280,29 +287,37 @@ describe('TimeslotDeleteComponent', () => {
 
     component.deleteTimeslot();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith('deleted');
   }));
 
   it('should delete timeslot series', fakeAsync(() => {
     let closeForm = spyOn(component.activeModal, 'close');
+
     component.timeslot.id = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.timeslot.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     component.ngOnInit();
     tick();
+
     component.deleteTimeslotSeries();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith('deleted');
   }));
 
   it('should show error message on edit timeslot series error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.timeslot.id = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.timeslot.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
-    component.ngOnInit();
 
+    component.ngOnInit();
     tick();
+
     component.deleteTimeslotSeries();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -310,13 +325,16 @@ describe('TimeslotDeleteComponent', () => {
 
   it('should show error message on edit timeslot error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.timeslot.id = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.timeslot.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
-    component.ngOnInit();
 
+    component.ngOnInit();
     tick();
+
     component.deleteTimeslot();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');

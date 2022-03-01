@@ -1,24 +1,26 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgxPaginationModule} from "ngx-pagination";
-
-import {TimeslotsListComponent} from './timeslots-list.component';
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../../types/paged-response";
-import {Room} from "../../../../types/room";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RoomService} from "../../../../services/room.service";
-import {PagedList} from "../../../../types/paged-list";
-import {RoomTimespanType} from "../../../../types/enums/timespan-type";
-import {RoomTimespan} from "../../../../types/room-timespan";
-import {ActivatedRouteStub} from "../../../appointment-management/calendar-view/room-calendar-view.component.spec";
-import {ActivatedRoute} from "@angular/router";
-import {RoomId} from "../../../../types/aliases/room-id";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Injectable } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { BehaviorSubject, Observable } from "rxjs";
 import * as moment from "moment";
 
+import { TimeslotsListComponent } from './timeslots-list.component';
+
+import { RoomService } from "../../../../services/room.service";
+
+import { RoomTimespan } from "../../../../types/room-timespan";
+import { RoomTimespanType } from "../../../../types/enums/timespan-type";
+import { Room } from "../../../../types/room";
+import { RoomId } from "../../../../types/aliases/room-id";
+import { PagedList } from "../../../../types/paged-list";
+import { PagedResponse } from "../../../../types/paged-response";
+
 class MockRoomService {
-  public getRoomsData(): Observable<PagedResponse<Room>> {
+  getRoomsData(): Observable<PagedResponse<Room>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -61,15 +63,15 @@ class MockRoomService {
     });
   }
 
-  public getAvailableTimeslots(roomId: RoomId): Observable<PagedResponse<RoomTimespan>> {
+  getAvailableTimeslots(roomId: RoomId): Observable<PagedResponse<RoomTimespan>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -91,8 +93,8 @@ class MockRoomService {
             name: "Test room",
             description: "room to test",
             maxConcurrentBookings: 1,
-            autoAcceptBookings: false
-          }
+            autoAcceptBookings: false,
+          },
         },
         {
           id: "377ec178-5fd7-41e6-b663-664dacf5c546",
@@ -108,8 +110,8 @@ class MockRoomService {
             name: "Test room",
             description: "room to test",
             maxConcurrentBookings: 1,
-            autoAcceptBookings: false
-          }
+            autoAcceptBookings: false,
+          },
         },
         {
           id: "cfa078ce-402e-4453-b3cf-a2faf003c09a",
@@ -125,15 +127,15 @@ class MockRoomService {
             name: "Test room",
             description: "room to test",
             maxConcurrentBookings: 1,
-            autoAcceptBookings: false
-          }
+            autoAcceptBookings: false,
+          },
         },
       ];
       observer.next(pagedListTimeslots);
     });
   }
 
-  public getUnavailableTimeslots(roomId: RoomId): Observable<PagedResponse<RoomTimespan>> {
+  getUnavailableTimeslots(roomId: RoomId): Observable<PagedResponse<RoomTimespan>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -201,6 +203,7 @@ class MockRoomService {
           }
         },
       ];
+
       observer.next(pagedListTimeslots);
     });
   }
@@ -226,11 +229,29 @@ class MockModalService {
           seriesId: null,
           maxStart: null,
           amount: 1,
-        }
+        },
       },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
     };
   };
+}
+
+@Injectable()
+export class ActivatedRouteStub {
+  private subject = new BehaviorSubject(this.testParams);
+  params = this.subject.asObservable();
+  private _testParams: object = {};
+
+  get testParams() {
+    return this._testParams;
+  }
+
+  set testParams(params: object) {
+    this._testParams = params;
+    this.subject.next(params);
+  }
 }
 
 describe('Timeslot list method calls', () => {
@@ -251,14 +272,15 @@ describe('Timeslot list method calls', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeslotsListComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
     getAllRoomsMethod = spyOn(component, 'getRooms');
@@ -271,13 +293,12 @@ describe('Timeslot list method calls', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('should update rooms when timeslot is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotDeletionDialog("exampleTimeslotID");
-
     tick();
 
     expect(getTimeslotMethod).toHaveBeenCalled();
@@ -287,10 +308,10 @@ describe('Timeslot list method calls', () => {
 
   it('should not update rooms when timeslot deletion is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotDeletionDialog("exampleTimeslotID");
-
     tick();
 
     expect(getTimeslotMethod).not.toHaveBeenCalled();
@@ -300,10 +321,10 @@ describe('Timeslot list method calls', () => {
 
   it('should update room when timeslot is edited', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotEditForm("exampleTimeslotID");
-
     tick();
 
     expect(getTimeslotMethod).toHaveBeenCalled();
@@ -313,10 +334,10 @@ describe('Timeslot list method calls', () => {
 
   it('should not update room when timeslot edit is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotEditForm("exampleTimeslotID");
-
     tick();
 
     expect(getTimeslotMethod).not.toHaveBeenCalled();
@@ -326,10 +347,10 @@ describe('Timeslot list method calls', () => {
 
   it('should update room when timeslot is created', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotCreationForm();
-
     tick();
 
     expect(getTimeslotMethod).toHaveBeenCalled();
@@ -339,10 +360,10 @@ describe('Timeslot list method calls', () => {
 
   it('should not update room when timeslot creation is aborted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotCreationForm();
-
     tick();
 
     expect(getTimeslotMethod).not.toHaveBeenCalled();
@@ -352,9 +373,10 @@ describe('Timeslot list method calls', () => {
 
   it('should update room when timeslot is viewed and dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
-    component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
-    component.openTimeslotView("exampleTimeslotID");
 
+    component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
+    component.openTimeslotView("exampleTimeslotID");
     tick();
 
     expect(getTimeslotMethod).toHaveBeenCalled();
@@ -364,10 +386,10 @@ describe('Timeslot list method calls', () => {
 
   it('should not update rooms when room is viewed and not dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'aborted');
+
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.openTimeslotView("exampleTimeslotID");
-
     tick();
 
     expect(getTimeslotMethod).not.toHaveBeenCalled();
@@ -395,26 +417,27 @@ describe('Timeslot list method calls', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: ActivatedRoute, useValue: mockActivatedRoute},
-        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeslotsListComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
 
   it('should get all available and unavailable timeslots', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     let getAvailableTimeSlotsMethod = spyOn(component, 'getAvailableTimeslots');
     let getUnavailableTimeSlotsMethod = spyOn(component, 'getUnavailableTimeslots');
 
     component.getTimeslots();
-
     tick();
 
     expect(getAvailableTimeSlotsMethod).toHaveBeenCalled();
@@ -426,9 +449,10 @@ describe('Timeslot list method calls', () => {
       id: '59f1589d-197c-4f53-bfc1-4c57aae14c42',
       date: '2022-02-26',
     };
-    let getRoomTimeSlotsMethod = spyOn(component, 'getTimeslots');
-    component.ngOnInit();
 
+    let getRoomTimeSlotsMethod = spyOn(component, 'getTimeslots');
+
+    component.ngOnInit();
     tick();
 
     expect(getRoomTimeSlotsMethod).toHaveBeenCalled();
@@ -436,10 +460,10 @@ describe('Timeslot list method calls', () => {
 
   it('should change current room and get timeslots', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     let getRoomTimeSlotsMethod = spyOn(component, 'getTimeslots');
 
     component.changeRoom("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(component.room.id).toEqual("c2349c343c40-c918c-c319c");
@@ -451,9 +475,7 @@ describe('Timeslot list method calls', () => {
      component.availableTimeslots.pageSize = 10;
      component.unavailableTimeslots.pageSize = 10;
 
-
      component.getRooms();
-
      tick();
 
      let pagedListRooms = new PagedList<Room>();
@@ -490,7 +512,6 @@ describe('Timeslot list method calls', () => {
     localStorage.setItem('throwError', 'true');
 
     component.getRooms();
-
     tick();
 
     expect(consoleError).toHaveBeenCalled();
@@ -498,12 +519,10 @@ describe('Timeslot list method calls', () => {
     localStorage.setItem('throwError', 'false');
   }));
 
-
   it('should get all available timeslots', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.getAvailableTimeslots();
-
     tick();
 
     let pagedListTimeslots = new PagedList<RoomTimespan>();
@@ -564,14 +583,12 @@ describe('Timeslot list method calls', () => {
     ];
 
     expect(component.availableTimeslots).toEqual(pagedListTimeslots);
-
   }));
 
   it('should get all unavailable timeslots', fakeAsync(() => {
     component.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.getUnavailableTimeslots();
-
     tick();
 
     let pagedListTimeslots = new PagedList<RoomTimespan>();
@@ -636,8 +653,8 @@ describe('Timeslot list method calls', () => {
 
   it('should show get all available timeslots error', fakeAsync(() => {
       localStorage.setItem('throwError', 'true');
-      component.getAvailableTimeslots();
 
+      component.getAvailableTimeslots();
       tick();
 
       expect(consoleError).toHaveBeenCalled();
@@ -647,8 +664,8 @@ describe('Timeslot list method calls', () => {
 
   it('should show get all unavailable timeslots error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
-    component.getUnavailableTimeslots();
 
+    component.getUnavailableTimeslots();
     tick();
 
     expect(consoleError).toHaveBeenCalled();

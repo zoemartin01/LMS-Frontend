@@ -1,25 +1,27 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {RoomDeleteComponent} from './room-delete.component';
-import {Observable} from "rxjs";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RoomId} from "../../../types/aliases/room-id";
-import {Room} from "../../../types/room";
-import {RoomService} from "../../../services/room.service";
+import { RoomDeleteComponent } from './room-delete.component';
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
+import { RoomId } from "../../../types/aliases/room-id";
 
 class MockRoomService {
-  public getRoomData(roomId: RoomId): Observable<Room> {
+  getRoomData(roomId: RoomId): Observable<Room> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -28,8 +30,9 @@ class MockRoomService {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: true
-      }
+        autoAcceptBookings: true,
+      };
+
       observer.next(room);
     });
   }
@@ -41,17 +44,19 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
+
       const room: Room = {
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: true
-      }
+        autoAcceptBookings: true,
+      };
+
       observer.next(room);
     });
   }
@@ -73,13 +78,14 @@ describe('RoomDeleteComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoomDeleteComponent);
     component = fixture.componentInstance;
+
     deleteRoomMethod = spyOn(component, 'deleteRoom');
     deleteRoomMethod.calls.reset();
     getRoomDataMethod = spyOn(component, 'getRoomData');
@@ -92,7 +98,6 @@ describe('RoomDeleteComponent method calls', () => {
 
   it('should get room to init page', fakeAsync(() => {
     component.ngOnInit();
-
     tick();
 
     expect(getRoomDataMethod).toHaveBeenCalled();
@@ -117,34 +122,35 @@ describe('RoomDeleteComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoomDeleteComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
 
   it('should get room to init page and set component attributes', fakeAsync(() => {
     component.ngOnInit();
-
     tick();
+
     const room: Room = {
       id: "c7231328-203e-43f5-9ac1-d374d90484ac",
       name: "Test room",
       description: "room to test",
       maxConcurrentBookings: 1,
-      autoAcceptBookings: true
-    }
+      autoAcceptBookings: true,
+    };
+
     expect(component.room).toEqual(room);
     expect(component.roomDeleteForm.controls['name'].value).toEqual(room.name);
     expect(component.roomDeleteForm.controls['description'].value).toEqual(room.description);
     expect(component.roomDeleteForm.controls['maxConcurrentBookings'].value).toEqual(room.maxConcurrentBookings);
     expect(component.roomDeleteForm.controls['autoAcceptBookings'].value).toEqual(room.autoAcceptBookings);
-
   }));
 
   it('should delete an Room', fakeAsync(() => {

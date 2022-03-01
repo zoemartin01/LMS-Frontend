@@ -4,13 +4,13 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { RoomService } from "../../../../services/room.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { RoomTimespan } from "../../../../types/room-timespan";
 import { TimespanId } from "../../../../types/aliases/timespan-id";
 import { RoomId } from "../../../../types/aliases/room-id";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
 import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-timeslot-edit',
@@ -95,7 +95,6 @@ export class TimeslotEditComponent implements OnInit {
 
         this.setDate(this.timeslot.start);
 
-
         this.timeslotEditForm.controls['type'].setValue(this.timeslot.type);
         this.timeslotEditForm.controls['startHour'].setValue(this.timeslot.start.format('HH'));
         this.timeslotEditForm.controls['endHour'].setValue(this.timeslot.end.format('HH'));
@@ -137,6 +136,7 @@ export class TimeslotEditComponent implements OnInit {
    */
   public async editTimeslot(): Promise<void> {
     let changedData: { [key: string]: any} = {};
+
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
       || this.timeslotEditForm.controls['endHour'].dirty) {
       const day = moment(this.date).minutes(0).seconds(0);
@@ -148,10 +148,6 @@ export class TimeslotEditComponent implements OnInit {
         ? moment(day).add(1, 'day').hours(0).toISOString()
         : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
-    console.log(this.timeslot.room.id);
-    console.log(this.timeslot.id);
-    console.log(changedData);
-
 
     this.roomService.editTimeslot(this.timeslot.room.id, this.timeslot.id, changedData).subscribe({
       next: () => {

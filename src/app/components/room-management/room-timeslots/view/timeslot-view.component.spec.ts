@@ -1,17 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {TimeslotViewComponent} from './timeslot-view.component';
-import {TimespanId} from "../../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {RoomTimespanType} from "../../../../types/enums/timespan-type";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RoomTimespan} from "../../../../types/room-timespan";
-import {RoomService} from "../../../../services/room.service";
-import {Room} from "../../../../types/room";
+
+import { TimeslotViewComponent } from './timeslot-view.component';
+
+import { RoomService } from "../../../../services/room.service";
+
+import { RoomTimespan } from "../../../../types/room-timespan";
+import { TimespanId } from "../../../../types/aliases/timespan-id";
+import { RoomTimespanType } from "../../../../types/enums/timespan-type";
+import { Room } from "../../../../types/room";
 
 class MockRoomService {
   public getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
@@ -21,8 +23,8 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -40,9 +42,10 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
@@ -75,7 +78,7 @@ class MockModalService {
           seriesId: null,
           maxStart: null,
           amount: 1,
-        }
+        },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -100,10 +103,9 @@ describe('TimeslotViewComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: RoomService},
-        {provide: NgbModal, useClass: MockModalService},
-
       ],
     }).compileComponents();
 
@@ -112,7 +114,6 @@ describe('TimeslotViewComponent method calls', () => {
     getTimeslotDataMethod = spyOn(component, 'getTimeslotData');
     getTimeslotDataMethod.calls.reset();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -127,7 +128,9 @@ describe('TimeslotViewComponent method calls', () => {
 
   it('should close when timeslot is deleted', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
+
     let closeForm = spyOn(component.closeForm, 'emit');
+
     component.openTimeslotDeletionDialog();
     tick();
 
@@ -138,6 +141,7 @@ describe('TimeslotViewComponent method calls', () => {
 
   it('should update timeslot when timeslot is not deleted but dirty', fakeAsync(() => {
     localStorage.setItem('returnVal', 'updated');
+
     component.openTimeslotDeletionDialog();
     tick();
 
@@ -150,7 +154,6 @@ describe('TimeslotViewComponent method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openTimeslotDeletionDialog();
-
     tick();
 
     expect(getTimeslotDataMethod).not.toHaveBeenCalled();
@@ -177,8 +180,8 @@ describe('TimeslotViewComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
       ],
     }).compileComponents();
 
@@ -217,8 +220,8 @@ describe('TimeslotViewComponent', () => {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: false
-      }
+        autoAcceptBookings: false,
+      },
     };
 
     component.ngOnInit();

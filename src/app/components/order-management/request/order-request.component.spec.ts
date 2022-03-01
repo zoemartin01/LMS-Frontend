@@ -192,11 +192,11 @@ describe('OrderRequestComponent', () => {
         FormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: OrderService, useClass: MockOrderService },
         { provide: InventoryService, useClass: MockInventoryService },
         { provide: AdminService, useClass: MockAdminService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

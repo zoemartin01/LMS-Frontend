@@ -19,8 +19,8 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -36,7 +36,7 @@ class MockAdminService {
           domain: "lacey.biz"
         },
       ]});
-    })
+    });
   }
 }
 
@@ -47,7 +47,9 @@ class MockModalService {
       componentInstance: {
         domain: this.domain,
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(
+        resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
     };
   };
 }
@@ -68,9 +70,9 @@ describe('WhitelistRetailerCreateComponent', () => {
         FormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService }
+        { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -99,6 +101,7 @@ describe('WhitelistRetailerCreateComponent', () => {
 
   it('should throw an error on create whitelist retailer', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters')
     component.domains = [
       "jordan.biz",

@@ -178,11 +178,11 @@ describe('MessageBoxComponent - calls of updatePage', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
         { provide: Router, useValue: router },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -295,11 +295,11 @@ describe('MessageBoxComponent - calls of getters', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
         { provide: NgbModal, useClass: MockModalService },
         { provide: Router, useValue: router },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -388,11 +388,11 @@ describe('MessageBoxComponent - http functions', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
         { provide: UserService, useClass: MockUserService },
         { provide: NgbModal, useClass: MockModalService },
         { provide: Router, useValue: router },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

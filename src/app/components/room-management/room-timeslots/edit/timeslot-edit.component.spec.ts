@@ -1,22 +1,24 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-import {TimeslotEditComponent} from './timeslot-edit.component';
-import {TimespanId} from "../../../../types/aliases/timespan-id";
-import {Observable} from "rxjs";
-import {RoomTimespan} from "../../../../types/room-timespan";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {Room} from "../../../../types/room";
-import {RoomTimespanType} from "../../../../types/enums/timespan-type";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RoomService} from "../../../../services/room.service";
-import {RoomId} from "../../../../types/aliases/room-id";
-import {TimeSlotRecurrence} from "../../../../types/enums/timeslot-recurrence";
+
+import { TimeslotEditComponent } from './timeslot-edit.component';
+
+import { RoomService } from "../../../../services/room.service";
+
+import { RoomTimespan } from "../../../../types/room-timespan";
+import { TimespanId } from "../../../../types/aliases/timespan-id";
+import { RoomTimespanType } from "../../../../types/enums/timespan-type";
+import { Room } from "../../../../types/room";
+import { RoomId } from "../../../../types/aliases/room-id";
+import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
 
 class MockRoomService {
-  public getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
+  getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -42,22 +44,23 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
 
-  public editTimeslot(roomId: RoomId, timeslotId: TimespanId, changedData: object): Observable<RoomTimespan> {
+  editTimeslot(roomId: RoomId, timeslotId: TimespanId, changedData: object): Observable<RoomTimespan> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -75,22 +78,23 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
 
-  public editTimeslotSeries(roomId: RoomId, seriesId: TimespanId, changedData: object): Observable<RoomTimespan> {
+  editTimeslotSeries(roomId: RoomId, seriesId: TimespanId, changedData: object): Observable<RoomTimespan> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -108,9 +112,10 @@ class MockRoomService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: false
-        }
-      }
+          autoAcceptBookings: false,
+        },
+      };
+
       observer.next(timeslot);
     });
   }
@@ -143,9 +148,11 @@ class MockModalService {
           seriesId: null,
           maxStart: null,
           amount: 1,
-        }
+        },
       },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
     };
   };
 }
@@ -168,19 +175,18 @@ describe('TimeslotEditComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: RoomService},
-        {provide: NgbModal, useClass: MockModalService},
-
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeslotEditComponent);
     component = fixture.componentInstance;
+
     getTimeslotDataMethod = spyOn(component, 'getTimeslot');
     getTimeslotDataMethod.calls.reset();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -192,11 +198,14 @@ describe('TimeslotEditComponent method calls', () => {
 
     expect(getTimeslotDataMethod).toHaveBeenCalled();
   }));
+
   it('should handle change of datepicker', fakeAsync(() => {
     component.dateField.year = 2022;
     component.dateField.month = 4;
     component.dateField.day = 8;
+
     let setDateMethod = spyOn(component, 'setDate');
+
     component.handleDatepickerChange();
 
     expect(setDateMethod).toHaveBeenCalledWith(moment(`${component.dateField.year}-${component.dateField.month}-${component.dateField.day}`));
@@ -221,13 +230,14 @@ describe('TimeslotEditComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeslotEditComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
@@ -261,8 +271,8 @@ describe('TimeslotEditComponent', () => {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: false
-      }
+        autoAcceptBookings: false,
+      },
     };
 
     component.ngOnInit();
@@ -282,8 +292,8 @@ describe('TimeslotEditComponent', () => {
     component.timeslot.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
 
     component.setDate(component.timeslot.start);
-
     tick();
+
     expect(component.date).toEqual(moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
     expect(component.dateText).toEqual("14.02.2022");
     expect(component.dateField.day).toEqual(14);
@@ -292,11 +302,14 @@ describe('TimeslotEditComponent', () => {
   }));
 
   it('should edit timeslot', fakeAsync(() => {
-    let closeForm = spyOn(component.closeForm, 'emit');
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
     component.ngOnInit();
     tick();
+
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
     component.timeslotEditForm.controls['endHour'].setValue(17);
@@ -304,29 +317,39 @@ describe('TimeslotEditComponent', () => {
 
     component.editTimeslot();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should edit timeslot series', fakeAsync(() => {
     let closeForm = spyOn(component.closeForm, 'emit');
+
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     component.ngOnInit();
     tick();
+
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
     component.recurringTimeslotEditForm.controls['amount'].setValue(2);
     component.recurringTimeslotEditForm.controls['amount'].markAsDirty();
+
     component.editTimeslotSeries();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should show error message on edit timeslot series error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     component.ngOnInit();
+    tick();
+
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
     component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.monthly);
@@ -334,9 +357,9 @@ describe('TimeslotEditComponent', () => {
     component.recurringTimeslotEditForm.controls['amount'].setValue(2);
     component.recurringTimeslotEditForm.controls['amount'].markAsDirty();
 
-    tick();
     component.editTimeslotSeries();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -344,15 +367,19 @@ describe('TimeslotEditComponent', () => {
 
   it('should show error message on edit timeslot error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     component.ngOnInit();
+    tick();
+
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
 
-    tick();
     component.editTimeslot();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
@@ -360,31 +387,39 @@ describe('TimeslotEditComponent', () => {
 
   it('should handle edit timeslot with end hour 24', fakeAsync(() => {
     let closeForm = spyOn(component.closeForm, 'emit');
+
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
     component.ngOnInit();
+    tick();
+
     component.timeslotEditForm.controls['endHour'].setValue(24);
     component.timeslotEditForm.controls['endHour'].markAsDirty();
 
-    tick();
     component.editTimeslot();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
   it('should handle edit appointment series with end hour 24', fakeAsync(() => {
     let closeForm = spyOn(component.closeForm, 'emit');
+
     component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
     component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
 
     component.ngOnInit();
+    tick();
+
     component.timeslotEditForm.controls['endHour'].setValue(24);
     component.timeslotEditForm.controls['endHour'].markAsDirty();
     component.recurringTimeslotEditForm.controls['amount'].setValue(2);
     component.recurringTimeslotEditForm.controls['amount'].markAsDirty();
-    tick();
+
     component.editTimeslotSeries();
     tick();
+
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 });

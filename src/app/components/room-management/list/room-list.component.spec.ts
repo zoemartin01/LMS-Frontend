@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgxPaginationModule} from "ngx-pagination";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
-import {RoomListComponent} from './room-list.component';
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../types/paged-response";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {PagedList} from "../../../types/paged-list";
-import {Room} from "../../../types/room";
-import {RoomService} from "../../../services/room.service";
+import { RoomListComponent } from './room-list.component';
+
+import { RoomService } from "../../../services/room.service";
+
+import { Room } from "../../../types/room";
+import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockRoomService {
   public getRoomsData(): Observable<PagedResponse<Room>> {
@@ -19,8 +21,8 @@ class MockRoomService {
           error: {
             error: {
               message: 'Unknown Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -66,9 +68,11 @@ class MockModalService {
           description: '',
           maxConcurrentBookings: 1,
           autoAcceptBookings: null,
-        }
+        },
       },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
     };
   };
 }
@@ -90,14 +94,15 @@ describe('Room list method calls', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoomListComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
     getAllRoomsMethod = spyOn(component, 'getRooms');
@@ -110,7 +115,6 @@ describe('Room list method calls', () => {
 
   it('should get all rooms', fakeAsync(() => {
     component.ngOnInit();
-
     tick();
 
     expect(getAllRoomsMethod).toHaveBeenCalled();
@@ -120,7 +124,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'deleted');
 
     component.openRoomDeletionDialog("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(getAllRoomsMethod).toHaveBeenCalled();
@@ -132,7 +135,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openRoomDeletionDialog("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(getAllRoomsMethod).not.toHaveBeenCalled();
@@ -144,7 +146,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'updated');
 
     component.openRoomEditForm("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(getAllRoomsMethod).toHaveBeenCalled();
@@ -156,7 +157,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openRoomEditForm("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(getAllRoomsMethod).not.toHaveBeenCalled();
@@ -168,7 +168,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'created');
 
     component.openRoomCreationForm();
-
     tick();
 
     expect(getAllRoomsMethod).toHaveBeenCalled();
@@ -180,7 +179,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openRoomCreationForm();
-
     tick();
 
     expect(getAllRoomsMethod).not.toHaveBeenCalled();
@@ -192,7 +190,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'updated');
 
     component.openRoomView("c2349c343c40-c918c-c319c");
-
     tick();
 
     expect(getAllRoomsMethod).toHaveBeenCalled();
@@ -204,7 +201,6 @@ describe('Room list method calls', () => {
     localStorage.setItem('returnVal', 'aborted');
 
     component.openRoomView("c2349c343c40-c918c-c319c"   );
-
     tick();
 
     expect(getAllRoomsMethod).not.toHaveBeenCalled();
@@ -229,14 +225,15 @@ describe('RoomListComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoomListComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
@@ -245,7 +242,6 @@ describe('RoomListComponent method calls', () => {
     component.rooms.pageSize = 10;
 
     component.getRooms();
-
     tick();
 
     let pagedListRooms = new PagedList<Room>();
@@ -282,7 +278,6 @@ describe('RoomListComponent method calls', () => {
     localStorage.setItem('throwError', 'true');
 
     component.getRooms();
-
     tick();
 
     expect(consoleError).toHaveBeenCalled();
