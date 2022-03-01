@@ -154,7 +154,7 @@ describe('AdminService', () => {
   });
 
   it('should get all pending users', () => {
-    service.getPendingUsers(0, 0).subscribe(
+    service.getPendingUsers().subscribe(
       res => {
         expect(res).toEqual(
           {total: 2, data: [
@@ -212,7 +212,7 @@ describe('AdminService', () => {
   });
 
   it('should get all accepted users', () => {
-    service.getAcceptedUsers(0,0).subscribe(
+    service.getAcceptedUsers().subscribe(
       res => {
         expect(res).toEqual(
           {total: 2, data: [
@@ -438,7 +438,7 @@ describe('AdminService', () => {
   });
 
   it('should get all whitelist retailers', () => {
-    service.getWhitelistRetailers(0,0).subscribe(
+    service.getWhitelistRetailers().subscribe(
       res => {
         expect(res).toEqual(
           {total: 2, data: [
