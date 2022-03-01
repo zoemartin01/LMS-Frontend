@@ -97,7 +97,7 @@ export class TimeslotCreateComponent implements OnInit {
         this.roomService.createTimeslot(
           this.room,
           moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 0
+          endHour === 24
             ? moment(day).add(1, 'day').hours(0)
             : moment(day).hours(moment(endHour, 'HH:mm').hours()),
           +this.timeslotCreateForm.controls['type'].value
@@ -113,7 +113,7 @@ export class TimeslotCreateComponent implements OnInit {
         this.roomService.createTimeslotSeries(
           this.room,
           moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 0
+          endHour === 24
             ? moment(day).add(1, 'day').hours(0)
             : moment(day).hours(moment(endHour, 'HH:mm').hours()),
           +this.timeslotCreateForm.controls['type'].value,
