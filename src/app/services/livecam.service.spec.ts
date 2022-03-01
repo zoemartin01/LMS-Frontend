@@ -278,4 +278,10 @@ describe('LivecamService', () => {
           },
         ]});
   });
+
+  it('should get livestream feed path', () => {
+    expect(service.getLiveStreamFeedPath())
+      .toBe(`ws://localhost:3000/api/v1/livecam/stream?token=${localStorage
+        .getItem(environment.storageKeys.accessToken)}`);
+  });
 });

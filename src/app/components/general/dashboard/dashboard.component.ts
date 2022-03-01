@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { WINDOW } from '../../../providers/window.providers';
-import { environment } from '../../../../environments/environment';
 
 import { AuthService } from "../../../services/auth.service";
+import { MessagingService } from "../../../services/messaging.service";
 import { UserService } from "../../../services/user.service";
 
 import { User } from "../../../types/user";
@@ -38,13 +38,15 @@ export class DashboardComponent implements OnInit {
    * @constructor
    * @param {AuthService} authService service providing authentication functionalities
    * @param {UserService} userService service providing user functionalities
+   * @param {MessagingService} messagingService service providing messaging functionalities
    * @param {Window} window window provider
    */
   constructor(
     public authService: AuthService,
     private userService: UserService,
+    private messagingService: MessagingService,
     @Inject(WINDOW) private window: Window) {
-    this.websocket = new WebSocket(this.unreadMessagesWebSocketPath());
+    this.websocket = new WebSocket(messagingService.unreadMessagesWebSocketPath());
   }
 
   /**
@@ -61,16 +63,6 @@ export class DashboardComponent implements OnInit {
     };
 
     this.getUserDetails();
-  }
-
-  private unreadMessagesWebSocketPath(): string {
-    const isSSL = this.window.location.protocol === 'https:';
-    const protocol = isSSL ? 'wss:' : 'ws:';
-    const host = environment.production
-      ? this.window.location.hostname + environment.baseUrl
-      : environment.baseUrl.replace(/http(s)?:\/\//g, '');
-    const token = localStorage.getItem('accessToken');
-    return `${protocol}//${host}${environment.apiRoutes.messages.registerMessageWebsocket}?token=${token}`;
   }
 
   /**

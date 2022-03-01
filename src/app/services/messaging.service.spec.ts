@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { environment } from "../../environments/environment";
 
+import { WINDOW_PROVIDERS } from "../providers/window.providers";
+
 import { MessagingService } from './messaging.service';
 
 describe('MessagingService', () => {
@@ -15,6 +17,7 @@ describe('MessagingService', () => {
       ],
       providers:  [
         MessagingService,
+        WINDOW_PROVIDERS,
       ],
     });
 
