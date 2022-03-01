@@ -4,13 +4,13 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { RoomService } from "../../../../services/room.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { RoomTimespan } from "../../../../types/room-timespan";
 import { TimespanId } from "../../../../types/aliases/timespan-id";
 import { RoomId } from "../../../../types/aliases/room-id";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
 import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-timeslot-edit',
@@ -94,10 +94,6 @@ export class TimeslotEditComponent implements OnInit {
         this.timeslot.end = moment(this.timeslot.end)
 
         this.setDate(this.timeslot.start);
-        this.timeslot = res;
-
-        this.timeslot.start = moment(this.timeslot.start);
-        this.timeslot.end = moment(this.timeslot.end);
 
         this.timeslotEditForm.controls['type'].setValue(this.timeslot.type);
         this.timeslotEditForm.controls['startHour'].setValue(this.timeslot.start.format('HH'));

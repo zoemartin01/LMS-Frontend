@@ -976,8 +976,6 @@ describe('AppointmentService', () => {
   });
 
   it('should create an appointment series', () => {
-    console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
-    console.log(moment("2022-02-15T08:00:00.000Z", 'YYYY-MM-DDTHH:mm').toISOString(true));
     service.createAppointmentSeries({
         id: "c7231328-203e-43f5-9ac1-d374d90484ac",
         name: "Test room",
@@ -1051,8 +1049,7 @@ describe('AppointmentService', () => {
           }]
         );
       }
-    )
-    ;
+    );
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`);
 

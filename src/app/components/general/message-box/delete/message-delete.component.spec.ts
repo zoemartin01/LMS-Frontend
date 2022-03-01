@@ -43,8 +43,8 @@ describe('MessageDeleteComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: MessagingService, useClass: MockMessagingService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

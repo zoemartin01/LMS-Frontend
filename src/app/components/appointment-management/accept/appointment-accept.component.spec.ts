@@ -112,8 +112,8 @@ describe('AppointmentAcceptComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -181,8 +181,8 @@ describe('AppointmentAcceptComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

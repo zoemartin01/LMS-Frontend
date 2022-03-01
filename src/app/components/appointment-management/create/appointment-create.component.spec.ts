@@ -79,8 +79,8 @@ describe('AppointmentCreateComponent method calls', () => {
         NgbModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -166,8 +166,8 @@ describe('AppointmentCreateComponent', () => {
         NgbModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

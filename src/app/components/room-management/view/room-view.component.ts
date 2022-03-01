@@ -52,7 +52,7 @@ export class RoomViewComponent implements OnInit {
   constructor(
     public roomService: RoomService,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal
   ) {
@@ -111,7 +111,7 @@ export class RoomViewComponent implements OnInit {
    */
   public openRoomDeletionDialog(): void {
     const modal = this.modalService.open(RoomDeleteComponent);
-    modal.componentInstance.user.id = this.room.id;
+    modal.componentInstance.room.id = this.room.id;
     modal.result.then((result) => {
       if (result === 'deleted') {
         this.activeModal.close('dirty');

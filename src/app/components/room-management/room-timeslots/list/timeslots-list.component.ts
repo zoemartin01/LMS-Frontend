@@ -52,7 +52,7 @@ export class TimeslotsListComponent implements OnInit {
     public roomService: RoomService,
     public authService: AuthService,
     public userService: UserService,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private modalService: NgbModal
   ) {
   }
@@ -149,7 +149,7 @@ export class TimeslotsListComponent implements OnInit {
   }
 
   /**
-   * Gets all rooms
+   * Changes room
    */
   public changeRoom(roomId: string): void {
     this.room.id = roomId;

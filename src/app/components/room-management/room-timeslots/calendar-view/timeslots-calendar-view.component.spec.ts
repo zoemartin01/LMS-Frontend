@@ -289,9 +289,9 @@ describe('TimeslotsCalendarViewComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: ActivatedRoute, useValue: mockActivatedRoute},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();

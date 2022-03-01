@@ -109,8 +109,8 @@ describe('AppointmentDeleteComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -155,8 +155,8 @@ describe('AppointmentDeleteComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

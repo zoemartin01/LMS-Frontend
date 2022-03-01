@@ -321,9 +321,9 @@ describe('PersonalAppointmentListComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -436,9 +436,9 @@ describe('PersonalAppointmentListComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AppointmentService, useClass: MockAppointmentService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
