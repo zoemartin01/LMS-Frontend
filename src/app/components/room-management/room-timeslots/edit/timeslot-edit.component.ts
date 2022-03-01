@@ -94,10 +94,7 @@ export class TimeslotEditComponent implements OnInit {
         this.timeslot.end = moment(this.timeslot.end)
 
         this.setDate(this.timeslot.start);
-        this.timeslot = res;
 
-        this.timeslot.start = moment(this.timeslot.start);
-        this.timeslot.end = moment(this.timeslot.end);
 
         this.timeslotEditForm.controls['type'].setValue(this.timeslot.type);
         this.timeslotEditForm.controls['startHour'].setValue(this.timeslot.start.format('HH'));
@@ -140,7 +137,6 @@ export class TimeslotEditComponent implements OnInit {
    */
   public async editTimeslot(): Promise<void> {
     let changedData: { [key: string]: any} = {};
-
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
       || this.timeslotEditForm.controls['endHour'].dirty) {
       const day = moment(this.date).minutes(0).seconds(0);
@@ -152,6 +148,10 @@ export class TimeslotEditComponent implements OnInit {
         ? moment(day).add(1, 'day').hours(0).toISOString()
         : moment(day).hours(moment(endHour, 'HH:mm').hours()).toISOString();
     }
+    console.log(this.timeslot.room.id);
+    console.log(this.timeslot.id);
+    console.log(changedData);
+
 
     this.roomService.editTimeslot(this.timeslot.room.id, this.timeslot.id, changedData).subscribe({
       next: () => {

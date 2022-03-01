@@ -235,5 +235,4 @@ describe('TimeslotViewComponent', () => {
     expect(component.timeslotViewForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.timeslotViewForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));
-
 });
