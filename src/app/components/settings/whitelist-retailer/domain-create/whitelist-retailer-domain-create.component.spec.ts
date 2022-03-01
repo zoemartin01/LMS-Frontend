@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { WhitelistRetailerDomainCreateComponent } from './whitelist-retailer-domain-create.component';
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {Observable} from "rxjs";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
-import {AdminService} from "../../../../services/admin.service";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -24,7 +26,8 @@ class MockAdminService {
         });
       }
 
-      observer.next({id: "retailerExampleID",
+      observer.next({
+        id: "retailerExampleID",
         name: "McGlynn and Sons and daughters",
         domains: [
           {
@@ -35,9 +38,10 @@ class MockAdminService {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
             domain: "lacey.biz"
           },
-        ]});
+        ],
+      });
     });
-    }
+  }
 
   addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: string): Observable<WhitelistRetailerDomain> {
     return new Observable((observer) => {
@@ -52,12 +56,14 @@ class MockAdminService {
       }
 
       observer.next(
-        {id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-        domain: "louisa.org"}
+        {
+          id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
+          domain: "louisa.org",
+        },
       );
     });
-    }
   }
+}
 
 describe('WhitelistRetailerDomainCreateComponent', () => {
   let component: WhitelistRetailerDomainCreateComponent;
@@ -75,8 +81,8 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
         FormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { WhitelistRetailerDomainEditComponent } from './whitelist-retailer-domain-edit.component';
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {Observable} from "rxjs";
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {AdminService} from "../../../../services/admin.service";
-import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
+
+import { AdminService } from "../../../../services/admin.service";
+
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
+import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -24,7 +26,8 @@ class MockAdminService {
         });
       }
 
-      observer.next({id: "retailerExampleID",
+      observer.next({
+        id: "retailerExampleID",
         name: "McGlynn and Sons and daughters",
         domains: [
           {
@@ -35,11 +38,15 @@ class MockAdminService {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
             domain: "lacey.biz"
           },
-        ]});
+        ],
+      });
     });
   }
 
-  editDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId, changedData: object): Observable<WhitelistRetailerDomain> {
+  editDomainOfWhitelistRetailer(
+    whitelistRetailerId: WhitelistRetailerId,
+    whitelistRetailerDomainId: WhitelistRetailerDomainId,
+    changedData: object): Observable<WhitelistRetailerDomain> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -54,7 +61,7 @@ class MockAdminService {
       observer.next();
     });
   }
-  }
+}
 
 describe('WhitelistRetailerDomainEditComponent', () => {
   let component: WhitelistRetailerDomainEditComponent;
@@ -70,8 +77,8 @@ describe('WhitelistRetailerDomainEditComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -97,7 +104,8 @@ describe('WhitelistRetailerDomainEditComponent', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.whitelistRetailer).toEqual({id: "retailerExampleID",
+    expect(component.whitelistRetailer).toEqual({
+      id: "retailerExampleID",
       name: "McGlynn and Sons and daughters",
       domains: [
         {
@@ -108,11 +116,13 @@ describe('WhitelistRetailerDomainEditComponent', () => {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
           domain: "lacey.biz"
         },
-      ]});
+      ],
+    });
     expect(component.domainEditForm.controls['domain'].value).toEqual('jordan.biz')
   }));
 
-  it('should not try to get whitelist retailer data when whitelist retailer id is null', fakeAsync(() => {
+  it('should not try to get whitelist retailer data when whitelist retailer id is null',
+    fakeAsync(() => {
     expect(component.whitelistRetailer).toEqual({
       id: null,
       name: '',
@@ -170,7 +180,8 @@ describe('WhitelistRetailerDomainEditComponent', () => {
     expect(modalClose).toHaveBeenCalledWith('edited');
   }));
 
-  it('should return domain if domain has to be added to a not yet existing whitelist retailer', fakeAsync(() => {
+  it('should return domain if domain has to be added to a not yet existing whitelist retailer',
+    fakeAsync(() => {
     component.domainEditForm.controls['domain'].setValue('russianwarshipgofuckyourself.club');
 
     expect(component.whitelistRetailer).toEqual({
