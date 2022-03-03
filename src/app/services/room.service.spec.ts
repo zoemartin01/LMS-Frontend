@@ -5,10 +5,6 @@ import * as moment from "moment";
 import { environment } from "../../environments/environment";
 
 import {RoomService} from './room.service';
-import {environment} from "../../environments/environment";
-import {ParseArgumentException} from "@angular/cli/models/parser";
-import * as moment from "moment";
-import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
 
 import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
 
