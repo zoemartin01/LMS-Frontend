@@ -8,6 +8,7 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-user-settings',
@@ -40,10 +41,11 @@ export class UserSettingsComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {UserService} userService service providing user functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public userService: UserService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
+  constructor(public userService: UserService, public utilityService: UtilityService, public activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
   /**
@@ -86,26 +88,13 @@ export class UserSettingsComponent implements OnInit {
    * Edits user settings
    */
   public async editUserSettings(): Promise<void> {
-    if (this.userSettingsForm.controls['password'].value != "") {
-      this.userService.editUserData(
-        {
-          notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value,
-          password: this.userSettingsForm.controls['password'].value,
-        }
-      ).subscribe({
-        next: () => {
-          this.activeModal.close('edited');
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      });
-      return;
+    let changedData = this.utilityService.getDirtyValues(this.userSettingsForm);
+
+    if (this.userSettingsForm.controls['notificationChannel'].dirty) {
+      changedData['notificationChannel'] = +changedData['notificationChannel'];
     }
 
-    this.userService.editUserData(
-      {notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value}
-    ).subscribe({
+    this.userService.editUserData(changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
