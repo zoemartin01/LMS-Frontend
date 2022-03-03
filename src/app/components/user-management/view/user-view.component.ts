@@ -45,7 +45,7 @@ export class UserViewComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -117,6 +117,7 @@ export class UserViewComponent implements OnInit {
         return;
       }
 
+      //unreachable code? either deleted or aborted => delete this case?
       if (result !== 'aborted') {
         this.getUserData();
         this.dirty = true;
