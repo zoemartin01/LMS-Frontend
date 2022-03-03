@@ -1,11 +1,16 @@
-import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { ParseArgumentException } from "@angular/cli/models/parser";
+import * as moment from "moment";
+import { environment } from "../../environments/environment";
 
 import {RoomService} from './room.service';
 import {environment} from "../../environments/environment";
 import {ParseArgumentException} from "@angular/cli/models/parser";
 import * as moment from "moment";
 import {TimeSlotRecurrence} from "../types/enums/timeslot-recurrence";
+
+import { TimeSlotRecurrence } from "../types/enums/timeslot-recurrence";
 
 describe('RoomService', () => {
   let service: RoomService;
@@ -17,6 +22,7 @@ describe('RoomService', () => {
         HttpClientTestingModule,
       ],
     });
+
     service = TestBed.inject(RoomService);
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -52,7 +58,7 @@ describe('RoomService', () => {
               maxConcurrentBookings: 3,
               autoAcceptBookings: true
             },
-          ]
+          ],
         });
       }
     );
@@ -86,7 +92,7 @@ describe('RoomService', () => {
           maxConcurrentBookings: 3,
           autoAcceptBookings: true
         },
-      ]
+      ],
     });
   });
 
@@ -302,7 +308,6 @@ describe('RoomService', () => {
 
     expect(mockRequest.request.method).toBe('POST');
 
-
     mockRequest.flush({
       id: "c7231328-203e-43f5-9ac1-d374d90484ac",
       name: "Test room",
@@ -333,7 +338,6 @@ describe('RoomService', () => {
       .replace(':id', "c7231328-203e-43f5-9ac1-d374d90484ac")}`);
 
     expect(mockRequest.request.method).toBe('PATCH');
-
 
     mockRequest.flush({
       id: "c7231328-203e-43f5-9ac1-d374d90484ac",
@@ -1371,7 +1375,6 @@ describe('RoomService', () => {
   it('should delete timeslot', () => {
     service.deleteTimeslot("c7231328-203e-43f5-9ac1-d374d90484ac", "8e762183-dcb3-4018-b02d-fb5c3c46a9f8").subscribe();
 
-
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':roomId', "c7231328-203e-43f5-9ac1-d374d90484ac")
       .replace(':timeslotId', "8e762183-dcb3-4018-b02d-fb5c3c46a9f8")}`);
@@ -1396,7 +1399,6 @@ describe('RoomService', () => {
 
   it('should delete timeslot series', () => {
     service.deleteTimeslotSeries("c7231328-203e-43f5-9ac1-d374d90484ac", "5bbb467a-4539-4d4a-9b19-7fe0341be0ef").subscribe();
-
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslotSeries
       .replace(':roomId', "c7231328-203e-43f5-9ac1-d374d90484ac")
