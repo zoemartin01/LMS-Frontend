@@ -13,6 +13,7 @@ import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -43,9 +44,10 @@ export class GlobalSettingsComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, private modalService: NgbModal) {
+  constructor(public adminService: AdminService, public utilityService : UtilityService, private modalService: NgbModal) {
   }
 
   /**
@@ -117,6 +119,14 @@ export class GlobalSettingsComponent implements OnInit {
    */
   public async editGlobalSettings(): Promise<void> {
     if (this.globalSettingsForm.valid) {
+/*      let changedData = this.utilityService.getDirtyValues(this.globalSettingsForm);
+
+      if (this.globalSettingsForm.controls['recording.auto_delete'].dirty) {
+        changedData['recording.auto_delete'] = +changedData['recording.auto_delete']* 86400000;
+      }
+      if (this.globalSettingsForm.controls['user.max_recordings'].dirty) {
+        changedData['user.max_recordings'] = +changedData['user.max_recordings'];
+      }*/
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
         if (this.globalSettingsForm.controls[key].value != "") {
