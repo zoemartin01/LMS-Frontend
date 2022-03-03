@@ -65,20 +65,19 @@ export class LivecamScheduleComponent {
       } else if (bitrate_unit === 'mbps') {
         bitrate = bitrate * 1000 * 1000;
       }
-
       this.livecamService.scheduleRecording(start, end, resolution, bitrate).subscribe({
         next: () => {
           this.activeModal.close('scheduled');
         },
         error: error => {
-          if (error.error.message) {
+          if (error.message) {
             this.scheduleError = true;
-            this.scheduleErrorMessage = error.error.message;
+            this.scheduleErrorMessage = error.message;
           } else {
             this.scheduleError = true;
             this.scheduleErrorMessage = 'Invalid Input:';
 
-            error.error.forEach((field: any) => {
+            error.forEach((field: any) => {
               const constraints = field.constraints;
               Object.keys(constraints).forEach((key: any) => {
                 this.scheduleErrorMessage += `<br> - ${constraints[key]}`

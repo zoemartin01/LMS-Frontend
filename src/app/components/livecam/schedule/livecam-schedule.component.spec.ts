@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs';
 import * as moment from 'moment';
 
-import { LivecamScheduleComponent } from './livecam-schedule.component';
+import {LivecamScheduleComponent} from './livecam-schedule.component';
 
-import { LivecamService } from 'src/app/services/livecam.service';
+import {LivecamService} from 'src/app/services/livecam.service';
 
-import { Recording } from 'src/app/types/recording';
-import { VideoResolution } from 'src/app/types/enums/video-resolution';
-import { User } from 'src/app/types/user';
-import { UserRole } from 'src/app/types/enums/user-role';
+import {Recording} from 'src/app/types/recording';
+import {VideoResolution} from 'src/app/types/enums/video-resolution';
+import {User} from 'src/app/types/user';
+import {UserRole} from 'src/app/types/enums/user-role';
 
 class MockLivecamService {
   public scheduleRecording(
@@ -23,7 +23,7 @@ class MockLivecamService {
     bitrate: number
   ): Observable<Recording> {
     return new Observable((observer) => {
-      if (
+      /*if (
         start.toISOString() != '2019-01-01T00:00:00.000Z' ||
         end.toISOString() != '2019-01-02T00:00:00.000Z' ||
         resolution != VideoResolution.V1080 ||
@@ -31,9 +31,14 @@ class MockLivecamService {
       ) {
         observer.error({
           error: {
-            error: {
-              message: 'Invalid input parameters.',
-            },
+            message: 'Invalid input parameters.',
+          },
+        });
+      }*/
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error({
+          error: {
+            message: 'Unknown Error.',
           },
         });
       }
@@ -71,7 +76,7 @@ describe('LivecamScheduleComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: LivecamService, useClass: MockLivecamService },
+        {provide: LivecamService, useClass: MockLivecamService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -89,9 +94,8 @@ describe('LivecamScheduleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: fix errors
-
   it('should schedule recording with valid parameters', (done: DoneFn) => {
+    let closeModal = spyOn(component.activeModal, 'close');
     component.recordingScheduleForm.controls['start'].setValue('2019-01-01T00:00');
     component.recordingScheduleForm.controls['end'].setValue('2019-01-02T00:00');
     component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
@@ -101,13 +105,52 @@ describe('LivecamScheduleComponent', () => {
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      // expect(component.scheduleError).toBeFalse();
-      // expect(component.scheduleErrorMessage).toBe('');
+      expect(component.scheduleError).toBeFalse();
+      expect(component.scheduleErrorMessage).toBe('');
+      expect(closeModal).toHaveBeenCalledWith('scheduled')
+      done();
+    });
+  });
+
+  it('should schedule recording with valid parameters and bitrate unit kbps', (done: DoneFn) => {
+    let closeModal = spyOn(component.activeModal, 'close');
+    component.recordingScheduleForm.controls['start'].setValue('2019-01-01T00:00');
+    component.recordingScheduleForm.controls['end'].setValue('2019-01-02T00:00');
+    component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
+    component.recordingScheduleForm.controls['bitrate'].setValue(100);
+    component.recordingScheduleForm.controls['bitrate_unit'].setValue('kbps');
+
+    expect(component.recordingScheduleForm.valid).toBeTrue();
+
+    component.scheduleRecording().then(() => {
+      expect(component.scheduleError).toBeFalse();
+      expect(component.scheduleErrorMessage).toBe('');
+      expect(closeModal).toHaveBeenCalledWith('scheduled')
+      done();
+    });
+  });
+
+  it('should schedule recording with valid parameters and bitrate unit mbps', (done: DoneFn) => {
+    let closeModal = spyOn(component.activeModal, 'close');
+    component.recordingScheduleForm.controls['start'].setValue('2019-01-01T00:00');
+    component.recordingScheduleForm.controls['end'].setValue('2019-01-02T00:00');
+    component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
+    component.recordingScheduleForm.controls['bitrate'].setValue(100);
+    component.recordingScheduleForm.controls['bitrate_unit'].setValue('mbps');
+
+    expect(component.recordingScheduleForm.valid).toBeTrue();
+
+    component.scheduleRecording().then(() => {
+      expect(component.scheduleError).toBeFalse();
+      expect(component.scheduleErrorMessage).toBe('');
+      expect(closeModal).toHaveBeenCalledWith('scheduled')
       done();
     });
   });
 
   it('should handle schedule recording error with invalid parameters', (done: DoneFn) => {
+    localStorage.setItem('throwError', 'true');
+
     component.recordingScheduleForm.controls['start'].setValue('2019-01-02T00:00');
     component.recordingScheduleForm.controls['end'].setValue('2019-01-03T00:00');
     component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
@@ -117,12 +160,13 @@ describe('LivecamScheduleComponent', () => {
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      // expect(component.scheduleError).toBeTrue();
-      // expect(component.scheduleErrorMessage).toBe(
-      //   'Invalid form values'
-      // );
+      expect(component.scheduleError).toBeTrue();
+      expect(component.scheduleErrorMessage).toBe(
+        'Invalid Input:'
+      );
       done();
     });
+    localStorage.setItem('throwError', 'false');
   });
 
   it('should show error when form is invalid', (done: DoneFn) => {
@@ -136,9 +180,9 @@ describe('LivecamScheduleComponent', () => {
 
     component.scheduleRecording().then(() => {
       expect(component.scheduleError).toBeTrue();
-      // expect(component.scheduleErrorMessage).toBe(
-      //   'Invalid form values'
-      // );
+      expect(component.scheduleErrorMessage).toBe(
+         'Invalid form values'
+       );
       done();
     });
   });
