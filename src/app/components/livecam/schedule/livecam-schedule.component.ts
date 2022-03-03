@@ -77,14 +77,13 @@ export class LivecamScheduleComponent {
             this.scheduleError = true;
             this.scheduleErrorMessage = 'Invalid Input:';
 
-            error.forEach((field: any) => {
+            /*error.forEach((field: any) => {
               const constraints = field.constraints;
               Object.keys(constraints).forEach((key: any) => {
                 this.scheduleErrorMessage += `<br> - ${constraints[key]}`
               });
-            });
+            });*/
           }
-          console.error(error);
         }
       });
     } else {
