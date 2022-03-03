@@ -183,7 +183,7 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['lastName'].setValue('Putin');
     component.userEditForm.controls['lastName'].markAsDirty();
     component.userEditForm.controls['email'].setValue('duckputin@test.com');
-    component.userEditForm.controls['firstName'].markAsDirty();
+    component.userEditForm.controls['email'].markAsDirty();
     component.userEditForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userEditForm.controls['password'].markAsDirty();
     component.userEditForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
@@ -212,7 +212,7 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['lastName'].setValue('Putin');
     component.userEditForm.controls['lastName'].markAsDirty();
     component.userEditForm.controls['email'].setValue('duckputin@test.com');
-    component.userEditForm.controls['firstName'].markAsDirty();
+    component.userEditForm.controls['email'].markAsDirty();
     component.userEditForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userEditForm.controls['password'].markAsDirty();
     component.userEditForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
