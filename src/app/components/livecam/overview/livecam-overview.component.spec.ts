@@ -3,14 +3,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {NgxPaginationModule} from "ngx-pagination";
 
-import {WINDOW_PROVIDERS} from "../../../providers/window.providers";
-
 import {LivecamOverviewComponent} from './livecam-overview.component';
 import {Observable} from "rxjs";
 import {PagedResponse} from "../../../types/paged-response";
-import {Room} from "../../../types/room";
-import {RoomListComponent} from "../../room-management/list/room-list.component";
-import {RoomService} from "../../../services/room.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PagedList} from "../../../types/paged-list";
 import {Recording} from "../../../types/recording";
