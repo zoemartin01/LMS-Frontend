@@ -30,7 +30,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
     name: '',
     domains: [],
   }
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -97,6 +97,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
         return;
       }
 
+      // unreachable code? either deleted (see above) or aborted? => delete this case?
       if (result !== 'aborted') {
         this.getWhitelistRetailerData();
         this.dirty = true;
