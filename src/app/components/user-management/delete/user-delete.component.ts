@@ -25,8 +25,6 @@ export class UserDeleteComponent implements OnInit {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl(''),
-    password: new FormControl(''),
-    password_confirmation: new FormControl(''),
     role: new FormControl(''),
     notificationChannel: new FormControl(''),
   });
