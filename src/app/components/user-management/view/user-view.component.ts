@@ -43,7 +43,7 @@ export class UserViewComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -113,11 +113,6 @@ export class UserViewComponent implements OnInit {
       if (result === 'deleted') {
         this.activeModal.close('dirty');
         return;
-      }
-
-      if (result !== 'aborted') {
-        this.getUserData();
-        this.dirty = true;
       }
     });
   }
