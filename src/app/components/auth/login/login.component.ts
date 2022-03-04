@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { WINDOW } from '../../../providers/window.providers';
 
 import { AuthService } from "../../../services/auth.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { UserRole } from "../../../types/enums/user-role";
 
@@ -26,19 +27,20 @@ export class LoginComponent {
       Validators.required,
     ]),
   });
-  loginError: boolean = false;
-  loginErrorMessage: string = '';
+  errorMessage: string = '';
   activeDirectory: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {AuthService} authService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {Router} router router providing navigation
    * @param {Window} window window provider
    */
   constructor(
     private authService: AuthService,
+    public utilityService: UtilityService,
     private router: Router,
     @Inject(WINDOW) private window: Window) {
   }
@@ -48,6 +50,8 @@ export class LoginComponent {
    */
   public async login(): Promise<void> {
     if (this.loginForm.valid) {
+      this.errorMessage = '';
+
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password, this.activeDirectory).subscribe({
         next: (res: { accessToken: string, refreshToken: string, userId: string, role: string }) => {
           this.authService.setAccessToken(res.accessToken);
@@ -58,14 +62,11 @@ export class LoginComponent {
           this.router.navigateByUrl('/dashboard').then(() => this.window.location.reload());
         },
         error: error => {
-          this.loginError = true;
-          this.loginErrorMessage = error.error.message;
-          console.error('There was an error!', error);
+          this.errorMessage = error.error.message;
         }
       })
     } else {
-      this.loginError = true;
-      this.loginErrorMessage = 'Invalid form values';
+      this.errorMessage = 'Invalid form values';
     }
   }
 }

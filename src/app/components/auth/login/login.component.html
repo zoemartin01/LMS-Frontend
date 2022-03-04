@@ -32,9 +32,9 @@
                  formControlName="password">
         </div>
         <br>
-        <div class="alert alert-danger" role="alert" *ngIf="loginError">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
           <b>Login failed:</b><br>
-          {{ loginErrorMessage }}
+          {{ errorMessage }}
         </div>
         <div class="row">
           <div class="col text-center">
