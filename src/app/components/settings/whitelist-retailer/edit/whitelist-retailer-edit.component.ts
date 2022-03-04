@@ -20,8 +20,6 @@ import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-r
 
 /**
  * Component for whitelist retailer edit popup
- *
- *
  */
 export class WhitelistRetailerEditComponent implements OnInit {
   public retailerEditForm: FormGroup = new FormGroup({
