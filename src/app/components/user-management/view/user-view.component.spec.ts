@@ -1,16 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { UserViewComponent } from './user-view.component';
-import {UserId} from "../../../types/aliases/user-id";
-import {Observable} from "rxjs";
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {Appointment} from "../../../types/appointment";
-import {AdminService} from "../../../services/admin.service";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -20,8 +21,8 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -76,9 +77,9 @@ describe('UserViewComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 

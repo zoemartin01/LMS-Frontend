@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { UserDeclineComponent } from './user-decline.component';
-import {UserId} from "../../../types/aliases/user-id";
-import {Observable} from "rxjs";
-import {User} from "../../../types/user";
-import {AdminService} from "../../../services/admin.service";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -19,8 +21,8 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -32,7 +34,7 @@ class MockAdminService {
         role: 1,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -44,8 +46,8 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -68,8 +70,8 @@ describe('UserDeclineComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -118,6 +120,7 @@ describe('UserDeclineComponent', () => {
 
   it('should throw an error on init page', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+
     expect(component.user).toEqual({
       id: null,
       firstName: "",

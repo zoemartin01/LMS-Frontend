@@ -1,16 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { UserSettingsComponent } from './user-settings.component';
-import {UserId} from "../../../types/aliases/user-id";
-import {Observable} from "rxjs";
-import {User} from "../../../types/user";
-import {UserService} from "../../../services/user.service";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+
+import { UserService } from "../../../services/user.service";
+
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockUserService {
   public getUserDetails(): Observable<User> {
@@ -20,8 +21,8 @@ class MockUserService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -45,8 +46,8 @@ class MockUserService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -72,8 +73,10 @@ class MockModalService {
       componentInstance: {
         user: this.user
       },
-      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
-    }
+      result: new Promise<string>(
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
+      ),
+    };
   }
 }
 
@@ -93,9 +96,9 @@ describe('UserSettingsComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: UserService, useClass: MockUserService },
         { provide: NgbModal, useClass: MockModalService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -206,7 +209,6 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
 
-
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editUserSettings();
@@ -223,7 +225,6 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
-
 
     const modalClose = spyOn(component.activeModal, 'close');
     const consoleError = spyOn(console, 'error');
@@ -244,7 +245,6 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password_confirmation'].setValue('');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
 
-
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editUserSettings();
@@ -261,7 +261,6 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password'].setValue('');
     component.userSettingsForm.controls['password_confirmation'].setValue('');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
-
 
     const modalClose = spyOn(component.activeModal, 'close');
     const consoleError = spyOn(console, 'error');

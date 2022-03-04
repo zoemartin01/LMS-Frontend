@@ -114,12 +114,6 @@ export class UserViewComponent implements OnInit {
         this.activeModal.close('dirty');
         return;
       }
-
-      //unreachable code? either deleted or aborted => delete this case?
-      if (result !== 'aborted') {
-        this.getUserData();
-        this.dirty = true;
-      }
     });
   }
 }

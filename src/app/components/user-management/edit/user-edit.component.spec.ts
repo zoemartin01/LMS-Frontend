@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
 import { UserEditComponent } from './user-edit.component';
-import {UserId} from "../../../types/aliases/user-id";
-import {Observable} from "rxjs";
-import {User} from "../../../types/user";
-import {AdminService} from "../../../services/admin.service";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -44,8 +46,8 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
 
@@ -69,8 +71,8 @@ describe('UserEditComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        NgbActiveModal,
         { provide: AdminService, useClass: MockAdminService },
+        NgbActiveModal,
       ],
     }).compileComponents();
 
@@ -114,7 +116,7 @@ describe('UserEditComponent', () => {
       role: 2,
       emailVerification: true,
       isActiveDirectory: false,
-      notificationChannel: 4
+      notificationChannel: 4,
     });
     expect(component.userEditForm.controls['firstName'].value).toEqual('user');
     expect(component.userEditForm.controls['lastName'].value).toEqual('userson');
@@ -193,7 +195,6 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['notificationChannel'].setValue('3');
     component.userEditForm.controls['notificationChannel'].markAsDirty();
 
-
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editUserData();
@@ -221,7 +222,6 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['role'].markAsDirty();
     component.userEditForm.controls['notificationChannel'].setValue('3');
     component.userEditForm.controls['notificationChannel'].markAsDirty();
-
 
     const modalClose = spyOn(component.activeModal, 'close');
     const consoleError = spyOn(console, 'error');

@@ -1,19 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
 import { UserListComponent } from './user-list.component';
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../types/paged-response";
-import {User} from "../../../types/user";
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
-import {WhitelistRetailerDomain} from "../../../types/whitelist-retailer-domain";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {UserRole} from "../../../types/enums/user-role";
-import {AdminService} from "../../../services/admin.service";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {PagedList} from "../../../types/paged-list";
+
+import { AdminService } from "../../../services/admin.service";
+
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockAdminService {
   getPendingUsers(limit: number = 0, offset: number = 0): Observable<PagedResponse<User>> {
@@ -28,7 +28,9 @@ class MockAdminService {
         });
       }
 
-      observer.next({ total: 2, data: [
+      observer.next({
+        total: 2,
+        data: [
           {
             id: "userAB",
             email: "user11@test.com",
@@ -37,7 +39,7 @@ class MockAdminService {
             role: 1,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 4
+            notificationChannel: 4,
           },
           {
             id:"userABC",
@@ -47,11 +49,12 @@ class MockAdminService {
             role: 1,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 2
-          }
-        ]});
+            notificationChannel: 2,
+          },
+        ],
+      });
     });
-  };
+  }
 
   getAcceptedUsers(limit: number = 0, offset: number = 0): Observable<PagedResponse<User>> {
     return new Observable((observer) => {
@@ -60,11 +63,14 @@ class MockAdminService {
           error: {
             error: {
               message: 'Internal Server Error.',
-            }
-          }
+            },
+          },
         });
       }
-      observer.next({ total: 2, data: [
+
+      observer.next({
+        total: 2,
+        data: [
           {
             id: "userXY",
             email: "user@test.com",
@@ -73,7 +79,7 @@ class MockAdminService {
             role: 2,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 4
+            notificationChannel: 4,
           },
           {
             id:"userXYZ",
@@ -83,12 +89,13 @@ class MockAdminService {
             role: 3,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 2
-          }
-        ]});
+            notificationChannel: 2,
+          },
+        ],
+      });
     });
   }
-  }
+}
 
 class MockModalService {
   public user: User = {
@@ -163,7 +170,7 @@ describe('UserListComponent', () => {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       },
       {
         id:"userXYZ",
@@ -173,8 +180,8 @@ describe('UserListComponent', () => {
         role: 3,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 2
-      }
+        notificationChannel: 2,
+      },
     ];
 
     pendingUsers.data = [
@@ -186,7 +193,7 @@ describe('UserListComponent', () => {
         role: 1,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       },
       {
         id:"userABC",
@@ -196,8 +203,8 @@ describe('UserListComponent', () => {
         role: 1,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 2
-      }
+        notificationChannel: 2,
+      },
     ];
 
     expect(component.pendingUsers).toEqual(pendingUsers);
