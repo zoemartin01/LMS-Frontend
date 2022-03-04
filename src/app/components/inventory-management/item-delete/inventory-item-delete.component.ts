@@ -14,8 +14,6 @@ import { InventoryItem } from "../../../types/inventory-item";
 
 /**
  * Component for the deletion of an inventory item
- *
- *
  */
 export class InventoryItemDeleteComponent implements OnInit {
   public inventoryItemDeleteForm: FormGroup = new FormGroup({

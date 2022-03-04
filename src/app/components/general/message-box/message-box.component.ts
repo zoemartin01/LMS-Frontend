@@ -23,8 +23,6 @@ import { PagedList } from 'src/app/types/paged-list';
 
 /**
  * Component for the message box page
- *
- *
  */
 export class MessageBoxComponent implements OnInit {
   public messages: PagedList<Message> = new PagedList<Message>();

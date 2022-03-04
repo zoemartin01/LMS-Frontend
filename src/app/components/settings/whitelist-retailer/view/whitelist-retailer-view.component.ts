@@ -18,8 +18,6 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Component for whitelist retailer view popup
- *
- *
  */
 export class WhitelistRetailerViewComponent implements OnInit {
   public retailerViewForm: FormGroup = new FormGroup({
@@ -30,7 +28,7 @@ export class WhitelistRetailerViewComponent implements OnInit {
     name: '',
     domains: [],
   }
-  public dirty: boolean = true;
+  public dirty: boolean = false;
 
   /**
    * Constructor
@@ -95,11 +93,6 @@ export class WhitelistRetailerViewComponent implements OnInit {
       if (result === 'deleted') {
         this.activeModal.close('dirty');
         return;
-      }
-
-      if (result !== 'aborted') {
-        this.getWhitelistRetailerData();
-        this.dirty = true;
       }
     });
   }
