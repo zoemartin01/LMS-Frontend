@@ -12,8 +12,6 @@ import { UserService } from "../../../services/user.service";
 
 /**
  * Component for the register page
- *
- *
  */
 export class RegisterComponent {
   public registerForm: FormGroup = new FormGroup({

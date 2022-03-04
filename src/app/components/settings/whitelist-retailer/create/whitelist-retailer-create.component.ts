@@ -18,8 +18,6 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Component for whitelist retailer creation popup
- *
- *
  */
 export class WhitelistRetailerCreateComponent {
   public whitelistRetailer: WhitelistRetailer = {

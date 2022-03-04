@@ -20,8 +20,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 /**
  * Component for user view popup
- *
- *
  */
 export class UserViewComponent implements OnInit {
   public userViewForm: FormGroup = new FormGroup({
