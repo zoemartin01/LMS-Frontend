@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { AppointmentService } from "../../../services/appointment.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import * as moment from "moment";
+
+import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
+
 import { Appointment } from "../../../types/appointment";
 import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import * as moment from "moment";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-accept',
@@ -59,15 +62,21 @@ export class AppointmentAcceptComponent implements OnInit {
     maxStart: null,
     amount: 1,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public appointmentService: AppointmentService,  private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public utilityService: UtilityService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal) {
     this.appointmentAcceptForm.disable();
   }
 
@@ -110,12 +119,14 @@ export class AppointmentAcceptComponent implements OnInit {
    * Accepts appointment
    */
   public async acceptAppointment(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.acceptAppointmentRequest(this.appointment.id).subscribe({
       next: () => {
         this.activeModal.close('accepted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
@@ -124,12 +135,14 @@ export class AppointmentAcceptComponent implements OnInit {
    * Accepts appointment series
    */
   public async acceptAppointmentSeries(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.acceptAppointmentSeriesRequest(this.appointment.seriesId).subscribe({
       next: () => {
         this.activeModal.close('accepted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

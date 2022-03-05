@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Appointment } from "../../../types/appointment";
 import { UserRole } from "../../../types/enums/user-role";
@@ -61,15 +62,22 @@ export class AppointmentDeclineComponent implements OnInit {
     maxStart: null,
     amount: 1,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public utilityService: UtilityService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal
+  ) {
     this.appointmentDeclineForm.disable();
   }
 
@@ -109,12 +117,14 @@ export class AppointmentDeclineComponent implements OnInit {
    * Decline appointment
    */
   public async declineAppointment(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.declineAppointmentRequest(this.appointment.id).subscribe({
       next: () => {
         this.activeModal.close('declined');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
@@ -123,12 +133,14 @@ export class AppointmentDeclineComponent implements OnInit {
    * Declines appointment series
    */
   public async declineAppointmentSeries(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.declineAppointmentSeriesRequest(this.appointment.seriesId).subscribe({
       next: () => {
         this.activeModal.close('declined');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
