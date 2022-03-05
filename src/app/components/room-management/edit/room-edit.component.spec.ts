@@ -220,7 +220,7 @@ describe('RoomEditComponent', () => {
     component.editRoomData();
     tick();
 
-    expect(component.errorMessage).toBe('Unknown error.');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

@@ -45,6 +45,8 @@ export class TimeslotCreateComponent implements OnInit {
   };
   public isRecurring: boolean = false;
   public errorMessage = '';
+  public force = false;
+  public appointmentConflictMessage = '';
 
   /**
    * Constructor
@@ -94,6 +96,7 @@ export class TimeslotCreateComponent implements OnInit {
    */
   public async createTimeslot(): Promise<void> {
     this.errorMessage = '';
+    this.appointmentConflictMessage = '';
 
     if (!this.timeslotCreateForm.valid) {
       this.errorMessage = 'You need to fill in all required fields!';
@@ -110,13 +113,18 @@ export class TimeslotCreateComponent implements OnInit {
         endHour === 24
           ? moment(day).add(1, 'day').hours(0)
           : moment(day).hours(moment(endHour, 'HH:mm').hours()),
-        +this.timeslotCreateForm.controls['type'].value
+        +this.timeslotCreateForm.controls['type'].value,
+        this.force
       ).subscribe({
         next: () => {
           this.closeForm.emit(true);
         },
         error: error => {
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
+          if (error.status === 409) {
+            this.appointmentConflictMessage = this.utilityService.formatErrorMessage(error);
+          } else {
+            this.errorMessage = this.utilityService.formatErrorMessage(error);
+          }
         }
       });
     } else {
@@ -128,13 +136,18 @@ export class TimeslotCreateComponent implements OnInit {
           : moment(day).hours(moment(endHour, 'HH:mm').hours()),
         +this.timeslotCreateForm.controls['type'].value,
         +this.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].value,
-        +this.recurringTimeslotCreateForm.controls['amount'].value
+        +this.recurringTimeslotCreateForm.controls['amount'].value,
+        this.force
       ).subscribe({
         next: () => {
           this.closeForm.emit(true);
         },
         error: error => {
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
+          if (error.status === 409) {
+            this.appointmentConflictMessage = this.utilityService.formatErrorMessage(error);
+          } else {
+            this.errorMessage = this.utilityService.formatErrorMessage(error);
+          }
         }
       });
     }
