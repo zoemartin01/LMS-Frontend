@@ -27,7 +27,7 @@ export class UserEditComponent implements OnInit {
       Validators.required,
     ]),
     email: new FormControl('', [
-      Validators.email,
+      Validators.required,
     ]),
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
