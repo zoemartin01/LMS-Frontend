@@ -36,4 +36,33 @@ describe('UtilityService', () => {
       },
     });
   });
+
+  it('should return error formatted as string when formatted as single error message', () => {
+    expect(service.formatErrorMessage({
+      error: {
+        message: 'Test error message!',
+      },
+    })).toBe('Test error message!');
+  });
+
+  it('should return error formatted as string when formatted as array of error messages', () => {
+    expect(service.formatErrorMessage({
+      error: [
+        {
+          constraints: {
+            'a': "error a",
+            'b': "error b",
+          },
+        },
+      ],
+    })).toBe('Invalid Input:<br> - error a<br> - error b');
+  });
+
+  it('should return error formatted as string when formatted in inappropriate format', () => {
+    expect(service.formatErrorMessage({
+      error: {
+        aaaargh: "what the f*** are U doin???",
+      },
+    })).toBe('There has been an error!');
+  });
 });

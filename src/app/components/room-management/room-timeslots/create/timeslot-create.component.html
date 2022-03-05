@@ -75,6 +75,7 @@
           </div>
         </div>
       </form>
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
       <br>
       <div class="row">
         <div class="col text-center">

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-room-create',
@@ -15,44 +16,49 @@ import { RoomService } from "../../../services/room.service";
  */
 export class RoomCreateComponent {
   public roomCreateForm: FormGroup = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
+    name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(1, [
-      Validators.required,
-      Validators.min(1),
-    ]),
+    maxConcurrentBookings: new FormControl(1, Validators.required),
     autoAcceptBookings: new FormControl(false, Validators.required),
   });
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService,  public activeModal: NgbActiveModal) {
+  constructor(
+    public roomService: RoomService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
    * Creates room with data
    */
   public async createRoom(): Promise<void> {
-    if (this.roomCreateForm.valid) {
-      const name = this.roomCreateForm.value.name;
-      const description = this.roomCreateForm.value.description;
-      const maxConcurrentBookings = this.roomCreateForm.value.maxConcurrentBookings;
-      const autoAcceptBookings = this.roomCreateForm.value.autoAcceptBookings;
-      this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings).subscribe({
-        next: () => {
-          this.activeModal.close('created');
-        }, error: error => {
-          console.error('There was an error!', error);
-        }
-      });
-    } else {
-      console.error('Invalid form data')
+    this.errorMessage = '';
+
+    if (!this.roomCreateForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
     }
+
+    const name = this.roomCreateForm.value.name;
+    const description = this.roomCreateForm.value.description;
+    const maxConcurrentBookings = this.roomCreateForm.value.maxConcurrentBookings;
+    const autoAcceptBookings = this.roomCreateForm.value.autoAcceptBookings;
+    this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings).subscribe({
+      next: () => {
+        this.activeModal.close('created');
+      },
+      error: error => {
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      }
+    });
   }
 }

@@ -1,19 +1,19 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
-import { NgxPaginationModule } from "ngx-pagination";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
+import {NgxPaginationModule} from "ngx-pagination";
 
-import { GlobalSettingsComponent } from './global-settings.component';
+import {GlobalSettingsComponent} from './global-settings.component';
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { GlobalSetting } from "../../../types/global-setting";
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { PagedResponse } from "../../../types/paged-response";
-import { PagedList } from "../../../types/paged-list";
+import {GlobalSetting} from "../../../types/global-setting";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {PagedResponse} from "../../../types/paged-response";
+import {PagedList} from "../../../types/paged-list";
 
 class MockAdminService {
   getGlobalSettings(): Observable<GlobalSetting[]> {
@@ -21,9 +21,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -49,9 +47,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
-            }
           }
         });
       }
@@ -97,23 +93,22 @@ class MockAdminService {
       observer.next(pagedList);
     })
   }
+
   updateGlobalSettings(changedData: object): Observable<GlobalSetting[]> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Inventory Item not Found.',
-            }
           }
         });
       }
       let globalSettings: GlobalSetting[] = [
         {
-        key: "user.max_recordings",
-        value: "10",
-        description: "Maximum Recordings per User"
-      },
+          key: "user.max_recordings",
+          value: "10",
+          description: "Maximum Recordings per User"
+        },
         {
           key: "recording.auto_delete",
           value: "69420",
@@ -126,12 +121,12 @@ class MockAdminService {
 }
 
 class MockModalService {
-  open(): { componentInstance: { whitelistRetailer: { id: string|null } }, result: Promise<string> } {
+  open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        whitelistRetailer: { id: null },
+        whitelistRetailer: {id: null},
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -152,8 +147,8 @@ describe('GlobalSettingsComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
@@ -165,7 +160,7 @@ describe('GlobalSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', fakeAsync( () => {
+  it('should init page', fakeAsync(() => {
     let pagedListW = new PagedList<WhitelistRetailer>();
     let globalSettings: GlobalSetting[] = [];
 

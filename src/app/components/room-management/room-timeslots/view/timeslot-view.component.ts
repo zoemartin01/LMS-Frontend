@@ -106,7 +106,7 @@ export class TimeslotViewComponent implements OnInit {
   public openTimeslotDeletionDialog(): void {
     const modal = this.modalService.open(TimeslotDeleteComponent);
     modal.componentInstance.timeslot.id = this.timeslot.id;
-    modal.componentInstance.room.id = this.timeslot.room.id;
+    modal.componentInstance.timeslot.room.id = this.timeslot.room.id;
     modal.result.then((result) => {
       if (result === 'deleted') {
         this.closeForm.emit(true);

@@ -173,7 +173,7 @@ describe('RoomDeleteComponent', () => {
     component.getRoomData();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('There has been an error!');
 
     localStorage.setItem('throwError', 'false');
   }));

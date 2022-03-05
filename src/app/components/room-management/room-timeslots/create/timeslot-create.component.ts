@@ -4,6 +4,7 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { RoomService } from "../../../../services/room.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { Room } from "../../../../types/room";
 
@@ -43,14 +44,17 @@ export class TimeslotCreateComponent implements OnInit {
     year = 1990;
   };
   public isRecurring: boolean = false;
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    */
   constructor(
     public roomService: RoomService,
+    public utilityService: UtilityService,
   ) {
   }
 
@@ -89,47 +93,50 @@ export class TimeslotCreateComponent implements OnInit {
    * Opens timeslot creation form
    */
   public async createTimeslot(): Promise<void> {
-    if (this.timeslotCreateForm.valid) {
-      const day = moment(this.date).minutes(0).seconds(0);
-      const endHour = +this.timeslotCreateForm.controls['endHour'].value;
+    this.errorMessage = '';
 
-      if (!this.isRecurring) {
-        this.roomService.createTimeslot(
-          this.room,
-          moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 24
-            ? moment(day).add(1, 'day').hours(0)
-            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
-          +this.timeslotCreateForm.controls['type'].value
-        ).subscribe({
-          next: () => {
-            this.closeForm.emit(true);
-          },
-          error: error => {
-            console.error('There was an error!', error);
-          }
-        });
-      } else {
-        this.roomService.createTimeslotSeries(
-          this.room,
-          moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 24
-            ? moment(day).add(1, 'day').hours(0)
-            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
-          +this.timeslotCreateForm.controls['type'].value,
-          +this.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].value,
-          +this.recurringTimeslotCreateForm.controls['amount'].value
-        ).subscribe({
-          next: () => {
-            this.closeForm.emit(true);
-          },
-          error: error => {
-            console.error('There was an error!', error);
-          }
-        });
-      }
+    if (!this.timeslotCreateForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+
+    const day = moment(this.date).minutes(0).seconds(0);
+    const endHour = +this.timeslotCreateForm.controls['endHour'].value;
+
+    if (!this.isRecurring) {
+      this.roomService.createTimeslot(
+        this.room,
+        moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+        endHour === 24
+          ? moment(day).add(1, 'day').hours(0)
+          : moment(day).hours(moment(endHour, 'HH:mm').hours()),
+        +this.timeslotCreateForm.controls['type'].value
+      ).subscribe({
+        next: () => {
+          this.closeForm.emit(true);
+        },
+        error: error => {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
+      });
     } else {
-      console.error('Invalid form data')
+      this.roomService.createTimeslotSeries(
+        this.room,
+        moment(day).hours(moment(this.timeslotCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+        endHour === 24
+          ? moment(day).add(1, 'day').hours(0)
+          : moment(day).hours(moment(endHour, 'HH:mm').hours()),
+        +this.timeslotCreateForm.controls['type'].value,
+        +this.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].value,
+        +this.recurringTimeslotCreateForm.controls['amount'].value
+      ).subscribe({
+        next: () => {
+          this.closeForm.emit(true);
+        },
+        error: error => {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
+      });
     }
   }
 }
