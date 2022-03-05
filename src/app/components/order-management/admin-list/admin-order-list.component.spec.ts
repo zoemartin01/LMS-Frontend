@@ -25,67 +25,67 @@ class MockOrderService {
       }
 
       observer.next({
-        "total": 5,
-        "data": [{
-          "id": "b69537c7-9d6b-491a-bd24-1c5019d18e03",
-          "itemName": null,
-          "status": 1,
-          "quantity": 42,
-          "url": "amazon.com",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+        total: 5,
+        data: [{
+          id: "b69537c7-9d6b-491a-bd24-1c5019d18e03",
+          itemName: null,
+          status: 1,
+          quantity: 42,
+          url: "amazon.com",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
-            "name": "Fantastic Steel Soap",
-            "description": "Distinctio iste et est tenetur officiis quis.",
-            "quantity": 40424
+          item: {
+            id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
+            name: "Fantastic Steel Soap",
+            description: "Distinctio iste et est tenetur officiis quis.",
+            quantity: 40424
           }
         }, {
-          "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-          "itemName": "Awesome Granite Towels",
-          "status": 1,
-          "quantity": 42962,
-          "url": "https://clementine.biz",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+          itemName: "Awesome Granite Towels",
+          status: 1,
+          quantity: 42962,
+          url: "https://clementine.biz",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         }, {
-          "id": "f3e34073-2b2b-434d-b2c8-9498070bad2d",
-          "itemName": null,
-          "status": 1,
-          "quantity": 34570,
-          "url": "https://otis.org",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "f3e34073-2b2b-434d-b2c8-9498070bad2d",
+          itemName: null,
+          status: 1,
+          quantity: 34570,
+          url: "https://otis.org",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
-            "name": "Fantastic Steel Soap",
-            "description": "Distinctio iste et est tenetur officiis quis.",
-            "quantity": 40424
+          item: {
+            id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
+            name: "Fantastic Steel Soap",
+            description: "Distinctio iste et est tenetur officiis quis.",
+            quantity: 40424
           }
         }]
       });
@@ -103,67 +103,67 @@ class MockOrderService {
       }
 
       observer.next({
-        "total": 10,
-        "data": [{
-          "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-          "itemName": "Incredible Frozen Car",
-          "status": 4,
-          "quantity": 37188,
-          "url": "https://alan.org",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+        total: 10,
+        data: [{
+          id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+          itemName: "Incredible Frozen Car",
+          status: 4,
+          quantity: 37188,
+          url: "https://alan.org",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         }, {
-          "id": "3c764b80-1502-4900-8f97-dbd26f4eee0a",
-          "itemName": null,
-          "status": 3,
-          "quantity": 22813,
-          "url": "http://mabelle.info",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "3c764b80-1502-4900-8f97-dbd26f4eee0a",
+          itemName: null,
+          status: 3,
+          quantity: 22813,
+          url: "http://mabelle.info",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "3c08883c-d61e-4a9f-8967-64f83847acdc",
-            "name": "Generic Steel Table",
-            "description": "Labore incidunt error nihil nihil ipsam alias deserunt soluta.",
-            "quantity": 44900
+          item: {
+            id: "3c08883c-d61e-4a9f-8967-64f83847acdc",
+            name: "Generic Steel Table",
+            description: "Labore incidunt error nihil nihil ipsam alias deserunt soluta.",
+            quantity: 44900
           }
         }, {
-          "id": "4838b988-2a95-43b3-8569-da5716dd17dc",
-          "itemName": null,
-          "status": 4,
-          "quantity": 37648,
-          "url": "https://anibal.info",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "4838b988-2a95-43b3-8569-da5716dd17dc",
+          itemName: null,
+          status: 4,
+          quantity: 37648,
+          url: "https://anibal.info",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "52f0f2eb-69ec-4ba6-a70d-ee513d1de8d9",
-            "name": "Generic Granite Table",
-            "description": "In quis et ad nihil culpa asperiores.",
-            "quantity": 8117
+          item: {
+            id: "52f0f2eb-69ec-4ba6-a70d-ee513d1de8d9",
+            name: "Generic Granite Table",
+            description: "In quis et ad nihil culpa asperiores.",
+            quantity: 8117
           }
         }]
       });
@@ -181,58 +181,58 @@ class MockOrderService {
       }
 
       observer.next({
-        "total": 4,
-        "data": [{
-          "id": "66134a8d-6819-44d9-8d92-2aadccd993d1",
-          "itemName": "Gorgeous Frozen Tuna",
-          "status": 2,
-          "quantity": 94823,
-          "url": "http://annamae.name",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+        total: 4,
+        data: [{
+          id: "66134a8d-6819-44d9-8d92-2aadccd993d1",
+          itemName: "Gorgeous Frozen Tuna",
+          status: 2,
+          quantity: 94823,
+          url: "http://annamae.name",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         }, {
-          "id": "522d408c-e773-49b9-8138-8c19f1a893f6",
-          "itemName": "Sleek Wooden Bike",
-          "status": 2,
-          "quantity": 48899,
-          "url": "http://marcelo.net",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "522d408c-e773-49b9-8138-8c19f1a893f6",
+          itemName: "Sleek Wooden Bike",
+          status: 2,
+          quantity: 48899,
+          url: "http://marcelo.net",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         }, {
-          "id": "afa6c271-47f3-458c-9296-548d1e54df17",
-          "itemName": "Gorgeous Metal Chair",
-          "status": 2,
-          "quantity": 17581,
-          "url": "https://ron.org",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "afa6c271-47f3-458c-9296-548d1e54df17",
+          itemName: "Gorgeous Metal Chair",
+          status: 2,
+          quantity: 17581,
+          url: "https://ron.org",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         }]
       });
     });
@@ -380,46 +380,46 @@ describe('AdminOrderListComponent', () => {
 
   it('should return inventory item name', () => {
     expect(component.getItemName({
-      "id": "b69537c7-9d6b-491a-bd24-1c5019d18e03",
-      "itemName": null,
-      "status": 1,
-      "quantity": 42,
-      "url": "amazon.com",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "b69537c7-9d6b-491a-bd24-1c5019d18e03",
+      itemName: null,
+      status: 1,
+      quantity: 42,
+      url: "amazon.com",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": {
-        "id": "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
-        "name": "Fantastic Steel Soap",
-        "description": "Distinctio iste et est tenetur officiis quis.",
-        "quantity": 40424
+      item: {
+        id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
+        name: "Fantastic Steel Soap",
+        description: "Distinctio iste et est tenetur officiis quis.",
+        quantity: 40424
       }
     })).toBe('Fantastic Steel Soap');
 
     expect(component.getItemName({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 4,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 4,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBe('Incredible Frozen Car');
   });
 });
