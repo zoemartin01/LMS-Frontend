@@ -965,7 +965,8 @@ describe('RoomService', () => {
       },
       moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
       moment("2022-02-14T22:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-      2).subscribe(
+      2,
+      false).subscribe(
       res => {
         expect(res).toEqual(
           {
@@ -1025,7 +1026,8 @@ describe('RoomService', () => {
       },
       moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
       moment("2022-02-14T22:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
-      2)).toThrow(ParseArgumentException);
+      2,
+      false)).toThrow(ParseArgumentException);
   });
 
   it('should create timeslot series', () => {
@@ -1040,7 +1042,8 @@ describe('RoomService', () => {
       moment("2022-02-14T22:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
       2,
       TimeSlotRecurrence.weekly,
-      3).subscribe(
+      3,
+      false).subscribe(
       res => {
         expect(res).toEqual([
             {
@@ -1173,7 +1176,8 @@ describe('RoomService', () => {
       moment("2022-02-14T22:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
       2,
       TimeSlotRecurrence.weekly,
-      3)).toThrow(ParseArgumentException);
+      3,
+      false)).toThrow(ParseArgumentException);
   });
 
   it('should edit timeslot', () => {
@@ -1369,7 +1373,10 @@ describe('RoomService', () => {
   });
 
   it('should delete timeslot', () => {
-    service.deleteTimeslot("c7231328-203e-43f5-9ac1-d374d90484ac", "8e762183-dcb3-4018-b02d-fb5c3c46a9f8").subscribe();
+    service.deleteTimeslot(
+      "c7231328-203e-43f5-9ac1-d374d90484ac",
+      "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
+      false).subscribe();
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':roomId', "c7231328-203e-43f5-9ac1-d374d90484ac")
@@ -1386,15 +1393,24 @@ describe('RoomService', () => {
   });
 
   it('should throw exception when trying to delete timeslot with roomId null', () => {
-    expect(() => service.deleteTimeslot(null, "8e762183-dcb3-4018-b02d-fb5c3c46a9f8")).toThrow(ParseArgumentException);
+    expect(() => service.deleteTimeslot(
+      null,
+      "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
+      false)).toThrow(ParseArgumentException);
   });
 
   it('should throw exception when trying to delete timeslot with timeslotId null', () => {
-    expect(() => service.deleteTimeslot("c7231328-203e-43f5-9ac1-d374d90484ac", null)).toThrow(ParseArgumentException);
+    expect(() => service.deleteTimeslot(
+      "c7231328-203e-43f5-9ac1-d374d90484ac",
+      null,
+      false)).toThrow(ParseArgumentException);
   });
 
   it('should delete timeslot series', () => {
-    service.deleteTimeslotSeries("c7231328-203e-43f5-9ac1-d374d90484ac", "5bbb467a-4539-4d4a-9b19-7fe0341be0ef").subscribe();
+    service.deleteTimeslotSeries(
+      "c7231328-203e-43f5-9ac1-d374d90484ac",
+      "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+      false).subscribe();
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslotSeries
       .replace(':roomId', "c7231328-203e-43f5-9ac1-d374d90484ac")
@@ -1411,10 +1427,16 @@ describe('RoomService', () => {
   });
 
   it('should throw exception when trying to delete timeslot series with roomId null', () => {
-    expect(() => service.deleteTimeslotSeries(null, "5bbb467a-4539-4d4a-9b19-7fe0341be0ef")).toThrow(ParseArgumentException);
+    expect(() => service.deleteTimeslotSeries(
+      null,
+      "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+      false)).toThrow(ParseArgumentException);
   });
 
   it('should throw exception when trying to delete timeslot series with seriesId null', () => {
-    expect(() => service.deleteTimeslotSeries("c7231328-203e-43f5-9ac1-d374d90484ac", null)).toThrow(ParseArgumentException);
+    expect(() => service.deleteTimeslotSeries(
+      "c7231328-203e-43f5-9ac1-d374d90484ac",
+      null,
+      false)).toThrow(ParseArgumentException);
   });
 });
