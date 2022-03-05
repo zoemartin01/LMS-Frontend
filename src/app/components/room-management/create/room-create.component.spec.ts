@@ -17,9 +17,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -84,14 +82,12 @@ describe('RoomCreateComponent', () => {
   it('should handle invalid form entries on create Room', fakeAsync(() => {
     component.roomCreateForm.controls['name'].setValue("Test room");
     component.roomCreateForm.controls['description'].setValue("edited description");
-    component.roomCreateForm.controls['maxConcurrentBookings'].setValue("-2");
-
-    let consoleError = spyOn(console, 'error');
+    component.roomCreateForm.controls['maxConcurrentBookings'].setValue("");
 
     component.createRoom();
     tick();
 
-    expect(consoleError).toHaveBeenCalledWith('Invalid form data');
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
   it('should show error message on create Room error', fakeAsync(() => {
@@ -107,7 +103,7 @@ describe('RoomCreateComponent', () => {
     component.createRoom();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
