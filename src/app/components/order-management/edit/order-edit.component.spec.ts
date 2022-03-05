@@ -1,28 +1,28 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { OrderEditComponent } from './order-edit.component';
+import {OrderEditComponent} from './order-edit.component';
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import { AdminService } from "../../../services/admin.service";
-import { AuthService } from "../../../services/auth.service";
-import { InventoryService } from "../../../services/inventory.service";
-import { OrderService } from "../../../services/order.service";
+import {AdminService} from "../../../services/admin.service";
+import {AuthService} from "../../../services/auth.service";
+import {InventoryService} from "../../../services/inventory.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { OrderId } from "../../../types/aliases/order-id";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { InventoryItem } from "../../../types/inventory-item";
-import { PagedResponse } from "../../../types/paged-response";
-import { PagedList } from "../../../types/paged-list";
+import {Order} from "../../../types/order";
+import {OrderId} from "../../../types/aliases/order-id";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {InventoryItem} from "../../../types/inventory-item";
+import {PagedResponse} from "../../../types/paged-response";
+import {PagedList} from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -30,9 +30,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -87,9 +85,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -122,9 +118,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -163,7 +157,7 @@ class MockModalService {
 }
 
 class MockAdminService {
-  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted : boolean }> {
+  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted: boolean }> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -176,7 +170,7 @@ class MockAdminService {
       }
 
       observer.next({
-        isWhitelisted : false
+        isWhitelisted: false
       });
     });
   }
@@ -199,11 +193,11 @@ describe('OrderEditComponent', () => {
         FormsModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
-        { provide: InventoryService, useClass: MockInventoryService },
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: OrderService, useClass: MockOrderService},
+        {provide: InventoryService, useClass: MockInventoryService},
+        {provide: AuthService, useClass: MockAuthService},
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -438,7 +432,7 @@ describe('OrderEditComponent', () => {
   });
 
   it('should open whitelist retailer list', () => {
-    let openModal = spyOn(component.modalService,'open');
+    let openModal = spyOn(component.modalService, 'open');
 
     component.openWhitelistRetailerList();
 
@@ -451,6 +445,10 @@ describe('OrderEditComponent', () => {
     component.orderEditForm.controls['itemName'].markAsDirty();
     component.orderEditForm.controls['status'].setValue('2');
     component.orderEditForm.controls['status'].markAsDirty();
+    component.orderEditForm.controls['quantity'].setValue('20');
+    component.orderEditForm.controls['quantity'].markAsDirty();
+    component.orderEditForm.controls['url'].setValue('amazon.notcom');
+    component.orderEditForm.controls['url'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -462,6 +460,26 @@ describe('OrderEditComponent', () => {
 
   it('should throw error on edit of order', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+    component.order.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4bNotExistent";
+    component.orderEditForm.controls['itemName'].setValue('Fantastic Wooden Soap');
+    component.orderEditForm.controls['itemName'].markAsDirty();
+    component.orderEditForm.controls['status'].setValue('2');
+    component.orderEditForm.controls['status'].markAsDirty();
+    component.orderEditForm.controls['quantity'].setValue('20');
+    component.orderEditForm.controls['quantity'].markAsDirty();
+    component.orderEditForm.controls['url'].setValue('amazon.notcom');
+    component.orderEditForm.controls['url'].markAsDirty();
+
+    component.editOrder();
+    tick();
+
+    expect(component.errorMessage).toEqual('Inventory Item not Found.')
+
+    localStorage.removeItem('throwError');
+  }));
+
+  it('should throw error on edit of order when input invalid', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
 
     component.order.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
     component.orderEditForm.controls['itemName'].setValue('Fantastic Wooden Soap');
@@ -469,12 +487,9 @@ describe('OrderEditComponent', () => {
     component.orderEditForm.controls['status'].setValue('2');
     component.orderEditForm.controls['status'].markAsDirty();
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.editOrder();
-
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('edited');
+    tick();
+    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
 
     localStorage.removeItem('throwError');
   }));

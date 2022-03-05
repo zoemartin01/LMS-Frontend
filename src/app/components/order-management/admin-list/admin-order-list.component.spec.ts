@@ -1,17 +1,17 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgxPaginationModule } from "ngx-pagination";
-import { Observable } from "rxjs";
-import { environment } from "../../../../environments/environment";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Observable} from "rxjs";
+import {environment} from "../../../../environments/environment";
 
-import { AdminOrderListComponent } from './admin-order-list.component';
+import {AdminOrderListComponent} from './admin-order-list.component';
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { PagedResponse } from "../../../types/paged-response";
+import {Order} from "../../../types/order";
+import {PagedResponse} from "../../../types/paged-response";
 
 class MockOrderService {
   public getAllPendingOrders(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
@@ -19,9 +19,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -99,9 +97,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -179,9 +175,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -271,8 +265,8 @@ describe('AdminOrderListComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: OrderService, useClass: MockOrderService},
+        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
@@ -284,7 +278,7 @@ describe('AdminOrderListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.pendingOrders.pageSize).toEqual(environment.defaultPageSize);
@@ -294,6 +288,7 @@ describe('AdminOrderListComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.pendingOrders.pageSize).toEqual(3);
@@ -301,7 +296,7 @@ describe('AdminOrderListComponent', () => {
     expect(component.declinedOrders.pageSize).toEqual(3);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open order create form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created 045fcd70-d323-4de2-894e-a10772b23457');

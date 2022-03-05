@@ -20,9 +20,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
-            }
           }
         });
       }
@@ -100,9 +98,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
-            }
           }
         });
       }
@@ -180,9 +176,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
-            }
           }
         });
       }
@@ -292,7 +286,7 @@ describe('PersonalOrderListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.pendingOrders.pageSize).toEqual(environment.defaultPageSize);
@@ -302,6 +296,7 @@ describe('PersonalOrderListComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
+tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.pendingOrders.pageSize).toEqual(3);
@@ -309,7 +304,7 @@ describe('PersonalOrderListComponent', () => {
     expect(component.declinedOrders.pageSize).toEqual(3);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open order create form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created 045fcd70-d323-4de2-894e-a10772b23457');
@@ -317,7 +312,6 @@ describe('PersonalOrderListComponent', () => {
     const updatePageMethod = spyOn(component, 'updatePage');
 
     component.openOrderCreationForm();
-
     tick();
 
     expect(updatePageMethod).toHaveBeenCalledWith();
@@ -331,7 +325,6 @@ describe('PersonalOrderListComponent', () => {
     const updatePageMethod = spyOn(component, 'updatePage');
 
     component.openOrderEditForm('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     expect(updatePageMethod).toHaveBeenCalledWith();
@@ -343,7 +336,6 @@ describe('PersonalOrderListComponent', () => {
     localStorage.setItem('returnVal', 'deleted');
 
     component.openOrderDeletionDialog('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     localStorage.removeItem('returnVal');
@@ -355,7 +347,6 @@ describe('PersonalOrderListComponent', () => {
     const getAcceptedOrdersMethod = spyOn(component, 'getAcceptedOrders');
 
     component.openInventoryOrderForm('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     expect(getAcceptedOrdersMethod).toHaveBeenCalledWith(1);

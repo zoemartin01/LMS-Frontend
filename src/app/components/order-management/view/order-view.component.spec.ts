@@ -1,19 +1,19 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgxPaginationModule } from "ngx-pagination";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbModal, NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Observable} from "rxjs";
 
-import { OrderViewComponent } from './order-view.component';
+import {OrderViewComponent} from './order-view.component';
 
-import { AuthService } from "../../../services/auth.service";
-import { OrderService } from "../../../services/order.service";
+import {AuthService} from "../../../services/auth.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
+import {Order} from "../../../types/order";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderStatus} from "../../../types/enums/order-status";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -21,9 +21,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -81,12 +79,12 @@ class MockAuthService {
 }
 
 class MockModalService {
-  open(): { componentInstance: { order: { id: string|null } }, result: Promise<string> } {
+  open(): { componentInstance: { order: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        order: { id: null },
+        order: {id: null},
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -106,9 +104,9 @@ describe('OrderViewComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: OrderService, useClass: MockOrderService},
+        {provide: AuthService, useClass: MockAuthService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -121,7 +119,7 @@ describe('OrderViewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page with linked item', () => {
+  it('should init page with linked item', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -144,6 +142,7 @@ describe('OrderViewComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
       "id": "045fcd70-d323-4de2-894e-a10772b23457",
@@ -174,9 +173,9 @@ describe('OrderViewComponent', () => {
     expect(component.orderViewForm.controls['quantity'].value).toBe(10);
     expect(component.orderViewForm.controls['url'].value).toBe('conrad.de/pizza');
     expect(component.orderViewForm.controls['status'].value).toBe(3);
-  });
+  }));
 
-  it('should init page whith item name', () => {
+  it('should init page whith item name', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -199,6 +198,7 @@ describe('OrderViewComponent', () => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
       "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
@@ -224,9 +224,9 @@ describe('OrderViewComponent', () => {
     expect(component.orderViewForm.controls['quantity'].value).toBe(42962);
     expect(component.orderViewForm.controls['url'].value).toBe('https://clementine.biz');
     expect(component.orderViewForm.controls['status'].value).toBe(1);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.order).toEqual({
@@ -253,6 +253,7 @@ describe('OrderViewComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
@@ -281,7 +282,7 @@ describe('OrderViewComponent', () => {
     expect(component.orderViewForm.controls['status'].value).toBe(0);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open order edit form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'edited');
@@ -289,7 +290,6 @@ describe('OrderViewComponent', () => {
     const getOrderDataMethod = spyOn(component, 'getOrderData');
 
     component.openOrderEditForm();
-
     tick();
 
     expect(getOrderDataMethod).toHaveBeenCalledWith();
@@ -304,7 +304,6 @@ describe('OrderViewComponent', () => {
     const closeModalMethod = spyOn(component.activeModal, 'close');
 
     component.openOrderDeletionDialog();
-
     tick();
 
     expect(closeModalMethod).toHaveBeenCalledWith('dirty');
@@ -318,7 +317,6 @@ describe('OrderViewComponent', () => {
     const getOrderDataMethod = spyOn(component, 'getOrderData');
 
     component.openInventoryOrderForm();
-
     tick();
 
     expect(getOrderDataMethod).toHaveBeenCalledWith();

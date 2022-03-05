@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { UserRole } from "../../../types/enums/user-role";
+import {Order} from "../../../types/order";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UserRole} from "../../../types/enums/user-role";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-order-delete',
@@ -43,14 +44,16 @@ export class OrderDeleteComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, public activeModal: NgbActiveModal) {
+  constructor(public orderService: OrderService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
     this.orderDeleteForm.disable();
   }
 
@@ -64,7 +67,7 @@ export class OrderDeleteComponent implements OnInit {
   /**
    * Gets all data of order
    */
-  public async getOrderData() : Promise<void> {
+  public async getOrderData(): Promise<void> {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
@@ -89,12 +92,13 @@ export class OrderDeleteComponent implements OnInit {
    * Deletes order
    */
   public async deleteOrder(): Promise<void> {
+    this.errorMessage = '';
     this.orderService.deleteOrder(this.order.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
