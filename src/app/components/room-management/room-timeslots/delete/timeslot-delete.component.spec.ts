@@ -59,6 +59,15 @@ class MockRoomService {
         });
       }
 
+      if (localStorage.getItem('throwTimeSlotConflictError') === 'true') {
+        observer.error({
+          status: 409,
+          error: {
+            message: 'Has Conflict.',
+          },
+        });
+      }
+
       const timeslot: RoomTimespan = {
         id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
         start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -87,6 +96,15 @@ class MockRoomService {
         observer.error({
           error: {
             message: 'Unknown Error.',
+          },
+        });
+      }
+
+      if (localStorage.getItem('throwTimeSlotConflictError') === 'true') {
+        observer.error({
+          status: 409,
+          error: {
+            message: 'Has Conflict.',
           },
         });
       }
@@ -332,5 +350,29 @@ describe('TimeslotDeleteComponent', () => {
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should show error message on delete timeslot conflict error', fakeAsync(() => {
+    localStorage.setItem('throwTimeSlotConflictError', 'true');
+
+    component.deleteTimeslot();
+    tick();
+
+    expect(component.appointmentConflictMessage ).toBe('Has Conflict.');
+    expect(component.errorMessage).toBe('');
+
+    localStorage.removeItem('throwTimeSlotConflictError');
+  }));
+
+  it('should show error message on delete timeslot series conflict error', fakeAsync(() => {
+    localStorage.setItem('throwTimeSlotConflictError', 'true');
+
+    component.deleteTimeslotSeries();
+    tick();
+
+    expect(component.appointmentConflictMessage ).toBe('Has Conflict.');
+    expect(component.errorMessage).toBe('');
+
+    localStorage.removeItem('throwTimeSlotConflictError');
   }));
 });
