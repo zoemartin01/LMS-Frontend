@@ -59,6 +59,7 @@ export class TimeslotEditComponent implements OnInit {
     year = 1990;
   };
   public isRecurring: boolean = false;
+  public errorMessage = '';
 
   /**
    * Constructor
@@ -135,6 +136,7 @@ export class TimeslotEditComponent implements OnInit {
    * Changes data of single timeslot
    */
   public async editTimeslot(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} = {};
 
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
@@ -154,7 +156,7 @@ export class TimeslotEditComponent implements OnInit {
         this.closeForm.emit(true);
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
@@ -163,6 +165,7 @@ export class TimeslotEditComponent implements OnInit {
    * Changes data of single timeslot
    */
   public async editTimeslotSeries(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringTimeslotEditForm);
 
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
@@ -182,7 +185,7 @@ export class TimeslotEditComponent implements OnInit {
         this.closeForm.emit(true);
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
