@@ -125,13 +125,13 @@ export class AppointmentService {
    * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are not created
    */
   public createAppointmentSeries(
-      room: Room,
-      start: moment.Moment,
-      end: moment.Moment,
-      timeSlotRecurrence: TimeSlotRecurrence,
-      amount: number,
-      force: boolean
-    ): Observable<Appointment[]> {
+    room: Room,
+    start: moment.Moment,
+    end: moment.Moment,
+    timeSlotRecurrence: TimeSlotRecurrence,
+    amount: number,
+    force: boolean
+  ): Observable<Appointment[]> {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.appointments.createAppointmentSeries}`;
     const requestBody = {
       roomId: room.id,

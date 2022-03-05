@@ -221,12 +221,14 @@ export class RoomService {
    * @param {moment.Moment} start start of the timeslot
    * @param {moment.Moment} end end of the timeslot
    * @param {RoomTimespanType} type type of the time slot
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are deleted
    */
   public createTimeslot(
     room : Room,
     start: moment.Moment,
     end: moment.Moment,
-    type: RoomTimespanType
+    type: RoomTimespanType,
+    force: boolean
   ): Observable<RoomTimespan> {
     if (room.id === null) {
       throw ParseArgumentException;
@@ -238,6 +240,7 @@ export class RoomService {
       start: start.toISOString(),
       end: end.toISOString(),
       type,
+      force,
     };
 
     return this.httpClient.post<RoomTimespan>(apiURL, requestBody);
@@ -252,6 +255,7 @@ export class RoomService {
    * @param {RoomTimespanType} type type of the time slot
    * @param timeSlotRecurrence recurrence of the timeslot series
    * @param {number} amount 2-2048, amount of timeslots wanted for the series
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are deleted
    */
   public createTimeslotSeries(
     room: Room,
@@ -259,7 +263,8 @@ export class RoomService {
     end: moment.Moment,
     type: RoomTimespanType,
     timeSlotRecurrence: TimeSlotRecurrence,
-    amount: number
+    amount: number,
+    force: boolean
   ): Observable<RoomTimespan[]> {
     if (room.id === null) {
       throw ParseArgumentException;
@@ -273,6 +278,7 @@ export class RoomService {
       type,
       timeSlotRecurrence,
       amount,
+      force,
     };
 
     return this.httpClient.post<RoomTimespan[]>(apiURL, requestBody);
@@ -327,8 +333,9 @@ export class RoomService {
    *
    * @param {RoomId} roomId id of room
    * @param {TimespanId} timeslotId id of a timeslot to be deleted
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are deleted
    */
-  public deleteTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<void> {
+  public deleteTimeslot(roomId: RoomId, timeslotId: TimespanId, force: boolean): Observable<void> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -340,7 +347,9 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslot
       .replace(':roomId', roomId).replace(':timeslotId', timeslotId)}`;
 
-    return this.httpClient.delete<void>(apiURL);
+    return this.httpClient.delete<void>(apiURL, {
+      body: { force },
+    });
   }
 
   /**
@@ -348,8 +357,9 @@ export class RoomService {
    *
    * @param {RoomId} roomId id of room
    * @param {SeriesId} seriesId id of a series of timeslots to be deleted
+   * @param {boolean} force if true no warning is returned on conflict, appointments with conflicts are deleted
    */
-  public deleteTimeslotSeries(roomId: RoomId, seriesId: SeriesId): Observable<void> {
+  public deleteTimeslotSeries(roomId: RoomId, seriesId: SeriesId, force: boolean): Observable<void> {
     if (roomId === null) {
       throw ParseArgumentException;
     }
@@ -361,6 +371,8 @@ export class RoomService {
     const apiURL = `${environment.baseUrl}${environment.apiRoutes.rooms.deleteTimeslotSeries
       .replace(':roomId', roomId).replace(':seriesId', seriesId)}`;
 
-    return this.httpClient.delete<void>(apiURL);
+    return this.httpClient.delete<void>(apiURL, {
+      body: { force },
+    });
   }
 }
