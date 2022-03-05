@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {UtilityService} from "../../../services/utility.service";
+import { InventoryItem } from "../../../types/inventory-item";
 
 @Component({
   selector: 'app-inventory-item-create',
@@ -18,13 +18,9 @@ import {UtilityService} from "../../../services/utility.service";
  */
 export class InventoryItemCreateComponent {
   public createInventoryItemForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
     description: new FormControl(''),
-    quantity: new FormControl('', [
-      Validators.required,
-    ])
+    quantity: new FormControl('', Validators.required)
   });
   public errorMessage = '';
 
@@ -35,19 +31,24 @@ export class InventoryItemCreateComponent {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
-
 
   /**
    * Opens inventory creation form
    */
   public async createInventoryItem(): Promise<void> {
     this.errorMessage = '';
+
     if (this.createInventoryItemForm.invalid) {
       this.errorMessage = 'You need to fill in all required fields!'
       return;
     }
+
     const name = this.createInventoryItemForm.value.itemName;
     const description = this.createInventoryItemForm.value.description;
     const quantity = +this.createInventoryItemForm.value.quantity;
@@ -60,6 +61,6 @@ export class InventoryItemCreateComponent {
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
-    })
+    });
   }
 }

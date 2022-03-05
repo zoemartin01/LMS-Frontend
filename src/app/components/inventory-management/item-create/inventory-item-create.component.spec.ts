@@ -1,16 +1,16 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
-import {InventoryItemCreateComponent} from './inventory-item-create.component';
+import { InventoryItemCreateComponent } from './inventory-item-create.component';
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
+import { InventoryItem } from "../../../types/inventory-item";
 
 class MockInventoryService {
   createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
@@ -51,7 +51,7 @@ describe('InventoryItemCreateComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: InventoryService, useClass: MockInventoryService},
+        { provide: InventoryService, useClass: MockInventoryService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -76,6 +76,7 @@ describe('InventoryItemCreateComponent', () => {
 
     component.createInventoryItem();
     tick();
+
     expect(modalClose).toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
   }));
 
@@ -88,6 +89,7 @@ describe('InventoryItemCreateComponent', () => {
 
     component.createInventoryItem();
     tick();
+
     expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
@@ -98,6 +100,7 @@ describe('InventoryItemCreateComponent', () => {
 
     component.createInventoryItem();
     tick();
+
     expect(component.errorMessage).toEqual('You need to fill in all required fields!');
   }));
 });
