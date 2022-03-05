@@ -14,7 +14,7 @@ import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 import { Room } from "../../../types/room";
 
 class MockAppointmentService {
-  public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
+  getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -314,15 +314,6 @@ describe('AppointmentEditComponent method calls', () => {
     expect(component.isRecurring).toEqual(true);
   }));
 
-  /*it('should call setDateMethod with current date', fakeAsync(() => {
-    let setDateMethod = spyOn(component, 'setDate');
-
-    component.ngOnInit();
-    tick();
-
-    expect(setDateMethod).toHaveBeenCalledWith(moment(undefined));
-  }));*/
-
   it('should handle change of datepicker', fakeAsync(() => {
     component.dateField.year = 2022;
     component.dateField.month = 4;
@@ -511,5 +502,53 @@ describe('AppointmentEditComponent', () => {
     expect(consoleError).toHaveBeenCalled();
 
     localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should show error message on appointment edit error', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.appointmentEditForm.controls['startHour'].setValue(7);
+    component.appointmentEditForm.controls['startHour'].markAsDirty();
+    component.appointmentEditForm.controls['endHour'].setValue(17);
+    component.appointmentEditForm.controls['endHour'].markAsDirty();
+
+    component.editAppointment();
+    tick();
+
+    expect(component.errorMessage).toBe('Unknown Error.');
+
+    localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should show error message on appointment series edit error', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.appointmentEditForm.controls['startHour'].setValue(7);
+    component.appointmentEditForm.controls['startHour'].markAsDirty();
+    component.appointmentEditForm.controls['endHour'].setValue(17);
+    component.recurringAppointmentEditForm.controls['amount'].setValue(2);
+    component.recurringAppointmentEditForm.controls['amount'].markAsDirty();
+    component.recurringAppointmentEditForm.controls['timeSlotRecurrence'].setValue(3);
+
+    component.editAppointmentSeries();
+    tick();
+
+    expect(component.errorMessage).toBe('Unknown Error.');
+
+    localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should handle invalid input', fakeAsync(() => {
+    component.editAppointment();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
+  }));
+
+  it('should handle invalid input', fakeAsync(() => {
+    component.editAppointmentSeries();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });
