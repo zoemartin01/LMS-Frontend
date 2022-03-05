@@ -1,18 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
-import {Observable} from "rxjs";
-import {environment} from "../../../../environments/environment";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
+import { environment } from "../../../../environments/environment";
 
-import {PersonalOrderListComponent} from './personal-order-list.component';
+import { PersonalOrderListComponent } from './personal-order-list.component';
 
-import {AuthService} from "../../../services/auth.service";
-import {OrderService} from "../../../services/order.service";
+import { AuthService } from "../../../services/auth.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {PagedResponse} from "../../../types/paged-response";
+import { Order } from "../../../types/order";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockOrderService {
   public getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
