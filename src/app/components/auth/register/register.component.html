@@ -44,7 +44,7 @@
           <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
                  formControlName="password_confirmation" autocomplete="password"
                  (change)="checkPasswordConfirmation()">
-          <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
+          <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails" [innerHTML]="passwordConfirmationFailsMessage"></div>
         </div>
         <br>
         <div class="row">
@@ -66,7 +66,7 @@
         <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
         <div class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" role="button">Register</button>
+            <button type="button" class="btn btn-primary" (click)="register()">Register</button>
           </div>
         </div>
       </form>

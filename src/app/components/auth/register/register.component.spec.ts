@@ -1,18 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpErrorResponse } from "@angular/common/http";
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
-import { RegisterComponent } from './register.component';
+import {RegisterComponent} from './register.component';
 
-import { UserService } from '../../../services/user.service';
+import {UserService} from '../../../services/user.service';
 
-import { User } from '../../../types/user';
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {User} from '../../../types/user';
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
 
 class MockUserService {
   register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
@@ -20,7 +19,7 @@ class MockUserService {
       if (email === 'known@example.com') {
         observer.error({
           error: {
-              message: 'User with this email already exists.',
+            message: 'User with this email already exists.',
           }
         });
       }
@@ -60,8 +59,8 @@ describe('RegisterComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: UserService, useClass: MockUserService },
-        { provide: Router, useValue: router },
+        {provide: UserService, useClass: MockUserService},
+        {provide: Router, useValue: router},
       ],
     }).compileComponents();
 
@@ -129,36 +128,39 @@ describe('RegisterComponent', () => {
     });
   });
 
-  it('should confirm password', () => {
+  it('should confirm password', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPassword!');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeFalse();
-  });
+  }));
 
-  it('should not show password confirmation failure because password confirmation field is empty', () => {
+  it('should not show password confirmation failure because password confirmation field is empty', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeFalse();
-  });
+  }));
 
-  it('should show password confirmation failure because password and password conformation fields don\'t match', () => {
+  it('should show password confirmation failure because password and password conformation fields don\'t match', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeTrue();
-  });
+  }));
 });

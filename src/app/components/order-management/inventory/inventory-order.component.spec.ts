@@ -33,44 +33,44 @@ class MockOrderService {
 
       id === "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b"
         ? observer.next({
-          "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-          "itemName": "Awesome Granite Towels",
-          "status": 1,
-          "quantity": 42962,
-          "url": "https://clementine.biz",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+          itemName: "Awesome Granite Towels",
+          status: 1,
+          quantity: 42962,
+          url: "https://clementine.biz",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         })
         : observer.next({
-          "id": "045fcd70-d323-4de2-894e-a10772b23457",
-          "itemName": null,
-          "status": 3,
-          "quantity": 10,
-          "url": "conrad.de/pizza",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "045fcd70-d323-4de2-894e-a10772b23457",
+          itemName: null,
+          status: 3,
+          quantity: 10,
+          url: "conrad.de/pizza",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-            "name": "Fantastic Concrete Pizza",
-            "description": "Cum exercitationem est.",
-            "quantity": 49691
+          item: {
+            id: "920b8cc7-364f-4255-9540-09093f1e167a",
+            name: "Fantastic Concrete Pizza",
+            description: "Cum exercitationem est.",
+            quantity: 49691
           }
         });
     });
@@ -354,7 +354,7 @@ describe('InventoryOrderComponent', () => {
     expect(component.inventoryOrderForm.controls['status'].value).toBe(1);
   }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.order).toEqual({
@@ -407,7 +407,7 @@ describe('InventoryOrderComponent', () => {
     expect(component.inventoryOrderForm.controls['status'].value).toBe(0);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should inventory order', fakeAsync(() => {
     component.inventoryOrderForm.controls['itemName'].setValue('Fantastic Wooden Soap');
@@ -508,7 +508,7 @@ describe('InventoryOrderComponent', () => {
     component.inventoryOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('There has been an error!');
+    expect(component.errorMessage).toEqual('Internal Server Error.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
