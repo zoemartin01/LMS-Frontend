@@ -95,16 +95,12 @@
             </label>
           </div>
         </div>
-        <div class="alert alert-danger mt-2" role="alert"
-             *ngIf="hasError">
-          {{ hasErrorMessage }}
-        </div>
       </form>
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
       <br>
       <div class="row">
         <div class="col text-center">
-          <button [disabled]="!appointmentCreateForm.valid || (isRecurring && !recurringAppointmentCreateForm.valid)"
-                  (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
+          <button (click)="createAppointment()" class="btn btn-primary" role="button">Save</button>
           <button (click)="closeForm.emit(false)" class="btn btn-secondary" role="button">Abort</button>
         </div>
       </div>
