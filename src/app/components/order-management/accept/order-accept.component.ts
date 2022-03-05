@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
+import {Order} from "../../../types/order";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-order-accept',
@@ -42,14 +43,16 @@ export class OrderAcceptComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, public activeModal: NgbActiveModal) {
+  constructor(public orderService: OrderService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
     this.orderAcceptForm.disable();
   }
 
@@ -63,7 +66,7 @@ export class OrderAcceptComponent implements OnInit {
   /**
    * Gets all data of order
    */
-  public async getOrderData() : Promise<void> {
+  public async getOrderData(): Promise<void> {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
@@ -86,13 +89,14 @@ export class OrderAcceptComponent implements OnInit {
   /**
    * Accept order
    */
-  public async acceptOrder() : Promise<void> {
+  public async acceptOrder(): Promise<void> {
+    this.errorMessage = '',
     this.orderService.acceptOrderRequest(this.order.id).subscribe({
       next: () => {
         this.activeModal.close('accepted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       },
     });
   }

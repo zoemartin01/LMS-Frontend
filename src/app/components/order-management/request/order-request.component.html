@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-  <form (keyup.enter)="requestOrder()" [formGroup]="requestOrderForm" (ngSubmit)="requestOrder()">
+  <form (keyup.enter)="requestOrder()" [formGroup]="requestOrderForm">
     <div class="form-group row">
       <label for="itemName" class="form-label">Item Name</label>
       <div class="input-group">
@@ -34,16 +34,11 @@
       <a class="alert-link" href="javascript:void(0)" (click)="openWhitelistRetailerList()">See whitelisted
         retailers</a>
     </div>
-    <div class="alert alert-danger" role="alert" *ngIf="requestOrderError">
-      <b>Creation failed:</b><br>
-      {{ requestOrderErrorMessage }}
-    </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" [disabled]="!requestOrderForm.valid"
-          (click)="requestOrder()">Request
-  </button>
+  <button type="button" class="btn btn-primary" (click)="requestOrder()">Request</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
