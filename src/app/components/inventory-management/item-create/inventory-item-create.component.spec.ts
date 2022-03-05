@@ -1,16 +1,16 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgxPaginationModule } from "ngx-pagination";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Observable} from "rxjs";
 
-import { InventoryItemCreateComponent } from './inventory-item-create.component';
+import {InventoryItemCreateComponent} from './inventory-item-create.component';
 
-import { InventoryService } from "../../../services/inventory.service";
+import {InventoryService} from "../../../services/inventory.service";
 
-import { InventoryItem } from "../../../types/inventory-item";
+import {InventoryItem} from "../../../types/inventory-item";
 
 class MockInventoryService {
   createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
@@ -18,9 +18,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -53,7 +51,7 @@ describe('InventoryItemCreateComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: InventoryService, useClass: MockInventoryService },
+        {provide: InventoryService, useClass: MockInventoryService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -77,7 +75,7 @@ describe('InventoryItemCreateComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.createInventoryItem();
-
+    tick();
     expect(modalClose).toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
   }));
 
@@ -88,24 +86,18 @@ describe('InventoryItemCreateComponent', () => {
     component.createInventoryItemForm.controls['description'].setValue('Distinctio iste et est tenetur officiis quis.');
     component.createInventoryItemForm.controls['quantity'].setValue('40424');
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.createInventoryItem();
-
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
+    tick();
+    expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
-  it('should show error when form is invalid', () => {
-    component.createInventoryItemForm.controls['quantity'].setValue(-15);
-
-    const modalClose = spyOn(component.activeModal, 'close');
+  it('should show error when form is invalid', fakeAsync(() => {
+    component.createInventoryItemForm.controls['quantity'].setValue('');
 
     component.createInventoryItem();
-
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
-  });
+    tick();
+    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
+  }));
 });

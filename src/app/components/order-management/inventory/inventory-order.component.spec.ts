@@ -1,24 +1,24 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { InventoryOrderComponent } from './inventory-order.component';
+import {InventoryOrderComponent} from './inventory-order.component';
 
-import { InventoryService } from "../../../services/inventory.service";
-import { OrderService } from "../../../services/order.service";
+import {InventoryService} from "../../../services/inventory.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { OrderId } from "../../../types/aliases/order-id";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { InventoryItem } from "../../../types/inventory-item";
-import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
-import { PagedResponse } from "../../../types/paged-response";
-import { PagedList } from "../../../types/paged-list";
+import {Order} from "../../../types/order";
+import {OrderId} from "../../../types/aliases/order-id";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {InventoryItem} from "../../../types/inventory-item";
+import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
+import {PagedResponse} from "../../../types/paged-response";
+import {PagedList} from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -26,9 +26,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -83,9 +81,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Order not Found.',
-            }
+            message: 'Order not Found.',
           }
         });
       }
@@ -155,9 +151,7 @@ class MockInventoryService {
       if (inventoryItemName === 'Fantastic Error Soap') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
         return;
@@ -166,9 +160,7 @@ class MockInventoryService {
       if (inventoryItemName !== 'Fantastic Wooden Soap') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           },
           status: 404,
         });
@@ -189,9 +181,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -210,9 +200,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -244,8 +232,8 @@ describe('InventoryOrderComponent', () => {
         FormsModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
-        { provide: InventoryService, useClass: MockInventoryService },
+        {provide: OrderService, useClass: MockOrderService},
+        {provide: InventoryService, useClass: MockInventoryService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -261,7 +249,7 @@ describe('InventoryOrderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page with linked item', () => {
+  it('should init page with linked item', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -284,6 +272,7 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
       "id": "045fcd70-d323-4de2-894e-a10772b23457",
@@ -313,9 +302,9 @@ describe('InventoryOrderComponent', () => {
     expect(component.inventoryOrderForm.controls['quantity'].value).toBe(10);
     expect(component.inventoryOrderForm.controls['url'].value).toBe('conrad.de/pizza');
     expect(component.inventoryOrderForm.controls['status'].value).toBe(3);
-  });
+  }));
 
-  it('should init page whith item name', () => {
+  it('should init page whith item name', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -338,6 +327,7 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
       "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
@@ -362,7 +352,7 @@ describe('InventoryOrderComponent', () => {
     expect(component.inventoryOrderForm.controls['quantity'].value).toBe(42962);
     expect(component.inventoryOrderForm.controls['url'].value).toBe('https://clementine.biz');
     expect(component.inventoryOrderForm.controls['status'].value).toBe(1);
-  });
+  }));
 
   it('should throw error on page init', () => {
     localStorage.setItem('throwError', 'true');
@@ -389,6 +379,7 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
@@ -427,7 +418,6 @@ describe('InventoryOrderComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.inventoryOrder();
-
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -449,7 +439,6 @@ describe('InventoryOrderComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.inventoryOrder();
-
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -470,20 +459,17 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Order not Found.');
+
     expect(component.inventoryItem).toEqual({
       id: "920b8cc7-364f-4255-9540-09093f1e167a",
       name: "Fantastic Concrete Pizza",
       description: "Cum exercitationem est.",
       quantity: 49691,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -496,20 +482,16 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Order not Found.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -522,20 +504,17 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
 
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('There has been an error!');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));

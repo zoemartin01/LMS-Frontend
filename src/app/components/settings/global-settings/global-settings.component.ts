@@ -153,6 +153,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
         this.openWhitelistRetailerView(result.split(' ')[1]);
+        this.getWhitelistRetailers();
       }
     });
   }

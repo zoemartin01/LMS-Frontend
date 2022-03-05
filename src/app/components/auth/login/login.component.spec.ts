@@ -104,8 +104,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.valid).toBeTrue();
 
     component.login().then(() => {
-      expect(component.loginError).toBeFalse();
-      expect(component.loginErrorMessage).toBe('');
+      expect(component.errorMessage).toBe('');
       done();
     });
   });
@@ -117,7 +116,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.valid).toBeTrue();
 
     component.login().then(() => {
-      expect(component.loginError).toBeTrue();
+      expect(component.errorMessage).not.toEqual('');
       expect(locationReload).not.toHaveBeenCalled();
       done();
     });
@@ -130,8 +129,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.valid).toBeFalse();
 
     component.login().then(() => {
-      expect(component.loginError).toBeTrue();
-      expect(component.loginErrorMessage).toBe('Invalid form values');
+      expect(component.errorMessage).toBe('Invalid form values');
       expect(locationReload).not.toHaveBeenCalled();
       done();
     });
