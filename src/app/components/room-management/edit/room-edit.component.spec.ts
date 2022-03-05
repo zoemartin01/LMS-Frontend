@@ -211,12 +211,10 @@ describe('RoomEditComponent', () => {
   it('should show error message on edit Room error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    let consoleError =  spyOn(console, 'error');
-
     component.editRoomData();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('There has been an error!');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -235,7 +233,6 @@ describe('RoomEditComponent', () => {
     component.editRoomData();
     tick();
 
-    expect(component.maxBookingsConflict).toEqual(true);
     expect(component.maxBookingsConflictMessage).toEqual('Bookings conflict!');
 
     localStorage.setItem('throwMaxBookingsConflictError', 'false');

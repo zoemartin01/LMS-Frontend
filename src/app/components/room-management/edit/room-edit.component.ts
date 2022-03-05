@@ -18,14 +18,9 @@ import { Room } from "../../../types/room";
  */
 export class RoomEditComponent implements OnInit {
   public roomEditForm: FormGroup = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
+    name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(1, [
-      Validators.required,
-      Validators.min(1),
-    ]),
+    maxConcurrentBookings: new FormControl(1, Validators.required),
     autoAcceptBookings: new FormControl(false, Validators.required),
   });
   public room: Room = {
@@ -35,17 +30,21 @@ export class RoomEditComponent implements OnInit {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
-  public maxBookingsConflict = false;
   public maxBookingsConflictMessage = '';
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
-   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public utilityService: UtilityService, public roomService: RoomService, public activeModal: NgbActiveModal) {
+  constructor(
+    public roomService: RoomService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -86,6 +85,8 @@ export class RoomEditComponent implements OnInit {
    * Changes data of room
    */
   public async editRoomData(): Promise<void> {
+    this.maxBookingsConflictMessage = '';
+    this.errorMessage = '';
     this.roomService.editRoomData(this.room.id,
       this.utilityService.getDirtyValues(this.roomEditForm)
     ).subscribe({
@@ -94,11 +95,10 @@ export class RoomEditComponent implements OnInit {
       },
       error: error => {
         if (error.status === 409) {
-          this.maxBookingsConflict = true;
-          this.maxBookingsConflictMessage = error.error.message;
+          this.maxBookingsConflictMessage = this.utilityService.formatErrorMessage(error);
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
-
-        console.error('There was an error!', error);
       }
     });
   }
