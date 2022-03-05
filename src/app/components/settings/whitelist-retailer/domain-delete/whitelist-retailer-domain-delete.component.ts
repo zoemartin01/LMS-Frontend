@@ -6,6 +6,7 @@ import { AdminService } from "../../../../services/admin.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
+import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-domain-delete',
@@ -32,14 +33,16 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
   }
   public domain: string = '';
   public name: string = '';
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
     this.domainDeleteForm.disable();
 
   }
@@ -81,6 +84,7 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * Deletes domain of whitelist retailer
    */
   public async deleteDomainOfWhitelistRetailer(): Promise<void> {
+    this.errorMessage = '';
     if (this.whitelistRetailer.id === null) {
       this.activeModal.close('deleted');
       return;
@@ -91,6 +95,7 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
