@@ -35,7 +35,7 @@ export class UserSettingsComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-  passwordConfirmationFails: boolean = false;
+  public passwordConfirmationFails: boolean = false;
   public editedUserSettings: boolean = false;
   public errorMessage = '';
 
