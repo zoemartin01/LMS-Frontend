@@ -174,14 +174,15 @@ describe('UserAcceptComponent', () => {
 
     component.user.id = 'userAB';
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.acceptUser();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.')
 
     localStorage.removeItem('throwError');
   }));

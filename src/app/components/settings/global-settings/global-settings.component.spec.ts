@@ -303,6 +303,20 @@ describe('GlobalSettingsComponent', () => {
     localStorage.removeItem('throwError');
   }));
 
+  it('should throw an error on edit global settings if form values are empty', fakeAsync(() => {
+    expect(component.errorMessage).toEqual('')
+
+    component.globalSettingsForm.controls['user.max_recordings'].setValue('');
+    component.globalSettingsForm.controls['user.max_recordings'].markAsDirty();
+    component.globalSettingsForm.controls['recording.auto_delete'].setValue('');
+    component.globalSettingsForm.controls['recording.auto_delete'].markAsDirty();
+
+    component.editGlobalSettings();
+    tick();
+
+    expect(component.errorMessage).toEqual('You need to fill in all required fields!')
+  }));
+
   it('should open whitelist retailer create component and then whitelist retailer view', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created exampleWhitelistRetailerId');
 

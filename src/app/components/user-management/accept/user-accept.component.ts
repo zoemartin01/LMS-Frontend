@@ -85,7 +85,6 @@ export class UserAcceptComponent implements OnInit {
         this.activeModal.close('accepted');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });

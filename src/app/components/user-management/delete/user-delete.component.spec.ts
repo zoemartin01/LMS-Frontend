@@ -60,9 +60,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -85,9 +83,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -329,14 +325,15 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'userXY';
 
-    const consoleError = spyOn(console, 'error');
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.')
 
     localStorage.removeItem('throwError');
   }));
@@ -346,14 +343,15 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'anotherUserId';
 
-    const consoleError = spyOn(console, 'error');
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
