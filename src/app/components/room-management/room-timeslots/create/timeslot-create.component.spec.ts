@@ -24,9 +24,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -63,9 +61,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -290,7 +286,7 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -316,7 +312,7 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -384,6 +380,6 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalledWith('Invalid form data');
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });
