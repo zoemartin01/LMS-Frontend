@@ -39,4 +39,33 @@ export class UtilityService {
 
     return dirtyValues;
   }
+
+  /**
+   * Formats errors given back by the backend
+   * @param {any} errorResponse error response object
+   */
+  public formatErrorMessage(errorResponse: any): string {
+    //if backend gives back error message as string in response body
+    if (errorResponse.error && errorResponse.error.message && typeof errorResponse.error.message === 'string') {
+      return errorResponse.error.message;
+    }
+
+    //if backend gives back an array of errors in response body
+    if (errorResponse.error && Array.isArray(errorResponse.error)) {
+      let errorMessage = 'Invalid Input:';
+
+      for (const errorEntry of errorResponse.error) {
+        Object.keys(errorEntry.constraints).forEach(
+          (key: any) => {
+            errorMessage += `<br> - ${errorEntry.constraints[key]}`
+          }
+        );
+      }
+
+      return errorMessage;
+    }
+
+    //If no special error message was sent back by backend
+    return 'There has been an error!';
+  }
 }

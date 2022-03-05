@@ -21,7 +21,7 @@ export class InventoryItemEditComponent implements OnInit {
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
     quantity: new FormControl(null, [
-      Validators.required, Validators.min(0)
+      Validators.required
     ]),
   });
   public inventoryItem: InventoryItem = {
@@ -30,6 +30,7 @@ export class InventoryItemEditComponent implements OnInit {
     description: '',
     quantity: null,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
@@ -74,6 +75,11 @@ export class InventoryItemEditComponent implements OnInit {
    * Changes data of inventory item
    */
   public async editInventoryItemData(): Promise<void> {
+    this.errorMessage = '';
+    if(this.inventoryItemEditForm.invalid){
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
     let changedData = this.utilityService.getDirtyValues(this.inventoryItemEditForm);
 
     if (this.inventoryItemEditForm.controls['quantity'].dirty) {
@@ -88,7 +94,7 @@ export class InventoryItemEditComponent implements OnInit {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

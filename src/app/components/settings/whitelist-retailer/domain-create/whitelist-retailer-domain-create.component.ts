@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { AdminService } from "../../../../services/admin.service";
+import {AdminService} from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
+import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
+import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-domain-create',
@@ -27,14 +28,16 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
     name: '',
     domains: [],
   }
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -64,6 +67,7 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    * Creates new domain
    */
   public async addDomainToWhitelistRetailer(): Promise<void> {
+    this.errorMessage = '';
     if (this.domainCreateForm.valid) {
       if (this.whitelistRetailer.id === null) {
         this.activeModal.close(this.domainCreateForm.value.domain);
@@ -79,11 +83,11 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
           }
         },
         error: error => {
-          console.error('There was an error!', error);
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
       })
     } else {
-      console.error('Domain can not be empty!');
+      this.errorMessage = 'Domain can not be empty!';
     }
   }
 }

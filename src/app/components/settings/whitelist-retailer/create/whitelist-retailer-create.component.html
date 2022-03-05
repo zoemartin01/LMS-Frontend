@@ -13,6 +13,7 @@
         </div>
       </div>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
     <div class="row">
       <table class="table table-striped">
         <thead class="thead-dark">
@@ -42,8 +43,7 @@
         <a (click)="openWhitelistRetailerDomainCreationForm()
 " class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Add Domain</a>
       </div>
-      <button type="button" class="btn btn-primary" [disabled]="!retailerCreateForm.valid"
-              (click)="createWhitelistRetailer()">Save
+      <button type="button" class="btn btn-primary" (click)="createWhitelistRetailer()">Save
       </button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
     </div>

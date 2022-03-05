@@ -1,15 +1,15 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { WhitelistRetailerDeleteComponent } from './whitelist-retailer-delete.component';
+import {WhitelistRetailerDeleteComponent} from './whitelist-retailer-delete.component';
 
-import { AdminService } from "../../../../services/admin.service";
+import {AdminService} from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -17,9 +17,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
+            message: 'Whitelist Retailer not Found.',
           }
         });
       }
@@ -39,16 +37,14 @@ class MockAdminService {
         ],
       });
     });
-    }
+  }
 
   deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
+            message: 'Whitelist Retailer not Found.',
           }
         });
       }
@@ -72,7 +68,7 @@ describe('WhitelistRetailerDeleteComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: AdminService, useClass: MockAdminService },
+        {provide: AdminService, useClass: MockAdminService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -95,7 +91,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.whitelistRetailer).toEqual({id: "retailerExampleID",
+    expect(component.whitelistRetailer).toEqual({
+      id: "retailerExampleID",
       name: "McGlynn and Sons and daughters",
       domains: [
         {
@@ -121,6 +118,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
       domains: [],
     });
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
     tick();
 
@@ -129,8 +128,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
       name: '',
       domains: [],
     });
-
     expect(component.retailerDeleteForm.controls['name'].value).toEqual('');
+    expect(consoleError).toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -150,11 +149,14 @@ describe('WhitelistRetailerDeleteComponent', () => {
 
     component.whitelistRetailer.id = 'retailerExampleID';
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteWhitelistRetailer();
 
     expect(modalClose).not.toHaveBeenCalledWith('deleted');
+    expect(component.errorMessage).toEqual('Whitelist Retailer not Found.');
 
     localStorage.removeItem('throwError');
   }));

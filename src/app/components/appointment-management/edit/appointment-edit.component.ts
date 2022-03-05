@@ -4,6 +4,7 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Appointment } from "../../../types/appointment";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
@@ -11,7 +12,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -30,8 +30,8 @@ export class AppointmentEditComponent implements OnInit {
     endHour: new FormControl('', Validators.required),
   });
   public recurringAppointmentEditForm: FormGroup = new FormGroup({
-    timeSlotRecurrence: new FormControl(''),
-    amount: new FormControl(''),
+    timeSlotRecurrence: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),
   });
   public appointment: Appointment = {
     id: null,
@@ -73,6 +73,7 @@ export class AppointmentEditComponent implements OnInit {
   public force = false;
   public timeslotConflict = false;
   public timeslotConflictMessage = '';
+  public errorMessage = '';
 
   /**
    * Constructor
@@ -146,7 +147,13 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointment(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} = {};
+
+    if (!this.appointmentEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
 
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
@@ -168,9 +175,9 @@ export class AppointmentEditComponent implements OnInit {
         if (error.status === 409) {
           this.timeslotConflict = true;
           this.timeslotConflictMessage = error.error.message;
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
-
-        console.error('There was an error!', error);
       }
     });
   }
@@ -179,7 +186,13 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointmentSeries(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringAppointmentEditForm);
+
+    if (!this.appointmentEditForm.valid || !this.recurringAppointmentEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
 
     if (this.force) {
       changedData['force'] = this.force;
@@ -204,9 +217,9 @@ export class AppointmentEditComponent implements OnInit {
       error: error => {
         if (error.status === 409) {
           this.seriesConflict = true;
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
-
-        console.error('There was an error!', error);
       }
     });
   }

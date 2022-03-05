@@ -42,11 +42,11 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
+
+        return;
       }
 
       if (localStorage.getItem('throwMaxBookingsConflictError') === 'true') {
@@ -56,6 +56,8 @@ class MockRoomService {
             message: 'Bookings conflict!',
           },
         });
+
+        return;
       }
 
       const room: Room = {
@@ -211,12 +213,14 @@ describe('RoomEditComponent', () => {
   it('should show error message on edit Room error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    let consoleError =  spyOn(console, 'error');
+    component.roomEditForm.controls['name'].setValue("name");
+    component.roomEditForm.controls['maxConcurrentBookings'].setValue(3);
+    component.roomEditForm.controls['description'].setValue("edited description");
 
     component.editRoomData();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -235,9 +239,18 @@ describe('RoomEditComponent', () => {
     component.editRoomData();
     tick();
 
-    expect(component.maxBookingsConflict).toEqual(true);
     expect(component.maxBookingsConflictMessage).toEqual('Bookings conflict!');
 
     localStorage.setItem('throwMaxBookingsConflictError', 'false');
+  }));
+
+  it('should handle invalid input', fakeAsync(() => {
+    component.roomEditForm.controls['maxConcurrentBookings'].setValue(3);
+    component.roomEditForm.controls['description'].setValue("edited description");
+
+    component.editRoomData();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });

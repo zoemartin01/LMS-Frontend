@@ -1,16 +1,16 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { WhitelistRetailerEditComponent } from './whitelist-retailer-edit.component';
+import {WhitelistRetailerEditComponent} from './whitelist-retailer-edit.component';
 
-import { AdminService } from "../../../../services/admin.service";
+import {AdminService} from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
-import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
+import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
+import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -18,9 +18,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not found.',
-            },
+            message: 'Whitelist Retailer not found.',
           },
         });
       }
@@ -37,7 +35,8 @@ class MockAdminService {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
             domain: "lacey.biz",
           },
-        ]});
+        ]
+      });
     });
   }
 
@@ -47,9 +46,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not found.',
-            },
+            message: 'Whitelist Retailer not found.',
           },
         });
       }
@@ -69,6 +66,7 @@ class MockModalService {
     id: null,
     domain: '',
   };
+
   open(): { componentInstance: { whitelistRetailer: WhitelistRetailer, whitelistRetailerDomain: WhitelistRetailerDomain }, result: Promise<string> } {
     return {
       componentInstance: {
@@ -76,7 +74,7 @@ class MockModalService {
         whitelistRetailerDomain: this.whitelistRetailerDomain,
       },
       result: new Promise<string>(
-        resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
       ),
     };
   }
@@ -96,8 +94,8 @@ describe('RetailerEditComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -123,7 +121,8 @@ describe('RetailerEditComponent', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.whitelistRetailer).toEqual({id: "retailerExampleID",
+    expect(component.whitelistRetailer).toEqual({
+      id: "retailerExampleID",
       name: "McGlynn and Sons and daughters",
       domains: [
         {
@@ -185,14 +184,15 @@ describe('RetailerEditComponent', () => {
     component.whitelistRetailer.id = 'retailerExampleID';
     component.retailerEditForm.controls['name'].setValue('Duck Putin');
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editWhitelistRetailerData();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Whitelist Retailer not found.');
 
     localStorage.removeItem('throwError');
   }));
@@ -237,5 +237,17 @@ describe('RetailerEditComponent', () => {
     expect(component.dirty).toEqual(true);
 
     localStorage.removeItem('returnVal');
+  }));
+
+  it('should throw an error when retailer name is empty', fakeAsync(() => {
+    expect(component.errorMessage).toEqual('');
+
+    component.whitelistRetailer.id = 'retailerExampleID';
+    component.retailerEditForm.controls['name'].setValue('');
+
+    component.editWhitelistRetailerData();
+    tick();
+
+    expect(component.errorMessage).toEqual('Retailer name cannot be empty');
   }));
 });

@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-  <form (keyup.enter)="editInventoryItemData()" [formGroup]="inventoryItemEditForm" (ngSubmit)="editInventoryItemData()">
+  <form (keyup.enter)="editInventoryItemData()" [formGroup]="inventoryItemEditForm">
     <div class="form-group">
       <label for="name" class="my-1">Name</label>
       <div class="input-group">
@@ -25,8 +25,8 @@
       </div>
     </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
-
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="editInventoryItemData()">Save</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>

@@ -74,6 +74,7 @@ export class InventoryListComponent implements OnInit {
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
         this.openInventoryItemViewForm(result.split(' ')[1]);
+        this.getInventory();
       }
     });
   }

@@ -1,18 +1,18 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { OrderAcceptComponent } from './order-accept.component';
+import {OrderAcceptComponent} from './order-accept.component';
 
-import { OrderService } from "../../../services/order.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderId } from "../../../types/aliases/order-id";
+import {Order} from "../../../types/order";
+import {OrderStatus} from "../../../types/enums/order-status";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
+import {OrderId} from "../../../types/aliases/order-id";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -20,53 +20,51 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
 
       id === "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b"
         ? observer.next({
-          "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-          "itemName": "Awesome Granite Towels",
-          "status": 1,
-          "quantity": 42962,
-          "url": "https://clementine.biz",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+          itemName: "Awesome Granite Towels",
+          status: 1,
+          quantity: 42962,
+          url: "https://clementine.biz",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         })
         : observer.next({
-          "id": "045fcd70-d323-4de2-894e-a10772b23457",
-          "itemName": null,
-          "status": 3,
-          "quantity": 10,
-          "url": "conrad.de/pizza",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "045fcd70-d323-4de2-894e-a10772b23457",
+          itemName: null,
+          status: 3,
+          quantity: 10,
+          url: "conrad.de/pizza",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-            "name": "Fantastic Concrete Pizza",
-            "description": "Cum exercitationem est.",
-            "quantity": 49691
+          item: {
+            id: "920b8cc7-364f-4255-9540-09093f1e167a",
+            name: "Fantastic Concrete Pizza",
+            description: "Cum exercitationem est.",
+            quantity: 49691
           }
         });
     });
@@ -77,36 +75,34 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
 
       observer.next({
-        "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-        "itemName": "Awesome Granite Towels",
-        "status": changedData.status,
-        "quantity": 42962,
-        "url": "https://clementine.biz",
-        "user": {
-          "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-          "email": "visitor@test.com",
-          "firstName": "Visitor",
-          "lastName": "Visitor",
-          "role": 2,
-          "emailVerification": true,
-          "isActiveDirectory": false,
-          "notificationChannel": 3
+        id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+        itemName: "Awesome Granite Towels",
+        status: changedData.status,
+        quantity: 42962,
+        url: "https://clementine.biz",
+        user: {
+          id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+          email: "visitor@test.com",
+          firstName: "Visitor",
+          lastName: "Visitor",
+          role: 2,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
         },
-        "item": null
+        item: null
       });
     });
   }
 
   acceptOrderRequest(orderId: OrderId): Observable<Order> {
-    return this.updateOrderData(orderId, { status: OrderStatus.ordered });
+    return this.updateOrderData(orderId, {status: OrderStatus.ordered});
   }
 }
 
@@ -125,7 +121,7 @@ describe('OrderAcceptComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
+        {provide: OrderService, useClass: MockOrderService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -168,26 +164,26 @@ describe('OrderAcceptComponent', () => {
     tick();
 
     expect(component.order).toEqual({
-      "id": "045fcd70-d323-4de2-894e-a10772b23457",
-      "itemName": null,
-      "status": 3,
-      "quantity": 10,
-      "url": "conrad.de/pizza",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "045fcd70-d323-4de2-894e-a10772b23457",
+      itemName: null,
+      status: 3,
+      quantity: 10,
+      url: "conrad.de/pizza",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": {
-        "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-        "name": "Fantastic Concrete Pizza",
-        "description": "Cum exercitationem est.",
-        "quantity": 49691
+      item: {
+        id: "920b8cc7-364f-4255-9540-09093f1e167a",
+        name: "Fantastic Concrete Pizza",
+        description: "Cum exercitationem est.",
+        quantity: 49691
       }
     });
 
@@ -224,22 +220,22 @@ describe('OrderAcceptComponent', () => {
     tick();
 
     expect(component.order).toEqual({
-      "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-      "itemName": "Awesome Granite Towels",
-      "status": 1,
-      "quantity": 42962,
-      "url": "https://clementine.biz",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+      itemName: "Awesome Granite Towels",
+      status: 1,
+      quantity: 42962,
+      url: "https://clementine.biz",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     });
 
     expect(component.orderAcceptForm.controls['itemName'].value).toBe('Awesome Granite Towels');
@@ -311,6 +307,8 @@ describe('OrderAcceptComponent', () => {
 
     component.acceptOrder();
 
+    tick();
+
     expect(modalClose).toHaveBeenCalledWith('accepted');
   }));
 
@@ -319,12 +317,11 @@ describe('OrderAcceptComponent', () => {
 
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.acceptOrder();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('accepted');
+    tick();
+
+    expect(component.errorMessage).toEqual('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));

@@ -1,15 +1,15 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { WhitelistRetailerCreateComponent } from './whitelist-retailer-create.component';
+import {WhitelistRetailerCreateComponent} from './whitelist-retailer-create.component';
 
-import { AdminService } from "../../../../services/admin.service";
+import {AdminService} from "../../../../services/admin.service";
 
-import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
 
 class MockAdminService {
   createWhitelistRetailer(domains: String[], name: String): Observable<WhitelistRetailer> {
@@ -17,38 +17,39 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
 
-      observer.next({id: "retailerExampleID",
+      observer.next({
+        id: "retailerExampleID",
         name: "McGlynn and Sons and daughters",
         domains: [
-        {
-          id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
-        },
-        {
-          id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
-        },
-      ]});
+          {
+            id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+            domain: "jordan.biz"
+          },
+          {
+            id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+            domain: "lacey.biz"
+          },
+        ]
+      });
     });
   }
 }
 
 class MockModalService {
   domain: String = "";
+
   open(): { componentInstance: { domain: String }, result: Promise<string> } {
     return {
       componentInstance: {
         domain: this.domain,
       },
       result: new Promise<string>(
-        resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
       ),
     };
   };
@@ -70,8 +71,8 @@ describe('WhitelistRetailerCreateComponent', () => {
         FormsModule,
       ],
       providers: [
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -108,14 +109,15 @@ describe('WhitelistRetailerCreateComponent', () => {
       "lacey.biz"
     ];
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.createWhitelistRetailer();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('created retailerExampleID');
+    expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

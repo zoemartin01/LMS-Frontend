@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
-import { InventoryService } from "../../../services/inventory.service";
+import {InventoryService} from "../../../services/inventory.service";
 
-import { InventoryItem } from "../../../types/inventory-item";
+import {InventoryItem} from "../../../types/inventory-item";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-item-delete',
@@ -28,14 +29,17 @@ export class InventoryItemDeleteComponent implements OnInit {
     description: '',
     quantity: null,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
+   * @param {UtilityService} utilityService service providing utility functionalities
    */
-  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal) {
+  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal, public utilityService: UtilityService,
+  ) {
     this.inventoryItemDeleteForm.disable();
   }
 
@@ -49,7 +53,7 @@ export class InventoryItemDeleteComponent implements OnInit {
   /**
    * Gets all data of inventory item
    */
-  public async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData(): Promise<void> {
     this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
       next: res => {
         this.inventoryItem = res;
@@ -68,12 +72,13 @@ export class InventoryItemDeleteComponent implements OnInit {
    * Deletes inventory item
    */
   public async deleteInventoryItem(): Promise<void> {
+    this.errorMessage = '';
     this.inventoryService.deleteInventoryItem(this.inventoryItem.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

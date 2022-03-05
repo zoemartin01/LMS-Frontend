@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { LivecamService } from '../../../services/livecam.service';
 
 import { VideoResolution } from 'src/app/types/enums/video-resolution';
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-livecam-schedule',
@@ -37,16 +38,16 @@ export class LivecamScheduleComponent {
   });
   public moment = moment;
   public endMin = moment();
-  public scheduleError: boolean = false;
-  public scheduleErrorMessage: string = '';
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public livecamService: LivecamService, public activeModal: NgbActiveModal) {
+  constructor(public livecamService: LivecamService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
   }
 
   /**
@@ -70,25 +71,12 @@ export class LivecamScheduleComponent {
           this.activeModal.close('scheduled');
         },
         error: error => {
-          if (error.message) {
-            this.scheduleError = true;
-            this.scheduleErrorMessage = error.message;
-          } else {
-            this.scheduleError = true;
-            this.scheduleErrorMessage = 'Invalid Input:';
-
-            /*error.forEach((field: any) => {
-              const constraints = field.constraints;
-              Object.keys(constraints).forEach((key: any) => {
-                this.scheduleErrorMessage += `<br> - ${constraints[key]}`
-              });
-            });*/
-          }
+          console.error(error);
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
       });
     } else {
-      this.scheduleError = true;
-      this.scheduleErrorMessage = 'Invalid form values';
+      this.errorMessage = 'Invalid form values';
     }
   }
 
