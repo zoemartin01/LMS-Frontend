@@ -4,6 +4,7 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Room } from "../../../types/room";
 
@@ -48,16 +49,17 @@ export class AppointmentCreateComponent implements OnInit {
   public force = false;
   public timeslotConflict = false;
   public timeslotConflictMessage = '';
-  public hasError = false;
-  public hasErrorMessage = '';
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    */
   constructor(
     public appointmentService: AppointmentService,
+    public utilityService: UtilityService,
   ) {
   }
 
@@ -98,63 +100,58 @@ export class AppointmentCreateComponent implements OnInit {
    * Opens appointment creation form
    */
   public async createAppointment(): Promise<void> {
-    if (this.appointmentCreateForm.valid && (!this.isRecurring || this.recurringAppointmentCreateForm.valid)) {
-      this.hasError = false;
-      const day = moment(this.date).minutes(0).seconds(0);
-      const endHour = +this.appointmentCreateForm.controls['endHour'].value;
+    this.errorMessage = '';
+    if (!this.appointmentCreateForm.valid || (this.isRecurring && !this.recurringAppointmentCreateForm.valid)) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
 
-      if (!this.isRecurring) {
-        this.appointmentService.createAppointment(
-          this.room,
-          moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 24
-            ? moment(day).add(1, 'day').hours(0)
-            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
-        ).subscribe({
-          next: () => {
-            this.closeForm.emit(true);
-          },
-          error: error => {
-            if (error.status === 409) {
-              this.timeslotConflict = true;
-              this.timeslotConflictMessage = error.error.message;
-            }
+    const day = moment(this.date).minutes(0).seconds(0);
+    const endHour = +this.appointmentCreateForm.controls['endHour'].value;
 
-            console.error('There was an error!', error);
+    if (!this.isRecurring) {
+      this.appointmentService.createAppointment(
+        this.room,
+        moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+        endHour === 24
+          ? moment(day).add(1, 'day').hours(0)
+          : moment(day).hours(moment(endHour, 'HH:mm').hours()),
+      ).subscribe({
+        next: () => {
+          this.closeForm.emit(true);
+        },
+        error: error => {
+          if (error.status === 409) {
+            this.timeslotConflict = true;
+            this.timeslotConflictMessage = error.error.message;
           }
-        });
-      } else {
-        this.appointmentService.createAppointmentSeries(
-          this.room,
-          moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
-          endHour === 24
-            ? moment(day).add(1, 'day').hours(0)
-            : moment(day).hours(moment(endHour, 'HH:mm').hours()),
-          +this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
-          +this.recurringAppointmentCreateForm.value.amount,
-          this.force
-        ).subscribe({
-          next: () => {
-            this.seriesConflict = false;
-            this.closeForm.emit(true);
-          },
-          error: error => {
-            if (error.status === 409) {
-              this.seriesConflict = true;
-            }
 
-            console.error('There was an error!', error);
-          }
-        });
-      }
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
+      });
     } else {
-      if (this.appointmentCreateForm.controls['safetyInstructions'].invalid
-        || this.appointmentCreateForm.controls['hwlabRules'].invalid) {
-        this.hasError = true;
-        this.hasErrorMessage = 'Please accept the safety instructions and the hwlab rules.';
-      }
+      this.appointmentService.createAppointmentSeries(
+        this.room,
+        moment(day).hours(moment(this.appointmentCreateForm.controls['startHour'].value, 'HH:mm').hours()),
+        endHour === 24
+          ? moment(day).add(1, 'day').hours(0)
+          : moment(day).hours(moment(endHour, 'HH:mm').hours()),
+        +this.recurringAppointmentCreateForm.value.timeSlotRecurrence,
+        +this.recurringAppointmentCreateForm.value.amount,
+        this.force
+      ).subscribe({
+        next: () => {
+          this.seriesConflict = false;
+          this.closeForm.emit(true);
+        },
+        error: error => {
+          if (error.status === 409) {
+            this.seriesConflict = true;
+          }
 
-      console.error('Invalid form data')
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
+      });
     }
   }
 }
