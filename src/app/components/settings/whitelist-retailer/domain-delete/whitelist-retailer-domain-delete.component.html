@@ -18,8 +18,8 @@
     </div>
   </form>
   <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
-
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="deleteDomainOfWhitelistRetailer()">Delete Domain</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
