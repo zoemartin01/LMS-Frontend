@@ -15,8 +15,6 @@ import { UserRole } from "../../../types/enums/user-role";
 
 /**
  * Component for the login page
- *
- *
  */
 export class LoginComponent {
   public loginForm: FormGroup = new FormGroup({

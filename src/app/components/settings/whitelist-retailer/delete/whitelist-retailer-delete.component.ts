@@ -14,8 +14,6 @@ import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 /**
  * Component for the deletion of a whitelist retailer
- *
- *
  */
 export class WhitelistRetailerDeleteComponent implements OnInit {
   public retailerDeleteForm: FormGroup = new FormGroup({

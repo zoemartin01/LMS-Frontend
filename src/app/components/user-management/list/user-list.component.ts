@@ -23,8 +23,6 @@ import { PagedList } from "../../../types/paged-list";
 
 /**
  * Component for a list of all users
- *
- *
  */
 export class UserListComponent implements OnInit {
   public pendingUsers: PagedList<User> = new PagedList<User>();

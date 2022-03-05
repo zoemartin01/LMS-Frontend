@@ -169,7 +169,7 @@ describe('InventoryItemViewComponent', () => {
   }));
 
   it('should open order creation form', fakeAsync(() => {
-    localStorage.setItem('returnVal', 'created "045fcd70-d323-4de2-894e-a10772b23457"');
+    localStorage.setItem('returnVal', 'created 045fcd70-d323-4de2-894e-a10772b23457');
 
     component.openOrderCreationForm();
 
