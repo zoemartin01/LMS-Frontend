@@ -1,19 +1,19 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { UserDeleteComponent } from './user-delete.component';
+import {UserDeleteComponent} from './user-delete.component';
 
-import { AdminService } from "../../../services/admin.service";
-import { AuthService } from "../../../services/auth.service";
-import { UserService } from "../../../services/user.service";
+import {AdminService} from "../../../services/admin.service";
+import {AuthService} from "../../../services/auth.service";
+import {UserService} from "../../../services/user.service";
 
-import { User } from "../../../types/user";
-import { UserId } from "../../../types/aliases/user-id";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {User} from "../../../types/user";
+import {UserId} from "../../../types/aliases/user-id";
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -21,9 +21,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -46,9 +44,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -121,9 +117,9 @@ describe('UserDeleteComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: UserService, useClass: MockUserService },
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: AuthService, useClass: MockAuthService},
+        {provide: UserService, useClass: MockUserService},
         NgbActiveModal,
       ],
     }).compileComponents();

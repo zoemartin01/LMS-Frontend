@@ -8,6 +8,7 @@ import { AdminService } from "../../../services/admin.service";
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-decline',
@@ -35,15 +36,17 @@ export class UserDeclineComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   }
+  public errorMessage: string ='';
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(public adminService: AdminService, public utilityService: UtilityService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
     this.userDeclineForm.disable();
   }
 
@@ -76,12 +79,14 @@ export class UserDeclineComponent implements OnInit {
    * Declines user
    */
   public async declineUser(): Promise<void> {
+    this.errorMessage = '';
     this.adminService.declineUserRequest(this.user.id).subscribe({
       next: () => {
         this.activeModal.close('declined');
       },
       error: error => {
         console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       },
     });
   }

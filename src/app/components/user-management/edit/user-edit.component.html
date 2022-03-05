@@ -62,10 +62,10 @@
       </select>
     </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" [disabled]="!userEditForm.valid || passwordConfirmationFails"
-          (click)="editUserData()">Save
+  <button type="button" class="btn btn-primary" (click)="editUserData()">Save
   </button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>
