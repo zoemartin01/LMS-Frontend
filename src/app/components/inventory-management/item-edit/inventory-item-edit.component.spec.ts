@@ -167,7 +167,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.editInventoryItemData();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('There has been an error!');
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');
