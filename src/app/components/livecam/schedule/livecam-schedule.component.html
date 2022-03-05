@@ -59,11 +59,7 @@
       </div>
     </div>
   </form>
-  <div class="alert alert-danger" role="alert" *ngIf="scheduleError">
-    <b>Creation failed:</b>
-    <br>
-    <div [innerHTML]="scheduleErrorMessage"></div>
-  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="scheduleRecording()">
