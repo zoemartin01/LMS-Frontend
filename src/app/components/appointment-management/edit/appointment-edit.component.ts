@@ -12,6 +12,7 @@ import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 import {UtilityService} from "../../../services/utility.service";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-appointment-edit',
@@ -68,6 +69,7 @@ export class AppointmentEditComponent implements OnInit {
     month = 1;
     year = 1990;
   };
+  public dirtyDate = false;
   public isRecurring: boolean = false;
   public seriesConflict = false;
   public force = false;
@@ -106,6 +108,7 @@ export class AppointmentEditComponent implements OnInit {
         this.appointment.end = moment(this.appointment.end)
 
         this.setDate(this.appointment.start);
+        this.dirtyDate = false;
 
         this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
         this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
@@ -126,6 +129,7 @@ export class AppointmentEditComponent implements OnInit {
    * @param {moment.Moment} date date
    */
   public setDate(date: moment.Moment): void {
+    this.dirtyDate = true;
     this.date = date;
 
     this.dateText = this.date.format("DD.MM.YYYY");
@@ -187,7 +191,14 @@ export class AppointmentEditComponent implements OnInit {
 
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
-      const day = moment(this.date).minutes(0).seconds(0);
+      let day;
+
+      if (this.dirtyDate) {
+        day = moment(this.date).minutes(0).seconds(0);
+      } else {
+        const series = (await lastValueFrom(this.appointmentService.getAllAppointmentsForSeries(this.appointment.seriesId))).data;
+        day = moment(series[0].start).minutes(0).seconds(0);
+      }
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
