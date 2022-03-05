@@ -66,7 +66,7 @@
         <td>{{ recording.start?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ recording.resolution }}</td>
-        <td>{{ readableBytes(recording.size!) }}</td>
+        <td>{{ livecamService.readableBytes(recording.size!) }}</td>
         <td class="col-sm-2">
           <button
             (click)="downloadRecording(recording.id)"

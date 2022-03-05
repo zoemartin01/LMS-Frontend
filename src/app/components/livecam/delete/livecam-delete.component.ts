@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
-import { LivecamOverviewComponent } from '../overview/livecam-overview.component';
+import {LivecamService} from 'src/app/services/livecam.service';
 
-import { LivecamService } from 'src/app/services/livecam.service';
-
-import { Recording } from 'src/app/types/recording';
-import { VideoResolution } from '../../../types/enums/video-resolution';
-import { UserRole } from 'src/app/types/enums/user-role';
-import { NotificationChannel } from 'src/app/types/enums/notification-channel';
+import {Recording} from 'src/app/types/recording';
+import {VideoResolution} from '../../../types/enums/video-resolution';
+import {UserRole} from 'src/app/types/enums/user-role';
+import {NotificationChannel} from 'src/app/types/enums/notification-channel';
 
 @Component({
   selector: 'app-livecam-delete',
@@ -55,7 +53,6 @@ export class LivecamDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal service providing modal functionalities
    */
   constructor(public livecamService: LivecamService, public activeModal: NgbActiveModal) {
@@ -84,7 +81,7 @@ export class LivecamDeleteComponent implements OnInit {
         this.recordingDeleteForm.controls['start'].setValue(this.recording.start.format('YYYY-MM-DDTHH:mm'));
         this.recordingDeleteForm.controls['end'].setValue(this.recording.end.format('YYYY-MM-DDTHH:mm'));
         this.recordingDeleteForm.controls['resolution'].setValue(this.recording.resolution);
-        this.recordingDeleteForm.controls['bitrate'].setValue(LivecamOverviewComponent.readableBytes(this.recording.bitrate!));
+        this.recordingDeleteForm.controls['bitrate'].setValue(this.livecamService.readableBytes(this.recording.bitrate!));
       },
       error: (error) => {
         console.error('There was an error!', error);

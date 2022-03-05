@@ -188,30 +188,4 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  /**
-   * Helper method to convert bytes to a human-readable format
-   *
-   * @param {number} bytes bytes
-   * @param {number} decimals decimals
-   */
-  public readableBytes = (bytes: number, decimals: number = 2) =>
-    LivecamOverviewComponent.readableBytes(bytes, decimals);
-
-
-  /**
-   * Static helper method to convert bytes to a human-readable format
-   *
-   * @param {number} bytes bytes
-   * @param {number} decimals decimals
-   */
-  public static readableBytes(bytes: number, decimals: number = 2): string {
-    if (bytes == 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (
-      parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i]
-    );
-  }
 }
