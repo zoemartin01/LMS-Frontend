@@ -41,6 +41,7 @@ export class RegisterComponent {
   errorMessage: string = '';
   passwordConfirmationFails: boolean = false;
   passwordConfirmationFailsMessage: string = 'Password confirmation failed!';
+
   /**
    * Constructor
    * @constructor
