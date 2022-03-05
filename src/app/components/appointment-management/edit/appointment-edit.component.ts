@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { lastValueFrom } from 'rxjs';
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Appointment } from "../../../types/appointment";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
@@ -11,8 +13,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import {UtilityService} from "../../../services/utility.service";
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-appointment-edit',
