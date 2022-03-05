@@ -119,14 +119,6 @@ export class GlobalSettingsComponent implements OnInit {
    */
   public async editGlobalSettings(): Promise<void> {
     if (this.globalSettingsForm.valid) {
-/*      let changedData = this.utilityService.getDirtyValues(this.globalSettingsForm);
-
-      if (this.globalSettingsForm.controls['recording.auto_delete'].dirty) {
-        changedData['recording.auto_delete'] = +changedData['recording.auto_delete']* 86400000;
-      }
-      if (this.globalSettingsForm.controls['user.max_recordings'].dirty) {
-        changedData['user.max_recordings'] = +changedData['user.max_recordings'];
-      }*/
       let changedFields: object[] = [];
       for (let key of Object.keys(this.globalSettingsForm.controls)) {
         if (this.globalSettingsForm.controls[key].value != "") {
