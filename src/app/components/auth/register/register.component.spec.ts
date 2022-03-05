@@ -20,9 +20,7 @@ class MockUserService {
       if (email === 'known@example.com') {
         observer.error({
           error: {
-            error: {
               message: 'User with this email already exists.',
-            }
           }
         });
       }
@@ -89,8 +87,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.registerError).toBeFalse();
-      expect(component.registerErrorMessage).toBe('');
+      expect(component.errorMessage).toBe('');
       expect(router.navigateByUrl).toHaveBeenCalledWith('/register/verify-email');
       done();
     });
@@ -108,7 +105,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.registerError).toBeTrue();
+      expect(component.errorMessage).toEqual('User with this email already exists.');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });
@@ -126,8 +123,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeFalse();
 
     component.register().then(() => {
-      expect(component.registerError).toBeTrue();
-      expect(component.registerErrorMessage).toBe('Invalid form values');
+      expect(component.errorMessage).toBe('You need to fill in all required fields and check all  required checkboxes!');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });

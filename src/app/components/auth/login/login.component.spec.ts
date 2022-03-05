@@ -20,9 +20,7 @@ class MockAuthService {
       if (email !== 'alex@mustermensch.com' || password !== 'bestPasswordEver!') {
         observer.error({
           error: {
-            error: {
               message: 'Invalid email or password.',
-            }
           }
         });
       }
@@ -129,7 +127,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.valid).toBeFalse();
 
     component.login().then(() => {
-      expect(component.errorMessage).toBe('Invalid form values');
+      expect(component.errorMessage).toBe('You need to fill in all required fields!');
       expect(locationReload).not.toHaveBeenCalled();
       done();
     });
