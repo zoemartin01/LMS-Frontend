@@ -12,7 +12,7 @@
           <div class="input-group">
             <label for="maxRecordings" class="my-1">Maximum Recordings</label>
             <div class="input-group">
-              <input type="number" min="1" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
+              <input type="number" class="form-control" id="maxRecordings" formControlName="user.max_recordings">
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
           <div class="input-group">
             <label for="recordingAutoDelete" class="my-1">Days before recordings are deleted</label>
             <div class="input-group">
-              <input type="number" min="1" class="form-control" id="recordingAutoDelete"
+              <input type="number" class="form-control" id="recordingAutoDelete"
                      formControlName="recording.auto_delete">
             </div>
           </div>
@@ -61,6 +61,8 @@
           </div>
         </div>
         <br>
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
+        <div class="alert alert-success" role="alert" *ngIf="editedGlobalSettings">Application Settings were updated!</div>
         <div class="row">
           <div class="col text-center">
             <button type="button" class="btn btn-primary" [disabled]="!globalSettingsForm.valid"
