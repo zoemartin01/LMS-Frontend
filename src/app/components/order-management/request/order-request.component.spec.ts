@@ -1,27 +1,23 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
-import { OrderRequestComponent } from './order-request.component';
+import {OrderRequestComponent} from './order-request.component';
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import { AdminService } from "../../../services/admin.service";
-import { InventoryService } from "../../../services/inventory.service";
-import { OrderService } from "../../../services/order.service";
+import {AdminService} from "../../../services/admin.service";
+import {InventoryService} from "../../../services/inventory.service";
+import {OrderService} from "../../../services/order.service";
 
-import { Order } from "../../../types/order";
-import { OrderId } from "../../../types/aliases/order-id";
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { OrderStatus } from "../../../types/enums/order-status";
-import { InventoryItem } from "../../../types/inventory-item";
-import { PagedResponse } from "../../../types/paged-response";
-import { PagedList } from "../../../types/paged-list";
+import {Order} from "../../../types/order";
+import {InventoryItem} from "../../../types/inventory-item";
+import {PagedResponse} from "../../../types/paged-response";
+import {PagedList} from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -29,9 +25,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -86,9 +80,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -121,9 +113,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -156,20 +146,18 @@ class MockModalService {
 }
 
 class MockAdminService {
-  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted : boolean }> {
+  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted: boolean }> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
 
       observer.next({
-        isWhitelisted : false
+        isWhitelisted: false
       });
     });
   }
@@ -192,10 +180,10 @@ describe('OrderRequestComponent', () => {
         FormsModule,
       ],
       providers: [
-        { provide: OrderService, useClass: MockOrderService },
-        { provide: InventoryService, useClass: MockInventoryService },
-        { provide: AdminService, useClass: MockAdminService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: OrderService, useClass: MockOrderService},
+        {provide: InventoryService, useClass: MockInventoryService},
+        {provide: AdminService, useClass: MockAdminService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -211,10 +199,11 @@ describe('OrderRequestComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', () => {
+  it('should init page', fakeAsync(() => {
     expect(component.existingItems).toEqual([]);
 
     component.ngOnInit();
+    tick();
 
     expect(component.existingItems).toEqual([
       {
@@ -230,32 +219,34 @@ describe('OrderRequestComponent', () => {
         quantity: 40424,
       },
     ]);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.existingItems).toEqual([]);
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.existingItems).toEqual([]);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
-  it('should check url against retailer whitelist', () => {
+  it('should check url against retailer whitelist', fakeAsync(() => {
     expect(component.isWhitelisted).toBeTrue();
 
     component.requestOrderForm.controls['url'].setValue('konrad.com');
 
     component.checkUrlAgainstWhitelistedRetailers();
+    tick();
 
     expect(component.isWhitelisted).toBeFalse();
-  });
+  }));
 
-  it('should throw error when checking url against retailer whitelist', () => {
+  it('should throw error when checking url against retailer whitelist', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.isWhitelisted).toBeTrue();
@@ -263,20 +254,22 @@ describe('OrderRequestComponent', () => {
     component.requestOrderForm.controls['url'].setValue('konrad.com');
 
     component.checkUrlAgainstWhitelistedRetailers();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.isWhitelisted).toBeTrue();
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
-  it('should open whitelist retailer list', () => {
-    let openModal = spyOn(component.modalService,'open');
+  it('should open whitelist retailer list', fakeAsync(() => {
+    let openModal = spyOn(component.modalService, 'open');
 
     component.openWhitelistRetailerList();
+    tick();
 
     expect(openModal).toHaveBeenCalledWith(WhitelistRetailerUserListComponent);
-  });
+  }));
 
   it('should edit order', fakeAsync(() => {
     component.requestOrderForm.controls['itemName'].setValue('Fantastic Wooden Soap');
@@ -286,6 +279,7 @@ describe('OrderRequestComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.requestOrder();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('created 045fcd70-d323-4de2-894e-a10772b23457');
   }));
@@ -297,26 +291,22 @@ describe('OrderRequestComponent', () => {
     component.requestOrderForm.controls['quantity'].setValue(2);
     component.requestOrderForm.controls['url'].setValue('conrad.de/pizza');
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.requestOrder();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
   it('should throw error on edit of order because of invalid data', fakeAsync(() => {
     component.requestOrderForm.controls['itemName'].setValue('Fantastic Wooden Soap');
-    component.requestOrderForm.controls['quantity'].setValue(-3);
+    component.requestOrderForm.controls['quantity'].setValue('');
     component.requestOrderForm.controls['url'].setValue('conrad.de/pizza');
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.requestOrder();
+    tick();
 
-    expect(consoleError).toHaveBeenCalledWith('Invalid form values');
-    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
   }));
 });

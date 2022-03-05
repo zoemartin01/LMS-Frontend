@@ -1,18 +1,18 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgxPaginationModule } from "ngx-pagination";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Observable} from "rxjs";
 
-import { InventoryListComponent } from './inventory-list.component';
+import {InventoryListComponent} from './inventory-list.component';
 
-import { InventoryService } from "../../../services/inventory.service";
+import {InventoryService} from "../../../services/inventory.service";
 
-import { InventoryItem } from "../../../types/inventory-item";
-import { PagedList } from "../../../types/paged-list";
-import { PagedResponse } from "../../../types/paged-response";
+import {InventoryItem} from "../../../types/inventory-item";
+import {PagedList} from "../../../types/paged-list";
+import {PagedResponse} from "../../../types/paged-response";
 
 class MockInventoryService {
   getInventoryItems(limit: number = 0, offset: number = 0): Observable<PagedResponse<InventoryItem>> {
@@ -20,9 +20,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -53,21 +51,21 @@ class MockModalService {
     itemName: new FormControl('', [
       Validators.required,
     ]),
-    quantity: new FormControl(null,[
+    quantity: new FormControl(null, [
       Validators.required,
-      Validators.min(1),
     ]),
     url: new FormControl('', [
       Validators.required,
     ]),
   });
-  open(): { componentInstance: { inventoryItem: { id: string|null }, requestOrderForm: FormGroup }, result: Promise<string> } {
+
+  open(): { componentInstance: { inventoryItem: { id: string | null }, requestOrderForm: FormGroup }, result: Promise<string> } {
     return {
       componentInstance: {
-        inventoryItem: { id: null },
+        inventoryItem: {id: null},
         requestOrderForm: this.requestOrderForm,
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -87,8 +85,8 @@ describe('InventoryListComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: InventoryService, useClass: MockInventoryService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: InventoryService, useClass: MockInventoryService},
+        {provide: NgbModal, useClass: MockModalService},
       ],
     }).compileComponents();
 
@@ -100,12 +98,12 @@ describe('InventoryListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', () => {
+  it('should init page', fakeAsync(() => {
     let pagedList = new PagedList<InventoryItem>();
     expect(component.inventory).toEqual(pagedList);
 
     component.ngOnInit();
-
+    tick();
     pagedList.data = [
       {
         id: "920b8cc7-364f-4255-9540-09093f1e167a",
@@ -121,9 +119,9 @@ describe('InventoryListComponent', () => {
       },
     ];
     expect(component.inventory).toEqual(pagedList);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     let pagedList = new PagedList<InventoryItem>();
@@ -132,12 +130,12 @@ describe('InventoryListComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
-
+    tick();
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventory).toEqual(pagedList);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open inventory item creation form and then inventory item view', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created 920b8cc7-364f-4255-9540-09093f1e167a');
