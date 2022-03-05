@@ -7,12 +7,12 @@ import * as moment from 'moment';
 import { LivecamOverviewComponent } from '../overview/livecam-overview.component';
 
 import { LivecamService } from 'src/app/services/livecam.service';
+import { UtilityService } from "../../../services/utility.service";
 
 import { Recording } from 'src/app/types/recording';
 import { VideoResolution } from '../../../types/enums/video-resolution';
 import { UserRole } from 'src/app/types/enums/user-role';
 import { NotificationChannel } from 'src/app/types/enums/notification-channel';
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-livecam-delete',
@@ -57,11 +57,14 @@ export class LivecamDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
-   * @param {ActivatedRoute} route route that activated this component
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal service providing modal functionalities
    */
-  constructor(public livecamService: LivecamService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public livecamService: LivecamService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.recordingDeleteForm.disable();
   }
 
@@ -105,7 +108,6 @@ export class LivecamDeleteComponent implements OnInit {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
