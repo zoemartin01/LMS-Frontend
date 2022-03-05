@@ -46,6 +46,7 @@ export class UserEditComponent implements OnInit {
     isActiveDirectory: false,
   };
   public UserRole = UserRole;
+  public errorMessage: string = '';
 
   /**
    * Constructor
@@ -88,6 +89,11 @@ export class UserEditComponent implements OnInit {
    * Changes data of user
    */
   public async editUserData(): Promise<void> {
+    this.errorMessage = '';
+    if (!this.userEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
     let changedData = this.utilityService.getDirtyValues(this.userEditForm);
 
     if (this.userEditForm.controls['role'].dirty) {
@@ -104,6 +110,7 @@ export class UserEditComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
