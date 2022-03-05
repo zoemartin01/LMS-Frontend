@@ -65,8 +65,7 @@
         <div class="alert alert-success" role="alert" *ngIf="editedGlobalSettings">Application Settings were updated!</div>
         <div class="row">
           <div class="col text-center">
-            <button type="button" class="btn btn-primary" [disabled]="!globalSettingsForm.valid"
-                    (click)="editGlobalSettings()">Submit
+            <button type="button" class="btn btn-primary" (click)="editGlobalSettings()">Submit
             </button>
             <button type="button" class="btn btn-secondary" (click)="getGlobalSettings()">Reset</button>
           </div>
