@@ -19,10 +19,8 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
             },
-          },
         });
       }
 
@@ -44,10 +42,8 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Internal Server Error.',
             },
-          },
         });
       }
 
