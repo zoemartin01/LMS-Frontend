@@ -137,6 +137,12 @@ export class TimeslotEditComponent implements OnInit {
    */
   public async editTimeslot(): Promise<void> {
     this.errorMessage = '';
+
+    if (!this.timeslotEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+
     let changedData: { [key: string]: any} = {};
 
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty
@@ -166,6 +172,12 @@ export class TimeslotEditComponent implements OnInit {
    */
   public async editTimeslotSeries(): Promise<void> {
     this.errorMessage = '';
+
+    if (!this.timeslotEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+
     let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringTimeslotEditForm);
 
     if (this.date !== this.timeslot.start || this.timeslotEditForm.controls['startHour'].dirty

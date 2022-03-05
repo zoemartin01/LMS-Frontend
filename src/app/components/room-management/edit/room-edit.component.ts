@@ -87,6 +87,12 @@ export class RoomEditComponent implements OnInit {
   public async editRoomData(): Promise<void> {
     this.maxBookingsConflictMessage = '';
     this.errorMessage = '';
+
+    if (!this.roomEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+
     this.roomService.editRoomData(this.room.id,
       this.utilityService.getDirtyValues(this.roomEditForm)
     ).subscribe({
