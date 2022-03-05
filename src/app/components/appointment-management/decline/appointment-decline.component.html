@@ -74,6 +74,7 @@
     </div>
   </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 <div class="modal-footer">
   <button *ngIf="appointment.timeSlotRecurrence===1" type="button" class="btn btn-danger" (click)="declineAppointment()">Decline Appointment</button>
