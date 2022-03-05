@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import {Component} from '@angular/core';
+import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
-import { UserService } from "../../../services/user.service";
+import {UserService} from "../../../services/user.service";
+import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,6 @@ export class RegisterComponent {
     ]),
     email: new FormControl('', [
       Validators.required,
-      Validators.email,
     ]),
     password: new FormControl('', [
       Validators.required,
@@ -38,45 +38,43 @@ export class RegisterComponent {
       Validators.requiredTrue,
     ]),
   });
-  registerError: boolean = false;
-  registerErrorMessage: string = '';
+  errorMessage: string = '';
   passwordConfirmationFails: boolean = false;
 
   /**
    * Constructor
    * @constructor
    * @param {UserService} userService service providing user functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {Router} router router providing navigation
    */
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, public utilityService: UtilityService,
+              private router: Router) {
   }
 
   /**
    * Registers user with provided data
    */
   public async register(): Promise<void> {
-    if (this.registerForm.valid) {
-      this.userService.register(
-        this.registerForm.value.firstname,
-        this.registerForm.value.name,
-        this.registerForm.value.email,
-        this.registerForm.value.password
-      ).subscribe({
-        next: () => {
-          this.registerError = false;
-          this.registerErrorMessage = '';
-          this.router.navigateByUrl('/register/verify-email');
-        },
-        error: error => {
-          this.registerError = true;
-          this.registerErrorMessage = error.error.message;
-          console.error('There was an error!', error);
-        }
-      })
-    } else {
-      this.registerError = true;
-      this.registerErrorMessage = 'Invalid form values';
+    this.errorMessage = '';
+    if (this.registerForm.invalid) {
+      this.errorMessage = 'You need to fill in all required fields and check all  required checkboxes!'
+      return;
     }
+    this.userService.register(
+      this.registerForm.value.firstname,
+      this.registerForm.value.name,
+      this.registerForm.value.email,
+      this.registerForm.value.password
+    ).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/register/verify-email');
+      },
+      error: error => {
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   /**

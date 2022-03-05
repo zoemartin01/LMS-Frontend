@@ -7,7 +7,7 @@
 <div class="row justify-content-center" *ngIf="showForm">
   <div class="card col-md-4">
     <div class="col-auto card-body">
-      <form (keyup.enter)="verifyEmail()" [formGroup]="verifyForm" (ngSubmit)="verifyEmail()">
+      <form (keyup.enter)="verifyEmail()" [formGroup]="verifyForm">
         <div class="form-group">
           <label for="userId" class="my-1">User-ID</label>
           <div class="input-group">
@@ -21,16 +21,12 @@
                  id="token" autocomplete="off" formControlName="token">
         </div>
         <br>
-        <div class="alert alert-danger" role="alert" *ngIf="verifyEmailError">
-          <b>Email verification failed:</b><br>
-          {{ verifyEmailErrorMessage }}
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!verifyForm.valid"
-                    role="button">Verify Email</button>
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage">
+          <div class="row">
+            <div class="col text-center">
+              <button class="btn btn-primary" role="button">Verify Email</button>
+            </div>
           </div>
-        </div>
       </form>
     </div>
   </div>
