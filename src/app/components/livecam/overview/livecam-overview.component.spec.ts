@@ -12,6 +12,7 @@ import {Recording} from "../../../types/recording";
 import {VideoResolution} from "../../../types/enums/video-resolution";
 import * as moment from "moment";
 import {LivecamService} from "../../../services/livecam.service";
+import {RecordingId} from "../../../types/aliases/recording-id";
 
 class MockLivecamService {
   public getFinishedRecordings(): Observable<PagedResponse<Recording>> {
@@ -19,9 +20,7 @@ class MockLivecamService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Unknown Error.',
-            },
           },
         });
       }
@@ -77,9 +76,7 @@ class MockLivecamService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
               message: 'Unknown Error.',
-            },
           },
         });
       }
@@ -128,6 +125,55 @@ class MockLivecamService {
 
       observer.next(recordings);
     });
+  }
+
+  getRecordingData(recordingId: RecordingId): Observable<Recording> {
+    return new Observable((observer) => {
+      if (localStorage.getItem('throwError') === 'true') {
+        observer.error({
+          error: {
+            message: 'Unknown Error.',
+          },
+        });
+      }
+
+      const recording: Recording = {
+        id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        },
+        start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
+        end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
+        resolution: VideoResolution.V1080,
+        bitrate: 1000,
+        size: 0,
+      };
+
+      observer.next(recording);
+    });
+  }
+
+  downloadRecording(recordingId: RecordingId): Observable<ArrayBuffer> {
+      return new Observable((observer) => {
+        if (localStorage.getItem('throwError') === 'true') {
+          observer.error({
+            error: {
+              message: 'Unknown Error.',
+            },
+          });
+        }
+
+        const recordingData: ArrayBuffer = new ArrayBuffer(8);
+
+        observer.next(recordingData);
+      });
   }
 }
 
@@ -404,6 +450,25 @@ describe('LivecamOverviewComponent method calls', () => {
     localStorage.setItem('throwError', 'true');
 
     component.getScheduledRecordings();
+    tick();
+
+    expect(consoleError).toHaveBeenCalled();
+
+    localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should download recording', fakeAsync(() => {
+
+    component.downloadRecording('id');
+    tick(100);
+
+    //expect(component.scheduledRecordings).toEqual(pagedListRecordings);
+  }));
+
+  it('should show error message on get finished recordings error', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.getFinishedRecordings();
     tick();
 
     expect(consoleError).toHaveBeenCalled();

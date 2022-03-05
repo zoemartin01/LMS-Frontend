@@ -284,4 +284,12 @@ describe('LivecamService', () => {
       .toBe(`ws://localhost:3000/api/v1/livecam/stream?token=${localStorage
         .getItem(environment.storageKeys.accessToken)}`);
   });
+
+  it('should convert bytes to a human-readable format', () => {
+    expect(service.readableBytes(123400000, 2)).toEqual('117.68 MB' );
+  });
+
+  it('should convert bytes to a human-readable format 0 bytes', () => {
+    expect(service.readableBytes(0, 2)).toEqual('0 Bytes' );
+  });
 });

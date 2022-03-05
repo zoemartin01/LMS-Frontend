@@ -16,31 +16,29 @@ class MockLivecamService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
 
       const recording: Recording = {
-          id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
-          user: {
-            id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
-            email: "admin@test.com",
-            firstName: "Admin",
-            lastName: "Admin",
-            role: 3,
-            emailVerification: true,
-            isActiveDirectory: false,
-            notificationChannel: 3
-          },
-          start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
-          end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
-          resolution: VideoResolution.V1080,
-          bitrate: 1000,
-          size: 0,
-        };
+        id: '0a8f8f5f-f8f8-4f8f-8f8f-8f8f8f8f8f8f',
+        user: {
+          id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+          email: "admin@test.com",
+          firstName: "Admin",
+          lastName: "Admin",
+          role: 3,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
+        },
+        start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
+        end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
+        resolution: VideoResolution.V1080,
+        bitrate: 1000,
+        size: 0,
+      };
 
       observer.next(recording);
     });
@@ -80,6 +78,16 @@ class MockLivecamService {
       observer.next(recording);
     });
   }
+
+  readableBytes(bytes: number, decimals: number = 2): string {
+    if (bytes == 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (
+      parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i]
+    );
+  }
 }
 
 describe('LivecamDeleteComponent method calls', () => {
@@ -97,7 +105,7 @@ describe('LivecamDeleteComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: LivecamService, useClass: MockLivecamService },
+        {provide: LivecamService, useClass: MockLivecamService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -176,7 +184,7 @@ describe('LivecamDeleteComponent method calls', () => {
     component.deleteRecording();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('There has been an error!');
 
     localStorage.setItem('throwError', 'false');
   }));

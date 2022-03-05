@@ -6,10 +6,6 @@ import * as moment from 'moment';
 
 import {LivecamService} from 'src/app/services/livecam.service';
 
-import {Recording} from 'src/app/types/recording';
-import {VideoResolution} from '../../../types/enums/video-resolution';
-import {UserRole} from 'src/app/types/enums/user-role';
-import {NotificationChannel} from 'src/app/types/enums/notification-channel';
 import { Recording } from 'src/app/types/recording';
 import { VideoResolution } from '../../../types/enums/video-resolution';
 import { UserRole } from 'src/app/types/enums/user-role';

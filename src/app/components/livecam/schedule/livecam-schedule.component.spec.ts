@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -105,8 +105,7 @@ describe('LivecamScheduleComponent', () => {
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      expect(component.scheduleError).toBeFalse();
-      expect(component.scheduleErrorMessage).toBe('');
+      expect(component.errorMessage).toEqual('');
       expect(closeModal).toHaveBeenCalledWith('scheduled')
       done();
     });
@@ -123,8 +122,7 @@ describe('LivecamScheduleComponent', () => {
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      expect(component.scheduleError).toBeFalse();
-      expect(component.scheduleErrorMessage).toBe('');
+      expect(component.errorMessage).toBe('');
       expect(closeModal).toHaveBeenCalledWith('scheduled')
       done();
     });
@@ -141,8 +139,7 @@ describe('LivecamScheduleComponent', () => {
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      expect(component.scheduleError).toBeFalse();
-      expect(component.scheduleErrorMessage).toBe('');
+      expect(component.errorMessage).toEqual('');
       expect(closeModal).toHaveBeenCalledWith('scheduled')
       done();
     });
@@ -154,15 +151,14 @@ describe('LivecamScheduleComponent', () => {
     component.recordingScheduleForm.controls['start'].setValue('2019-01-02T00:00');
     component.recordingScheduleForm.controls['end'].setValue('2019-01-03T00:00');
     component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
-    component.recordingScheduleForm.controls['bitrate'].setValue(1);
+    component.recordingScheduleForm.controls['bitrate'].setValue('-1');
     component.recordingScheduleForm.controls['bitrate_unit'].setValue('bps');
 
     expect(component.recordingScheduleForm.valid).toBeTrue();
 
     component.scheduleRecording().then(() => {
-      expect(component.scheduleError).toBeTrue();
-      expect(component.scheduleErrorMessage).toBe(
-        'Invalid Input:'
+      expect(component.errorMessage).toEqual(
+        'Unknown Error.'
       );
       done();
     });
@@ -173,17 +169,29 @@ describe('LivecamScheduleComponent', () => {
     component.recordingScheduleForm.controls['start'].setValue('2019-01-02T00:00:00.000Z');
     component.recordingScheduleForm.controls['end'].setValue('2019-01-03T00:00:00.000Z');
     component.recordingScheduleForm.controls['resolution'].setValue(VideoResolution.V1080);
-    component.recordingScheduleForm.controls['bitrate'].setValue(-1);
+    component.recordingScheduleForm.controls['bitrate'].setValue('');
     component.recordingScheduleForm.controls['bitrate_unit'].setValue('bps');
 
     expect(component.recordingScheduleForm.valid).toBeFalse();
 
     component.scheduleRecording().then(() => {
-      expect(component.scheduleError).toBeTrue();
-      expect(component.scheduleErrorMessage).toBe(
-         'Invalid form values'
-       );
+      expect(component.errorMessage).toEqual(
+        'You need to fill in all required fields!'
+      );
       done();
     });
   });
+
+  it('should set the minimum of end moment to be the start moment', fakeAsync((one: DoneFn) => {
+    component.recordingScheduleForm.controls['start'].setValue('2019-01-02T00:00:00.000Z');
+    let endMin = moment('2019-01-02T00:00:00.000Z', 'YYYY-MM-DDTHH:mm');
+    component.updateEndField();
+    tick();
+    expect(component.endMin).toEqual(endMin);
+  }));
+
+  it('should turn all non-null enum values into strings', fakeAsync((one: DoneFn) => {
+    expect(component.resolutions()).toEqual(['256x144', '320x240', '640x360', '640x480', '1280x720', '1920x1080', '2560x1440', '3840x2160']);
+    tick();
+  }));
 });
