@@ -95,7 +95,6 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });

@@ -184,14 +184,15 @@ describe('RetailerEditComponent', () => {
     component.whitelistRetailer.id = 'retailerExampleID';
     component.retailerEditForm.controls['name'].setValue('Duck Putin');
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editWhitelistRetailerData();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Whitelist Retailer not found.');
 
     localStorage.removeItem('throwError');
   }));
@@ -236,5 +237,17 @@ describe('RetailerEditComponent', () => {
     expect(component.dirty).toEqual(true);
 
     localStorage.removeItem('returnVal');
+  }));
+
+  it('should throw an error when retailer name is empty', fakeAsync(() => {
+    expect(component.errorMessage).toEqual('');
+
+    component.whitelistRetailer.id = 'retailerExampleID';
+    component.retailerEditForm.controls['name'].setValue('');
+
+    component.editWhitelistRetailerData();
+    tick();
+
+    expect(component.errorMessage).toEqual('Retailer name cannot be empty');
   }));
 });

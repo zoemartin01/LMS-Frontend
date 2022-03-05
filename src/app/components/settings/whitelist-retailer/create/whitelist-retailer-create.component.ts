@@ -56,7 +56,6 @@ export class WhitelistRetailerCreateComponent {
         this.activeModal.close(`created ${whitelistRetailer.id}`);
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });

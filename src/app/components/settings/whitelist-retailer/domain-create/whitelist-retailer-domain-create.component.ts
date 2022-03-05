@@ -83,12 +83,10 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
           }
         },
         error: error => {
-          console.error('There was an error!', error);
           this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
       })
     } else {
-      console.error('Domain can not be empty!');
       this.errorMessage = 'Domain can not be empty!';
     }
   }

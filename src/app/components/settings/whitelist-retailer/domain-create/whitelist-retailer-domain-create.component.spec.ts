@@ -182,14 +182,15 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     component.domainCreateForm.controls['domain'].setValue('louisa.org');
     component.whitelistRetailer.id = 'retailerExampleID';
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.addDomainToWhitelistRetailer();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.')
 
     localStorage.removeItem('throwError');
   }));
@@ -217,14 +218,15 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     component.domainCreateForm.controls['domain'].setValue('');
     component.whitelistRetailer.id = 'retailerExampleID';
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.addDomainToWhitelistRetailer();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Domain can not be empty!')
 
     localStorage.removeItem('throwError');
   }));

@@ -71,7 +71,6 @@ export class WhitelistRetailerDeleteComponent implements OnInit {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });

@@ -82,7 +82,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
    */
   public async editWhitelistRetailerData(): Promise<void> {
     this.errorMessage = '';
-    if(!this.retailerEditForm.valid) {
+    if (!this.retailerEditForm.valid) {
       this.errorMessage = 'Retailer name cannot be empty';
       return;
     }
@@ -94,7 +94,6 @@ export class WhitelistRetailerEditComponent implements OnInit {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
