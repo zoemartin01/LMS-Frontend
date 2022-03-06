@@ -202,7 +202,7 @@ describe('WhitelistRetailerDomainEditComponent', () => {
     component.domainEditForm.controls['domain'].setValue('jordan.org');
     component.whitelistRetailer.id = 'retailerExampleID';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -210,13 +210,13 @@ describe('WhitelistRetailerDomainEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
   it('should throw an error if whitelist retailer domain is empty', fakeAsync(() => {
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     component.whitelistRetailer.id = 'retailerExampleID';
 
@@ -225,6 +225,6 @@ describe('WhitelistRetailerDomainEditComponent', () => {
     component.editDomainOfWhitelistRetailer();
     tick();
 
-    expect(component.errorMessage).toEqual('Domain can not be empty!');
+    expect(component.errorMessage).toBe('Domain can not be empty!');
   }));
 });

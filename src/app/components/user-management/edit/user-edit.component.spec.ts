@@ -204,7 +204,7 @@ describe('UserEditComponent', () => {
 
     component.user.id = 'userXY';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     component.userEditForm.controls['firstName'].setValue('Duck');
     component.userEditForm.controls['firstName'].markAsDirty();
@@ -227,13 +227,13 @@ describe('UserEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
   it('should throw an error when trying trying to send empty form values', fakeAsync(() => {
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     component.user.id = 'userXY';
     component.userEditForm.controls['firstName'].setValue('');
@@ -246,7 +246,7 @@ describe('UserEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!')
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {

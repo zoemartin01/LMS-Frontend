@@ -104,7 +104,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.errorMessage).toEqual('User with this email already exists.');
+      expect(component.errorMessage).toBe('User with this email already exists.');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });

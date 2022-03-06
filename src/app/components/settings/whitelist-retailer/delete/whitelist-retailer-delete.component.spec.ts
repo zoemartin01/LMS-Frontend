@@ -150,7 +150,7 @@ describe('WhitelistRetailerDeleteComponent', () => {
 
     component.whitelistRetailer.id = 'retailerExampleID';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -158,7 +158,7 @@ describe('WhitelistRetailerDeleteComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalledWith('deleted');
-    expect(component.errorMessage).toEqual('Whitelist Retailer not Found.');
+    expect(component.errorMessage).toBe('Whitelist Retailer not Found.');
 
     localStorage.removeItem('throwError');
   }));

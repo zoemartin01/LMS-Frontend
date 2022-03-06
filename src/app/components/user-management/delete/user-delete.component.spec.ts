@@ -325,15 +325,15 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'userXY';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
+    expect(component.errorMessage).toBe('Internal Server Error.');
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.')
 
     localStorage.removeItem('throwError');
   }));
@@ -343,15 +343,15 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'anotherUserId';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
+    expect(component.errorMessage).toBe('Internal Server Error.');
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

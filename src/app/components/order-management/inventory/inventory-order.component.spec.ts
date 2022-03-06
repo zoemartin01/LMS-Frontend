@@ -460,7 +460,7 @@ describe('InventoryOrderComponent', () => {
     component.inventoryOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Order not Found.');
+    expect(component.errorMessage).toBe('Order not Found.');
 
     expect(component.inventoryItem).toEqual({
       id: "920b8cc7-364f-4255-9540-09093f1e167a",
@@ -483,7 +483,7 @@ describe('InventoryOrderComponent', () => {
     component.inventoryOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Order not Found.');
+    expect(component.errorMessage).toBe('Order not Found.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
@@ -505,7 +505,7 @@ describe('InventoryOrderComponent', () => {
     component.inventoryOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Internal Server Error.');
+    expect(component.errorMessage).toBe('Internal Server Error.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',

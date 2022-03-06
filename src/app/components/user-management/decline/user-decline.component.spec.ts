@@ -173,7 +173,7 @@ describe('UserDeclineComponent', () => {
 
     component.user.id = 'userAB';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -181,7 +181,7 @@ describe('UserDeclineComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.')
+    expect(component.errorMessage).toBe('Internal Server Error.')
 
     localStorage.removeItem('throwError');
   }));

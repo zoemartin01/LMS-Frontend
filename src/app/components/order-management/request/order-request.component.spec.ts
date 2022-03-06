@@ -294,7 +294,7 @@ describe('OrderRequestComponent', () => {
     component.requestOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Internal Server Error.');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
@@ -307,6 +307,6 @@ describe('OrderRequestComponent', () => {
     component.requestOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });

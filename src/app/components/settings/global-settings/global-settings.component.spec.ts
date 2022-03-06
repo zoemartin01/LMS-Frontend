@@ -301,7 +301,7 @@ describe('GlobalSettingsComponent', () => {
   }));
 
   it('should throw an error on edit global settings if form values are empty', fakeAsync(() => {
-    expect(component.errorMessage).toEqual('')
+    expect(component.errorMessage).toBe('')
 
     component.globalSettingsForm.controls['user.max_recordings'].setValue('');
     component.globalSettingsForm.controls['user.max_recordings'].markAsDirty();
@@ -311,7 +311,7 @@ describe('GlobalSettingsComponent', () => {
     component.editGlobalSettings();
     tick();
 
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!')
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should open whitelist retailer create component and then whitelist retailer view', fakeAsync(() => {

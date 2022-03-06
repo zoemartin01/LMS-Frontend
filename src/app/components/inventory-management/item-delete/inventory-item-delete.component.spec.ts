@@ -150,7 +150,7 @@ describe('InventoryItemDeleteComponent', () => {
     component.deleteInventoryItem();
     tick();
 
-    expect(component.errorMessage).toEqual('Inventory Item not Found.');
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));
