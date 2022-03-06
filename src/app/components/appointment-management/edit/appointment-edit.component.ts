@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { lastValueFrom } from 'rxjs';
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Appointment } from "../../../types/appointment";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
@@ -11,7 +13,6 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { RoomTimespanType } from "../../../types/enums/timespan-type";
 import { UserRole } from "../../../types/enums/user-role";
 import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-appointment-edit',
@@ -30,8 +31,8 @@ export class AppointmentEditComponent implements OnInit {
     endHour: new FormControl('', Validators.required),
   });
   public recurringAppointmentEditForm: FormGroup = new FormGroup({
-    timeSlotRecurrence: new FormControl(''),
-    amount: new FormControl(''),
+    timeSlotRecurrence: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),
   });
   public appointment: Appointment = {
     id: null,
@@ -68,11 +69,13 @@ export class AppointmentEditComponent implements OnInit {
     month = 1;
     year = 1990;
   };
+  public dirtyDate = false;
   public isRecurring: boolean = false;
   public seriesConflict = false;
   public force = false;
   public timeslotConflict = false;
   public timeslotConflictMessage = '';
+  public errorMessage = '';
 
   /**
    * Constructor
@@ -106,6 +109,7 @@ export class AppointmentEditComponent implements OnInit {
         this.appointment.end = moment(this.appointment.end)
 
         this.setDate(this.appointment.start);
+        this.dirtyDate = false;
 
         this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
         this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
@@ -126,6 +130,7 @@ export class AppointmentEditComponent implements OnInit {
    * @param {moment.Moment} date date
    */
   public setDate(date: moment.Moment): void {
+    this.dirtyDate = true;
     this.date = date;
 
     this.dateText = this.date.format("DD.MM.YYYY");
@@ -146,7 +151,13 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointment(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} = {};
+
+    if (!this.appointmentEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
 
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
@@ -168,9 +179,9 @@ export class AppointmentEditComponent implements OnInit {
         if (error.status === 409) {
           this.timeslotConflict = true;
           this.timeslotConflictMessage = error.error.message;
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
-
-        console.error('There was an error!', error);
       }
     });
   }
@@ -179,7 +190,13 @@ export class AppointmentEditComponent implements OnInit {
    * Changes data of single appointment
    */
   public async editAppointmentSeries(): Promise<void> {
+    this.errorMessage = '';
     let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringAppointmentEditForm);
+
+    if (!this.appointmentEditForm.valid || !this.recurringAppointmentEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
 
     if (this.force) {
       changedData['force'] = this.force;
@@ -187,7 +204,14 @@ export class AppointmentEditComponent implements OnInit {
 
     if (this.date !== this.appointment.start || this.appointmentEditForm.controls['startHour'].dirty
       || this.appointmentEditForm.controls['endHour'].dirty) {
-      const day = moment(this.date).minutes(0).seconds(0);
+      let day;
+
+      if (this.dirtyDate) {
+        day = moment(this.date).minutes(0).seconds(0);
+      } else {
+        const series = (await lastValueFrom(this.appointmentService.getAllAppointmentsForSeries(this.appointment.seriesId))).data;
+        day = moment(series[0].start).minutes(0).seconds(0);
+      }
 
       changedData['start'] = day.hours(moment(this.appointmentEditForm.controls['startHour'].value, 'HH:mm')
         .hours()).toISOString();
@@ -204,9 +228,9 @@ export class AppointmentEditComponent implements OnInit {
       error: error => {
         if (error.status === 409) {
           this.seriesConflict = true;
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
-
-        console.error('There was an error!', error);
       }
     });
   }

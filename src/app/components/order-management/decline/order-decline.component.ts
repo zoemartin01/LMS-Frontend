@@ -3,6 +3,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup } from "@angular/forms";
 
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
@@ -43,14 +44,20 @@ export class OrderDeclineComponent implements OnInit {
     },
     status: OrderStatus.unknown,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, public activeModal: NgbActiveModal) {
+  constructor(
+    public orderService: OrderService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.orderDeclineForm.disable();
   }
 
@@ -64,7 +71,7 @@ export class OrderDeclineComponent implements OnInit {
   /**
    * Gets all data of order
    */
-  public async getOrderData() : Promise<void> {
+  public async getOrderData(): Promise<void> {
     this.orderService.getOrderData(this.order.id).subscribe({
       next: res => {
         this.order = res;
@@ -74,6 +81,7 @@ export class OrderDeclineComponent implements OnInit {
         } else {
           this.orderDeclineForm.controls['itemName'].setValue(res.itemName);
         }
+
         this.orderDeclineForm.controls['quantity'].setValue(res.quantity);
         this.orderDeclineForm.controls['url'].setValue(res.url);
         this.orderDeclineForm.controls['status'].setValue(res.status);
@@ -87,13 +95,14 @@ export class OrderDeclineComponent implements OnInit {
   /**
    * Declines order
    */
-  public async declineOrder() : Promise<void> {
+  public async declineOrder(): Promise<void> {
+    this.errorMessage = '';
     this.orderService.declineOrderRequest(this.order.id).subscribe({
       next: () => {
         this.activeModal.close('declined');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       },
     });
   }

@@ -1,8 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -20,9 +19,7 @@ class MockUserService {
       if (email === 'known@example.com') {
         observer.error({
           error: {
-            error: {
-              message: 'User with this email already exists.',
-            }
+            message: 'User with this email already exists.',
           }
         });
       }
@@ -89,8 +86,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.registerError).toBeFalse();
-      expect(component.registerErrorMessage).toBe('');
+      expect(component.errorMessage).toBe('');
       expect(router.navigateByUrl).toHaveBeenCalledWith('/register/verify-email');
       done();
     });
@@ -108,7 +104,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.registerError).toBeTrue();
+      expect(component.errorMessage).toBe('User with this email already exists.');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });
@@ -126,43 +122,45 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeFalse();
 
     component.register().then(() => {
-      expect(component.registerError).toBeTrue();
-      expect(component.registerErrorMessage).toBe('Invalid form values');
+      expect(component.errorMessage).toBe('You need to fill in all required fields and check all  required checkboxes!');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });
   });
 
-  it('should confirm password', () => {
+  it('should confirm password', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPassword!');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeFalse();
-  });
+  }));
 
-  it('should not show password confirmation failure because password confirmation field is empty', () => {
+  it('should not show password confirmation failure because password confirmation field is empty', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeFalse();
-  });
+  }));
 
-  it('should show password confirmation failure because password and password conformation fields don\'t match', () => {
+  it('should show password confirmation failure because password and password conformation fields don\'t match', fakeAsync(() => {
     expect(component.passwordConfirmationFails).toBeFalse();
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
 
     component.checkPasswordConfirmation();
+    tick();
 
     expect(component.passwordConfirmationFails).toBeTrue();
-  });
+  }));
 });

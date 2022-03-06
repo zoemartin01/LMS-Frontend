@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { RoomService } from "../../../../services/room.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { RoomTimespan } from "../../../../types/room-timespan";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
@@ -45,15 +46,23 @@ export class TimeslotDeleteComponent implements OnInit {
     maxStart: null,
     amount: 1,
   };
+  public errorMessage = '';
+  public force = false;
+  public appointmentConflictMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, private route: ActivatedRoute,  public activeModal: NgbActiveModal) {
+  constructor(
+    public roomService: RoomService,
+    public utilityService: UtilityService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal) {
     this.timeslotDeleteForm.disable();
   }
 
@@ -68,12 +77,19 @@ export class TimeslotDeleteComponent implements OnInit {
    * Deletes timeslot
    */
   public async deleteTimeslot(): Promise<void> {
-    this.roomService.deleteTimeslot(this.timeslot.room.id, this.timeslot.id).subscribe({
+    this.errorMessage = '';
+    this.appointmentConflictMessage = '';
+
+    this.roomService.deleteTimeslot(this.timeslot.room.id, this.timeslot.id, this.force).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        if (error.status === 409) {
+          this.appointmentConflictMessage = this.utilityService.formatErrorMessage(error);
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
       }
     });
   }
@@ -82,12 +98,19 @@ export class TimeslotDeleteComponent implements OnInit {
    * Deletes timeslot series
    */
   public async deleteTimeslotSeries(): Promise<void> {
-    this.roomService.deleteTimeslotSeries(this.timeslot.room.id, this.timeslot.seriesId).subscribe({
+    this.errorMessage = '';
+    this.appointmentConflictMessage = '';
+
+    this.roomService.deleteTimeslotSeries(this.timeslot.room.id, this.timeslot.seriesId, this.force).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        if (error.status === 409) {
+          this.appointmentConflictMessage = this.utilityService.formatErrorMessage(error);
+        } else {
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        }
       }
     });
   }

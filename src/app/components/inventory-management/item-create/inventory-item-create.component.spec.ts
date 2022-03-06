@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -18,9 +18,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -77,6 +75,7 @@ describe('InventoryItemCreateComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.createInventoryItem();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
   }));
@@ -88,24 +87,20 @@ describe('InventoryItemCreateComponent', () => {
     component.createInventoryItemForm.controls['description'].setValue('Distinctio iste et est tenetur officiis quis.');
     component.createInventoryItemForm.controls['quantity'].setValue('40424');
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.createInventoryItem();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
-  it('should show error when form is invalid', () => {
-    component.createInventoryItemForm.controls['quantity'].setValue(-15);
-
-    const modalClose = spyOn(component.activeModal, 'close');
+  it('should show error when form is invalid', fakeAsync(() => {
+    component.createInventoryItemForm.controls['quantity'].setValue('');
 
     component.createInventoryItem();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('created 5b3c87c9-81a7-411e-b55a-8486ba065b4b');
-  });
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
+  }));
 });

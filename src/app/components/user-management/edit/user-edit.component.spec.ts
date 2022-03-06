@@ -19,10 +19,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -34,7 +32,7 @@ class MockAdminService {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -44,9 +42,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -208,6 +204,8 @@ describe('UserEditComponent', () => {
 
     component.user.id = 'userXY';
 
+    expect(component.errorMessage).toBe('');
+
     component.userEditForm.controls['firstName'].setValue('Duck');
     component.userEditForm.controls['firstName'].markAsDirty();
     component.userEditForm.controls['lastName'].setValue('Putin');
@@ -224,15 +222,31 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editUserData();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
+  }));
+
+  it('should throw an error when trying trying to send empty form values', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
+    component.user.id = 'userXY';
+    component.userEditForm.controls['firstName'].setValue('');
+    component.userEditForm.controls['lastName'].setValue('');
+    component.userEditForm.controls['email'].setValue('');
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserData();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {

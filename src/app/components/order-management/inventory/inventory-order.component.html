@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-  <form (keyup.enter)="inventoryOrder()" [formGroup]="inventoryOrderForm" (ngSubmit)="inventoryOrder()">
+  <form (keyup.enter)="inventoryOrder()" [formGroup]="inventoryOrderForm">
     <div class="form-group">
       <input type="text" class="form-control" list="itemOptions" id="itemName" placeholder="Item Name"
              formControlName="itemName" autocomplete="itemName">
@@ -34,6 +34,7 @@
       </select>
     </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 
 <div class="modal-footer">

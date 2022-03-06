@@ -21,10 +21,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -32,12 +30,12 @@ class MockAdminService {
         {
           key: "user.max_recordings",
           value: "5",
-          description: "Maximum Recordings per User"
+          description: "Maximum Recordings per User",
         },
         {
           key: "recording.auto_delete",
           value: "86400000",
-          description: "Time after a recording gets automatically deleted"
+          description: "Time after a recording gets automatically deleted",
         },
       ];
       observer.next(globalSettings);
@@ -49,9 +47,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -64,17 +60,17 @@ class MockAdminService {
           domains: [
             {
               id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-              domain: "jordan.biz"
+              domain: "jordan.biz",
             },
             {
               id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-              domain: "lacey.biz"
+              domain: "lacey.biz",
             },
             {
               id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-              domain: "louisa.org"
-            }
-          ]
+              domain: "louisa.org",
+            },
+          ],
         },
         {
           id: "6b01d1a9-0712-46a9-baef-03edc9f7b128",
@@ -82,38 +78,37 @@ class MockAdminService {
           domains: [
             {
               id: "987f5291-e2cc-4ecc-9731-55b64bbeba44",
-              domain: "roma.biz"
+              domain: "roma.biz",
             },
             {
               id: "3c902fdf-1d62-4ecf-bf16-b75108134929",
-              domain: "diana.net"
+              domain: "diana.net",
             },
             {
               id: "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
-              domain: "noelia.biz"
-            }
-          ]
+              domain: "noelia.biz",
+            },
+          ],
         }]
       observer.next(pagedList);
-    })
+    });
   }
+
   updateGlobalSettings(changedData: object): Observable<GlobalSetting[]> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
       let globalSettings: GlobalSetting[] = [
         {
-        key: "user.max_recordings",
-        value: "10",
-        description: "Maximum Recordings per User"
-      },
+          key: "user.max_recordings",
+          value: "10",
+          description: "Maximum Recordings per User"
+        },
         {
           key: "recording.auto_delete",
           value: "69420",
@@ -126,12 +121,12 @@ class MockAdminService {
 }
 
 class MockModalService {
-  open(): { componentInstance: { whitelistRetailer: { id: string|null } }, result: Promise<string> } {
+  open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
         whitelistRetailer: { id: null },
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -165,9 +160,8 @@ describe('GlobalSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', fakeAsync( () => {
+  it('should init page', fakeAsync(() => {
     let pagedListW = new PagedList<WhitelistRetailer>();
-    let globalSettings: GlobalSetting[] = [];
 
     expect(component.globalSettingsForm.controls['user.max_recordings'].value).toEqual('');
     expect(component.globalSettingsForm.controls['recording.auto_delete'].value).toEqual('');
@@ -182,16 +176,16 @@ describe('GlobalSettingsComponent', () => {
     component.ngOnInit();
     tick();
 
-    globalSettings = [
+    let globalSettings: GlobalSetting[] = [
       {
         key: "user.max_recordings",
         value: "5",
-        description: "Maximum Recordings per User"
+        description: "Maximum Recordings per User",
       },
       {
         key: "recording.auto_delete",
         value: "86400000",
-        description: "Time after a recording gets automatically deleted"
+        description: "Time after a recording gets automatically deleted",
       },
     ];
 
@@ -202,17 +196,17 @@ describe('GlobalSettingsComponent', () => {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
           {
             id: "131d596c-1ec3-4c3d-a31e-02bb2e0b253b",
-            domain: "louisa.org"
-          }
-        ]
+            domain: "louisa.org",
+          },
+        ],
       },
       {
         id: "6b01d1a9-0712-46a9-baef-03edc9f7b128",
@@ -220,17 +214,17 @@ describe('GlobalSettingsComponent', () => {
         domains: [
           {
             id: "987f5291-e2cc-4ecc-9731-55b64bbeba44",
-            domain: "roma.biz"
+            domain: "roma.biz",
           },
           {
             id: "3c902fdf-1d62-4ecf-bf16-b75108134929",
-            domain: "diana.net"
+            domain: "diana.net",
           },
           {
             id: "e27156ea-0036-4ed8-be4c-1e10e1c6e209",
-            domain: "noelia.biz"
-          }
-        ]
+            domain: "noelia.biz",
+          },
+        ],
       }];
 
     expect(component.globalSettingsForm.controls['user.max_recordings'].value).toEqual(+globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
@@ -293,8 +287,6 @@ describe('GlobalSettingsComponent', () => {
   it('should throw error on update global settings', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    const consoleError = spyOn(console, 'error');
-
     component.globalSettingsForm.controls['user.max_recordings'].setValue('10');
     component.globalSettingsForm.controls['user.max_recordings'].markAsDirty();
     component.globalSettingsForm.controls['recording.auto_delete'].setValue('69420');
@@ -303,9 +295,23 @@ describe('GlobalSettingsComponent', () => {
     component.editGlobalSettings();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
+  }));
+
+  it('should throw an error on edit global settings if form values are empty', fakeAsync(() => {
+    expect(component.errorMessage).toBe('')
+
+    component.globalSettingsForm.controls['user.max_recordings'].setValue('');
+    component.globalSettingsForm.controls['user.max_recordings'].markAsDirty();
+    component.globalSettingsForm.controls['recording.auto_delete'].setValue('');
+    component.globalSettingsForm.controls['recording.auto_delete'].markAsDirty();
+
+    component.editGlobalSettings();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should open whitelist retailer create component and then whitelist retailer view', fakeAsync(() => {

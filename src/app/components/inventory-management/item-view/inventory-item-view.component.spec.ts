@@ -18,9 +18,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -37,24 +35,18 @@ class MockInventoryService {
 
 class MockModalService {
   public requestOrderForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
-    quantity: new FormControl(null,[
-      Validators.required,
-      Validators.min(1),
-    ]),
-    url: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(null, Validators.required),
+    url: new FormControl('', Validators.required),
   });
-  open(): { componentInstance: { inventoryItem: { id: string|null }, requestOrderForm: FormGroup }, result: Promise<string> } {
+
+  open(): { componentInstance: { inventoryItem: { id: string | null }, requestOrderForm: FormGroup }, result: Promise<string> } {
     return {
       componentInstance: {
         inventoryItem: { id: null },
         requestOrderForm: this.requestOrderForm,
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -88,15 +80,18 @@ describe('InventoryItemViewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', () => {
+  it('should init page', fakeAsync(() => {
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
     });
 
     component.ngOnInit();
+    tick();
 
     expect(component.inventoryItem).toEqual({
       id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
@@ -108,13 +103,15 @@ describe('InventoryItemViewComponent', () => {
     expect(component.inventoryItemViewForm.controls['name'].value).toBe('Fantastic Steel Soap');
     expect(component.inventoryItemViewForm.controls['description'].value).toBe('Distinctio iste et est tenetur officiis quis.');
     expect(component.inventoryItemViewForm.controls['quantity'].value).toBe(40424);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
@@ -123,10 +120,11 @@ describe('InventoryItemViewComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
@@ -137,15 +135,16 @@ describe('InventoryItemViewComponent', () => {
     expect(component.inventoryItemViewForm.controls['quantity'].value).toBeNull();
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open inventory item edit form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'edited');
 
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+
     const getInventoryItemDataMethod = spyOn(component, 'getInventoryItemData');
 
     component.openInventoryItemEditForm();
-
     tick();
 
     expect(getInventoryItemDataMethod).toHaveBeenCalled();
@@ -157,10 +156,11 @@ describe('InventoryItemViewComponent', () => {
   it('should open inventory item deletion form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+
     const closeModalMethod = spyOn(component.activeModal, 'close');
 
     component.openInventoryItemDeletionDialog();
-
     tick();
 
     expect(closeModalMethod).toHaveBeenCalledWith('dirty');
@@ -172,7 +172,6 @@ describe('InventoryItemViewComponent', () => {
     localStorage.setItem('returnVal', 'created 045fcd70-d323-4de2-894e-a10772b23457');
 
     component.openOrderCreationForm();
-
     tick();
 
     localStorage.removeItem('returnVal');

@@ -8,12 +8,12 @@ import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/white
 import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
 import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { GlobalSetting } from "../../../types/global-setting";
 import { WhitelistRetailer } from "../../../types/whitelist-retailer";
 import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
 import { PagedList } from 'src/app/types/paged-list';
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-global-settings',
@@ -39,6 +39,8 @@ export class GlobalSettingsComponent implements OnInit {
     "static.faq": new FormControl(''),
     "static.faq_admin": new FormControl(''),
   });
+  public errorMessage: string = '';
+  public editedGlobalSettings: boolean = false;
 
   /**
    * Constructor
@@ -47,7 +49,11 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public utilityService : UtilityService, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -62,6 +68,8 @@ export class GlobalSettingsComponent implements OnInit {
    * Gets global settings
    */
   public async getGlobalSettings(): Promise<void> {
+    this.errorMessage = '';
+    this.editedGlobalSettings = false;
     this.adminService.getGlobalSettings().subscribe({
       next: res => {
         this.updateGlobalSettingsForm(res);
@@ -118,33 +126,38 @@ export class GlobalSettingsComponent implements OnInit {
    * Changes data of global settings
    */
   public async editGlobalSettings(): Promise<void> {
-    if (this.globalSettingsForm.valid) {
-      let changedFields: object[] = [];
-      for (let key of Object.keys(this.globalSettingsForm.controls)) {
-        if (this.globalSettingsForm.controls[key].value != "") {
-          if (key == 'recording.auto_delete') {
-            changedFields.push({
-              key,
-              value: this.globalSettingsForm.controls[key].value * 86400000,
-            });
-          } else {
-            changedFields.push({
-              key,
-              value: this.globalSettingsForm.controls[key].value,
-            });
-          }
+    this.errorMessage = '';
+    this.editedGlobalSettings = false;
+    if (!this.globalSettingsForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+    let changedFields: object[] = [];
+    for (let key of Object.keys(this.globalSettingsForm.controls)) {
+      if (this.globalSettingsForm.controls[key].value != "") {
+        if (key == 'recording.auto_delete') {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value * 86400000,
+          });
+        } else {
+          changedFields.push({
+            key,
+            value: this.globalSettingsForm.controls[key].value,
+          });
         }
       }
-
-      this.adminService.updateGlobalSettings(changedFields).subscribe({
-        next: res => {
-          this.updateGlobalSettingsForm(res);
-        },
-        error: error => {
-          console.error('There was an error!', error);
-        }
-      })
     }
+
+    this.adminService.updateGlobalSettings(changedFields).subscribe({
+      next: res => {
+        this.updateGlobalSettingsForm(res);
+        this.editedGlobalSettings = true;
+      },
+      error: error => {
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      }
+    })
   }
 
   /**
@@ -155,6 +168,7 @@ export class GlobalSettingsComponent implements OnInit {
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
         this.openWhitelistRetailerView(result.split(' ')[1]);
+        this.getWhitelistRetailers();
       }
     });
   }

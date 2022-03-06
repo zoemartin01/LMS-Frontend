@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 
@@ -21,21 +22,26 @@ export class InventoryItemDeleteComponent implements OnInit {
     description: new FormControl(''),
     quantity: new FormControl(null),
   });
-
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
     description: '',
     quantity: null,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal) {
+  constructor(
+    public inventoryService: InventoryService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.inventoryItemDeleteForm.disable();
   }
 
@@ -49,7 +55,7 @@ export class InventoryItemDeleteComponent implements OnInit {
   /**
    * Gets all data of inventory item
    */
-  public async getInventoryItemData() : Promise<void> {
+  public async getInventoryItemData(): Promise<void> {
     this.inventoryService.getInventoryItemData(this.inventoryItem.id).subscribe({
       next: res => {
         this.inventoryItem = res;
@@ -68,12 +74,13 @@ export class InventoryItemDeleteComponent implements OnInit {
    * Deletes inventory item
    */
   public async deleteInventoryItem(): Promise<void> {
+    this.errorMessage = '';
     this.inventoryService.deleteInventoryItem(this.inventoryItem.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
 import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Appointment } from "../../../types/appointment";
 import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
@@ -60,15 +61,22 @@ export class AppointmentDeleteComponent implements OnInit {
     amount: 1,
     confirmationStatus: ConfirmationStatus.unknown,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AppointmentService} appointmentService service providing appointment functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public appointmentService: AppointmentService, private route: ActivatedRoute,  public activeModal: NgbActiveModal) {
+  constructor(
+    public appointmentService: AppointmentService,
+    public utilityService: UtilityService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal
+  ) {
     this.appointmentDeleteForm.disable();
   }
 
@@ -83,12 +91,14 @@ export class AppointmentDeleteComponent implements OnInit {
    * Deletes appointment
    */
   public async deleteAppointment(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.deleteAppointment(this.appointment.id).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }
@@ -97,12 +107,14 @@ export class AppointmentDeleteComponent implements OnInit {
    * Deletes appointment series
    */
   public async deleteAppointmentSeries(): Promise<void> {
+    this.errorMessage = '';
+
     this.appointmentService.deleteAppointmentSeries(this.appointment.seriesId).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

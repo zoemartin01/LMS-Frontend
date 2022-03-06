@@ -19,9 +19,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }

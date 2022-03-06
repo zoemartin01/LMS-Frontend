@@ -20,15 +20,9 @@ import { NotificationChannel } from "../../../types/enums/notification-channel";
  */
 export class UserEditComponent implements OnInit {
   public userEditForm: FormGroup = new FormGroup({
-    firstName: new FormControl('', [
-      Validators.required,
-    ]),
-    lastName: new FormControl('', [
-      Validators.required,
-    ]),
-    email: new FormControl('', [
-      Validators.email,
-    ]),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
     role: new FormControl(0),
@@ -46,6 +40,7 @@ export class UserEditComponent implements OnInit {
     isActiveDirectory: false,
   };
   public UserRole = UserRole;
+  public errorMessage: string = '';
 
   /**
    * Constructor
@@ -54,7 +49,11 @@ export class UserEditComponent implements OnInit {
    * @param {AdminService} adminService service providing admin functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public utilityService: UtilityService, public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(
+    public utilityService: UtilityService,
+    public adminService: AdminService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -80,14 +79,21 @@ export class UserEditComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
-      }
-    })
+      },
+    });
   }
 
   /**
    * Changes data of user
    */
   public async editUserData(): Promise<void> {
+    this.errorMessage = '';
+
+    if (!this.userEditForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
+    }
+
     let changedData = this.utilityService.getDirtyValues(this.userEditForm);
 
     if (this.userEditForm.controls['role'].dirty) {
@@ -103,8 +109,8 @@ export class UserEditComponent implements OnInit {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
-      }
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      },
     });
   }
 
@@ -112,7 +118,9 @@ export class UserEditComponent implements OnInit {
    * Checks if password and password confirmation match
    */
   public checkPasswordConfirmation() {
-    this.passwordConfirmationFails = !(this.userEditForm.value.password === this.userEditForm.value.password_confirmation
-      || this.userEditForm.value.password_confirmation === '');
+    this.passwordConfirmationFails = !(
+      this.userEditForm.value.password === this.userEditForm.value.password_confirmation
+      || this.userEditForm.value.password_confirmation === ''
+    );
   }
 }

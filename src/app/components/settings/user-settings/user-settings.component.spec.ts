@@ -14,14 +14,12 @@ import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockUserService {
-  public getUserDetails(): Observable<User> {
+  getUserDetails(): Observable<User> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -34,7 +32,7 @@ class MockUserService {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -44,9 +42,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -71,7 +67,7 @@ class MockModalService {
   open(): { componentInstance: { user: User }, result: Promise<string> } {
     return {
       componentInstance: {
-        user: this.user
+        user: this.user,
       },
       result: new Promise<string>(
         resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
@@ -227,13 +223,12 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editUserSettings();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
@@ -263,13 +258,12 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editUserSettings();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
