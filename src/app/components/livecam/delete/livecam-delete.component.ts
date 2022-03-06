@@ -1,19 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 import {LivecamService} from 'src/app/services/livecam.service';
-import { LivecamOverviewComponent } from '../overview/livecam-overview.component';
+import {UtilityService} from "../../../services/utility.service";
 
-import { LivecamService } from 'src/app/services/livecam.service';
-import { UtilityService } from "../../../services/utility.service";
-
-import { Recording } from 'src/app/types/recording';
-import { VideoResolution } from '../../../types/enums/video-resolution';
-import { UserRole } from 'src/app/types/enums/user-role';
-import { NotificationChannel } from 'src/app/types/enums/notification-channel';
+import {Recording} from 'src/app/types/recording';
+import {VideoResolution} from '../../../types/enums/video-resolution';
+import {UserRole} from 'src/app/types/enums/user-role';
+import {NotificationChannel} from 'src/app/types/enums/notification-channel';
 
 @Component({
   selector: 'app-livecam-delete',

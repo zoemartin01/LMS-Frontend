@@ -7,10 +7,6 @@ import {LivecamService} from '../../../services/livecam.service';
 
 import {VideoResolution} from 'src/app/types/enums/video-resolution';
 import {UtilityService} from "../../../services/utility.service";
-import { LivecamService } from '../../../services/livecam.service';
-import { UtilityService } from "../../../services/utility.service";
-
-import { VideoResolution } from 'src/app/types/enums/video-resolution';
 
 @Component({
   selector: 'app-livecam-schedule',
