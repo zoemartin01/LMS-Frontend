@@ -205,7 +205,7 @@ describe('AppointmentDeleteComponent', () => {
     component.deleteAppointment();
     tick();
 
-    expect(component.errorMessage).toEqual('Unknown Error.');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -216,7 +216,7 @@ describe('AppointmentDeleteComponent', () => {
     component.deleteAppointmentSeries();
     tick();
 
-    expect(component.errorMessage).toEqual('Unknown Error.');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

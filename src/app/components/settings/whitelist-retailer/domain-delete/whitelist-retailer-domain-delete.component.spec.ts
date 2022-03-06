@@ -198,7 +198,7 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     component.whitelistRetailer.id = 'retailerExampleID';
     component.whitelistRetailerDomain.id = 'e23fa361-c2f3-4575-9743-ef2b49b203b6';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -206,7 +206,7 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Whitelist Retailer not Found.');
+    expect(component.errorMessage).toBe('Whitelist Retailer not Found.');
 
     localStorage.removeItem('throwError');
   }));

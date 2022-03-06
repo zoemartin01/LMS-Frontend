@@ -471,7 +471,7 @@ describe('OrderEditComponent', () => {
     component.editOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Inventory Item not Found.')
+    expect(component.errorMessage).toBe('Inventory Item not Found.')
 
     localStorage.removeItem('throwError');
   }));
@@ -488,7 +488,7 @@ describe('OrderEditComponent', () => {
     component.editOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
 
     localStorage.removeItem('throwError');
   }));

@@ -173,6 +173,8 @@ describe('UserDeclineComponent', () => {
 
     component.user.id = 'userAB';
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.declineUser();

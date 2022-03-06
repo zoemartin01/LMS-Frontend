@@ -166,7 +166,7 @@ describe('InventoryItemEditComponent', () => {
     component.editInventoryItemData();
     tick();
 
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!')
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should throw error on edit of inventory item', fakeAsync(() => {
@@ -183,7 +183,7 @@ describe('InventoryItemEditComponent', () => {
     component.editInventoryItemData();
     tick();
 
-    expect(component.errorMessage).toEqual('Inventory Item not Found.');
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');

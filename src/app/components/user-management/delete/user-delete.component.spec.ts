@@ -325,6 +325,8 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'userXY';
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
@@ -340,6 +342,8 @@ describe('UserDeleteComponent', () => {
     localStorage.setItem('throwError', 'true');
 
     component.user.id = 'anotherUserId';
+
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 

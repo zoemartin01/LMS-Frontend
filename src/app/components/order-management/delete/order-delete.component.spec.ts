@@ -303,7 +303,7 @@ describe('OrderDeleteComponent', () => {
     component.deleteOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Order not Found.');
+    expect(component.errorMessage).toBe('Order not Found.');
 
     localStorage.removeItem('throwError');
   }));

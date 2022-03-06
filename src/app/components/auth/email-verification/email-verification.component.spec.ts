@@ -140,7 +140,7 @@ describe('EmailVerificationComponent', () => {
 
     component.verifyEmail().then(() => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
-      expect(component.errorMessage).toEqual('');
+      expect(component.errorMessage).toBe('');
       expect(component.showForm).toBeFalse();
       done();
     });
@@ -151,7 +151,7 @@ describe('EmailVerificationComponent', () => {
     component.verifyForm.controls['token'].setValue('iXhgvPIqq');
 
     component.verifyEmail().then(() => {
-      expect(component.errorMessage).toEqual('Token doesn\'t match.');
+      expect(component.errorMessage).toBe('Token doesn\'t match.');
       expect(component.showForm).toBeTrue();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
@@ -163,7 +163,7 @@ describe('EmailVerificationComponent', () => {
     component.verifyForm.controls['token'].setValue('');
 
     component.verifyEmail().then(() => {
-      expect(component.errorMessage).toEqual('You need to fill in all required fields!');
+      expect(component.errorMessage).toBe('You need to fill in all required fields!');
       expect(component.showForm).toBeTrue();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();

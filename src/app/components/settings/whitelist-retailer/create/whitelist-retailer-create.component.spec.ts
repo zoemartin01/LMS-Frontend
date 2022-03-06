@@ -109,7 +109,7 @@ describe('WhitelistRetailerCreateComponent', () => {
       "lacey.biz",
     ];
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -117,7 +117,7 @@ describe('WhitelistRetailerCreateComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalledWith('created retailerExampleID');
-    expect(component.errorMessage).toEqual('Internal Server Error.');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
