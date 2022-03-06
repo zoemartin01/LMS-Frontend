@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
@@ -32,14 +33,20 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
     domain: '',
   }
   public domain : string = '';
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -59,7 +66,12 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
         next: res => {
           this.whitelistRetailer = res;
-          this.domainEditForm.controls['domain'].setValue(res.domains.filter((whitelistRetailerDomain: WhitelistRetailerDomain) => whitelistRetailerDomain.id == this.whitelistRetailerDomain.id)[0].domain);
+          this.domainEditForm.controls['domain'].setValue(
+            res.domains.filter(
+              (whitelistRetailerDomain: WhitelistRetailerDomain) =>
+                whitelistRetailerDomain.id == this.whitelistRetailerDomain.id
+            )[0].domain
+          );
         },
         error: error => {
           console.error('There was an error!', error);
@@ -72,23 +84,31 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    * Edits domain of whitelist retailer
    */
   public async editDomainOfWhitelistRetailer(): Promise<void> {
+    this.errorMessage ='';
+
     if (this.whitelistRetailer.id === null) {
       this.activeModal.close(this.domainEditForm.controls['domain'].value);
       return;
     }
+
+    if (!this.domainEditForm.valid) {
+      this.errorMessage = 'Domain can not be empty!';
+      return;
+    }
+
     this.adminService.editDomainOfWhitelistRetailer(
       this.whitelistRetailer.id,
       this.whitelistRetailerDomain.id,
       {
-        domain: this.domainEditForm.controls['domain'].value
+        domain: this.domainEditForm.controls['domain'].value,
       }
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
-      }
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      },
     });
   }
 }

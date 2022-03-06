@@ -7,7 +7,7 @@
 <div class="row justify-content-center">
   <div class="card col-md-4">
     <div class="col-auto card-body">
-      <form (keyup.enter)="register()" [formGroup]="registerForm" (ngSubmit)="register()">
+      <form (keyup.enter)="register()" [formGroup]="registerForm">
         <div class="form-group row">
           <div class="col">
             <label for="firstname" class="my-1">First Name</label>
@@ -44,10 +44,7 @@
           <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
                  formControlName="password_confirmation" autocomplete="password"
                  (change)="checkPasswordConfirmation()">
-          <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails">
-            <b>Registration failed:</b><br>
-            {{ registerErrorMessage }}
-          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails" [innerHTML]="passwordConfirmationFailsMessage"></div>
         </div>
         <br>
         <div class="row">
@@ -66,14 +63,10 @@
           </div>
         </div>
         <br>
-        <div class="alert alert-danger" role="alert" *ngIf="registerError">
-          <b>Registration failed:</b><br>
-          {{ registerErrorMessage }}
-        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
         <div class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" [disabled]="!registerForm.valid || passwordConfirmationFails"
-                    role="button">Register</button>
+            <button type="button" class="btn btn-primary" (click)="register()">Register</button>
           </div>
         </div>
       </form>

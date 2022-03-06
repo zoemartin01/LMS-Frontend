@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { WhitelistRetailerUserListComponent } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
+import {
+  WhitelistRetailerUserListComponent
+} from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
@@ -29,10 +31,7 @@ export class OrderEditComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
   public orderEditForm: FormGroup = new FormGroup({
     itemName: new FormControl('', Validators.required),
-    quantity: new FormControl(0,[
-      Validators.required,
-      Validators.min(1),
-    ]),
+    quantity: new FormControl(0, Validators.required),
     url: new FormControl('', Validators.required),
     status: new FormControl(0, Validators.required),
   });
@@ -55,6 +54,7 @@ export class OrderEditComponent implements OnInit {
     status: OrderStatus.unknown,
   }
   public isWhitelisted: boolean = true;
+  public errorMessage = '';
 
   /**
    * Constructor
@@ -152,16 +152,24 @@ export class OrderEditComponent implements OnInit {
    * Changes data of order
    */
   public async editOrder(): Promise<void> {
+    this.errorMessage = '';
+
+    if(this.orderEditForm.invalid){
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
+    }
+
     const changedData = this.utilityService.getDirtyValues(this.orderEditForm);
     if (this.orderEditForm.controls['status'].dirty) {
       changedData['status'] = +changedData['status'];
     }
+
     this.orderService.updateOrderData(this.order.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

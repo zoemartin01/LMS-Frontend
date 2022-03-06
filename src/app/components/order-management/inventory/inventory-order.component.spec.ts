@@ -26,92 +26,88 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
-          }
+            message: 'Inventory Item not Found.',
+          },
         });
       }
 
       id === "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b"
         ? observer.next({
-          "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-          "itemName": "Awesome Granite Towels",
-          "status": 1,
-          "quantity": 42962,
-          "url": "https://clementine.biz",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+          itemName: "Awesome Granite Towels",
+          status: 1,
+          quantity: 42962,
+          url: "https://clementine.biz",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3,
           },
-          "item": null
+          item: null,
         })
         : observer.next({
-          "id": "045fcd70-d323-4de2-894e-a10772b23457",
-          "itemName": null,
-          "status": 3,
-          "quantity": 10,
-          "url": "conrad.de/pizza",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "045fcd70-d323-4de2-894e-a10772b23457",
+          itemName: null,
+          status: 3,
+          quantity: 10,
+          url: "conrad.de/pizza",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3,
           },
-          "item": {
-            "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-            "name": "Fantastic Concrete Pizza",
-            "description": "Cum exercitationem est.",
-            "quantity": 49691
-          }
+          item: {
+            id: "920b8cc7-364f-4255-9540-09093f1e167a",
+            name: "Fantastic Concrete Pizza",
+            description: "Cum exercitationem est.",
+            quantity: 49691,
+          },
         });
     });
   }
 
-  public updateOrderData(orderId: OrderId, changedData: object): Observable<Order> {
+  updateOrderData(orderId: OrderId, changedData: object): Observable<Order> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Order not Found.',
-            }
-          }
+            message: 'Order not Found.',
+          },
         });
       }
 
       observer.next({
-        "id": "045fcd70-d323-4de2-894e-a10772b23457",
-        "itemName": null,
-        "status": 3,
-        "quantity": 10,
-        "url": "conrad.de/pizza",
-        "user": {
-          "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-          "email": "visitor@test.com",
-          "firstName": "Visitor",
-          "lastName": "Visitor",
-          "role": 2,
-          "emailVerification": true,
-          "isActiveDirectory": false,
-          "notificationChannel": 3
+        id: "045fcd70-d323-4de2-894e-a10772b23457",
+        itemName: null,
+        status: 3,
+        quantity: 10,
+        url: "conrad.de/pizza",
+        user: {
+          id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+          email: "visitor@test.com",
+          firstName: "Visitor",
+          lastName: "Visitor",
+          role: 2,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3,
         },
-        "item": {
-          "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-          "name": "Fantastic Concrete Pizza",
-          "description": "Cum exercitationem est.",
-          "quantity": 49691
-        }
+        item: {
+          id: "920b8cc7-364f-4255-9540-09093f1e167a",
+          name: "Fantastic Concrete Pizza",
+          description: "Cum exercitationem est.",
+          quantity: 49691,
+        },
       });
     });
   }
@@ -123,10 +119,8 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -155,10 +149,8 @@ class MockInventoryService {
       if (inventoryItemName === 'Fantastic Error Soap') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
         return;
       }
@@ -166,9 +158,7 @@ class MockInventoryService {
       if (inventoryItemName !== 'Fantastic Wooden Soap') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           },
           status: 404,
         });
@@ -184,15 +174,13 @@ class MockInventoryService {
     });
   }
 
-  public editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
+  editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -205,15 +193,13 @@ class MockInventoryService {
     });
   }
 
-  public createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
+  createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -238,10 +224,10 @@ describe('InventoryOrderComponent', () => {
         InventoryOrderComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
         { provide: OrderService, useClass: MockOrderService },
@@ -261,7 +247,7 @@ describe('InventoryOrderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page with linked item', () => {
+  it('should init page with linked item', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -284,38 +270,39 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
-      "id": "045fcd70-d323-4de2-894e-a10772b23457",
-      "itemName": null,
-      "status": 3,
-      "quantity": 10,
-      "url": "conrad.de/pizza",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "045fcd70-d323-4de2-894e-a10772b23457",
+      itemName: null,
+      status: 3,
+      quantity: 10,
+      url: "conrad.de/pizza",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3,
       },
-      "item": {
-        "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-        "name": "Fantastic Concrete Pizza",
-        "description": "Cum exercitationem est.",
-        "quantity": 49691
-      }
+      item: {
+        id: "920b8cc7-364f-4255-9540-09093f1e167a",
+        name: "Fantastic Concrete Pizza",
+        description: "Cum exercitationem est.",
+        quantity: 49691,
+      },
     });
 
     expect(component.inventoryOrderForm.controls['itemName'].value).toBe('Fantastic Concrete Pizza');
     expect(component.inventoryOrderForm.controls['quantity'].value).toBe(10);
     expect(component.inventoryOrderForm.controls['url'].value).toBe('conrad.de/pizza');
     expect(component.inventoryOrderForm.controls['status'].value).toBe(3);
-  });
+  }));
 
-  it('should init page whith item name', () => {
+  it('should init page whith item name', fakeAsync(() => {
     expect(component.order).toEqual({
       id: null,
       itemName: null,
@@ -338,33 +325,34 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b";
 
     component.ngOnInit();
+    tick();
 
     expect(component.order).toEqual({
-      "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-      "itemName": "Awesome Granite Towels",
-      "status": 1,
-      "quantity": 42962,
-      "url": "https://clementine.biz",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+      itemName: "Awesome Granite Towels",
+      status: 1,
+      quantity: 42962,
+      url: "https://clementine.biz",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3,
       },
-      "item": null
+      item: null,
     });
 
     expect(component.inventoryOrderForm.controls['itemName'].value).toBe('Awesome Granite Towels');
     expect(component.inventoryOrderForm.controls['quantity'].value).toBe(42962);
     expect(component.inventoryOrderForm.controls['url'].value).toBe('https://clementine.biz');
     expect(component.inventoryOrderForm.controls['status'].value).toBe(1);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.order).toEqual({
@@ -389,6 +377,7 @@ describe('InventoryOrderComponent', () => {
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.order).toEqual({
@@ -416,7 +405,7 @@ describe('InventoryOrderComponent', () => {
     expect(component.inventoryOrderForm.controls['status'].value).toBe(0);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should inventory order', fakeAsync(() => {
     component.inventoryOrderForm.controls['itemName'].setValue('Fantastic Wooden Soap');
@@ -427,7 +416,6 @@ describe('InventoryOrderComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.inventoryOrder();
-
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -449,7 +437,6 @@ describe('InventoryOrderComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.inventoryOrder();
-
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -470,20 +457,17 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Order not Found.');
+
     expect(component.inventoryItem).toEqual({
       id: "920b8cc7-364f-4255-9540-09093f1e167a",
       name: "Fantastic Concrete Pizza",
       description: "Cum exercitationem est.",
       quantity: 49691,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -496,20 +480,16 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Order not Found.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -522,20 +502,16 @@ describe('InventoryOrderComponent', () => {
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.inventoryOrder();
-
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Internal Server Error.');
     expect(component.inventoryItem).toEqual({
       id: null,
       name: '',
       description: '',
       quantity: null,
     });
-    expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));

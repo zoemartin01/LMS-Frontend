@@ -30,53 +30,51 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
 
       id === "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b"
         ? observer.next({
-          "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-          "itemName": "Awesome Granite Towels",
-          "status": 1,
-          "quantity": 42962,
-          "url": "https://clementine.biz",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+          itemName: "Awesome Granite Towels",
+          status: 1,
+          quantity: 42962,
+          url: "https://clementine.biz",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": null
+          item: null
         })
         : observer.next({
-          "id": "045fcd70-d323-4de2-894e-a10772b23457",
-          "itemName": null,
-          "status": 3,
-          "quantity": 10,
-          "url": "conrad.de/pizza",
-          "user": {
-            "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-            "email": "visitor@test.com",
-            "firstName": "Visitor",
-            "lastName": "Visitor",
-            "role": 2,
-            "emailVerification": true,
-            "isActiveDirectory": false,
-            "notificationChannel": 3
+          id: "045fcd70-d323-4de2-894e-a10772b23457",
+          itemName: null,
+          status: 3,
+          quantity: 10,
+          url: "conrad.de/pizza",
+          user: {
+            id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+            email: "visitor@test.com",
+            firstName: "Visitor",
+            lastName: "Visitor",
+            role: 2,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3
           },
-          "item": {
-            "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-            "name": "Fantastic Concrete Pizza",
-            "description": "Cum exercitationem est.",
-            "quantity": 49691
+          item: {
+            id: "920b8cc7-364f-4255-9540-09093f1e167a",
+            name: "Fantastic Concrete Pizza",
+            description: "Cum exercitationem est.",
+            quantity: 49691
           }
         });
     });
@@ -87,30 +85,28 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
 
       observer.next({
-        "id": "045fcd70-d323-4de2-894e-a10772b23457",
-        "itemName": "Fantastic Wooden Soap",
-        "status": 2,
-        "quantity": 10,
-        "url": "conrad.de/pizza",
-        "user": {
-          "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-          "email": "visitor@test.com",
-          "firstName": "Visitor",
-          "lastName": "Visitor",
-          "role": 2,
-          "emailVerification": true,
-          "isActiveDirectory": false,
-          "notificationChannel": 3
+        id: "045fcd70-d323-4de2-894e-a10772b23457",
+        itemName: "Fantastic Wooden Soap",
+        status: 2,
+        quantity: 10,
+        url: "conrad.de/pizza",
+        user: {
+          id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+          email: "visitor@test.com",
+          firstName: "Visitor",
+          lastName: "Visitor",
+          role: 2,
+          emailVerification: true,
+          isActiveDirectory: false,
+          notificationChannel: 3
         },
-        "item": null,
+        item: null,
       });
     });
   }
@@ -122,9 +118,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -163,20 +157,18 @@ class MockModalService {
 }
 
 class MockAdminService {
-  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted : boolean }> {
+  checkDomainAgainstWhitelist(domain: string): Observable<{ isWhitelisted: boolean }> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
 
       observer.next({
-        isWhitelisted : false
+        isWhitelisted: false
       });
     });
   }
@@ -247,26 +239,26 @@ describe('OrderEditComponent', () => {
     tick();
 
     expect(component.order).toEqual({
-      "id": "045fcd70-d323-4de2-894e-a10772b23457",
-      "itemName": null,
-      "status": 3,
-      "quantity": 10,
-      "url": "conrad.de/pizza",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "045fcd70-d323-4de2-894e-a10772b23457",
+      itemName: null,
+      status: 3,
+      quantity: 10,
+      url: "conrad.de/pizza",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": {
-        "id": "920b8cc7-364f-4255-9540-09093f1e167a",
-        "name": "Fantastic Concrete Pizza",
-        "description": "Cum exercitationem est.",
-        "quantity": 49691
+      item: {
+        id: "920b8cc7-364f-4255-9540-09093f1e167a",
+        name: "Fantastic Concrete Pizza",
+        description: "Cum exercitationem est.",
+        quantity: 49691
       }
     });
     expect(component.existingItems).toEqual([
@@ -318,22 +310,22 @@ describe('OrderEditComponent', () => {
     tick();
 
     expect(component.order).toEqual({
-      "id": "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
-      "itemName": "Awesome Granite Towels",
-      "status": 1,
-      "quantity": 42962,
-      "url": "https://clementine.biz",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "40ecc367-e0a9-4f57-8fe4-4d56b2e0184b",
+      itemName: "Awesome Granite Towels",
+      status: 1,
+      quantity: 42962,
+      url: "https://clementine.biz",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     });
     expect(component.existingItems).toEqual([
       {
@@ -438,7 +430,7 @@ describe('OrderEditComponent', () => {
   });
 
   it('should open whitelist retailer list', () => {
-    let openModal = spyOn(component.modalService,'open');
+    let openModal = spyOn(component.modalService, 'open');
 
     component.openWhitelistRetailerList();
 
@@ -451,6 +443,10 @@ describe('OrderEditComponent', () => {
     component.orderEditForm.controls['itemName'].markAsDirty();
     component.orderEditForm.controls['status'].setValue('2');
     component.orderEditForm.controls['status'].markAsDirty();
+    component.orderEditForm.controls['quantity'].setValue('20');
+    component.orderEditForm.controls['quantity'].markAsDirty();
+    component.orderEditForm.controls['url'].setValue('amazon.notcom');
+    component.orderEditForm.controls['url'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -462,6 +458,26 @@ describe('OrderEditComponent', () => {
 
   it('should throw error on edit of order', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+    component.order.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4bNotExistent";
+    component.orderEditForm.controls['itemName'].setValue('Fantastic Wooden Soap');
+    component.orderEditForm.controls['itemName'].markAsDirty();
+    component.orderEditForm.controls['status'].setValue('2');
+    component.orderEditForm.controls['status'].markAsDirty();
+    component.orderEditForm.controls['quantity'].setValue('20');
+    component.orderEditForm.controls['quantity'].markAsDirty();
+    component.orderEditForm.controls['url'].setValue('amazon.notcom');
+    component.orderEditForm.controls['url'].markAsDirty();
+
+    component.editOrder();
+    tick();
+
+    expect(component.errorMessage).toEqual('Inventory Item not Found.')
+
+    localStorage.removeItem('throwError');
+  }));
+
+  it('should throw error on edit of order when input invalid', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
 
     component.order.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
     component.orderEditForm.controls['itemName'].setValue('Fantastic Wooden Soap');
@@ -469,12 +485,10 @@ describe('OrderEditComponent', () => {
     component.orderEditForm.controls['status'].setValue('2');
     component.orderEditForm.controls['status'].markAsDirty();
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.editOrder();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('edited');
+    expect(component.errorMessage).toEqual('You need to fill in all required fields!');
 
     localStorage.removeItem('throwError');
   }));

@@ -19,9 +19,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -34,7 +32,7 @@ class MockAdminService {
         role: 1,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -44,9 +42,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -111,7 +107,7 @@ describe('UserAcceptComponent', () => {
       role: 1,
       emailVerification: true,
       isActiveDirectory: false,
-      notificationChannel: 4
+      notificationChannel: 4,
     });
     expect(component.userAcceptForm.controls['firstname'].value).toEqual('user');
     expect(component.userAcceptForm.controls['name'].value).toEqual('usersonsonson');
@@ -164,13 +160,12 @@ describe('UserAcceptComponent', () => {
     component.user.id = 'userAB';
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.acceptUser();
     tick();
 
     expect(modalClose).toHaveBeenCalledWith('accepted');
-    expect(consoleError).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('');
   }));
 
   it('should throw an error on accept user', fakeAsync(() => {
@@ -179,13 +174,12 @@ describe('UserAcceptComponent', () => {
     component.user.id = 'userAB';
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.acceptUser();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

@@ -8,6 +8,7 @@ import { WhitelistRetailerDomainDeleteComponent } from "../domain-delete/whiteli
 import { WhitelistRetailerDomainEditComponent } from "../domain-edit/whitelist-retailer-domain-edit.component";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
@@ -33,6 +34,7 @@ export class WhitelistRetailerEditComponent implements OnInit {
     domains: [],
   }
   public dirty: boolean = true;
+  public errorMessage: string = '';
 
   /**
    * Constructor
@@ -40,12 +42,14 @@ export class WhitelistRetailerEditComponent implements OnInit {
    * @param {AdminService} adminService service providing admin functionalities
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbModal} modalService service providing modal functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public adminService: AdminService,
     private route: ActivatedRoute,
     public activeModal: NgbActiveModal,
+    public utilityService: UtilityService,
     private modalService: NgbModal
   ) {
   }
@@ -77,15 +81,22 @@ export class WhitelistRetailerEditComponent implements OnInit {
    *
    */
   public async editWhitelistRetailerData(): Promise<void> {
+    this.errorMessage = '';
+
+    if (!this.retailerEditForm.valid) {
+      this.errorMessage = 'Retailer name cannot be empty';
+      return;
+    }
+
     this.adminService.editWhitelistRetailerData(this.whitelistRetailer.id, {
-        name: this.retailerEditForm.controls['name'].value
+        name: this.retailerEditForm.controls['name'].value,
       }
     ).subscribe({
       next: () => {
         this.activeModal.close('edited');
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     });
   }

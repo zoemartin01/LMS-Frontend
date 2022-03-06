@@ -20,9 +20,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -50,24 +48,18 @@ class MockInventoryService {
 
 class MockModalService {
   public requestOrderForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
-    quantity: new FormControl(null,[
-      Validators.required,
-      Validators.min(1),
-    ]),
-    url: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(null, Validators.required),
+    url: new FormControl('', Validators.required),
   });
-  open(): { componentInstance: { inventoryItem: { id: string|null }, requestOrderForm: FormGroup }, result: Promise<string> } {
+
+  open(): { componentInstance: { inventoryItem: { id: string | null }, requestOrderForm: FormGroup }, result: Promise<string> } {
     return {
       componentInstance: {
         inventoryItem: { id: null },
         requestOrderForm: this.requestOrderForm,
       },
-      result: new Promise<string>(resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')),
+      result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
 }
@@ -100,11 +92,12 @@ describe('InventoryListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', () => {
+  it('should init page', fakeAsync(() => {
     let pagedList = new PagedList<InventoryItem>();
     expect(component.inventory).toEqual(pagedList);
 
     component.ngOnInit();
+    tick();
 
     pagedList.data = [
       {
@@ -121,9 +114,9 @@ describe('InventoryListComponent', () => {
       },
     ];
     expect(component.inventory).toEqual(pagedList);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     let pagedList = new PagedList<InventoryItem>();
@@ -132,12 +125,13 @@ describe('InventoryListComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventory).toEqual(pagedList);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open inventory item creation form and then inventory item view', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created 920b8cc7-364f-4255-9540-09093f1e167a');
@@ -145,7 +139,6 @@ describe('InventoryListComponent', () => {
     const openViewModal = spyOn(component, 'openInventoryItemViewForm');
 
     component.openInventoryItemCreationForm();
-
     tick();
 
     expect(openViewModal).toHaveBeenCalledWith('920b8cc7-364f-4255-9540-09093f1e167a');
@@ -159,7 +152,6 @@ describe('InventoryListComponent', () => {
     const openViewModal = spyOn(component, 'openInventoryItemViewForm');
 
     component.openOrderCreationForm("Fantastic Concrete Pizza", "045fcd70-d323-4de2-894e-a10772b23457");
-
     tick();
 
     expect(openViewModal).toHaveBeenCalledWith("045fcd70-d323-4de2-894e-a10772b23457");
@@ -173,7 +165,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openInventoryItemViewForm('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();
@@ -187,7 +178,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openInventoryItemEditForm('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();
@@ -201,7 +191,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openItemDeletionDialog('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { Room } from "../../../types/room";
 
@@ -17,15 +18,10 @@ import { Room } from "../../../types/room";
  */
 export class RoomDeleteComponent implements OnInit {
   public roomDeleteForm: FormGroup = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
+    name: new FormControl(''),
     description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(1, [
-      Validators.required,
-      Validators.min(1),
-    ]),
-    autoAcceptBookings: new FormControl(false, Validators.required),
+    maxConcurrentBookings: new FormControl(1),
+    autoAcceptBookings: new FormControl(false),
   });
   public room: Room = {
     id: null,
@@ -34,14 +30,20 @@ export class RoomDeleteComponent implements OnInit {
     maxConcurrentBookings: 1,
     autoAcceptBookings: null,
   };
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {RoomService} roomService service providing room functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public roomService: RoomService, public activeModal: NgbActiveModal) {
+  constructor(
+    public roomService: RoomService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.roomDeleteForm.disable();
   }
 
@@ -70,6 +72,7 @@ export class RoomDeleteComponent implements OnInit {
    * Gets all data of room
    */
   public async getRoomData() : Promise<void> {
+    this.errorMessage = '';
     this.roomService.getRoomData(this.room.id).subscribe({
       next: res => {
         this.room = res;
@@ -79,7 +82,7 @@ export class RoomDeleteComponent implements OnInit {
         this.roomDeleteForm.controls['autoAcceptBookings'].setValue(res.autoAcceptBookings);
       },
       error: error => {
-        console.error('There was an error!', error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     })
   }

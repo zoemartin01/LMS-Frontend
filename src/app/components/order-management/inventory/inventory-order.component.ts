@@ -4,6 +4,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
@@ -52,17 +53,20 @@ export class InventoryOrderComponent implements OnInit {
     quantity: null,
   };
   existingItems: InventoryItem[] = [];
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {OrderService} orderService service providing order functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
   constructor(
     public inventoryService: InventoryService,
     public orderService: OrderService,
+    public utilityService: UtilityService,
     public activeModal: NgbActiveModal
   ) {
     this.inventoryOrderForm.controls['quantity'].disable();
@@ -120,6 +124,7 @@ export class InventoryOrderComponent implements OnInit {
    * Sets order status to "inventoried" and adds order to inventory
    */
   public async inventoryOrder(): Promise<void> {
+    this.errorMessage = '';
     this.inventoryService.getInventoryItemByName(this.inventoryOrderForm.controls['itemName'].value).subscribe({
       // case: existing inventory item => edit
       next: res => {
@@ -129,7 +134,7 @@ export class InventoryOrderComponent implements OnInit {
             this.inventoryItem.id, { quantity: (+this.inventoryItem.quantity + +this.order.quantity) }
           ).subscribe({
             error: error => {
-              console.error('There was an error!', error);
+              this.errorMessage = this.utilityService.formatErrorMessage(error);
             }
           })
         }
@@ -143,7 +148,7 @@ export class InventoryOrderComponent implements OnInit {
             this.activeModal.close(`inventoried ${this.order.id}`)
           },
           error: error => {
-            console.error('There was an error!', error);
+            this.errorMessage = this.utilityService.formatErrorMessage(error);
           }
         });
       },
@@ -155,7 +160,7 @@ export class InventoryOrderComponent implements OnInit {
           const quantity = this.inventoryOrderForm.controls['quantity'].value;
           this.inventoryService.createInventoryItem(name, description, quantity).subscribe({
             error: error => {
-              console.error('There was an error!', error);
+              this.errorMessage = this.utilityService.formatErrorMessage(error);
             },
           });
 
@@ -168,11 +173,11 @@ export class InventoryOrderComponent implements OnInit {
               this.activeModal.close(`inventoried ${this.order.id}`)
             },
             error: error => {
-              console.error('There was an error!', error);
+              this.errorMessage = this.utilityService.formatErrorMessage(error);
             }
           });
         } else {
-          console.error('There was an error!', error);
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
       },
     });

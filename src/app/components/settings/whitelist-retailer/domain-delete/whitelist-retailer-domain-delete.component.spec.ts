@@ -18,10 +18,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
-          }
+            message: 'Whitelist Retailer not Found.',
+          },
         });
       }
 
@@ -42,14 +40,15 @@ class MockAdminService {
     });
   }
 
-  deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<void> {
+  deleteDomainOfWhitelistRetailer(
+    whitelistRetailerId: WhitelistRetailerId,
+    whitelistRetailerDomainId: WhitelistRetailerDomainId
+  ): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
+            message: 'Whitelist Retailer not Found.',
           }
         });
       }
@@ -102,18 +101,20 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.whitelistRetailer).toEqual({id: "retailerExampleID",
+    expect(component.whitelistRetailer).toEqual({
+      id: "retailerExampleID",
       name: "McGlynn and Sons and daughters",
       domains: [
         {
           id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
+          domain: "jordan.biz",
         },
         {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
+          domain: "lacey.biz",
         },
-      ]});
+      ],
+    });
     expect(component.domainDeleteForm.controls['name'].value).toEqual('McGlynn and Sons and daughters');
     expect(component.domainDeleteForm.controls['domain'].value).toEqual('lacey.biz');
   }));
@@ -145,8 +146,8 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
   }));
 
   it('should update form on init if whitelist retailer id is null', fakeAsync(() => {
-    component.name = 'Duck Putin'
-    component.domain = 'russianwarshipgofuckyourself.club'
+    component.name = 'Duck Putin';
+    component.domain = 'russianwarshipgofuckyourself.club';
 
     expect(component.whitelistRetailer).toEqual({
       id: null,
@@ -170,7 +171,7 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     component.deleteDomainOfWhitelistRetailer();
     tick();
 
-    expect(modalClose).toHaveBeenCalledWith('deleted')
+    expect(modalClose).toHaveBeenCalledWith('deleted');
   }));
 
   it('should delete whitelist retailer when whitelist retailer id is null', fakeAsync(() => {
@@ -197,14 +198,15 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     component.whitelistRetailer.id = 'retailerExampleID';
     component.whitelistRetailerDomain.id = 'e23fa361-c2f3-4575-9743-ef2b49b203b6';
 
+    expect(component.errorMessage).toEqual('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.deleteDomainOfWhitelistRetailer();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toEqual('Whitelist Retailer not Found.');
 
     localStorage.removeItem('throwError');
   }));

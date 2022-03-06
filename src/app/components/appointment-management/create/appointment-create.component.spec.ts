@@ -130,26 +130,6 @@ describe('AppointmentCreateComponent method calls', () => {
 
     expect(setDateMethod).toHaveBeenCalledWith(moment(`${component.dateField.year}-${component.dateField.month}-${component.dateField.day}`));
   }));
-
-  it('should create appointment', fakeAsync(() => {
-    component.isRecurring = false;
-    component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
-
-    component.ngOnInit();
-    component.createAppointment();
-
-    expect(component.createAppointment).toHaveBeenCalled();
-  }));
-
-  it('should create appointment series', fakeAsync(() => {
-    component.isRecurring = true;
-    component.start = moment("2022-02-14T14:00:00.000Z", 'YYYY-MM-DDTHH:mm');
-
-    component.ngOnInit();
-    component.createAppointment();
-
-    expect(component.createAppointment).toHaveBeenCalled();
-  }));
 });
 
 describe('AppointmentCreateComponent', () => {
@@ -196,7 +176,6 @@ describe('AppointmentCreateComponent', () => {
     let closeForm = spyOn(component.closeForm, 'emit');
 
     component.ngOnInit();
-
     tick();
 
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
@@ -204,7 +183,6 @@ describe('AppointmentCreateComponent', () => {
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
 
     component.createAppointment();
-
     tick();
 
     expect(closeForm).toHaveBeenCalledWith(true);
@@ -215,10 +193,8 @@ describe('AppointmentCreateComponent', () => {
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
 
     let closeForm = spyOn(component.closeForm, 'emit');
-    //let createAppointmentSeriesServiceMethod = spyOn(component.appointmentService, 'createAppointmentSeries');
 
     component.ngOnInit();
-
     tick();
 
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
@@ -227,59 +203,9 @@ describe('AppointmentCreateComponent', () => {
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
     component.createAppointment();
-
     tick();
 
     expect(closeForm).toHaveBeenCalledWith(true);
-    //expect(createAppointmentSeriesServiceMethod).toHaveBeenCalled();
-  }));
-
-  it('should show warning, that safety instructions and the hwlab rules have to be accepted', fakeAsync(() => {
-    component.isRecurring = true;
-    component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
-
-    let closeForm = spyOn(component.closeForm, 'emit');
-
-    component.ngOnInit();
-
-    tick();
-
-    component.appointmentCreateForm.controls['safetyInstructions'].setValue(false);
-    component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
-    component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
-    component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
-
-    component.createAppointment();
-
-    tick();
-
-    expect(closeForm).not.toHaveBeenCalled();
-    expect(component.hasError).toEqual(true);
-    expect(component.hasErrorMessage).toEqual('Please accept the safety instructions and the hwlab rules.');
-  }));
-
-  it('should show warning, that safety instructions and the hwlab rules have to be accepted', fakeAsync(() => {
-    component.isRecurring = true;
-    component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
-
-    let closeForm = spyOn(component.closeForm, 'emit');
-
-    component.ngOnInit();
-
-    tick();
-
-    component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
-    component.appointmentCreateForm.controls['hwlabRules'].setValue(false);
-    component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
-    component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
-
-    component.createAppointment();
-
-    tick();
-
-    expect(closeForm).not.toHaveBeenCalled();
-    expect(component.hasError).toEqual(true);
-    expect(component.hasErrorMessage).toEqual('Please accept the safety instructions and the hwlab rules.');
   }));
 
   it('should show error message on accept appointment series booking conflict error', fakeAsync(() => {
@@ -291,7 +217,6 @@ describe('AppointmentCreateComponent', () => {
     let closeForm = spyOn(component.closeForm, 'emit');
 
     component.ngOnInit();
-
     tick();
 
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
@@ -300,7 +225,6 @@ describe('AppointmentCreateComponent', () => {
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 
     component.createAppointment();
-
     tick();
 
     expect(closeForm).not.toHaveBeenCalled();
@@ -318,7 +242,6 @@ describe('AppointmentCreateComponent', () => {
     let closeForm = spyOn(component.closeForm, 'emit');
 
     component.ngOnInit();
-
     tick();
 
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
@@ -326,7 +249,6 @@ describe('AppointmentCreateComponent', () => {
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
 
     component.createAppointment();
-
     tick();
 
     expect(closeForm).not.toHaveBeenCalled();
@@ -334,5 +256,12 @@ describe('AppointmentCreateComponent', () => {
     expect(component.timeslotConflictMessage).toEqual('Your booking conflicts with to many other bookings.');
 
     localStorage.setItem('throwTimeSlotConflictError', 'false');
+  }));
+
+  it('should handle invalid input', fakeAsync(() => {
+    component.createAppointment();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });

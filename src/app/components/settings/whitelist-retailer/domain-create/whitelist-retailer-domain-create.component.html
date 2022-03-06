@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Add Domain</h4>
 </div>
+
 <div class="modal-body">
   <form [formGroup]="domainCreateForm">
     <div class="form-group row">
@@ -12,10 +13,10 @@
       </div>
     </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
+
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" [disabled]="!domainCreateForm.valid"
-          (click)="addDomainToWhitelistRetailer()">Save
-  </button>
+  <button type="button" class="btn btn-primary" (click)="addDomainToWhitelistRetailer()">Save</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

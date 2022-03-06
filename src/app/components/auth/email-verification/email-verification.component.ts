@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-email-verification',
@@ -23,18 +24,19 @@ export class EmailVerificationComponent implements OnInit {
     ]),
   });
   public showForm: boolean = false;
-  public verifyEmailError: boolean = false;
-  public verifyEmailErrorMessage: string = '';
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {UserService} userService service providing user functionalities
    * @param {ActivatedRoute} route route that activated this component
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {Router} router angular router
    */
   constructor(
     private userService: UserService,
+    public utilityService: UtilityService,
     private route: ActivatedRoute,
     private router: Router) {
   }
@@ -59,27 +61,24 @@ export class EmailVerificationComponent implements OnInit {
    * Verifies user's email with provided data
    */
   public async verifyEmail(): Promise<void> {
+    this.errorMessage = '';
     this.showForm = false;
-
-    if (this.verifyForm.valid) {
-      this.userService.verifyEmail(
-        this.verifyForm.value.userId,
-        this.verifyForm.value.token
-      ).subscribe({
-        next: () => {
-          this.router.navigateByUrl('/login');
-        },
-        error: error => {
-          this.verifyEmailError = true;
-          this.verifyEmailErrorMessage = error.error.message;
-          this.showForm = true;
-          console.error('There was an error!', error);
-        }
-      });
-    } else {
-      this.verifyEmailError = true;
-      this.verifyEmailErrorMessage = 'Invalid form values';
+    if (this.verifyForm.invalid) {
+      this.errorMessage = 'You need to fill in all required fields!'
       this.showForm = true;
+      return;
     }
+    this.userService.verifyEmail(
+      this.verifyForm.value.userId,
+      this.verifyForm.value.token
+    ).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/login');
+      },
+      error: error => {
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+        this.showForm = true;
+      }
+    });
   }
 }

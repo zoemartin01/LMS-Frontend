@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 import { LivecamService } from '../../../services/livecam.service';
+import { UtilityService } from "../../../services/utility.service";
 
 import { VideoResolution } from 'src/app/types/enums/video-resolution';
 
@@ -18,35 +19,28 @@ import { VideoResolution } from 'src/app/types/enums/video-resolution';
  */
 export class LivecamScheduleComponent {
   public recordingScheduleForm: FormGroup = new FormGroup({
-    start: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$')
-    ]),
-    end: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$')
-    ]),
+    start: new FormControl('', Validators.required),
+    end: new FormControl('', Validators.required),
     resolution: new FormControl(VideoResolution.V1080),
-    bitrate: new FormControl('', [
-      Validators.required,
-      Validators.min(1),
-    ]),
-    bitrate_unit: new FormControl('kbps', [
-      Validators.required,
-    ]),
+    bitrate: new FormControl('', Validators.required),
+    bitrate_unit: new FormControl('kbps', Validators.required),
   });
   public moment = moment;
   public endMin = moment();
-  public scheduleError: boolean = false;
-  public scheduleErrorMessage: string = '';
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {LivecamService} livecamService service providing livecam functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public livecamService: LivecamService, public activeModal: NgbActiveModal) {
+  constructor(
+    public livecamService: LivecamService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -71,26 +65,12 @@ export class LivecamScheduleComponent {
           this.activeModal.close('scheduled');
         },
         error: error => {
-          if (error.error.message) {
-            this.scheduleError = true;
-            this.scheduleErrorMessage = error.error.message;
-          } else {
-            this.scheduleError = true;
-            this.scheduleErrorMessage = 'Invalid Input:';
-
-            error.error.forEach((field: any) => {
-              const constraints = field.constraints;
-              Object.keys(constraints).forEach((key: any) => {
-                this.scheduleErrorMessage += `<br> - ${constraints[key]}`
-              });
-            });
-          }
           console.error(error);
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
         }
       });
     } else {
-      this.scheduleError = true;
-      this.scheduleErrorMessage = 'Invalid form values';
+      this.errorMessage = 'Invalid form values';
     }
   }
 
@@ -100,7 +80,6 @@ export class LivecamScheduleComponent {
   public async updateEndField() : Promise<void> {
     this.endMin = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
   }
-
 
   /**
    * Helper method that turns all non-null enum values into strings

@@ -23,11 +23,11 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
-          }
+            message: 'Unknown Error.',
+          },
         });
+
+        return;
       }
 
       const timeslot: RoomTimespan = {
@@ -57,9 +57,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -91,9 +89,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -344,12 +340,8 @@ describe('TimeslotEditComponent', () => {
   it('should show error message on edit timeslot series error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
-    component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
-
-    component.ngOnInit();
-    tick();
-
+    component.timeslotEditForm.controls['endHour'].setValue(10);
+    component.timeslotEditForm.controls['type'].setValue(2);
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
     component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.monthly);
@@ -360,7 +352,7 @@ describe('TimeslotEditComponent', () => {
     component.editTimeslotSeries();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -368,21 +360,41 @@ describe('TimeslotEditComponent', () => {
   it('should show error message on edit timeslot error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    component.timeslotId = "8e762183-dcb3-4018-b02d-fb5c3c46a9f8";
-    component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
-
-    component.ngOnInit();
-    tick();
-
+    component.timeslotEditForm.controls['endHour'].setValue(10);
+    component.timeslotEditForm.controls['type'].setValue(2);
     component.timeslotEditForm.controls['startHour'].setValue(7);
     component.timeslotEditForm.controls['startHour'].markAsDirty();
 
     component.editTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
+  }));
+
+  it('should throw invalid input error on edit timeslot series error', fakeAsync(() => {
+    component.timeslotEditForm.controls['type'].setValue(2);
+    component.timeslotEditForm.controls['startHour'].setValue(7);
+    component.timeslotEditForm.controls['startHour'].markAsDirty();
+    component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.monthly);
+    component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].markAsDirty();
+
+    component.editTimeslotSeries();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
+  }));
+
+  it('should throw invalid input error on edit timeslot error', fakeAsync(() => {
+    component.timeslotEditForm.controls['type'].setValue(2);
+    component.timeslotEditForm.controls['startHour'].setValue(7);
+    component.timeslotEditForm.controls['startHour'].markAsDirty();
+
+    component.editTimeslot();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
   it('should handle edit timeslot with end hour 24', fakeAsync(() => {

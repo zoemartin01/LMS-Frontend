@@ -24,9 +24,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }

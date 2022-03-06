@@ -19,10 +19,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -34,7 +32,7 @@ class MockAdminService {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -44,9 +42,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -224,13 +220,12 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editUserData();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
