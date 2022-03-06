@@ -1,20 +1,20 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {UserSettingsComponent} from './user-settings.component';
+import { UserSettingsComponent } from './user-settings.component';
 
-import {UserService} from "../../../services/user.service";
+import { UserService } from "../../../services/user.service";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockUserService {
-  public getUserDetails(): Observable<User> {
+  getUserDetails(): Observable<User> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -32,7 +32,7 @@ class MockUserService {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -67,7 +67,7 @@ class MockModalService {
   open(): { componentInstance: { user: User }, result: Promise<string> } {
     return {
       componentInstance: {
-        user: this.user
+        user: this.user,
       },
       result: new Promise<string>(
         resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
@@ -92,8 +92,8 @@ describe('UserSettingsComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: UserService, useClass: MockUserService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: UserService, useClass: MockUserService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();

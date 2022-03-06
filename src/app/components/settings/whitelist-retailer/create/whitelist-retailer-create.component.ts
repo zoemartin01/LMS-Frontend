@@ -7,9 +7,9 @@ import { WhitelistRetailerDomainDeleteComponent } from "../domain-delete/whiteli
 import { WhitelistRetailerDomainEditComponent } from "../domain-edit/whitelist-retailer-domain-edit.component";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-whitelist-retailer-create',
@@ -43,7 +43,12 @@ export class WhitelistRetailerCreateComponent {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal, public utilityService: UtilityService, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    public activeModal: NgbActiveModal,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -57,7 +62,7 @@ export class WhitelistRetailerCreateComponent {
       },
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
-      }
+      },
     });
   }
 

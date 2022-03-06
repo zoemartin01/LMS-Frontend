@@ -1,15 +1,15 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {WhitelistRetailerCreateComponent} from './whitelist-retailer-create.component';
+import { WhitelistRetailerCreateComponent } from './whitelist-retailer-create.component';
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 
 class MockAdminService {
   createWhitelistRetailer(domains: String[], name: String): Observable<WhitelistRetailer> {
@@ -28,13 +28,13 @@ class MockAdminService {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
-        ]
+        ],
       });
     });
   }
@@ -65,14 +65,14 @@ describe('WhitelistRetailerCreateComponent', () => {
         WhitelistRetailerCreateComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -86,10 +86,10 @@ describe('WhitelistRetailerCreateComponent', () => {
   });
 
   it('should create whitelist retailer', fakeAsync(() => {
-    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters')
+    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters');
     component.domains = [
       "jordan.biz",
-      "lacey.biz"
+      "lacey.biz",
     ];
 
     const modalClose = spyOn(component.activeModal, 'close');
@@ -103,10 +103,10 @@ describe('WhitelistRetailerCreateComponent', () => {
   it('should throw an error on create whitelist retailer', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters')
+    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters');
     component.domains = [
       "jordan.biz",
-      "lacey.biz"
+      "lacey.biz",
     ];
 
     expect(component.errorMessage).toEqual('');
@@ -154,7 +154,7 @@ describe('WhitelistRetailerCreateComponent', () => {
     component.dirty = false;
     component.domains = [
       'domain.test',
-      'domain.2.test'
+      'domain.2.test',
     ]
 
     component.openWhitelistRetailerDomainDeletionDialog('domain.test');
