@@ -96,30 +96,13 @@ export class UserSettingsComponent implements OnInit {
    * Edits user settings
    */
   public async editUserSettings(): Promise<void> {
-    this.errorMessage = '';
-    this.editedUserSettings = false;
-    if (this.userSettingsForm.controls['password'].value != "") {
-      this.userService.editUserData(
-        {
-          notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value,
-          password: this.userSettingsForm.controls['password'].value,
-        }
-      ).subscribe({
-        next: () => {
-          this.activeModal.close('edited');
-          this.editedUserSettings = true;
-        },
-        error: error => {
-          console.error('There was an error!', error);
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
-      });
-      return;
+    let changedData = this.utilityService.getDirtyValues(this.userSettingsForm);
+
+    if (this.userSettingsForm.controls['notificationChannel'].dirty) {
+      changedData['notificationChannel'] = +changedData['notificationChannel'];
     }
 
-    this.userService.editUserData(
-      {notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value}
-    ).subscribe({
+    this.userService.editUserData(changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
         this.editedUserSettings = true;
