@@ -4,11 +4,11 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-decline',
@@ -46,7 +46,12 @@ export class UserDeclineComponent implements OnInit {
    * @param {ActivatedRoute} route route that activated this component
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public utilityService: UtilityService, private route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    private route: ActivatedRoute,
+    public activeModal: NgbActiveModal
+  ) {
     this.userDeclineForm.disable();
   }
 

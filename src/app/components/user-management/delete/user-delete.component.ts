@@ -6,11 +6,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
 import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-delete',
@@ -85,7 +85,7 @@ export class UserDeleteComponent implements OnInit {
         error: error => {
           console.error('There was an error!', error);
         }
-      })
+      });
     } else {
       this.userService.getUserDetails().subscribe({
         next: res => {
@@ -100,7 +100,7 @@ export class UserDeleteComponent implements OnInit {
         error: error => {
           console.error('There was an error!', error);
         }
-      })
+      });
     }
   }
 
@@ -115,9 +115,8 @@ export class UserDeleteComponent implements OnInit {
           this.activeModal.close('deleted');
         },
         error: error => {
-          console.error('There was an error!', error);
           this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
+        },
       });
       return;
     } else {
@@ -128,9 +127,8 @@ export class UserDeleteComponent implements OnInit {
           localStorage.clear();
         },
         error: error => {
-          console.error('There was an error!', error);
           this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
+        },
       });
     }
   }
