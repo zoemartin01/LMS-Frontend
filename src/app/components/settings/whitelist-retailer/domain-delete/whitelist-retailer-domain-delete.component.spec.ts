@@ -1,16 +1,16 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {WhitelistRetailerDomainDeleteComponent} from './whitelist-retailer-domain-delete.component';
+import { WhitelistRetailerDomainDeleteComponent } from './whitelist-retailer-domain-delete.component';
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -40,7 +40,10 @@ class MockAdminService {
     });
   }
 
-  deleteDomainOfWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomainId: WhitelistRetailerDomainId): Observable<void> {
+  deleteDomainOfWhitelistRetailer(
+    whitelistRetailerId: WhitelistRetailerId,
+    whitelistRetailerDomainId: WhitelistRetailerDomainId
+  ): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -69,7 +72,7 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
+        { provide: AdminService, useClass: MockAdminService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -104,13 +107,13 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
       domains: [
         {
           id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
+          domain: "jordan.biz",
         },
         {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
+          domain: "lacey.biz",
         },
-      ]
+      ],
     });
     expect(component.domainDeleteForm.controls['name'].value).toEqual('McGlynn and Sons and daughters');
     expect(component.domainDeleteForm.controls['domain'].value).toEqual('lacey.biz');
@@ -143,8 +146,8 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
   }));
 
   it('should update form on init if whitelist retailer id is null', fakeAsync(() => {
-    component.name = 'Duck Putin'
-    component.domain = 'russianwarshipgofuckyourself.club'
+    component.name = 'Duck Putin';
+    component.domain = 'russianwarshipgofuckyourself.club';
 
     expect(component.whitelistRetailer).toEqual({
       id: null,
@@ -168,7 +171,7 @@ describe('WhitelistRetailerDomainDeleteComponent', () => {
     component.deleteDomainOfWhitelistRetailer();
     tick();
 
-    expect(modalClose).toHaveBeenCalledWith('deleted')
+    expect(modalClose).toHaveBeenCalledWith('deleted');
   }));
 
   it('should delete whitelist retailer when whitelist retailer id is null', fakeAsync(() => {

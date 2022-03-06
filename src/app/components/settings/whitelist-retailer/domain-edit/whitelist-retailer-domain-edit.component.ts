@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-domain-edit',
@@ -42,7 +42,11 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -62,7 +66,12 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       this.adminService.getWhitelistRetailerData(this.whitelistRetailer.id).subscribe({
         next: res => {
           this.whitelistRetailer = res;
-          this.domainEditForm.controls['domain'].setValue(res.domains.filter((whitelistRetailerDomain: WhitelistRetailerDomain) => whitelistRetailerDomain.id == this.whitelistRetailerDomain.id)[0].domain);
+          this.domainEditForm.controls['domain'].setValue(
+            res.domains.filter(
+              (whitelistRetailerDomain: WhitelistRetailerDomain) =>
+                whitelistRetailerDomain.id == this.whitelistRetailerDomain.id
+            )[0].domain
+          );
         },
         error: error => {
           console.error('There was an error!', error);

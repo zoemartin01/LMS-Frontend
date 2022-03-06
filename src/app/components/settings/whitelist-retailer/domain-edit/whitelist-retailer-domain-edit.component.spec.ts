@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {WhitelistRetailerDomainEditComponent} from './whitelist-retailer-domain-edit.component';
+import { WhitelistRetailerDomainEditComponent } from './whitelist-retailer-domain-edit.component';
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
-import {WhitelistRetailerDomainId} from "../../../../types/aliases/whitelist-retailer-domain-id";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
+import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -20,7 +20,7 @@ class MockAdminService {
         observer.error({
           error: {
             message: 'Whitelist Retailer not found.',
-          }
+          },
         });
       }
 
@@ -30,11 +30,11 @@ class MockAdminService {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
         ],
       });
@@ -50,7 +50,7 @@ class MockAdminService {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -73,7 +73,7 @@ describe('WhitelistRetailerDomainEditComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
+        { provide: AdminService, useClass: MockAdminService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -106,15 +106,15 @@ describe('WhitelistRetailerDomainEditComponent', () => {
       domains: [
         {
           id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
+          domain: "jordan.biz",
         },
         {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
+          domain: "lacey.biz",
         },
       ],
     });
-    expect(component.domainEditForm.controls['domain'].value).toEqual('jordan.biz')
+    expect(component.domainEditForm.controls['domain'].value).toEqual('jordan.biz');
   }));
 
   it('should not try to get whitelist retailer data when whitelist retailer id is null',
@@ -136,7 +136,7 @@ describe('WhitelistRetailerDomainEditComponent', () => {
         name: '',
         domains: [],
       });
-    }));
+  }));
 
   it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
@@ -194,7 +194,7 @@ describe('WhitelistRetailerDomainEditComponent', () => {
 
       expect(consoleError).not.toHaveBeenCalled();
       expect(modalClose).toHaveBeenCalledWith(component.domainEditForm.value.domain);
-    }))
+  }));
 
   it('should throw an error when editing a domain to a whitelisted retailer', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
