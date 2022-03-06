@@ -47,37 +47,40 @@ export class LivecamScheduleComponent {
    * Schedules a livecam recording with the passed parameters
    */
   public async scheduleRecording(): Promise<void> {
-    if (this.recordingScheduleForm.valid) {
-      const start = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
-      const end = moment(this.recordingScheduleForm.value.end, 'YYYY-MM-DDTHH:mm');
-      const resolution = this.recordingScheduleForm.value.resolution;
-      const bitrate_unit = this.recordingScheduleForm.value.bitrate_unit;
-      let bitrate = this.recordingScheduleForm.value.bitrate;
+    this.errorMessage = '';
 
-      if (bitrate_unit === 'kbps') {
-        bitrate = bitrate * 1000;
-      } else if (bitrate_unit === 'mbps') {
-        bitrate = bitrate * 1000 * 1000;
-      }
-
-      this.livecamService.scheduleRecording(start, end, resolution, bitrate).subscribe({
-        next: () => {
-          this.activeModal.close('scheduled');
-        },
-        error: error => {
-          console.error(error);
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
-      });
-    } else {
-      this.errorMessage = 'Invalid form values';
+    if (!this.recordingScheduleForm.valid) {
+      this.errorMessage = 'You need to fill in all required fields!';
+      return;
     }
+
+    const start = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
+    const end = moment(this.recordingScheduleForm.value.end, 'YYYY-MM-DDTHH:mm');
+    const resolution = this.recordingScheduleForm.value.resolution;
+    const bitrate_unit = this.recordingScheduleForm.value.bitrate_unit;
+    let bitrate = this.recordingScheduleForm.value.bitrate;
+
+    if (bitrate_unit === 'kbps') {
+      bitrate = bitrate * 1000;
+    } else if (bitrate_unit === 'mbps') {
+      bitrate = bitrate * 1000 * 1000;
+    }
+
+    this.livecamService.scheduleRecording(start, end, resolution, bitrate).subscribe({
+      next: () => {
+        this.activeModal.close('scheduled');
+      },
+      error: error => {
+        console.error(error);
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      }
+    });
   }
 
   /**
    * Helper method that sets the minimum of end moment to be the start moment
    */
-  public async updateEndField() : Promise<void> {
+  public async updateEndField(): Promise<void> {
     this.endMin = moment(this.recordingScheduleForm.value.start, 'YYYY-MM-DDTHH:mm');
   }
 

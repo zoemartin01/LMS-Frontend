@@ -381,8 +381,6 @@ describe('GlobalSettingsComponent', () => {
       },
       "static.homepage"
     );
-
-    //expect(component.globalSettingsForm.controls['static.homepage'].value).toBe("first linesecond line")
   });
 
   it('should throw an error when trying to update content on static page with non txt or md file', () => {

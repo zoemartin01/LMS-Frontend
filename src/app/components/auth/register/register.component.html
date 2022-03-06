@@ -37,14 +37,12 @@
         <div class="form-group">
           <label for="password" class="my-1">Password</label>
           <input class="form-control" type="password" placeholder="Password" id="password"
-                 formControlName="password" autocomplete="password" (change)="checkPasswordConfirmation()">
+                 formControlName="password" autocomplete="password">
         </div>
         <div class="form-group">
           <label for="password_confirmation" class="my-1">Password Confirmation</label>
           <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
-                 formControlName="password_confirmation" autocomplete="password"
-                 (change)="checkPasswordConfirmation()">
-          <div class="alert alert-danger" role="alert" *ngIf="passwordConfirmationFails" [innerHTML]="passwordConfirmationFailsMessage"></div>
+                 formControlName="password_confirmation" autocomplete="password">
         </div>
         <br>
         <div class="row">

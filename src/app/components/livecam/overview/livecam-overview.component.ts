@@ -125,7 +125,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public async downloadRecording(recordingId: RecordingId): Promise<void> {
     this.livecamService.getRecordingData(recordingId).subscribe({
       next: (recording: Recording) => {
-        recording.start = moment(recording.start);
+        const recordingStartFormatted = moment(recording.start).format('YYYY-MM-DD_HH-mm');
 
         this.livecamService
           .downloadRecording(recording.id)
@@ -136,9 +136,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
 
             const link = document.createElement('a');
             link.href = data;
-            link.download = `Recording-${recording.start?.format(
-              'YYYY-MM-DD_HH-mm'
-            )}.mp4`;
+            link.download = `Recording-${recordingStartFormatted}.mp4`;
 
             link.dispatchEvent(
               new MouseEvent('click', {
@@ -187,31 +185,5 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
         this.getScheduledRecordings(this.scheduledRecordings.page);
       }
     });
-  }
-
-  /**
-   * Helper method to convert bytes to a human-readable format
-   *
-   * @param {number} bytes bytes
-   * @param {number} decimals decimals
-   */
-  public readableBytes = (bytes: number, decimals: number = 2) =>
-    LivecamOverviewComponent.readableBytes(bytes, decimals);
-
-
-  /**
-   * Static helper method to convert bytes to a human-readable format
-   *
-   * @param {number} bytes bytes
-   * @param {number} decimals decimals
-   */
-  public static readableBytes(bytes: number, decimals: number = 2): string {
-    if (bytes == 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (
-      parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i]
-    );
   }
 }

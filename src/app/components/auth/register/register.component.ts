@@ -25,8 +25,6 @@ export class RegisterComponent {
     hwlabRules: new FormControl(false, Validators.requiredTrue),
   });
   errorMessage: string = '';
-  passwordConfirmationFails: boolean = false;
-  passwordConfirmationFailsMessage: string = 'Password confirmation failed!';
 
   /**
    * Constructor
@@ -43,10 +41,13 @@ export class RegisterComponent {
    */
   public async register(): Promise<void> {
     this.errorMessage = '';
+
     if (this.registerForm.invalid) {
       this.errorMessage = 'You need to fill in all required fields and check all  required checkboxes!'
       return;
     }
+    if (!this.checkPasswordConfirmation()) return;
+
     this.userService.register(
       this.registerForm.value.firstname,
       this.registerForm.value.name,
@@ -58,7 +59,6 @@ export class RegisterComponent {
       },
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
-        console.error('There was an error!', error);
       }
     })
   }
@@ -66,8 +66,11 @@ export class RegisterComponent {
   /**
    * Checks if password and password confirmation match
    */
-  public checkPasswordConfirmation() {
-    this.passwordConfirmationFails = !(this.registerForm.value.password === this.registerForm.value.password_confirmation
-      || this.registerForm.value.password_confirmation === '');
+  public checkPasswordConfirmation(): boolean {
+    if (!(this.registerForm.value.password === this.registerForm.value.password_confirmation)) {
+      this.errorMessage = 'Password confirmation failed!';
+      return false;
+    }
+    return true;
   }
 }

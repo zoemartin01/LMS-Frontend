@@ -95,12 +95,6 @@ export class AppointmentAcceptComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointment.start = moment(this.appointment.start);
-        this.appointment.end = moment(this.appointment.end);
-        if (this.appointment.maxStart !== undefined) {
-          this.appointment.maxStart = moment(this.appointment.maxStart);
-          this.appointmentAcceptForm.controls['lastDate'].setValue(res.maxStart?.format('DD.MM.YYYY'));
-        }
         this.appointmentAcceptForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
         this.appointmentAcceptForm.controls['room'].setValue(res.room.name);
         this.appointmentAcceptForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
@@ -108,6 +102,14 @@ export class AppointmentAcceptComponent implements OnInit {
         this.appointmentAcceptForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentAcceptForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentAcceptForm.controls['amount'].setValue(res.amount);
+
+        this.appointment.start = moment(this.appointment.start);
+        this.appointment.end = moment(this.appointment.end);
+
+        if (this.appointment.maxStart !== null) {
+          this.appointment.maxStart = moment(this.appointment.maxStart);
+          this.appointmentAcceptForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));
+        }
       },
       error: error => {
         console.error('There was an error!', error);

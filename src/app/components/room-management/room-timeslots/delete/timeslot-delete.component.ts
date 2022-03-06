@@ -123,9 +123,6 @@ export class TimeslotDeleteComponent implements OnInit {
       next: res => {
         this.timeslot = res;
 
-        this.timeslot.start = moment(this.timeslot.start);
-        this.timeslot.end = moment(this.timeslot.end);
-
         this.timeslotDeleteForm.controls['type'].setValue(res.type);
         this.timeslotDeleteForm.controls['room'].setValue(res.room.name);
         this.timeslotDeleteForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
@@ -133,6 +130,9 @@ export class TimeslotDeleteComponent implements OnInit {
         this.timeslotDeleteForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.timeslotDeleteForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.timeslotDeleteForm.controls['amount'].setValue(res.amount);
+        
+        this.timeslot.start = moment(this.timeslot.start);
+        this.timeslot.end = moment(this.timeslot.end);
       },
       error: error => {
         console.error('There was an error!', error);

@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit {
     role: new FormControl(0),
     notificationChannel: new FormControl(''),
   });
-  passwordConfirmationFails: boolean = false;
   public user: User = {
     id: null,
     firstName: '',
@@ -89,10 +88,11 @@ export class UserEditComponent implements OnInit {
   public async editUserData(): Promise<void> {
     this.errorMessage = '';
 
-    if (!this.userEditForm.valid) {
+    if (this.userEditForm.invalid) {
       this.errorMessage = 'You need to fill in all required fields!';
       return;
     }
+    if (!this.checkPasswordConfirmation()) return;
 
     let changedData = this.utilityService.getDirtyValues(this.userEditForm);
 
@@ -117,10 +117,11 @@ export class UserEditComponent implements OnInit {
   /**
    * Checks if password and password confirmation match
    */
-  public checkPasswordConfirmation() {
-    this.passwordConfirmationFails = !(
-      this.userEditForm.value.password === this.userEditForm.value.password_confirmation
-      || this.userEditForm.value.password_confirmation === ''
-    );
+  public checkPasswordConfirmation(): boolean {
+    if (!(this.userEditForm.value.password === this.userEditForm.value.password_confirmation)) {
+      this.errorMessage = 'Password confirmation failed!';
+      return false;
+    }
+    return true;
   }
 }

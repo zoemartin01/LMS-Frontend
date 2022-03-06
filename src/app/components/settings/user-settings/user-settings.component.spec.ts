@@ -240,13 +240,13 @@ describe('UserSettingsComponent', () => {
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {
-    expect(component.passwordConfirmationFails).toEqual(false);
+    expect(component.errorMessage).toBe('');
 
     component.userSettingsForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['password_confirmation'].setValue('duckPutin');
 
     component.checkPasswordConfirmation();
 
-    expect(component.passwordConfirmationFails).toEqual(true);
+    expect(component.errorMessage).toBe('Password confirmation failed!');
   });
 });

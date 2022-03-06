@@ -25,6 +25,38 @@ class MockAppointmentService {
         });
       }
 
+      if (appointmentId === 'IdWithStartAndEndNull') {
+        observer.next({
+          id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+          start: null,
+          end: null,
+          type: 1,
+          seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+          amount: 4,
+          timeSlotRecurrence: 3,
+          confirmationStatus: 1,
+          maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+          room: {
+            id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+            name: "Test room",
+            description: "room to test",
+            maxConcurrentBookings: 1,
+            autoAcceptBookings: true,
+          },
+          user: {
+            id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+            email: "admin@test.com",
+            firstName: "Admin",
+            lastName: "Admin",
+            role: 3,
+            emailVerification: true,
+            isActiveDirectory: false,
+            notificationChannel: 3,
+          },
+        });
+        return;
+      }
+
       const appointment: Appointment = {
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -40,7 +72,7 @@ class MockAppointmentService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: true
+          autoAcceptBookings: true,
         },
         user: {
           id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -50,9 +82,10 @@ class MockAppointmentService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
-        }
-      }
+          notificationChannel: 3,
+        },
+      };
+
       observer.next(appointment);
     });
   }
@@ -63,7 +96,7 @@ class MockAppointmentService {
         observer.error({
           error: {
             message: 'Unknown Error.',
-          }
+          },
         });
       }
 
@@ -77,7 +110,7 @@ class MockAppointmentService {
         observer.error({
           error: {
             message: 'Unknown Error.',
-          }
+          },
         });
       }
 
@@ -124,7 +157,6 @@ describe('AppointmentDeleteComponent method calls', () => {
 
   it('should get appointment to init page',fakeAsync(() =>{
     component.ngOnInit();
-
     tick();
 
     expect(getAppointmentDataMethod).toHaveBeenCalled();
@@ -156,9 +188,58 @@ describe('AppointmentDeleteComponent', () => {
 
     fixture = TestBed.createComponent(AppointmentDeleteComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
+
+  it('should set attributes to correct values after ngOnInit with appointment start end end null',
+    fakeAsync(() => {
+    component.appointment.id = 'IdWithStartAndEndNull';
+
+    const testAppointment: Appointment = {
+      id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
+      start: null,
+      end: null,
+      type: 1,
+      seriesId: "eef5fadc-53d9-4a49-83be-e55b2f94bb8e",
+      amount: 4,
+      timeSlotRecurrence: 3,
+      confirmationStatus: 1,
+      maxStart: moment("2022-03-07T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: true,
+      },
+      user: {
+        id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
+        email: "admin@test.com",
+        firstName: "Admin",
+        lastName: "Admin",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3,
+      },
+    };
+
+    component.ngOnInit();
+    tick();
+
+    expect(JSON.stringify(component.appointment)).toEqual(JSON.stringify(testAppointment));
+
+    expect(component.appointmentDeleteForm.controls['user'].value)
+      .toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
+    expect(component.appointmentDeleteForm.controls['room'].value).toEqual(testAppointment.room.name);
+    expect(component.appointmentDeleteForm.controls['date'].value).toEqual(undefined);
+    expect(component.appointmentDeleteForm.controls['startHour'].value).toEqual(undefined);
+    expect(component.appointmentDeleteForm.controls['endHour'].value).toEqual(undefined);
+    expect(component.appointmentDeleteForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testAppointment.timeSlotRecurrence);
+  }));
 
   it('should delete an appointment', fakeAsync(() => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";

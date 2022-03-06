@@ -17,7 +17,7 @@ import { Room } from "../../../../types/room";
 import { RoomId } from "../../../../types/aliases/room-id";
 
 class MockRoomService {
-  public getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
+  public getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -25,6 +25,27 @@ class MockRoomService {
             message: 'Unknown Error.',
           },
         });
+      }
+
+      if(timeslotId === 'timeSlotIdwithStartEndEndNull'){
+        observer.next({
+          id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
+          start: null,
+          end: null,
+          type: 2,
+          seriesId: "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+          amount: 3,
+          timeSlotRecurrence: 2,
+          maxStart: moment("2022-02-15T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+          room: {
+            id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+            name: "Test room",
+            description: "room to test",
+            maxConcurrentBookings: 1,
+            autoAcceptBookings: false,
+          },
+        });
+        return;
       }
 
       const timeslot: RoomTimespan = {
@@ -277,13 +298,51 @@ describe('TimeslotDeleteComponent', () => {
     tick();
 
     expect(component.timeslot).toEqual(testTimeslot);
-    expect(component.timeslot.start).toEqual(testTimeslot.start);
-    expect(component.timeslot.end).toEqual(testTimeslot.end);
+
     expect(component.timeslotDeleteForm.controls['type'].value).toEqual(testTimeslot.type);
     expect(component.timeslotDeleteForm.controls['room'].value).toEqual(testTimeslot.room.name);
-    expect(component.timeslotDeleteForm.controls['date'].value).toEqual(testTimeslot.start?.format('DD.MM.YYYY'));
-    expect(component.timeslotDeleteForm.controls['startHour'].value).toEqual(testTimeslot.start?.format('HH:mm'));
+    expect(component.timeslotDeleteForm.controls['date'].value)
+      .toEqual(testTimeslot.start?.format('DD.MM.YYYY'));
+    expect(component.timeslotDeleteForm.controls['startHour'].value)
+      .toEqual(testTimeslot.start?.format('HH:mm'));
     expect(component.timeslotDeleteForm.controls['endHour'].value).toEqual(testTimeslot.end?.format('HH:mm'));
+    expect(component.timeslotDeleteForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
+    expect(component.timeslotDeleteForm.controls['amount'].value).toEqual(testTimeslot.amount);
+  }));
+
+  it('should set attributes to correct values after ngOnInit with start end end null', fakeAsync(() => {
+    component.timeslot.id = "timeSlotIdwithStartEndEndNull";
+    component.timeslot.room.id = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
+    const testTimeslot: RoomTimespan = {
+      id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
+      start: null,
+      end: null,
+      type: 2,
+      seriesId: "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+      amount: 3,
+      timeSlotRecurrence: 2,
+      maxStart: moment("2022-02-15T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: false,
+      },
+    };
+
+    component.ngOnInit();
+    tick();
+
+    expect(JSON.stringify(component.timeslot)).toEqual(JSON.stringify(testTimeslot));
+    expect(JSON.stringify(component.timeslot.start)).toEqual(JSON.stringify(moment(testTimeslot.start)));
+    expect(JSON.stringify(component.timeslot.end)).toEqual(JSON.stringify(moment(testTimeslot.end)));
+    expect(component.timeslotDeleteForm.controls['type'].value).toEqual(testTimeslot.type);
+    expect(component.timeslotDeleteForm.controls['room'].value).toEqual(testTimeslot.room.name);
+    expect(component.timeslotDeleteForm.controls['date'].value).toEqual(undefined);
+    expect(component.timeslotDeleteForm.controls['startHour'].value).toEqual(undefined);
+    expect(component.timeslotDeleteForm.controls['endHour'].value).toEqual(undefined);
     expect(component.timeslotDeleteForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.timeslotDeleteForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));

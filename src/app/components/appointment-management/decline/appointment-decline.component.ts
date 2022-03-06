@@ -96,9 +96,6 @@ export class AppointmentDeclineComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointment.start = moment(this.appointment.start);
-        this.appointment.end = moment(this.appointment.end);
-
         this.appointmentDeclineForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
         this.appointmentDeclineForm.controls['room'].setValue(res.room.name);
         this.appointmentDeclineForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
@@ -106,10 +103,18 @@ export class AppointmentDeclineComponent implements OnInit {
         this.appointmentDeclineForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentDeclineForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentDeclineForm.controls['amount'].setValue(res.amount);
+
+        this.appointment.start = moment(this.appointment.start);
+        this.appointment.end = moment(this.appointment.end);
+
+        if (this.appointment.maxStart !== null) {
+          this.appointment.maxStart = moment(this.appointment.maxStart);
+          this.appointmentDeclineForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));
+        }
       },
       error: error => {
         console.error('There was an error!', error);
-      }
+      },
     })
   }
 

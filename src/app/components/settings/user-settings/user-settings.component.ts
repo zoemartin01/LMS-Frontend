@@ -36,7 +36,6 @@ export class UserSettingsComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   };
-  public passwordConfirmationFails: boolean = false;
   public editedUserSettings: boolean = false;
   public errorMessage = '';
 
@@ -96,6 +95,10 @@ export class UserSettingsComponent implements OnInit {
    * Edits user settings
    */
   public async editUserSettings(): Promise<void> {
+    this.errorMessage = '';
+
+    if (!this.checkPasswordConfirmation()) return;
+
     let changedData = this.utilityService.getDirtyValues(this.userSettingsForm);
 
     if (this.userSettingsForm.controls['notificationChannel'].dirty) {
@@ -116,8 +119,11 @@ export class UserSettingsComponent implements OnInit {
   /**
    * Checks if password and password confirmation match
    */
-  public checkPasswordConfirmation() {
-    this.passwordConfirmationFails =
-      !(this.userSettingsForm.value.password === this.userSettingsForm.value.password_confirmation)
+  public checkPasswordConfirmation(): boolean {
+    if (!(this.userSettingsForm.value.password === this.userSettingsForm.value.password_confirmation)) {
+      this.errorMessage = 'Password confirmation failed!';
+      return false;
+    }
+    return true;
   }
 }

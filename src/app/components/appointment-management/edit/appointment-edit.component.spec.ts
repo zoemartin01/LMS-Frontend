@@ -457,7 +457,7 @@ class MockAppointmentService {
               name: "Test room",
               description: "room to test",
               maxConcurrentBookings: 1,
-              autoAcceptBookings: true
+              autoAcceptBookings: true,
             },
             user: {
               id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -467,9 +467,9 @@ class MockAppointmentService {
               role: 3,
               emailVerification: true,
               isActiveDirectory: false,
-              notificationChannel: 3
-            }
-          }
+              notificationChannel: 3,
+            },
+          },
         ]
       };
 
