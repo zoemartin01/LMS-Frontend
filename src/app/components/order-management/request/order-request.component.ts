@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import {AdminService} from "../../../services/admin.service";
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
+import { AdminService } from "../../../services/admin.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {Order} from "../../../types/order";
-import {UtilityService} from "../../../services/utility.service";
+import { InventoryItem } from "../../../types/inventory-item";
+import { Order } from "../../../types/order";
 
 @Component({
   selector: 'app-order-request',
@@ -26,19 +26,12 @@ import {UtilityService} from "../../../services/utility.service";
 export class OrderRequestComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
   public requestOrderForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
-    quantity: new FormControl(0, [
-      Validators.required,
-    ]),
-    url: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(0, Validators.required),
+    url: new FormControl('', Validators.required),
   });
   public isWhitelisted: boolean = true;
   public errorMessage = '';
-
 
   /**
    * Constructor
@@ -107,10 +100,12 @@ export class OrderRequestComponent implements OnInit {
    */
   public async requestOrder(): Promise<void> {
     this.errorMessage = '';
+
     if (this.requestOrderForm.invalid) {
       this.errorMessage = 'You need to fill in all required fields!'
       return;
     }
+
     this.orderService.requestOrder(
       this.requestOrderForm.controls['itemName'].value,
       this.requestOrderForm.controls['quantity'].value,

@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
-import {InventoryItemEditComponent} from './inventory-item-edit.component';
+import { InventoryItemEditComponent } from './inventory-item-edit.component';
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
+import { InventoryItem } from "../../../types/inventory-item";
+import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 
 class MockInventoryService {
   getInventoryItemData(id: string): Observable<InventoryItem> {
@@ -71,7 +71,7 @@ describe('InventoryItemEditComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: InventoryService, useClass: MockInventoryService},
+        { provide: InventoryService, useClass: MockInventoryService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -99,6 +99,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.ngOnInit();
     tick();
+
     expect(component.inventoryItem).toEqual({
       id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: "Fantastic Steel Soap",
@@ -124,6 +125,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.ngOnInit();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
       id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
@@ -150,6 +152,7 @@ describe('InventoryItemEditComponent', () => {
 
     component.editInventoryItemData();
     tick();
+
     expect(modalClose).toHaveBeenCalledWith('edited');
   }));
 
@@ -162,7 +165,8 @@ describe('InventoryItemEditComponent', () => {
 
     component.editInventoryItemData();
     tick();
-    expect(component.errorMessage).toEqual('You need to fill in all required fields!')
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should throw error on edit of inventory item', fakeAsync(() => {
@@ -179,7 +183,7 @@ describe('InventoryItemEditComponent', () => {
     component.editInventoryItemData();
     tick();
 
-    expect(component.errorMessage).toEqual('Inventory Item not Found.');
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');

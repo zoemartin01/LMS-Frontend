@@ -20,9 +20,7 @@ export class InventoryItemEditComponent implements OnInit {
   public inventoryItemEditForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    quantity: new FormControl(null, [
-      Validators.required
-    ]),
+    quantity: new FormControl(null, Validators.required),
   });
   public inventoryItem: InventoryItem = {
     id: null,
@@ -76,10 +74,12 @@ export class InventoryItemEditComponent implements OnInit {
    */
   public async editInventoryItemData(): Promise<void> {
     this.errorMessage = '';
+
     if(this.inventoryItemEditForm.invalid){
       this.errorMessage = 'You need to fill in all required fields!'
       return;
     }
+
     let changedData = this.utilityService.getDirtyValues(this.inventoryItemEditForm);
 
     if (this.inventoryItemEditForm.controls['quantity'].dirty) {

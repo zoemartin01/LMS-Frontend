@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {WhitelistRetailerDomainCreateComponent} from './whitelist-retailer-domain-create.component';
+import { WhitelistRetailerDomainCreateComponent } from './whitelist-retailer-domain-create.component';
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -20,7 +20,7 @@ class MockAdminService {
         observer.error({
           error: {
             message: 'Whitelist Retailer not found.',
-          }
+          },
         });
       }
 
@@ -30,24 +30,27 @@ class MockAdminService {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
         ],
       });
     });
   }
 
-  addDomainToWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId, whitelistRetailerDomain: string): Observable<WhitelistRetailerDomain> {
+  addDomainToWhitelistRetailer(
+    whitelistRetailerId: WhitelistRetailerId,
+    whitelistRetailerDomain: string
+  ): Observable<WhitelistRetailerDomain> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -71,13 +74,13 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
         WhitelistRetailerDomainCreateComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
+        { provide: AdminService, useClass: MockAdminService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -108,13 +111,13 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
       domains: [
         {
           id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
+          domain: "jordan.biz",
         },
         {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
+          domain: "lacey.biz",
         },
-      ]
+      ],
     });
   }));
 
@@ -182,7 +185,7 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     component.domainCreateForm.controls['domain'].setValue('louisa.org');
     component.whitelistRetailer.id = 'retailerExampleID';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -190,12 +193,13 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Internal Server Error.')
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
 
-  it('should return domain if domain has to be added to a not yet existing whitelist retailer', fakeAsync(() => {
+  it('should return domain if domain has to be added to a not yet existing whitelist retailer',
+    fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('russianwarshipgofuckyourself.club');
 
     expect(component.whitelistRetailer).toEqual({
@@ -214,11 +218,12 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     expect(modalClose).toHaveBeenCalledWith(component.domainCreateForm.value.domain);
   }));
 
-  it('should throw an error when trying to add an empty domain to a whitelisted retailer', fakeAsync(() => {
+  it('should throw an error when trying to add an empty domain to a whitelisted retailer',
+    fakeAsync(() => {
     component.domainCreateForm.controls['domain'].setValue('');
     component.whitelistRetailer.id = 'retailerExampleID';
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -226,7 +231,7 @@ describe('WhitelistRetailerDomainCreateComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Domain can not be empty!')
+    expect(component.errorMessage).toBe('Domain can not be empty!');
 
     localStorage.removeItem('throwError');
   }));

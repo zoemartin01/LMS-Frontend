@@ -1,15 +1,15 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {InventoryItemDeleteComponent} from './inventory-item-delete.component';
+import { InventoryItemDeleteComponent } from './inventory-item-delete.component';
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
+import { InventoryItem } from "../../../types/inventory-item";
+import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 
 class MockInventoryService {
   getInventoryItemData(id: string): Observable<InventoryItem> {
@@ -61,7 +61,7 @@ describe('InventoryItemDeleteComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: InventoryService, useClass: MockInventoryService},
+        { provide: InventoryService, useClass: MockInventoryService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -88,7 +88,6 @@ describe('InventoryItemDeleteComponent', () => {
     component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
     component.ngOnInit();
-
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -115,7 +114,6 @@ describe('InventoryItemDeleteComponent', () => {
     component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
     component.ngOnInit();
-
     tick();
 
     expect(consoleError).toHaveBeenCalled();
@@ -140,6 +138,7 @@ describe('InventoryItemDeleteComponent', () => {
 
     component.deleteInventoryItem();
     tick();
+
     expect(modalClose).toHaveBeenCalledWith('deleted');
   }));
 
@@ -148,11 +147,10 @@ describe('InventoryItemDeleteComponent', () => {
 
     component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.deleteInventoryItem();
     tick();
-    expect(component.errorMessage).toEqual('Inventory Item not Found.');
+
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));

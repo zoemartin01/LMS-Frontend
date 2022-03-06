@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {UtilityService} from "../../../services/utility.service";
+import { InventoryItem } from "../../../types/inventory-item";
 
 @Component({
   selector: 'app-item-delete',
@@ -22,7 +22,6 @@ export class InventoryItemDeleteComponent implements OnInit {
     description: new FormControl(''),
     quantity: new FormControl(null),
   });
-
   public inventoryItem: InventoryItem = {
     id: null,
     name: '',
@@ -35,10 +34,13 @@ export class InventoryItemDeleteComponent implements OnInit {
    * Constructor
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
-   * @param {NgbActiveModal} activeModal modal containing this component
    * @param {UtilityService} utilityService service providing utility functionalities
+   * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public inventoryService: InventoryService, public activeModal: NgbActiveModal, public utilityService: UtilityService,
+  constructor(
+    public inventoryService: InventoryService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
   ) {
     this.inventoryItemDeleteForm.disable();
   }

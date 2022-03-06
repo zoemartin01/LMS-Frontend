@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {UserEditComponent} from './user-edit.component';
+import { UserEditComponent } from './user-edit.component';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {User} from "../../../types/user";
-import {UserId} from "../../../types/aliases/user-id";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -20,7 +20,7 @@ class MockAdminService {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -32,7 +32,7 @@ class MockAdminService {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 4
+        notificationChannel: 4,
       });
     });
   }
@@ -67,7 +67,7 @@ describe('UserEditComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
+        { provide: AdminService, useClass: MockAdminService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -204,6 +204,8 @@ describe('UserEditComponent', () => {
 
     component.user.id = 'userXY';
 
+    expect(component.errorMessage).toBe('');
+
     component.userEditForm.controls['firstName'].setValue('Duck');
     component.userEditForm.controls['firstName'].markAsDirty();
     component.userEditForm.controls['lastName'].setValue('Putin');
@@ -220,15 +222,31 @@ describe('UserEditComponent', () => {
     component.userEditForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editUserData();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
+  }));
+
+  it('should throw an error when trying trying to send empty form values', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
+    component.user.id = 'userXY';
+    component.userEditForm.controls['firstName'].setValue('');
+    component.userEditForm.controls['lastName'].setValue('');
+    component.userEditForm.controls['email'].setValue('');
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserData();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {

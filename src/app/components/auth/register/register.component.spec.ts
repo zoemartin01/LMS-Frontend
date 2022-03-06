@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
-import {RegisterComponent} from './register.component';
+import { RegisterComponent } from './register.component';
 
-import {UserService} from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
-import {User} from '../../../types/user';
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from '../../../types/user';
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockUserService {
   register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
@@ -59,8 +59,8 @@ describe('RegisterComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: UserService, useClass: MockUserService},
-        {provide: Router, useValue: router},
+        { provide: UserService, useClass: MockUserService },
+        { provide: Router, useValue: router },
       ],
     }).compileComponents();
 
@@ -104,7 +104,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
 
     component.register().then(() => {
-      expect(component.errorMessage).toEqual('User with this email already exists.');
+      expect(component.errorMessage).toBe('User with this email already exists.');
       expect(router.navigateByUrl).not.toHaveBeenCalled();
       done();
     });

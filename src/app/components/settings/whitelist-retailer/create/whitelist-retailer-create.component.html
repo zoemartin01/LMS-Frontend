@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Create Whitelist Retailer</h4>
 </div>
+
 <div class="modal-body">
   <form [formGroup]="retailerCreateForm" (keyup.enter)="createWhitelistRetailer()"
         (ngSubmit)="createWhitelistRetailer()">
@@ -38,14 +39,15 @@
         </tbody>
       </table>
     </div>
-    <div class="modal-footer">
-      <div class="col text-left">
-        <a (click)="openWhitelistRetailerDomainCreationForm()
-" class="btn btn-primary" role="button"> <i class="bi-plus-lg"></i> Add Domain</a>
-      </div>
-      <button type="button" class="btn btn-primary" (click)="createWhitelistRetailer()">Save
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
-    </div>
   </form>
+</div>
+
+<div class="modal-footer">
+  <div class="col text-left">
+    <a (click)="openWhitelistRetailerDomainCreationForm()" class="btn btn-primary" role="button">
+      <i class="bi-plus-lg"></i> Add Domain
+    </a>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="createWhitelistRetailer()">Save</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

@@ -27,9 +27,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'User not found.',
-            }
+            message: 'User not found.',
           }
         });
       }

@@ -1,18 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {OrderDeclineComponent} from './order-decline.component';
+import { OrderDeclineComponent } from './order-decline.component';
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -102,7 +102,7 @@ class MockOrderService {
   }
 
   declineOrderRequest(orderId: OrderId): Observable<Order> {
-    return this.updateOrderData(orderId, {status: OrderStatus.declined});
+    return this.updateOrderData(orderId, { status: OrderStatus.declined });
   }
 }
 
@@ -121,7 +121,7 @@ describe('OrderDeclineComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
+        { provide: OrderService, useClass: MockOrderService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -304,6 +304,7 @@ describe('OrderDeclineComponent', () => {
 
     component.declineOrder();
     tick();
+
     expect(modalClose).toHaveBeenCalledWith('declined');
   }));
 
@@ -315,7 +316,7 @@ describe('OrderDeclineComponent', () => {
     component.declineOrder();
     tick();
 
-    expect(component.errorMessage).toEqual('Inventory Item not Found.');
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));

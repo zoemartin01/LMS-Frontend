@@ -330,7 +330,7 @@ describe('AppointmentdeclineComponent', () => {
     component.declineAppointment();
     tick();
 
-    expect(component.errorMessage).toEqual('Unknown Error.');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -341,7 +341,7 @@ describe('AppointmentdeclineComponent', () => {
     component.declineAppointmentSeries();
     tick();
 
-    expect(component.errorMessage).toEqual('Unknown Error.');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

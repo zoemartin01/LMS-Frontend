@@ -1,17 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {UserDeclineComponent} from './user-decline.component';
+import { UserDeclineComponent } from './user-decline.component';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {User} from "../../../types/user";
-import {UserId} from "../../../types/aliases/user-id";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from "../../../types/user";
+import { UserId } from "../../../types/aliases/user-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockAdminService {
   getUser(userId: UserId): Observable<User> {
@@ -66,7 +66,7 @@ describe('UserDeclineComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
+        { provide: AdminService, useClass: MockAdminService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -160,13 +160,12 @@ describe('UserDeclineComponent', () => {
     component.user.id = 'userAB';
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.declineUser();
     tick();
 
     expect(modalClose).toHaveBeenCalledWith('declined');
-    expect(consoleError).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('');
   }));
 
   it('should throw an error on accept user', fakeAsync(() => {
@@ -174,14 +173,15 @@ describe('UserDeclineComponent', () => {
 
     component.user.id = 'userAB';
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.declineUser();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

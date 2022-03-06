@@ -1,16 +1,16 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {WhitelistRetailerEditComponent} from './whitelist-retailer-edit.component';
+import { WhitelistRetailerEditComponent } from './whitelist-retailer-edit.component';
 
-import {AdminService} from "../../../../services/admin.service";
+import { AdminService } from "../../../../services/admin.service";
 
-import {WhitelistRetailer} from "../../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../../types/aliases/whitelist-retailer-id";
-import {WhitelistRetailerDomain} from "../../../../types/whitelist-retailer-domain";
+import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../../types/aliases/whitelist-retailer-id";
+import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
 
 class MockAdminService {
   getWhitelistRetailerData(whitelistRetailerId: WhitelistRetailerId): Observable<WhitelistRetailer> {
@@ -35,7 +35,7 @@ class MockAdminService {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
             domain: "lacey.biz",
           },
-        ]
+        ],
       });
     });
   }
@@ -67,7 +67,13 @@ class MockModalService {
     domain: '',
   };
 
-  open(): { componentInstance: { whitelistRetailer: WhitelistRetailer, whitelistRetailerDomain: WhitelistRetailerDomain }, result: Promise<string> } {
+  open(): {
+    componentInstance: {
+      whitelistRetailer: WhitelistRetailer,
+      whitelistRetailerDomain: WhitelistRetailerDomain,
+    },
+    result: Promise<string>,
+  } {
     return {
       componentInstance: {
         whitelistRetailer: this.whitelistRetailer,
@@ -94,8 +100,8 @@ describe('RetailerEditComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -184,7 +190,7 @@ describe('RetailerEditComponent', () => {
     component.whitelistRetailer.id = 'retailerExampleID';
     component.retailerEditForm.controls['name'].setValue('Duck Putin');
 
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -192,7 +198,7 @@ describe('RetailerEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toEqual('Whitelist Retailer not found.');
+    expect(component.errorMessage).toBe('Whitelist Retailer not found.');
 
     localStorage.removeItem('throwError');
   }));
@@ -240,7 +246,7 @@ describe('RetailerEditComponent', () => {
   }));
 
   it('should throw an error when retailer name is empty', fakeAsync(() => {
-    expect(component.errorMessage).toEqual('');
+    expect(component.errorMessage).toBe('');
 
     component.whitelistRetailer.id = 'retailerExampleID';
     component.retailerEditForm.controls['name'].setValue('');
@@ -248,6 +254,6 @@ describe('RetailerEditComponent', () => {
     component.editWhitelistRetailerData();
     tick();
 
-    expect(component.errorMessage).toEqual('Retailer name cannot be empty');
+    expect(component.errorMessage).toBe('Retailer name cannot be empty');
   }));
 });

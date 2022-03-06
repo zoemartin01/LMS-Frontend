@@ -26,9 +26,7 @@ class MockMessagingService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -63,9 +61,7 @@ class MockMessagingService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -89,9 +85,7 @@ class MockMessagingService {
       if (messageId === '312d8319-c253-4ee4-8771-a4a8d4a2f411') {
         observer.error({
           error: {
-            error: {
-              message: 'Message not found.',
-            }
+            message: 'Message not found.',
           }
         });
       }
@@ -124,9 +118,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'User not found.',
-            }
+            message: 'User not found.',
           }
         });
       }

@@ -58,7 +58,7 @@ class MockAppointmentService {
         });
         return;
       }
-      
+
       const appointment: Appointment = {
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),

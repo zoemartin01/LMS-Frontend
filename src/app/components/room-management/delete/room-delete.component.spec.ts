@@ -18,9 +18,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -42,9 +40,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -173,7 +169,7 @@ describe('RoomDeleteComponent', () => {
     component.getRoomData();
     tick();
 
-    expect(component.errorMessage).toBe('There has been an error!');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

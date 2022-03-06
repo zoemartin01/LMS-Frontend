@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {UserService} from "../../../services/user.service";
+import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
 
-import {User} from "../../../types/user";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UserDeleteComponent} from "../../user-management/delete/user-delete.component";
-import {UtilityService} from "../../../services/utility.service";
+import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
+
+import { User } from "../../../types/user";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-user-settings',
@@ -47,7 +48,12 @@ export class UserSettingsComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public userService: UserService, public activeModal: NgbActiveModal, public utilityService: UtilityService, private modalService: NgbModal) {
+  constructor(
+    public userService: UserService,
+    public activeModal: NgbActiveModal,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -90,38 +96,20 @@ export class UserSettingsComponent implements OnInit {
    * Edits user settings
    */
   public async editUserSettings(): Promise<void> {
-    this.errorMessage = '';
-    this.editedUserSettings = false;
-    if (this.userSettingsForm.controls['password'].value != "") {
-      this.userService.editUserData(
-        {
-          notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value,
-          password: this.userSettingsForm.controls['password'].value,
-        }
-      ).subscribe({
-        next: () => {
-          this.activeModal.close('edited');
-          this.editedUserSettings = true;
-        },
-        error: error => {
-          console.error('There was an error!', error);
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
-      });
-      return;
+    let changedData = this.utilityService.getDirtyValues(this.userSettingsForm);
+
+    if (this.userSettingsForm.controls['notificationChannel'].dirty) {
+      changedData['notificationChannel'] = +changedData['notificationChannel'];
     }
 
-    this.userService.editUserData(
-      {notificationChannel: +this.userSettingsForm.controls['notificationChannel'].value}
-    ).subscribe({
+    this.userService.editUserData(changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');
         this.editedUserSettings = true;
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
-      }
+      },
     });
   }
 
@@ -129,6 +117,7 @@ export class UserSettingsComponent implements OnInit {
    * Checks if password and password confirmation match
    */
   public checkPasswordConfirmation() {
-    this.passwordConfirmationFails = !(this.userSettingsForm.value.password === this.userSettingsForm.value.password_confirmation)
+    this.passwordConfirmationFails =
+      !(this.userSettingsForm.value.password === this.userSettingsForm.value.password_confirmation)
   }
 }
