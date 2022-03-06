@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
 
 import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
-import { FormControl, FormGroup } from "@angular/forms";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
-import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-user-settings',
@@ -124,7 +125,6 @@ export class UserSettingsComponent implements OnInit {
         this.editedUserSettings = true;
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       },
     });

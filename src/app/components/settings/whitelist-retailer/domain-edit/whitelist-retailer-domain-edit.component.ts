@@ -85,19 +85,22 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
    */
   public async editDomainOfWhitelistRetailer(): Promise<void> {
     this.errorMessage ='';
+
     if (this.whitelistRetailer.id === null) {
       this.activeModal.close(this.domainEditForm.controls['domain'].value);
       return;
     }
+
     if (!this.domainEditForm.valid) {
       this.errorMessage = 'Domain can not be empty!';
       return;
     }
+
     this.adminService.editDomainOfWhitelistRetailer(
       this.whitelistRetailer.id,
       this.whitelistRetailerDomain.id,
       {
-        domain: this.domainEditForm.controls['domain'].value
+        domain: this.domainEditForm.controls['domain'].value,
       }
     ).subscribe({
       next: () => {
@@ -105,7 +108,7 @@ export class WhitelistRetailerDomainEditComponent implements OnInit {
       },
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
-      }
+      },
     });
   }
 }

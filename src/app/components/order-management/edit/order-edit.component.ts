@@ -153,14 +153,17 @@ export class OrderEditComponent implements OnInit {
    */
   public async editOrder(): Promise<void> {
     this.errorMessage = '';
+
     if(this.orderEditForm.invalid){
       this.errorMessage = 'You need to fill in all required fields!'
       return;
     }
+
     const changedData = this.utilityService.getDirtyValues(this.orderEditForm);
     if (this.orderEditForm.controls['status'].dirty) {
       changedData['status'] = +changedData['status'];
     }
+
     this.orderService.updateOrderData(this.order.id, changedData).subscribe({
       next: () => {
         this.activeModal.close('edited');

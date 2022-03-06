@@ -100,10 +100,12 @@ export class OrderRequestComponent implements OnInit {
    */
   public async requestOrder(): Promise<void> {
     this.errorMessage = '';
+
     if (this.requestOrderForm.invalid) {
       this.errorMessage = 'You need to fill in all required fields!'
       return;
     }
+
     this.orderService.requestOrder(
       this.requestOrderForm.controls['itemName'].value,
       this.requestOrderForm.controls['quantity'].value,

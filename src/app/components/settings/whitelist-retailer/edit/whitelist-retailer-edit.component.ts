@@ -82,10 +82,12 @@ export class WhitelistRetailerEditComponent implements OnInit {
    */
   public async editWhitelistRetailerData(): Promise<void> {
     this.errorMessage = '';
+
     if (!this.retailerEditForm.valid) {
       this.errorMessage = 'Retailer name cannot be empty';
       return;
     }
+
     this.adminService.editWhitelistRetailerData(this.whitelistRetailer.id, {
         name: this.retailerEditForm.controls['name'].value,
       }

@@ -49,7 +49,11 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public utilityService: UtilityService, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -151,7 +155,6 @@ export class GlobalSettingsComponent implements OnInit {
         this.editedGlobalSettings = true;
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     })

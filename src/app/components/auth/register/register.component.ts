@@ -35,8 +35,7 @@ export class RegisterComponent {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {Router} router router providing navigation
    */
-  constructor(private userService: UserService, public utilityService: UtilityService,
-              private router: Router) {
+  constructor(private userService: UserService, public utilityService: UtilityService, private router: Router) {
   }
 
   /**

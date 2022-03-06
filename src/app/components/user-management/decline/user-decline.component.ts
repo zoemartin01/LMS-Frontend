@@ -90,7 +90,6 @@ export class UserDeclineComponent implements OnInit {
         this.activeModal.close('declined');
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       },
     });

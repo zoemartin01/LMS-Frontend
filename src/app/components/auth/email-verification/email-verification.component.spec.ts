@@ -37,9 +37,9 @@ class MockUserService {
     return new Observable((observer) => {
       if (userId !== '59f1589d-197c-4f53-bfc1-4c57aae14c42' || token !== 'ixhgvplqq') {
         observer.error({
-            error: {
-              message: 'Token doesn\'t match.',
-          }
+          error: {
+            message: 'Token doesn\'t match.',
+          },
         });
       }
 
