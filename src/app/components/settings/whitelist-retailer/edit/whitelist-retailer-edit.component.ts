@@ -8,10 +8,10 @@ import { WhitelistRetailerDomainDeleteComponent } from "../domain-delete/whiteli
 import { WhitelistRetailerDomainEditComponent } from "../domain-edit/whitelist-retailer-domain-edit.component";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomainId } from "../../../../types/aliases/whitelist-retailer-domain-id";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-edit',
@@ -82,12 +82,14 @@ export class WhitelistRetailerEditComponent implements OnInit {
    */
   public async editWhitelistRetailerData(): Promise<void> {
     this.errorMessage = '';
+
     if (!this.retailerEditForm.valid) {
       this.errorMessage = 'Retailer name cannot be empty';
       return;
     }
+
     this.adminService.editWhitelistRetailerData(this.whitelistRetailer.id, {
-        name: this.retailerEditForm.controls['name'].value
+        name: this.retailerEditForm.controls['name'].value,
       }
     ).subscribe({
       next: () => {

@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-delete',
@@ -35,7 +35,12 @@ export class WhitelistRetailerDeleteComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService : AdminService, public activeModal: NgbActiveModal, public utilityService: UtilityService, private modalService: NgbModal) {
+  constructor(
+    public adminService : AdminService,
+    public activeModal: NgbActiveModal,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
     this.retailerDeleteForm.disable();
   }
 

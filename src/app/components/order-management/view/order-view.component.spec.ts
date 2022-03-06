@@ -1,19 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbModal, NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
-import {OrderViewComponent} from './order-view.component';
+import { OrderViewComponent } from './order-view.component';
 
-import {AuthService} from "../../../services/auth.service";
-import {OrderService} from "../../../services/order.service";
+import { AuthService } from "../../../services/auth.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -22,7 +22,7 @@ class MockOrderService {
         observer.error({
           error: {
             message: 'Inventory Item not Found.',
-          }
+          },
         });
       }
 
@@ -82,7 +82,7 @@ class MockModalService {
   open(): { componentInstance: { order: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        order: {id: null},
+        order: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -104,9 +104,9 @@ describe('OrderViewComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
-        {provide: AuthService, useClass: MockAuthService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: OrderService, useClass: MockOrderService },
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();

@@ -1,18 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 
-import {InventoryListComponent} from './inventory-list.component';
+import { InventoryListComponent } from './inventory-list.component';
 
-import {InventoryService} from "../../../services/inventory.service";
+import { InventoryService } from "../../../services/inventory.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {PagedList} from "../../../types/paged-list";
-import {PagedResponse} from "../../../types/paged-response";
+import { InventoryItem } from "../../../types/inventory-item";
+import { PagedList } from "../../../types/paged-list";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockInventoryService {
   getInventoryItems(limit: number = 0, offset: number = 0): Observable<PagedResponse<InventoryItem>> {
@@ -48,21 +48,15 @@ class MockInventoryService {
 
 class MockModalService {
   public requestOrderForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
-    quantity: new FormControl(null, [
-      Validators.required,
-    ]),
-    url: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(null, Validators.required),
+    url: new FormControl('', Validators.required),
   });
 
   open(): { componentInstance: { inventoryItem: { id: string | null }, requestOrderForm: FormGroup }, result: Promise<string> } {
     return {
       componentInstance: {
-        inventoryItem: {id: null},
+        inventoryItem: { id: null },
         requestOrderForm: this.requestOrderForm,
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
@@ -85,8 +79,8 @@ describe('InventoryListComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: InventoryService, useClass: MockInventoryService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: InventoryService, useClass: MockInventoryService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 
@@ -104,6 +98,7 @@ describe('InventoryListComponent', () => {
 
     component.ngOnInit();
     tick();
+
     pagedList.data = [
       {
         id: "920b8cc7-364f-4255-9540-09093f1e167a",
@@ -131,6 +126,7 @@ describe('InventoryListComponent', () => {
 
     component.ngOnInit();
     tick();
+
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventory).toEqual(pagedList);
 
@@ -143,7 +139,6 @@ describe('InventoryListComponent', () => {
     const openViewModal = spyOn(component, 'openInventoryItemViewForm');
 
     component.openInventoryItemCreationForm();
-
     tick();
 
     expect(openViewModal).toHaveBeenCalledWith('920b8cc7-364f-4255-9540-09093f1e167a');
@@ -157,7 +152,6 @@ describe('InventoryListComponent', () => {
     const openViewModal = spyOn(component, 'openInventoryItemViewForm');
 
     component.openOrderCreationForm("Fantastic Concrete Pizza", "045fcd70-d323-4de2-894e-a10772b23457");
-
     tick();
 
     expect(openViewModal).toHaveBeenCalledWith("045fcd70-d323-4de2-894e-a10772b23457");
@@ -171,7 +165,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openInventoryItemViewForm('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();
@@ -185,7 +178,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openInventoryItemEditForm('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();
@@ -199,7 +191,6 @@ describe('InventoryListComponent', () => {
     const getInventoryMethod = spyOn(component, 'getInventory');
 
     component.openItemDeletionDialog('920b8cc7-364f-4255-9540-09093f1e167a');
-
     tick();
 
     expect(getInventoryMethod).toHaveBeenCalled();

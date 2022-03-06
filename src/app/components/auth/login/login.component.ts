@@ -1,12 +1,12 @@
-import {Component, Inject} from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {WINDOW} from '../../../providers/window.providers';
+import { Component, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { WINDOW } from '../../../providers/window.providers';
 
-import {AuthService} from "../../../services/auth.service";
-import {UtilityService} from "../../../services/utility.service";
+import { AuthService } from "../../../services/auth.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {UserRole} from "../../../types/enums/user-role";
+import { UserRole } from "../../../types/enums/user-role";
 
 @Component({
   selector: 'app-login',
@@ -68,6 +68,5 @@ export class LoginComponent {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     })
-
   }
 }

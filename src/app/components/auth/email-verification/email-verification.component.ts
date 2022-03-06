@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import {UserService} from "../../../services/user.service";
-import {UtilityService} from "../../../services/utility.service";
+import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-email-verification',
@@ -80,6 +80,5 @@ export class EmailVerificationComponent implements OnInit {
         this.showForm = true;
       }
     });
-
   }
 }

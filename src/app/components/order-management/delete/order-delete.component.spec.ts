@@ -1,18 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {OrderDeleteComponent} from './order-delete.component';
+import { OrderDeleteComponent } from './order-delete.component';
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -70,7 +70,7 @@ class MockOrderService {
     });
   }
 
-  public deleteOrder(orderId: OrderId): Observable<void> {
+  deleteOrder(orderId: OrderId): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -100,7 +100,7 @@ describe('OrderDeleteComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
+        { provide: OrderService, useClass: MockOrderService },
         NgbActiveModal,
       ],
     }).compileComponents();

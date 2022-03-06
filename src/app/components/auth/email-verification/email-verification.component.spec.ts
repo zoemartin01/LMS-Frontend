@@ -1,20 +1,20 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {Injectable} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import {EmailVerificationComponent} from './email-verification.component';
+import { EmailVerificationComponent } from './email-verification.component';
 
-import {UserService} from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
-import {User} from '../../../types/user';
-import {UserId} from '../../../types/aliases/user-id';
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { User } from '../../../types/user';
+import { UserId } from '../../../types/aliases/user-id';
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Injectable()
 export class ActivatedRouteStub {
@@ -37,9 +37,9 @@ class MockUserService {
     return new Observable((observer) => {
       if (userId !== '59f1589d-197c-4f53-bfc1-4c57aae14c42' || token !== 'ixhgvplqq') {
         observer.error({
-            error: {
-              message: 'Token doesn\'t match.',
-          }
+          error: {
+            message: 'Token doesn\'t match.',
+          },
         });
       }
 

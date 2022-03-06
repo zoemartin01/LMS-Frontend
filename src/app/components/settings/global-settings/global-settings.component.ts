@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {WhitelistRetailerCreateComponent} from "../whitelist-retailer/create/whitelist-retailer-create.component";
-import {WhitelistRetailerDeleteComponent} from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
-import {WhitelistRetailerEditComponent} from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
-import {WhitelistRetailerViewComponent} from "../whitelist-retailer/view/whitelist-retailer-view.component";
+import { WhitelistRetailerCreateComponent } from "../whitelist-retailer/create/whitelist-retailer-create.component";
+import { WhitelistRetailerDeleteComponent } from "../whitelist-retailer/delete/whitelist-retailer-delete.component";
+import { WhitelistRetailerEditComponent } from "../whitelist-retailer/edit/whitelist-retailer-edit.component";
+import { WhitelistRetailerViewComponent } from "../whitelist-retailer/view/whitelist-retailer-view.component";
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {GlobalSetting} from "../../../types/global-setting";
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
-import {WhitelistRetailerId} from "../../../types/aliases/whitelist-retailer-id";
-import {PagedList} from 'src/app/types/paged-list';
-import {UtilityService} from "../../../services/utility.service";
+import { GlobalSetting } from "../../../types/global-setting";
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import { WhitelistRetailerId } from "../../../types/aliases/whitelist-retailer-id";
+import { PagedList } from 'src/app/types/paged-list';
 
 @Component({
   selector: 'app-global-settings',
@@ -49,7 +49,11 @@ export class GlobalSettingsComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
    */
-  constructor(public adminService: AdminService, public utilityService: UtilityService, private modalService: NgbModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -151,7 +155,6 @@ export class GlobalSettingsComponent implements OnInit {
         this.editedGlobalSettings = true;
       },
       error: error => {
-        console.error('There was an error!', error);
         this.errorMessage = this.utilityService.formatErrorMessage(error);
       }
     })

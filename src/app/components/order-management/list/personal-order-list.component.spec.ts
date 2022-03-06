@@ -15,7 +15,7 @@ import { Order } from "../../../types/order";
 import { PagedResponse } from "../../../types/paged-response";
 
 class MockOrderService {
-  public getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
+  getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -244,7 +244,7 @@ class MockModalService {
   open(): { componentInstance: { order: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        order: {id: null},
+        order: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -272,9 +272,9 @@ describe('PersonalOrderListComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
-        {provide: AuthService, useClass: MockAuthService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: OrderService, useClass: MockOrderService },
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: NgbModal, useClass: MockModalService },
       ],
     }).compileComponents();
 

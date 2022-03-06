@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Edit User</h4>
 </div>
+
 <div class="modal-body">
   <form (keyup.enter)="editUserData()" [formGroup]="userEditForm" (ngSubmit)="editUserData()">
     <span class="badge bg-primary" *ngIf="user.isActiveDirectory">Active Directory</span>
@@ -64,8 +65,8 @@
   </form>
   <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
+
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="editUserData()">Save
-  </button>
+  <button type="button" class="btn btn-primary" (click)="editUserData()">Save</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
 </div>

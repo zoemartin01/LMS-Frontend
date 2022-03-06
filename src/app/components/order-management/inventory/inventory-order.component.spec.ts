@@ -1,24 +1,24 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {InventoryOrderComponent} from './inventory-order.component';
+import { InventoryOrderComponent } from './inventory-order.component';
 
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {InventoryItem} from "../../../types/inventory-item";
-import {InventoryItemId} from "../../../types/aliases/inventory-item-id";
-import {PagedResponse} from "../../../types/paged-response";
-import {PagedList} from "../../../types/paged-list";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { InventoryItem } from "../../../types/inventory-item";
+import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
+import { PagedResponse } from "../../../types/paged-response";
+import { PagedList } from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -27,7 +27,7 @@ class MockOrderService {
         observer.error({
           error: {
             message: 'Inventory Item not Found.',
-          }
+          },
         });
       }
 
@@ -46,9 +46,9 @@ class MockOrderService {
             role: 2,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 3
+            notificationChannel: 3,
           },
-          item: null
+          item: null,
         })
         : observer.next({
           id: "045fcd70-d323-4de2-894e-a10772b23457",
@@ -64,25 +64,25 @@ class MockOrderService {
             role: 2,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 3
+            notificationChannel: 3,
           },
           item: {
             id: "920b8cc7-364f-4255-9540-09093f1e167a",
             name: "Fantastic Concrete Pizza",
             description: "Cum exercitationem est.",
-            quantity: 49691
-          }
+            quantity: 49691,
+          },
         });
     });
   }
 
-  public updateOrderData(orderId: OrderId, changedData: object): Observable<Order> {
+  updateOrderData(orderId: OrderId, changedData: object): Observable<Order> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             message: 'Order not Found.',
-          }
+          },
         });
       }
 
@@ -100,14 +100,14 @@ class MockOrderService {
           role: 2,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         item: {
           id: "920b8cc7-364f-4255-9540-09093f1e167a",
           name: "Fantastic Concrete Pizza",
           description: "Cum exercitationem est.",
-          quantity: 49691
-        }
+          quantity: 49691,
+        },
       });
     });
   }
@@ -119,10 +119,8 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -152,7 +150,7 @@ class MockInventoryService {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
         return;
       }
@@ -176,13 +174,13 @@ class MockInventoryService {
     });
   }
 
-  public editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
+  editInventoryItem(inventoryItemId: InventoryItemId, changedData: object): Observable<InventoryItem> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -195,13 +193,13 @@ class MockInventoryService {
     });
   }
 
-  public createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
+  createInventoryItem(name: string, description: string, quantity: number): Observable<InventoryItem> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -226,14 +224,14 @@ describe('InventoryOrderComponent', () => {
         InventoryOrderComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
-        {provide: InventoryService, useClass: MockInventoryService},
+        { provide: OrderService, useClass: MockOrderService },
+        { provide: InventoryService, useClass: MockInventoryService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -288,14 +286,14 @@ describe('InventoryOrderComponent', () => {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 3
+        notificationChannel: 3,
       },
       item: {
         id: "920b8cc7-364f-4255-9540-09093f1e167a",
         name: "Fantastic Concrete Pizza",
         description: "Cum exercitationem est.",
-        quantity: 49691
-      }
+        quantity: 49691,
+      },
     });
 
     expect(component.inventoryOrderForm.controls['itemName'].value).toBe('Fantastic Concrete Pizza');
@@ -343,9 +341,9 @@ describe('InventoryOrderComponent', () => {
         role: 2,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 3
+        notificationChannel: 3,
       },
-      item: null
+      item: null,
     });
 
     expect(component.inventoryOrderForm.controls['itemName'].value).toBe('Awesome Granite Towels');
@@ -503,7 +501,6 @@ describe('InventoryOrderComponent', () => {
     component.inventoryOrderForm.controls['itemName'].markAsDirty();
     component.order.id = '5b3c87c9-81a7-411e-b55a-8486ba065b4b';
     component.order.quantity = 10;
-
 
     component.inventoryOrder();
     tick();

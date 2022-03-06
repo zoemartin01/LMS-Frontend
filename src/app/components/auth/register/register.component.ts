@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
-import {UserService} from "../../../services/user.service";
-import {UtilityService} from "../../../services/utility.service";
+import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-register',
@@ -16,27 +16,13 @@ import {UtilityService} from "../../../services/utility.service";
  */
 export class RegisterComponent {
   public registerForm: FormGroup = new FormGroup({
-    firstname: new FormControl('', [
-      Validators.required,
-    ]),
-    name: new FormControl('', [
-      Validators.required,
-    ]),
-    email: new FormControl('', [
-      Validators.required,
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-    ]),
-    password_confirmation: new FormControl('', [
-      Validators.required,
-    ]),
-    safetyInstructions: new FormControl(false, [
-      Validators.requiredTrue,
-    ]),
-    hwlabRules: new FormControl(false, [
-      Validators.requiredTrue,
-    ]),
+    firstname: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    password_confirmation: new FormControl('', Validators.required),
+    safetyInstructions: new FormControl(false, Validators.requiredTrue),
+    hwlabRules: new FormControl(false, Validators.requiredTrue),
   });
   errorMessage: string = '';
   passwordConfirmationFails: boolean = false;
@@ -49,8 +35,7 @@ export class RegisterComponent {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {Router} router router providing navigation
    */
-  constructor(private userService: UserService, public utilityService: UtilityService,
-              private router: Router) {
+  constructor(private userService: UserService, public utilityService: UtilityService, private router: Router) {
   }
 
   /**

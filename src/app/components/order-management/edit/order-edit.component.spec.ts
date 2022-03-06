@@ -1,28 +1,28 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {OrderEditComponent} from './order-edit.component';
+import { OrderEditComponent } from './order-edit.component';
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import {AdminService} from "../../../services/admin.service";
-import {AuthService} from "../../../services/auth.service";
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
+import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {InventoryItem} from "../../../types/inventory-item";
-import {PagedResponse} from "../../../types/paged-response";
-import {PagedList} from "../../../types/paged-list";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { InventoryItem } from "../../../types/inventory-item";
+import { PagedResponse } from "../../../types/paged-response";
+import { PagedList } from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -162,9 +162,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -193,11 +191,11 @@ describe('OrderEditComponent', () => {
         FormsModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
-        {provide: InventoryService, useClass: MockInventoryService},
-        {provide: AuthService, useClass: MockAuthService},
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: OrderService, useClass: MockOrderService },
+        { provide: InventoryService, useClass: MockInventoryService },
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -489,6 +487,7 @@ describe('OrderEditComponent', () => {
 
     component.editOrder();
     tick();
+
     expect(component.errorMessage).toEqual('You need to fill in all required fields!');
 
     localStorage.removeItem('throwError');

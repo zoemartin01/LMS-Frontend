@@ -3,10 +3,10 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
-import {UtilityService} from "../../../../services/utility.service";
 
 @Component({
   selector: 'app-domain-delete',
@@ -42,9 +42,12 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.domainDeleteForm.disable();
-
   }
 
   /**
@@ -63,11 +66,11 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
         next: res => {
           this.whitelistRetailer = res;
           this.domainDeleteForm.controls['name'].setValue(res.name);
-          this.domainDeleteForm.controls['domain'].setValue(res.domains
-            .filter(
-              (whitelistRetailerDomain: WhitelistRetailerDomain) => {
-                return whitelistRetailerDomain.id == this.whitelistRetailerDomain.id;
-              })[0].domain
+          this.domainDeleteForm.controls['domain'].setValue(
+            res.domains.filter(
+              (whitelistRetailerDomain: WhitelistRetailerDomain) =>
+                whitelistRetailerDomain.id == this.whitelistRetailerDomain.id
+            )[0].domain
           );
         },
         error: error => {
@@ -85,11 +88,16 @@ export class WhitelistRetailerDomainDeleteComponent implements OnInit {
    */
   public async deleteDomainOfWhitelistRetailer(): Promise<void> {
     this.errorMessage = '';
+
     if (this.whitelistRetailer.id === null) {
       this.activeModal.close('deleted');
       return;
     }
-    this.adminService.deleteDomainOfWhitelistRetailer(this.whitelistRetailer.id, this.whitelistRetailerDomain.id).subscribe({
+
+    this.adminService.deleteDomainOfWhitelistRetailer(
+      this.whitelistRetailer.id,
+      this.whitelistRetailerDomain.id
+    ).subscribe({
       next: () => {
         this.activeModal.close('deleted');
       },
