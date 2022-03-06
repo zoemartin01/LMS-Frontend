@@ -228,6 +228,80 @@ describe('UserListComponent', () => {
     localStorage.removeItem('throwError');
   }));
 
+  it('should get all pending users', fakeAsync(() => {
+    let pendingUsers: PagedList<User> = new PagedList<User>();
+
+    expect(component.pendingUsers).toEqual(pendingUsers);
+
+    component.pendingUsers.page = 1;
+
+    component.getPendingUsers();
+    tick();
+
+    pendingUsers.total = 2;
+    pendingUsers.data = [
+      {
+        id: "userAB",
+        email: "user11@test.com",
+        firstName: "user",
+        lastName: "usersonsonson",
+        role: 1,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 4,
+      },
+      {
+        id:"userABC",
+        email: "user22@test.com",
+        firstName: "user22",
+        lastName: "usersonsonsonson",
+        role: 1,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 2,
+      },
+      ];
+
+    expect(component.pendingUsers).toEqual(pendingUsers);
+  }));
+
+  it('should get all accepted users', fakeAsync(() => {
+    let acceptedUsers: PagedList<User> = new PagedList<User>();
+
+    expect(component.acceptedUsers).toEqual(acceptedUsers);
+
+    component.acceptedUsers.page = 1;
+
+    component.getAcceptedUsers();
+    tick();
+
+    acceptedUsers.total = 2;
+    acceptedUsers.data = [
+      {
+        id: "userXY",
+        email: "user@test.com",
+        firstName: "user",
+        lastName: "userson",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 4,
+      },
+      {
+        id:"userXYZ",
+        email: "user2@test.com",
+        firstName: "user2",
+        lastName: "usersonson",
+        role: 3,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 2,
+      },
+    ];
+
+    expect(component.acceptedUsers).toEqual(acceptedUsers);
+  }));
+
   it('should open user accept dialog', fakeAsync(() => {
     localStorage.setItem('returnVal', 'accepted');
 
