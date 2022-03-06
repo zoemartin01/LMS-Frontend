@@ -181,7 +181,7 @@ describe('UserDeclineComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toBe('Internal Server Error.')
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

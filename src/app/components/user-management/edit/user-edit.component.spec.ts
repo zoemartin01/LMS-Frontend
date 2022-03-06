@@ -246,7 +246,7 @@ describe('UserEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(component.errorMessage).toBe('You need to fill in all required fields!')
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {
