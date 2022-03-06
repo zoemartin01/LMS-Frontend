@@ -42,9 +42,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown error.',
-            }
+            message: 'Unknown error.',
           }
         });
       }
@@ -85,9 +83,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown error.',
-            }
+            message: 'Unknown error.',
           }
         });
       }
@@ -170,9 +166,7 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown error.',
-            }
+            message: 'Unknown error.',
           }
         });
       }

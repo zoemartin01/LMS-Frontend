@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -19,9 +19,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -40,9 +38,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -91,15 +87,18 @@ describe('InventoryItemEditComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init page', () => {
+  it('should init page', fakeAsync(() => {
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
     });
 
     component.ngOnInit();
+    tick();
 
     expect(component.inventoryItem).toEqual({
       id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
@@ -111,23 +110,25 @@ describe('InventoryItemEditComponent', () => {
     expect(component.inventoryItemEditForm.controls['name'].value).toBe('Fantastic Steel Soap');
     expect(component.inventoryItemEditForm.controls['description'].value).toBe('Distinctio iste et est tenetur officiis quis.');
     expect(component.inventoryItemEditForm.controls['quantity'].value).toBe(40424);
-  });
+  }));
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
     });
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
@@ -138,7 +139,7 @@ describe('InventoryItemEditComponent', () => {
     expect(component.inventoryItemEditForm.controls['quantity'].value).toBeNull();
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should edit inventory item', fakeAsync(() => {
     component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
@@ -150,8 +151,22 @@ describe('InventoryItemEditComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editInventoryItemData();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('edited');
+  }));
+
+  it('should throw invalid input error on edit of inventory item', fakeAsync(() => {
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
+    component.inventoryItemEditForm.controls['name'].setValue('Fantastic Wooden Soap');
+    component.inventoryItemEditForm.controls['name'].markAsDirty();
+    component.inventoryItemEditForm.controls['quantity'].setValue('');
+    component.inventoryItemEditForm.controls['quantity'].markAsDirty();
+
+    component.editInventoryItemData();
+    tick();
+
+    expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
   it('should throw error on edit of inventory item', fakeAsync(() => {
@@ -166,8 +181,9 @@ describe('InventoryItemEditComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.editInventoryItemData();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
     expect(modalClose).not.toHaveBeenCalledWith('edited');
 
     localStorage.removeItem('throwError');

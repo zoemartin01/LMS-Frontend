@@ -17,38 +17,39 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
 
-      observer.next({id: "retailerExampleID",
+      observer.next({
+        id: "retailerExampleID",
         name: "McGlynn and Sons and daughters",
         domains: [
-        {
-          id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
-        },
-        {
-          id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
-        },
-      ]});
+          {
+            id: "227ffc6a-2953-41d7-abea-c4046720f62a",
+            domain: "jordan.biz",
+          },
+          {
+            id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
+            domain: "lacey.biz",
+          },
+        ],
+      });
     });
   }
 }
 
 class MockModalService {
   domain: String = "";
+
   open(): { componentInstance: { domain: String }, result: Promise<string> } {
     return {
       componentInstance: {
         domain: this.domain,
       },
       result: new Promise<string>(
-        resolve =>  resolve(localStorage.getItem('returnVal') ?? 'aborted')
+        resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')
       ),
     };
   };
@@ -64,10 +65,10 @@ describe('WhitelistRetailerCreateComponent', () => {
         WhitelistRetailerCreateComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
         { provide: AdminService, useClass: MockAdminService },
@@ -85,10 +86,10 @@ describe('WhitelistRetailerCreateComponent', () => {
   });
 
   it('should create whitelist retailer', fakeAsync(() => {
-    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters')
+    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters');
     component.domains = [
       "jordan.biz",
-      "lacey.biz"
+      "lacey.biz",
     ];
 
     const modalClose = spyOn(component.activeModal, 'close');
@@ -102,20 +103,21 @@ describe('WhitelistRetailerCreateComponent', () => {
   it('should throw an error on create whitelist retailer', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters')
+    component.retailerCreateForm.controls['name'].setValue('McGlynn and Sons and daughters');
     component.domains = [
       "jordan.biz",
-      "lacey.biz"
+      "lacey.biz",
     ];
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.createWhitelistRetailer();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
     expect(modalClose).not.toHaveBeenCalledWith('created retailerExampleID');
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));
@@ -152,7 +154,7 @@ describe('WhitelistRetailerCreateComponent', () => {
     component.dirty = false;
     component.domains = [
       'domain.test',
-      'domain.2.test'
+      'domain.2.test',
     ]
 
     component.openWhitelistRetailerDomainDeletionDialog('domain.test');

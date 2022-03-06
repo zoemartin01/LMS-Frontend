@@ -15,14 +15,12 @@ import { TimespanId } from "../../../types/aliases/timespan-id";
 import { SeriesId } from "../../../types/aliases/series-id";
 
 class MockAppointmentService {
-  public getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
+  getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -64,9 +62,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -80,9 +76,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -213,7 +207,7 @@ describe('AppointmentdeclineComponent', () => {
     component.declineAppointment();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -224,7 +218,7 @@ describe('AppointmentdeclineComponent', () => {
     component.declineAppointmentSeries();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

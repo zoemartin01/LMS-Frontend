@@ -55,6 +55,16 @@
       </div>
     </div>
   </form>
+  <div class="alert alert-danger mt-2" role="alert" *ngIf="appointmentConflictMessage !== ''">
+    <b>Warning:</b><br>
+    {{ appointmentConflictMessage }}<br>
+    <br>
+    <label class="form-check-label" for="force">
+      <input type="checkbox" class="form-check-input" id="force" [checked]="force" (change)="force = !force">
+      Delete timeslot including appointments.
+    </label>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="deleteTimeslot()">Delete Single Timeslot</button>

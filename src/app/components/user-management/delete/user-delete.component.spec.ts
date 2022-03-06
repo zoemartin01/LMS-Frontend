@@ -21,9 +21,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -46,9 +44,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -64,9 +60,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -89,9 +83,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            },
+            message: 'Internal Server Error.',
           },
         });
       }
@@ -333,13 +325,14 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'userXY';
 
-    const consoleError = spyOn(console, 'error');
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
@@ -350,13 +343,14 @@ describe('UserDeleteComponent', () => {
 
     component.user.id = 'anotherUserId';
 
-    const consoleError = spyOn(console, 'error');
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteUser();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
     expect(modalClose).not.toHaveBeenCalled();
 
     localStorage.removeItem('throwError');

@@ -17,9 +17,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -38,9 +36,7 @@ class MockInventoryService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Inventory Item not Found.',
-            }
+            message: 'Inventory Item not Found.',
           }
         });
       }
@@ -89,8 +85,9 @@ describe('InventoryItemDeleteComponent', () => {
       quantity: null,
     });
 
-    component.ngOnInit();
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
+    component.ngOnInit();
     tick();
 
     expect(component.inventoryItem).toEqual({
@@ -114,14 +111,14 @@ describe('InventoryItemDeleteComponent', () => {
       description: '',
       quantity: null,
     });
+    component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
     component.ngOnInit();
-
     tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.inventoryItem).toEqual({
-      id: null,
+      id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
       name: '',
       description: '',
       quantity: null,
@@ -140,6 +137,7 @@ describe('InventoryItemDeleteComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteInventoryItem();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('deleted');
   }));
@@ -149,12 +147,10 @@ describe('InventoryItemDeleteComponent', () => {
 
     component.inventoryItem.id = "5b3c87c9-81a7-411e-b55a-8486ba065b4b";
 
-    const modalClose = spyOn(component.activeModal, 'close');
-
     component.deleteInventoryItem();
+    tick();
 
-    expect(consoleError).toHaveBeenCalled();
-    expect(modalClose).not.toHaveBeenCalledWith('deleted');
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));

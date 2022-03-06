@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from "../../../services/admin.service";
 import { AuthService } from "../../../services/auth.service";
 import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { User } from "../../../types/user";
 import { UserRole } from "../../../types/enums/user-role";
@@ -38,6 +39,7 @@ export class UserDeleteComponent implements OnInit {
     emailVerification: true,
     isActiveDirectory: false,
   }
+  public errorMessage: string = '';
 
   /**
    * Constructor
@@ -46,9 +48,15 @@ export class UserDeleteComponent implements OnInit {
    * @param {AuthService} authService service providing authentication functionalities
    * @param {UserService} userService service providing user functionalities
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public router: Router, public authService: AuthService, public userService: UserService, public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(public router: Router,
+              public authService: AuthService,
+              public userService: UserService,
+              public adminService: AdminService,
+              public utilityService: UtilityService,
+              public activeModal: NgbActiveModal) {
     this.userDeleteForm.disable();
   }
 
@@ -77,7 +85,7 @@ export class UserDeleteComponent implements OnInit {
         error: error => {
           console.error('There was an error!', error);
         }
-      })
+      });
     } else {
       this.userService.getUserDetails().subscribe({
         next: res => {
@@ -92,7 +100,7 @@ export class UserDeleteComponent implements OnInit {
         error: error => {
           console.error('There was an error!', error);
         }
-      })
+      });
     }
   }
 
@@ -100,14 +108,15 @@ export class UserDeleteComponent implements OnInit {
    * Deletes user
    */
   public async deleteUser(): Promise<void> {
+    this.errorMessage = '';
     if (this.user.id != null && this.user.id != this.authService.getUserId()) {
       this.adminService.deleteUser(this.user.id).subscribe({
         next: () => {
           this.activeModal.close('deleted');
         },
         error: error => {
-          console.error('There was an error!', error);
-        }
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        },
       });
       return;
     } else {
@@ -118,8 +127,8 @@ export class UserDeleteComponent implements OnInit {
           localStorage.clear();
         },
         error: error => {
-          console.error('There was an error!', error);
-        }
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        },
       });
     }
   }

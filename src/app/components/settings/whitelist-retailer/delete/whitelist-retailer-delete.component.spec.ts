@@ -17,10 +17,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
-          }
+            message: 'Whitelist Retailer not Found.',
+          },
         });
       }
 
@@ -30,26 +28,24 @@ class MockAdminService {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
         ],
       });
     });
-    }
+  }
 
   deleteWhitelistRetailer(whitelistRetailerId: WhitelistRetailerId): Observable<void> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not Found.',
-            }
-          }
+            message: 'Whitelist Retailer not Found.',
+          },
         });
       }
 
@@ -95,7 +91,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.whitelistRetailer).toEqual({id: "retailerExampleID",
+    expect(component.whitelistRetailer).toEqual({
+      id: "retailerExampleID",
       name: "McGlynn and Sons and daughters",
       domains: [
         {
@@ -121,6 +118,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
       domains: [],
     });
 
+    const consoleError = spyOn(console, 'error');
+
     component.ngOnInit();
     tick();
 
@@ -129,8 +128,8 @@ describe('WhitelistRetailerDeleteComponent', () => {
       name: '',
       domains: [],
     });
-
     expect(component.retailerDeleteForm.controls['name'].value).toEqual('');
+    expect(consoleError).toHaveBeenCalled();
 
     localStorage.removeItem('throwError');
   }));
@@ -141,6 +140,7 @@ describe('WhitelistRetailerDeleteComponent', () => {
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteWhitelistRetailer();
+    tick();
 
     expect(modalClose).toHaveBeenCalledWith('deleted');
   }));
@@ -150,11 +150,15 @@ describe('WhitelistRetailerDeleteComponent', () => {
 
     component.whitelistRetailer.id = 'retailerExampleID';
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
 
     component.deleteWhitelistRetailer();
+    tick();
 
     expect(modalClose).not.toHaveBeenCalledWith('deleted');
+    expect(component.errorMessage).toBe('Whitelist Retailer not Found.');
 
     localStorage.removeItem('throwError');
   }));

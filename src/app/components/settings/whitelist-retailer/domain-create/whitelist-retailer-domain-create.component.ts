@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { AdminService } from "../../../../services/admin.service";
+import { UtilityService } from "../../../../services/utility.service";
 
 import { WhitelistRetailer } from "../../../../types/whitelist-retailer";
 import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-domain";
@@ -18,23 +19,27 @@ import { WhitelistRetailerDomain } from "../../../../types/whitelist-retailer-do
  */
 export class WhitelistRetailerDomainCreateComponent implements OnInit {
   public domainCreateForm: FormGroup = new FormGroup({
-    domain: new FormControl('', [
-      Validators.required,
-    ]),
+    domain: new FormControl('', Validators.required),
   });
   public whitelistRetailer: WhitelistRetailer = {
     id: null,
     name: '',
     domains: [],
   }
+  public errorMessage: string = '';
 
   /**
    * Constructor
    * @constructor
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public adminService: AdminService, public activeModal: NgbActiveModal) {
+  constructor(
+    public adminService: AdminService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
   }
 
   /**
@@ -55,7 +60,7 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
         },
         error: error => {
           console.error('There was an error!', error);
-        }
+        },
       })
     }
   }
@@ -64,11 +69,13 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
    * Creates new domain
    */
   public async addDomainToWhitelistRetailer(): Promise<void> {
+    this.errorMessage = '';
     if (this.domainCreateForm.valid) {
       if (this.whitelistRetailer.id === null) {
         this.activeModal.close(this.domainCreateForm.value.domain);
         return;
       }
+
       this.adminService.addDomainToWhitelistRetailer(
         this.whitelistRetailer.id,
         this.domainCreateForm.value.domain
@@ -79,11 +86,11 @@ export class WhitelistRetailerDomainCreateComponent implements OnInit {
           }
         },
         error: error => {
-          console.error('There was an error!', error);
-        }
-      })
+          this.errorMessage = this.utilityService.formatErrorMessage(error);
+        },
+      });
     } else {
-      console.error('Domain can not be empty!');
+      this.errorMessage = 'Domain can not be empty!';
     }
   }
 }

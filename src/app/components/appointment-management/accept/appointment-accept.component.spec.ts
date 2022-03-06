@@ -20,9 +20,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -64,9 +62,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -80,9 +76,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -237,7 +231,7 @@ describe('AppointmentAcceptComponent', () => {
     component.acceptAppointment();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -248,7 +242,7 @@ describe('AppointmentAcceptComponent', () => {
     component.acceptAppointmentSeries();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

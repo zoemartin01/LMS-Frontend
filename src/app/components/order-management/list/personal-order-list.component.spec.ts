@@ -15,14 +15,12 @@ import { Order } from "../../../types/order";
 import { PagedResponse } from "../../../types/paged-response";
 
 class MockOrderService {
-  public getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
+  getAllPendingOrdersForCurrentUser(limit: number = 0, offset: number = 0): Observable<PagedResponse<Order>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -100,9 +98,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -180,9 +176,7 @@ class MockOrderService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
+            message: 'Internal Server Error.',
           }
         });
       }
@@ -250,7 +244,7 @@ class MockModalService {
   open(): { componentInstance: { order: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        order: {id: null},
+        order: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -292,7 +286,7 @@ describe('PersonalOrderListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should throw error on page init', () => {
+  it('should throw error on page init', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     expect(component.pendingOrders.pageSize).toEqual(environment.defaultPageSize);
@@ -302,6 +296,7 @@ describe('PersonalOrderListComponent', () => {
     const consoleError = spyOn(console, 'error');
 
     component.ngOnInit();
+    tick();
 
     expect(consoleError).toHaveBeenCalled();
     expect(component.pendingOrders.pageSize).toEqual(3);
@@ -309,7 +304,7 @@ describe('PersonalOrderListComponent', () => {
     expect(component.declinedOrders.pageSize).toEqual(3);
 
     localStorage.removeItem('throwError');
-  });
+  }));
 
   it('should open order create form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created 045fcd70-d323-4de2-894e-a10772b23457');
@@ -317,7 +312,6 @@ describe('PersonalOrderListComponent', () => {
     const updatePageMethod = spyOn(component, 'updatePage');
 
     component.openOrderCreationForm();
-
     tick();
 
     expect(updatePageMethod).toHaveBeenCalledWith();
@@ -331,7 +325,6 @@ describe('PersonalOrderListComponent', () => {
     const updatePageMethod = spyOn(component, 'updatePage');
 
     component.openOrderEditForm('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     expect(updatePageMethod).toHaveBeenCalledWith();
@@ -343,7 +336,6 @@ describe('PersonalOrderListComponent', () => {
     localStorage.setItem('returnVal', 'deleted');
 
     component.openOrderDeletionDialog('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     localStorage.removeItem('returnVal');
@@ -355,7 +347,6 @@ describe('PersonalOrderListComponent', () => {
     const getAcceptedOrdersMethod = spyOn(component, 'getAcceptedOrders');
 
     component.openInventoryOrderForm('045fcd70-d323-4de2-894e-a10772b23457');
-
     tick();
 
     expect(getAcceptedOrdersMethod).toHaveBeenCalledWith(1);
@@ -365,46 +356,46 @@ describe('PersonalOrderListComponent', () => {
 
   it('should return inventory item name', () => {
     expect(component.getItemName({
-      "id": "b69537c7-9d6b-491a-bd24-1c5019d18e03",
-      "itemName": null,
-      "status": 1,
-      "quantity": 42,
-      "url": "amazon.com",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "b69537c7-9d6b-491a-bd24-1c5019d18e03",
+      itemName: null,
+      status: 1,
+      quantity: 42,
+      url: "amazon.com",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": {
-        "id": "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
-        "name": "Fantastic Steel Soap",
-        "description": "Distinctio iste et est tenetur officiis quis.",
-        "quantity": 40424
+      item: {
+        id: "5b3c87c9-81a7-411e-b55a-8486ba065b4b",
+        name: "Fantastic Steel Soap",
+        description: "Distinctio iste et est tenetur officiis quis.",
+        quantity: 40424
       }
     })).toBe('Fantastic Steel Soap');
 
     expect(component.getItemName({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 4,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 4,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBe('Incredible Frozen Car');
   });
 
@@ -412,233 +403,233 @@ describe('PersonalOrderListComponent', () => {
     localStorage.setItem('admin', 'false');
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 0,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 0,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 1,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 1,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeTrue();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 2,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 2,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 3,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 3,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 4,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 4,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 5,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 5,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     localStorage.setItem('admin', 'true');
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 0,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 0,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeTrue();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 1,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 1,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeTrue();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 2,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 2,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeTrue();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 3,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 3,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeTrue();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 4,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 4,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     expect(component.canEditAccepted({
-      "id": "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
-      "itemName": "Incredible Frozen Car",
-      "status": 5,
-      "quantity": 37188,
-      "url": "https://alan.org",
-      "user": {
-        "id": "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
-        "email": "visitor@test.com",
-        "firstName": "Visitor",
-        "lastName": "Visitor",
-        "role": 2,
-        "emailVerification": true,
-        "isActiveDirectory": false,
-        "notificationChannel": 3
+      id: "409e615a-5ba6-4e23-9b8b-7969a3ab4b70",
+      itemName: "Incredible Frozen Car",
+      status: 5,
+      quantity: 37188,
+      url: "https://alan.org",
+      user: {
+        id: "1ea02546-5fd3-4cff-8ebf-b57dfe30d906",
+        email: "visitor@test.com",
+        firstName: "Visitor",
+        lastName: "Visitor",
+        role: 2,
+        emailVerification: true,
+        isActiveDirectory: false,
+        notificationChannel: 3
       },
-      "item": null
+      item: null
     })).toBeFalse();
 
     localStorage.removeItem('admin');

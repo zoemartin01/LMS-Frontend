@@ -19,10 +19,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not found.',
-            }
-          }
+            message: 'Whitelist Retailer not found.',
+          },
         });
       }
 
@@ -32,11 +30,11 @@ class MockAdminService {
         domains: [
           {
             id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-            domain: "jordan.biz"
+            domain: "jordan.biz",
           },
           {
             id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-            domain: "lacey.biz"
+            domain: "lacey.biz",
           },
         ],
       });
@@ -51,10 +49,8 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Internal Server Error.',
-            }
-          }
+            message: 'Internal Server Error.',
+          },
         });
       }
 
@@ -110,36 +106,36 @@ describe('WhitelistRetailerDomainEditComponent', () => {
       domains: [
         {
           id: "227ffc6a-2953-41d7-abea-c4046720f62a",
-          domain: "jordan.biz"
+          domain: "jordan.biz",
         },
         {
           id: "e23fa361-c2f3-4575-9743-ef2b49b203b6",
-          domain: "lacey.biz"
+          domain: "lacey.biz",
         },
       ],
     });
-    expect(component.domainEditForm.controls['domain'].value).toEqual('jordan.biz')
+    expect(component.domainEditForm.controls['domain'].value).toEqual('jordan.biz');
   }));
 
   it('should not try to get whitelist retailer data when whitelist retailer id is null',
     fakeAsync(() => {
-    expect(component.whitelistRetailer).toEqual({
-      id: null,
-      name: '',
-      domains: [],
-    });
+      expect(component.whitelistRetailer).toEqual({
+        id: null,
+        name: '',
+        domains: [],
+      });
 
-    const consoleError = spyOn(console, 'error');
+      const consoleError = spyOn(console, 'error');
 
-    component.ngOnInit();
-    tick();
+      component.ngOnInit();
+      tick();
 
-    expect(consoleError).not.toHaveBeenCalled();
-    expect(component.whitelistRetailer).toEqual({
-      id: null,
-      name: '',
-      domains: [],
-    });
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(component.whitelistRetailer).toEqual({
+        id: null,
+        name: '',
+        domains: [],
+      });
   }));
 
   it('should throw error on page init', fakeAsync(() => {
@@ -182,39 +178,53 @@ describe('WhitelistRetailerDomainEditComponent', () => {
 
   it('should return domain if domain has to be added to a not yet existing whitelist retailer',
     fakeAsync(() => {
-    component.domainEditForm.controls['domain'].setValue('russianwarshipgofuckyourself.club');
+      component.domainEditForm.controls['domain'].setValue('russianwarshipgofuckyourself.club');
 
-    expect(component.whitelistRetailer).toEqual({
-      id: null,
-      name: '',
-      domains: [],
-    });
+      expect(component.whitelistRetailer).toEqual({
+        id: null,
+        name: '',
+        domains: [],
+      });
 
-    const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
+      const modalClose = spyOn(component.activeModal, 'close');
+      const consoleError = spyOn(console, 'error');
 
-    component.editDomainOfWhitelistRetailer();
-    tick();
+      component.editDomainOfWhitelistRetailer();
+      tick();
 
-    expect(consoleError).not.toHaveBeenCalled();
-    expect(modalClose).toHaveBeenCalledWith(component.domainEditForm.value.domain);
-  }))
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(modalClose).toHaveBeenCalledWith(component.domainEditForm.value.domain);
+  }));
 
-  it('should throw an error when adding a domain to a whitelisted retailer', fakeAsync(() => {
+  it('should throw an error when editing a domain to a whitelisted retailer', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
     component.domainEditForm.controls['domain'].setValue('jordan.org');
     component.whitelistRetailer.id = 'retailerExampleID';
 
+    expect(component.errorMessage).toBe('');
+
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.editDomainOfWhitelistRetailer();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
+  }));
+
+  it('should throw an error if whitelist retailer domain is empty', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
+    component.whitelistRetailer.id = 'retailerExampleID';
+
+    component.domainEditForm.controls['domain'].setValue('');
+
+    component.editDomainOfWhitelistRetailer();
+    tick();
+
+    expect(component.errorMessage).toBe('Domain can not be empty!');
   }));
 });

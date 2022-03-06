@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { WhitelistRetailerUserListComponent } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
+import {
+  WhitelistRetailerUserListComponent
+} from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
 import { AdminService } from "../../../services/admin.service";
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
@@ -23,26 +26,19 @@ import { Order } from "../../../types/order";
 export class OrderRequestComponent implements OnInit {
   public existingItems: InventoryItem[] = [];
   public requestOrderForm: FormGroup = new FormGroup({
-    itemName: new FormControl('', [
-      Validators.required,
-    ]),
-    quantity: new FormControl(0,[
-      Validators.required,
-      Validators.min(1),
-    ]),
-    url: new FormControl('', [
-      Validators.required,
-    ]),
+    itemName: new FormControl('', Validators.required),
+    quantity: new FormControl(0, Validators.required),
+    url: new FormControl('', Validators.required),
   });
   public isWhitelisted: boolean = true;
-  requestOrderError: boolean = false;
-  requestOrderErrorMessage: string = '';
+  public errorMessage = '';
 
   /**
    * Constructor
    * @constructor
    * @param {OrderService} orderService service providing order functionalities
    * @param {AdminService} adminService service providing admin functionalities
+   * @param {UtilityService} utilityService service providing utility functionalities
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
@@ -50,6 +46,7 @@ export class OrderRequestComponent implements OnInit {
   constructor(
     public orderService: OrderService,
     public adminService: AdminService,
+    public utilityService: UtilityService,
     public inventoryService: InventoryService,
     public activeModal: NgbActiveModal,
     public modalService: NgbModal
@@ -102,27 +99,26 @@ export class OrderRequestComponent implements OnInit {
    * Creates order request with data
    */
   public async requestOrder(): Promise<void> {
-    if (this.requestOrderForm.valid) {
-      this.orderService.requestOrder(
-        this.requestOrderForm.controls['itemName'].value,
-        this.requestOrderForm.controls['quantity'].value,
-        this.requestOrderForm.controls['url'].value
-      ).subscribe({
-        next: (orderRequest: Order) => {
-          if (orderRequest.id !== null) {
-            this.activeModal.close(`created ${orderRequest.id}`);
-          }
-        },
-        error: error => {
-          this.requestOrderError = true;
-          this.requestOrderErrorMessage = error.error.message;
-          console.error('There was an error!', error);
-        }
-      });
-    } else {
-      this.requestOrderError = true;
-      this.requestOrderErrorMessage = 'Invalid form values';
-      console.error('Invalid form values');
+    this.errorMessage = '';
+
+    if (this.requestOrderForm.invalid) {
+      this.errorMessage = 'You need to fill in all required fields!'
+      return;
     }
+
+    this.orderService.requestOrder(
+      this.requestOrderForm.controls['itemName'].value,
+      this.requestOrderForm.controls['quantity'].value,
+      this.requestOrderForm.controls['url'].value
+    ).subscribe({
+      next: (orderRequest: Order) => {
+        if (orderRequest.id !== null) {
+          this.activeModal.close(`created ${orderRequest.id}`);
+        }
+      },
+      error: error => {
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      }
+    });
   }
 }

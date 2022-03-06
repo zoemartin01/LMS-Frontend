@@ -24,9 +24,16 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
+          },
+        });
+      }
+
+      if (localStorage.getItem('throwTimeSlotConflictError') === 'true') {
+        observer.error({
+          status: 409,
+          error: {
+            message: 'Has Conflict.',
           },
         });
       }
@@ -63,9 +70,16 @@ class MockRoomService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
+          },
+        });
+      }
+
+      if (localStorage.getItem('throwTimeSlotConflictError') === 'true') {
+        observer.error({
+          status: 409,
+          error: {
+            message: 'Has Conflict.',
           },
         });
       }
@@ -267,6 +281,40 @@ describe('TimeslotCreateComponent', () => {
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
+  it('should show error message on create timeslot conflict error', fakeAsync(() => {
+    localStorage.setItem('throwTimeSlotConflictError', 'true');
+
+    component.isRecurring = true;
+    component.timeslotCreateForm.controls['startHour'].setValue(7);
+    component.timeslotCreateForm.controls['endHour'].setValue(17);
+    component.recurringTimeslotCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.monthly);
+    component.recurringTimeslotCreateForm.controls['amount'].setValue(3);
+
+    component.createTimeslot();
+    tick();
+
+    expect(component.appointmentConflictMessage ).toBe('Has Conflict.');
+    expect(component.errorMessage).toBe('');
+
+    localStorage.removeItem('throwTimeSlotConflictError');
+  }));
+
+  it('should show error message on create timeslot series conflict error', fakeAsync(() => {
+    localStorage.setItem('throwTimeSlotConflictError', 'true');
+
+    component.isRecurring = false;
+    component.timeslotCreateForm.controls['startHour'].setValue(7);
+    component.timeslotCreateForm.controls['endHour'].setValue(17);
+
+    component.createTimeslot();
+    tick();
+
+    expect(component.appointmentConflictMessage ).toBe('Has Conflict.');
+    expect(component.errorMessage).toBe('');
+
+    localStorage.removeItem('throwTimeSlotConflictError');
+  }));
+
   it('should show error message on create timeslot series error', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
@@ -290,7 +338,7 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -316,7 +364,7 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));
@@ -384,6 +432,6 @@ describe('TimeslotCreateComponent', () => {
     component.createTimeslot();
     tick();
 
-    expect(consoleError).toHaveBeenCalledWith('Invalid form data');
+    expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 });

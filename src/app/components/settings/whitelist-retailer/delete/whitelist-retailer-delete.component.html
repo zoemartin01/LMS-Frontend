@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Delete Whitelist Retailer</h4>
 </div>
+
 <div class="modal-body">
   <p>Are you sure that you want to delete this Retailer?</p>
 
@@ -15,7 +16,9 @@
       </div>
     </div>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="deleteWhitelistRetailer()">Delete Retailer</button>
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('aborted')">Abort</button>
