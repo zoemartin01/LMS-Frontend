@@ -333,6 +333,17 @@ describe('AppointmentService', () => {
     });
   });
 
+  it('shouldnt get appointments as status is undefined', () => {
+    service.getAllAppointments().subscribe();
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.appointments.getAllAppointments}?limit=0&offset=0`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush({
+    });
+  });
+
   it('should get all accepted appointments', () => {
     service.getAllAppointments(0, 0, ConfirmationStatus.accepted).subscribe(
       res => {
