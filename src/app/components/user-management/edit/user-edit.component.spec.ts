@@ -227,11 +227,7 @@ describe('UserEditComponent', () => {
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-<<<<<<< HEAD
     expect(component.errorMessage).toEqual('Internal Server Error.');
-=======
-    expect(component.errorMessage).toBe('Internal Server Error.');
->>>>>>> 661c18d005684578c3fa6e42dd19828875cd7d41
 
     localStorage.removeItem('throwError');
   }));
