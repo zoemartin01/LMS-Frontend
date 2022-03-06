@@ -169,7 +169,7 @@ describe('RoomDeleteComponent', () => {
     component.getRoomData();
     tick();
 
-    expect(component.errorMessage).toBe('There has been an error!');
+    expect(component.errorMessage).toBe('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

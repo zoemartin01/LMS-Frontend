@@ -160,13 +160,12 @@ describe('UserAcceptComponent', () => {
     component.user.id = 'userAB';
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.acceptUser();
     tick();
 
     expect(modalClose).toHaveBeenCalledWith('accepted');
-    expect(consoleError).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('');
   }));
 
   it('should throw an error on accept user', fakeAsync(() => {
@@ -175,13 +174,12 @@ describe('UserAcceptComponent', () => {
     component.user.id = 'userAB';
 
     const modalClose = spyOn(component.activeModal, 'close');
-    const consoleError = spyOn(console, 'error');
 
     component.acceptUser();
     tick();
 
     expect(modalClose).not.toHaveBeenCalled();
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
 
     localStorage.removeItem('throwError');
   }));

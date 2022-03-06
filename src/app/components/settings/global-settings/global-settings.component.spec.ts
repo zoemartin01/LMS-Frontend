@@ -287,8 +287,6 @@ describe('GlobalSettingsComponent', () => {
   it('should throw error on update global settings', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
 
-    const consoleError = spyOn(console, 'error');
-
     component.globalSettingsForm.controls['user.max_recordings'].setValue('10');
     component.globalSettingsForm.controls['user.max_recordings'].markAsDirty();
     component.globalSettingsForm.controls['recording.auto_delete'].setValue('69420');
@@ -297,7 +295,7 @@ describe('GlobalSettingsComponent', () => {
     component.editGlobalSettings();
     tick();
 
-    expect(consoleError).toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Inventory Item not Found.');
 
     localStorage.removeItem('throwError');
   }));
