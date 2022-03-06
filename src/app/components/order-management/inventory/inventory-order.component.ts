@@ -4,13 +4,13 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryService } from "../../../services/inventory.service";
 import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
 import { Order } from "../../../types/order";
 import { OrderStatus } from "../../../types/enums/order-status";
 import { NotificationChannel } from "../../../types/enums/notification-channel";
 import { UserRole } from "../../../types/enums/user-role";
-import {UtilityService} from "../../../services/utility.service";
 
 @Component({
   selector: 'app-inventory-order',

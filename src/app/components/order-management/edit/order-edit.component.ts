@@ -1,22 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import {AdminService} from "../../../services/admin.service";
-import {AuthService} from "../../../services/auth.service";
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
-import {UtilityService} from "../../../services/utility.service";
+import { AdminService } from "../../../services/admin.service";
+import { AuthService } from "../../../services/auth.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {InventoryItem} from "../../../types/inventory-item";
-import {Order} from "../../../types/order";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
+import { InventoryItem } from "../../../types/inventory-item";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-edit',

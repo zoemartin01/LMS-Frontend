@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {Order} from "../../../types/order";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UtilityService} from "../../../services/utility.service";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-order-accept',
   templateUrl: './order-accept.component.html',
   styleUrls: ['./order-accept.component.scss']
 })
+
 /**
  * Component to accept an order
  */
@@ -90,7 +91,7 @@ export class OrderAcceptComponent implements OnInit {
    * Accept order
    */
   public async acceptOrder(): Promise<void> {
-    this.errorMessage = '',
+    this.errorMessage = '';
     this.orderService.acceptOrderRequest(this.order.id).subscribe({
       next: () => {
         this.activeModal.close('accepted');

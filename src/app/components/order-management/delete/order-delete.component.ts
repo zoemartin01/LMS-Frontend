@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
-import {OrderService} from "../../../services/order.service";
+import { OrderService } from "../../../services/order.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {Order} from "../../../types/order";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {UserRole} from "../../../types/enums/user-role";
-import {UtilityService} from "../../../services/utility.service";
+import { Order } from "../../../types/order";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
 
 @Component({
   selector: 'app-order-delete',
@@ -53,7 +53,11 @@ export class OrderDeleteComponent implements OnInit {
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    */
-  constructor(public orderService: OrderService, public utilityService: UtilityService, public activeModal: NgbActiveModal) {
+  constructor(
+    public orderService: OrderService,
+    public utilityService: UtilityService,
+    public activeModal: NgbActiveModal
+  ) {
     this.orderDeleteForm.disable();
   }
 

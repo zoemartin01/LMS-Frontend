@@ -1,23 +1,23 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 
-import {OrderRequestComponent} from './order-request.component';
+import { OrderRequestComponent } from './order-request.component';
 import {
   WhitelistRetailerUserListComponent
 } from "../whitelist-retailer-user-list/whitelist-retailer-user-list.component";
 
-import {AdminService} from "../../../services/admin.service";
-import {InventoryService} from "../../../services/inventory.service";
-import {OrderService} from "../../../services/order.service";
+import { AdminService } from "../../../services/admin.service";
+import { InventoryService } from "../../../services/inventory.service";
+import { OrderService } from "../../../services/order.service";
 
-import {Order} from "../../../types/order";
-import {InventoryItem} from "../../../types/inventory-item";
-import {PagedResponse} from "../../../types/paged-response";
-import {PagedList} from "../../../types/paged-list";
+import { Order } from "../../../types/order";
+import { InventoryItem } from "../../../types/inventory-item";
+import { PagedResponse } from "../../../types/paged-response";
+import { PagedList } from "../../../types/paged-list";
 
 class MockOrderService {
   getOrderData(id: string): Observable<Order> {
@@ -26,7 +26,7 @@ class MockOrderService {
         observer.error({
           error: {
             message: 'Inventory Item not Found.',
-          }
+          },
         });
       }
 
@@ -45,9 +45,9 @@ class MockOrderService {
             role: 2,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 3
+            notificationChannel: 3,
           },
-          item: null
+          item: null,
         })
         : observer.next({
           id: "045fcd70-d323-4de2-894e-a10772b23457",
@@ -63,25 +63,25 @@ class MockOrderService {
             role: 2,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 3
+            notificationChannel: 3,
           },
           item: {
             id: "920b8cc7-364f-4255-9540-09093f1e167a",
             name: "Fantastic Concrete Pizza",
             description: "Cum exercitationem est.",
-            quantity: 49691
-          }
+            quantity: 49691,
+          },
         });
     });
   }
 
-  public requestOrder(itemName: string, quantity: number, url: string): Observable<Order> {
+  requestOrder(itemName: string, quantity: number, url: string): Observable<Order> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -99,7 +99,7 @@ class MockOrderService {
           role: 2,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         item: null,
       });
@@ -114,7 +114,7 @@ class MockInventoryService {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -152,7 +152,7 @@ class MockAdminService {
         observer.error({
           error: {
             message: 'Internal Server Error.',
-          }
+          },
         });
       }
 
@@ -174,16 +174,16 @@ describe('OrderRequestComponent', () => {
         OrderRequestComponent,
       ],
       imports: [
+        FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        FormsModule,
       ],
       providers: [
-        {provide: OrderService, useClass: MockOrderService},
-        {provide: InventoryService, useClass: MockInventoryService},
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: OrderService, useClass: MockOrderService },
+        { provide: InventoryService, useClass: MockInventoryService },
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
