@@ -4,7 +4,7 @@ import { ParseArgumentException } from "@angular/cli/models/parser";
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
-import { WINDOW_PROVIDERS } from "../providers/window.providers";
+import { WINDOW } from "../providers/window.providers";
 
 import { LivecamService } from './livecam.service';
 
@@ -13,6 +13,12 @@ import { VideoResolution } from '../types/enums/video-resolution';
 describe('LivecamService', () => {
   let service: LivecamService;
   let httpMock: HttpTestingController;
+  let windowMock: Window = <any>{
+    location: {
+      protocol: 'https:',
+      hostname: 'HOST',
+    }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,7 +27,7 @@ describe('LivecamService', () => {
       ],
       providers: [
         LivecamService,
-        WINDOW_PROVIDERS,
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
       ],
     });
 
@@ -281,7 +287,7 @@ describe('LivecamService', () => {
 
   it('should get livestream feed path', () => {
     expect(service.getLiveStreamFeedPath())
-      .toBe(`ws://localhost:3000/api/v1/livecam/stream?token=${localStorage
+      .toBe(`wss://localhost:3000/api/v1/livecam/stream?token=${localStorage
         .getItem(environment.storageKeys.accessToken)}`);
   });
 
@@ -290,6 +296,42 @@ describe('LivecamService', () => {
   });
 
   it('should convert bytes to a human-readable format 0 bytes', () => {
-    expect(service.readableBytes(0, 2)).toEqual('0 Bytes' );
+    expect(service.readableBytes(0)).toEqual('0 Bytes' );
+  });
+});
+
+describe('LivecamService - websockets', () => {
+  let service: LivecamService;
+  let httpMock: HttpTestingController;
+  let windowMock: Window = <any>{
+    location: {
+      protocol: 'http:',
+      hostname: 'HOST',
+    }
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+      providers: [
+        LivecamService,
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
+      ],
+    });
+
+    service = TestBed.inject(LivecamService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  it('should create livecam service', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should get livestream feed path', () => {
+    expect(service.getLiveStreamFeedPath())
+      .toBe(`ws://localhost:3000/api/v1/livecam/stream?token=${localStorage
+        .getItem(environment.storageKeys.accessToken)}`);
   });
 });
