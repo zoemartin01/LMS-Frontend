@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
-import {UserService} from "../../../services/user.service";
-import {UtilityService} from "../../../services/utility.service";
+import { UserService } from "../../../services/user.service";
+import { UtilityService } from "../../../services/utility.service";
 
 @Component({
   selector: 'app-register',

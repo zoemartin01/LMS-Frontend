@@ -134,11 +134,15 @@ export class AppointmentDeleteComponent implements OnInit {
         this.appointmentDeleteForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentDeleteForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentDeleteForm.controls['amount'].setValue(res.amount);
+
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
+
         if (this.appointment.maxStart !== null) {
           this.appointment.maxStart = moment(this.appointment.maxStart);
-          this.appointmentDeleteForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));
+          this.appointmentDeleteForm.controls['lastDate'].setValue(
+            this.appointment.maxStart.format('DD.MM.YYYY')
+          );
         }
       },
       error: error => {

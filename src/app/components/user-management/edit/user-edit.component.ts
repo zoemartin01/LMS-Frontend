@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit {
     role: new FormControl(0),
     notificationChannel: new FormControl(''),
   });
-  passwordConfirmationFails: boolean = false;
   public user: User = {
     id: null,
     firstName: '',

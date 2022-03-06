@@ -14,7 +14,7 @@ import { RoomTimespan } from "../../../../types/room-timespan";
 import { TimespanId } from "../../../../types/aliases/timespan-id";
 import { RoomTimespanType } from "../../../../types/enums/timespan-type";
 import { Room } from "../../../../types/room";
-import {RoomId} from "../../../../types/aliases/room-id";
+import { RoomId } from "../../../../types/aliases/room-id";
 
 class MockRoomService {
   public getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
@@ -43,7 +43,7 @@ class MockRoomService {
             description: "room to test",
             maxConcurrentBookings: 1,
             autoAcceptBookings: false,
-          }
+          },
         });
         return;
       }
@@ -62,7 +62,7 @@ class MockRoomService {
           description: "room to test",
           maxConcurrentBookings: 1,
           autoAcceptBookings: false,
-        }
+        },
       };
 
       observer.next(timeslot);

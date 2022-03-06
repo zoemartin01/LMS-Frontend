@@ -90,6 +90,7 @@ export class TimeslotViewComponent implements OnInit {
         this.timeslotViewForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.timeslotViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.timeslotViewForm.controls['amount'].setValue(res.amount);
+
         this.timeslot.start = moment(this.timeslot.start);
         this.timeslot.end = moment(this.timeslot.end);
       },

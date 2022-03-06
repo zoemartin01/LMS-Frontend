@@ -41,7 +41,7 @@ class MockAppointmentService {
             name: "Test room",
             description: "room to test",
             maxConcurrentBookings: 1,
-            autoAcceptBookings: true
+            autoAcceptBookings: true,
           },
           user: {
             id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -51,8 +51,8 @@ class MockAppointmentService {
             role: 3,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 3
-          }
+            notificationChannel: 3,
+          },
         });
         return;
       }
@@ -72,7 +72,7 @@ class MockAppointmentService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: true
+          autoAcceptBookings: true,
         },
         user: {
           id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -82,9 +82,10 @@ class MockAppointmentService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
-        }
-      }
+          notificationChannel: 3,
+        },
+      };
+
       observer.next(appointment);
     });
   }
@@ -95,7 +96,7 @@ class MockAppointmentService {
         observer.error({
           error: {
             message: 'Unknown Error.',
-          }
+          },
         });
       }
 
@@ -109,7 +110,7 @@ class MockAppointmentService {
         observer.error({
           error: {
             message: 'Unknown Error.',
-          }
+          },
         });
       }
 
@@ -156,7 +157,6 @@ describe('AppointmentDeleteComponent method calls', () => {
 
   it('should get appointment to init page',fakeAsync(() =>{
     component.ngOnInit();
-
     tick();
 
     expect(getAppointmentDataMethod).toHaveBeenCalled();
@@ -188,11 +188,13 @@ describe('AppointmentDeleteComponent', () => {
 
     fixture = TestBed.createComponent(AppointmentDeleteComponent);
     component = fixture.componentInstance;
+
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
   });
 
-  it('should set attributes to correct values after ngOnInit with appointment start end end null', fakeAsync(() => {
+  it('should set attributes to correct values after ngOnInit with appointment start end end null',
+    fakeAsync(() => {
     component.appointment.id = 'IdWithStartAndEndNull';
 
     const testAppointment: Appointment = {
@@ -210,7 +212,7 @@ describe('AppointmentDeleteComponent', () => {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: true
+        autoAcceptBookings: true,
       },
       user: {
         id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -220,23 +222,23 @@ describe('AppointmentDeleteComponent', () => {
         role: 3,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 3
-      }
+        notificationChannel: 3,
+      },
     };
 
     component.ngOnInit();
     tick();
 
     expect(JSON.stringify(component.appointment)).toEqual(JSON.stringify(testAppointment));
-    expect(JSON.stringify(component.appointment.start)).toEqual(JSON.stringify(moment(testAppointment.start)));
-    expect(JSON.stringify(component.appointment.end)).toEqual(JSON.stringify(moment(testAppointment.end)));
-    expect(component.appointmentDeleteForm.controls['user'].value).toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
+
+    expect(component.appointmentDeleteForm.controls['user'].value)
+      .toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
     expect(component.appointmentDeleteForm.controls['room'].value).toEqual(testAppointment.room.name);
     expect(component.appointmentDeleteForm.controls['date'].value).toEqual(undefined);
     expect(component.appointmentDeleteForm.controls['startHour'].value).toEqual(undefined);
     expect(component.appointmentDeleteForm.controls['endHour'].value).toEqual(undefined);
-    expect(component.appointmentDeleteForm.controls['timeSlotRecurrence'].value).toEqual(testAppointment.timeSlotRecurrence);
-
+    expect(component.appointmentDeleteForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testAppointment.timeSlotRecurrence);
   }));
 
   it('should delete an appointment', fakeAsync(() => {

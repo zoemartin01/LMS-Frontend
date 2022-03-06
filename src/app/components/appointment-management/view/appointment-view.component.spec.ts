@@ -23,10 +23,11 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-              message: 'Unknown Error.',
+            message: 'Unknown Error.',
           }
         });
       }
+
       if (appointmentId === 'IdWithStartAndEndNull') {
         observer.next({
           id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
@@ -43,7 +44,7 @@ class MockAppointmentService {
             name: "Test room",
             description: "room to test",
             maxConcurrentBookings: 1,
-            autoAcceptBookings: true
+            autoAcceptBookings: true,
           },
           user: {
             id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -54,7 +55,7 @@ class MockAppointmentService {
             emailVerification: true,
             isActiveDirectory: false,
             notificationChannel: 3
-          }
+          },
         });
         return;
       }
@@ -74,7 +75,7 @@ class MockAppointmentService {
           name: "Test room",
           description: "room to test",
           maxConcurrentBookings: 1,
-          autoAcceptBookings: true
+          autoAcceptBookings: true,
         },
         user: {
           id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -84,8 +85,8 @@ class MockAppointmentService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
-        }
+          notificationChannel: 3,
+        },
       };
 
       observer.next(appointment);
@@ -285,18 +286,24 @@ describe('AppointmentViewComponent', () => {
     tick();
 
     expect(component.appointment).toEqual(testAppointment);
-    expect(component.appointment.start).toEqual(testAppointment.start);
-    expect(component.appointment.end).toEqual(testAppointment.end);
-    expect(component.appointmentViewForm.controls['user'].value).toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
+
+    expect(component.appointmentViewForm.controls['user'].value)
+      .toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
     expect(component.appointmentViewForm.controls['room'].value).toEqual(testAppointment.room.name);
-    expect(component.appointmentViewForm.controls['date'].value).toEqual(testAppointment.start?.format('DD.MM.YYYY'));
-    expect(component.appointmentViewForm.controls['startHour'].value).toEqual(testAppointment.start?.format('HH:mm'));
-    expect(component.appointmentViewForm.controls['endHour'].value).toEqual(testAppointment.end?.format('HH:mm'));
-    expect(component.appointmentViewForm.controls['confirmationStatus'].value).toEqual(testAppointment.confirmationStatus);
-    expect(component.appointmentViewForm.controls['timeSlotRecurrence'].value).toEqual(testAppointment.timeSlotRecurrence);
+    expect(component.appointmentViewForm.controls['date'].value)
+      .toEqual(testAppointment.start?.format('DD.MM.YYYY'));
+    expect(component.appointmentViewForm.controls['startHour'].value)
+      .toEqual(testAppointment.start?.format('HH:mm'));
+    expect(component.appointmentViewForm.controls['endHour'].value)
+      .toEqual(testAppointment.end?.format('HH:mm'));
+    expect(component.appointmentViewForm.controls['confirmationStatus'].value)
+      .toEqual(testAppointment.confirmationStatus);
+    expect(component.appointmentViewForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testAppointment.timeSlotRecurrence);
   }));
 
-  it('should set attributes to correct values after ngOnInit with appointment start end end null', fakeAsync(() => {
+  it('should set attributes to correct values after ngOnInit with appointment start end end null',
+    fakeAsync(() => {
     component.appointment.id = 'IdWithStartAndEndNull';
 
     const testAppointment: Appointment = {
@@ -314,7 +321,7 @@ describe('AppointmentViewComponent', () => {
         name: "Test room",
         description: "room to test",
         maxConcurrentBookings: 1,
-        autoAcceptBookings: true
+        autoAcceptBookings: true,
       },
       user: {
         id: "ecaf341e-e600-4e4e-adab-a7e016c993ac",
@@ -324,8 +331,8 @@ describe('AppointmentViewComponent', () => {
         role: 3,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 3
-      }
+        notificationChannel: 3,
+      },
     };
 
     component.ngOnInit();
@@ -334,12 +341,13 @@ describe('AppointmentViewComponent', () => {
     expect(JSON.stringify(component.appointment)).toEqual(JSON.stringify(testAppointment));
     expect(JSON.stringify(component.appointment.start)).toEqual(JSON.stringify(moment(testAppointment.start)));
     expect(JSON.stringify(component.appointment.end)).toEqual(JSON.stringify(moment(testAppointment.end)));
-    expect(component.appointmentViewForm.controls['user'].value).toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
+    expect(component.appointmentViewForm.controls['user'].value)
+      .toEqual(testAppointment.user.firstName + ' ' + testAppointment.user.lastName);
     expect(component.appointmentViewForm.controls['room'].value).toEqual(testAppointment.room.name);
     expect(component.appointmentViewForm.controls['date'].value).toEqual(undefined);
     expect(component.appointmentViewForm.controls['startHour'].value).toEqual(undefined);
     expect(component.appointmentViewForm.controls['endHour'].value).toEqual(undefined);
-    expect(component.appointmentViewForm.controls['timeSlotRecurrence'].value).toEqual(testAppointment.timeSlotRecurrence);
-
+    expect(component.appointmentViewForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testAppointment.timeSlotRecurrence);
   }));
 });
