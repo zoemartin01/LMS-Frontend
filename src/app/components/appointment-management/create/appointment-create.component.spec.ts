@@ -188,6 +188,26 @@ describe('AppointmentCreateComponent', () => {
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
+  it('should create appointment when endhour = 24', fakeAsync(() => {
+    component.isRecurring = false;
+    component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
+    component.ngOnInit();
+    tick();
+
+    component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
+    component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
+    component.appointmentCreateForm.controls['endHour'].setValue(24);
+    component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.single);
+
+    component.createAppointment();
+    tick();
+
+    expect(closeForm).toHaveBeenCalledWith(true);
+  }));
+
   it('should create appointment series', fakeAsync(() => {
     component.isRecurring = true;
     component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
@@ -199,6 +219,27 @@ describe('AppointmentCreateComponent', () => {
 
     component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
     component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
+    component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
+    component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
+
+    component.createAppointment();
+    tick();
+
+    expect(closeForm).toHaveBeenCalledWith(true);
+  }));
+
+  it('should create appointment series when endhour = 24', fakeAsync(() => {
+    component.isRecurring = true;
+    component.start = moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
+    component.ngOnInit();
+    tick();
+
+    component.appointmentCreateForm.controls['safetyInstructions'].setValue(true);
+    component.appointmentCreateForm.controls['hwlabRules'].setValue(true);
+    component.appointmentCreateForm.controls['endHour'].setValue(24);
     component.recurringAppointmentCreateForm.controls['timeSlotRecurrence'].setValue(TimeSlotRecurrence.weekly);
     component.recurringAppointmentCreateForm.controls['amount'].setValue(2);
 

@@ -1,17 +1,17 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 import * as moment from "moment";
 
-import { AppointmentEditComponent } from './appointment-edit.component';
+import {AppointmentEditComponent} from './appointment-edit.component';
 
-import { AppointmentService } from "../../../services/appointment.service";
+import {AppointmentService} from "../../../services/appointment.service";
 
-import { Appointment } from "../../../types/appointment";
-import { TimespanId } from "../../../types/aliases/timespan-id";
-import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
-import { Room } from "../../../types/room";
+import {Appointment} from "../../../types/appointment";
+import {TimespanId} from "../../../types/aliases/timespan-id";
+import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import {Room} from "../../../types/room";
 
 class MockAppointmentService {
   getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -19,9 +19,7 @@ class MockAppointmentService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -247,7 +245,7 @@ describe('AppointmentEditComponent method calls', () => {
         NgbModule,
       ],
       providers: [
-        { provide: AppointmentService, useClass: MockAppointmentService },
+        {provide: AppointmentService, useClass: MockAppointmentService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -341,7 +339,7 @@ describe('AppointmentEditComponent', () => {
         NgbModule,
       ],
       providers: [
-        { provide: AppointmentService, useClass: MockAppointmentService },
+        {provide: AppointmentService, useClass: MockAppointmentService},
         NgbActiveModal,
       ],
     }).compileComponents();

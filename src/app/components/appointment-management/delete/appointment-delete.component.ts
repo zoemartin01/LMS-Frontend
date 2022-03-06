@@ -127,12 +127,6 @@ export class AppointmentDeleteComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointment.start = moment(this.appointment.start);
-        this.appointment.end = moment(this.appointment.end);
-        if (this.appointment.maxStart !== undefined) {
-          this.appointment.maxStart = moment(this.appointment.maxStart);
-          this.appointmentDeleteForm.controls['lastDate'].setValue(res.maxStart?.format('DD.MM.YYYY'));
-        }
         this.appointmentDeleteForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
         this.appointmentDeleteForm.controls['room'].setValue(res.room.name);
         this.appointmentDeleteForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
@@ -140,6 +134,12 @@ export class AppointmentDeleteComponent implements OnInit {
         this.appointmentDeleteForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentDeleteForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentDeleteForm.controls['amount'].setValue(res.amount);
+        this.appointment.start = moment(this.appointment.start);
+        this.appointment.end = moment(this.appointment.end);
+        if (this.appointment.maxStart !== null) {
+          this.appointment.maxStart = moment(this.appointment.maxStart);
+          this.appointmentDeleteForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));
+        }
       },
       error: error => {
         console.error('There was an error!', error);

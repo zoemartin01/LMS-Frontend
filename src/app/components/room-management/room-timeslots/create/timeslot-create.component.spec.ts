@@ -255,6 +255,31 @@ describe('TimeslotCreateComponent', () => {
     expect(closeForm).toHaveBeenCalledWith(true);
   }));
 
+  it('should create timeslot', fakeAsync(() => {
+    component.start = moment("2022-02-15T23:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+    component.room ={
+      id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+      name: "Test room",
+      description: "room to test",
+      maxConcurrentBookings: 1,
+      autoAcceptBookings: false
+    };
+
+    let closeForm = spyOn(component.closeForm, 'emit');
+
+    component.ngOnInit();
+    tick();
+
+    component.timeslotCreateForm.controls['startHour'].setValue(7);
+    component.timeslotCreateForm.controls['endHour'].setValue(17);
+
+    component.createTimeslot();
+    tick();
+
+    expect(closeForm).toHaveBeenCalledWith(true);
+  }));
+
+
   it('should create timeslot series', fakeAsync(() => {
     component.room ={
       id: "c7231328-203e-43f5-9ac1-d374d90484ac",
