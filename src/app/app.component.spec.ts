@@ -56,9 +56,7 @@ class MockAuthService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            }
+            message: 'Unknown Error.',
           }
         });
       }
@@ -74,9 +72,7 @@ class MockUserService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'User not found.',
-            }
+            message: 'User not found.',
           }
         });
       }

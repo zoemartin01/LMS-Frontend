@@ -17,9 +17,7 @@ class MockAdminService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Whitelist Retailer not found.',
-            },
+            message: 'Whitelist Retailer not found.',
           },
         });
       }

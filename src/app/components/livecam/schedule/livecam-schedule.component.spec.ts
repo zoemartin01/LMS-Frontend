@@ -31,9 +31,7 @@ class MockLivecamService {
       ) {
         observer.error({
           error: {
-            error: {
-              message: 'Invalid input parameters.',
-            },
+            message: 'Invalid input parameters.',
           },
         });
       }
