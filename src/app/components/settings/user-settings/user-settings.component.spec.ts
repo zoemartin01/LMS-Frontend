@@ -239,6 +239,7 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password'].setValue('');
     component.userSettingsForm.controls['password_confirmation'].setValue('');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
+    component.userSettingsForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -247,6 +248,21 @@ describe('UserSettingsComponent', () => {
 
     expect(modalClose).toHaveBeenCalledWith('edited');
   }));
+
+  it('should throw an error when password confirmation fails', fakeAsync(() => {
+    component.user.id = 'userXY';
+
+    component.userSettingsForm.controls['password'].setValue('password');
+    component.userSettingsForm.controls['password_confirmation'].setValue('passwrd');
+    component.userSettingsForm.controls['notificationChannel'].setValue('3');
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserSettings();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Password confirmation failed!');  }));
 
   it('should throw an error on edit notification channel', fakeAsync(() => {
     localStorage.setItem('throwError', 'true');
@@ -269,13 +285,11 @@ describe('UserSettingsComponent', () => {
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {
-    expect(component.passwordConfirmationFails).toEqual(false);
-
     component.userSettingsForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['password_confirmation'].setValue('duckPutin');
 
     component.checkPasswordConfirmation();
 
-    expect(component.passwordConfirmationFails).toEqual(true);
+    expect(component.checkPasswordConfirmation()).toBeFalse();
   });
 });

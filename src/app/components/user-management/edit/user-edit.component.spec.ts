@@ -249,14 +249,40 @@ describe('UserEditComponent', () => {
     expect(component.errorMessage).toBe('You need to fill in all required fields!');
   }));
 
+  it('should throw an error when password confirmation fails', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
+    component.user.id = 'userXY';
+
+    component.userEditForm.controls['firstName'].setValue('Duck');
+    component.userEditForm.controls['firstName'].markAsDirty();
+    component.userEditForm.controls['lastName'].setValue('Putin');
+    component.userEditForm.controls['lastName'].markAsDirty();
+    component.userEditForm.controls['email'].setValue('duckputin@test.com');
+    component.userEditForm.controls['email'].markAsDirty();
+    component.userEditForm.controls['password'].setValue('russianwarshipgofuckyourself');
+    component.userEditForm.controls['password'].markAsDirty();
+    component.userEditForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourselfwithtypo');
+    component.userEditForm.controls['password_confirmation'].markAsDirty();
+    component.userEditForm.controls['role'].setValue('3');
+    component.userEditForm.controls['role'].markAsDirty();
+    component.userEditForm.controls['notificationChannel'].setValue('3');
+    component.userEditForm.controls['notificationChannel'].markAsDirty();
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserData();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Password confirmation failed!');
+  }));
+
   it('should update PasswordConfirmationFails boolean', () => {
-    expect(component.passwordConfirmationFails).toEqual(false);
 
     component.userEditForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userEditForm.controls['password_confirmation'].setValue('duckPutin');
 
-    component.checkPasswordConfirmation();
-
-    expect(component.passwordConfirmationFails).toEqual(true);
+    expect(component.checkPasswordConfirmation()).toBeFalse();
   });
 });
