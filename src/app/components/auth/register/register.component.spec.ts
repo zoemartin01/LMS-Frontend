@@ -1,17 +1,17 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
-import { RegisterComponent } from './register.component';
+import {RegisterComponent} from './register.component';
 
-import { UserService } from '../../../services/user.service';
+import {UserService} from '../../../services/user.service';
 
-import { User } from '../../../types/user';
-import { UserRole } from "../../../types/enums/user-role";
-import { NotificationChannel } from "../../../types/enums/notification-channel";
+import {User} from '../../../types/user';
+import {UserRole} from "../../../types/enums/user-role";
+import {NotificationChannel} from "../../../types/enums/notification-channel";
 
 class MockUserService {
   register(firstName: string, lastName: string, email: string, password: string): Observable<User> {
@@ -59,8 +59,8 @@ describe('RegisterComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: UserService, useClass: MockUserService },
-        { provide: Router, useValue: router },
+        {provide: UserService, useClass: MockUserService},
+        {provide: Router, useValue: router},
       ],
     }).compileComponents();
 
@@ -163,7 +163,7 @@ describe('RegisterComponent', () => {
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
-
+    component.checkPasswordConfirmation();
     tick();
 
     expect(component.errorMessage).toBe('Password confirmation failed!');
