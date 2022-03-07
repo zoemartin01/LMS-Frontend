@@ -124,7 +124,7 @@ class MockModalService {
   open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        whitelistRetailer: {id: null},
+        whitelistRetailer: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
