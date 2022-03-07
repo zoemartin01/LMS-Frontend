@@ -15,7 +15,7 @@
         <th class="col">Item</th>
         <th class="col">Description</th>
         <th class="col">Quantity</th>
-        <th class="col-md-2"></th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody class="align-middle">
@@ -23,19 +23,11 @@
         <td>{{ inventoryItem.name }}</td>
         <td>{{ inventoryItem.description }}</td>
         <td>{{ inventoryItem.quantity }}</td>
-        <td class="col-sm-3">
-          <a (click)="openInventoryItemViewForm(inventoryItem.id)">
-            <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
-          </a>
-          <a *ngIf="authService.isAdmin()" (click)="openInventoryItemEditForm(inventoryItem.id)">
-            <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-          </a>
-          <a *ngIf="authService.isAdmin()" (click)="openItemDeletionDialog(inventoryItem.id)">
-            <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-          </a>
-          <a (click)="openOrderCreationForm(inventoryItem.name, inventoryItem.id)">
-            <button type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></button>
-          </a>
+        <td class="buttons">
+          <a (click)="openInventoryItemViewForm(inventoryItem.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
+          <a *ngIf="authService.isAdmin()" (click)="openInventoryItemEditForm(inventoryItem.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+          <a *ngIf="authService.isAdmin()" (click)="openItemDeletionDialog(inventoryItem.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+          <a (click)="openOrderCreationForm(inventoryItem.name, inventoryItem.id)" type="button" class="btn btn-success"><i class="bi bi-cart-plus-fill"></i></a>
         </td>
       </tr>
     </tbody>

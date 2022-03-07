@@ -9,21 +9,15 @@
 <div class="row">
   <div>
     <h2 class="display-5 d-inline">Scheduled Recordings</h2>
-    <button
-      (click)="openScheduleRecordingForm()"
-      type="button"
-      class="btn btn-primary d-inline mb-3"
-    >
-      <i class="bi-plus-lg"></i> Schedule new Recording
-    </button>
+    <a (click)="openScheduleRecordingForm()" type="button" class="btn btn-primary d-inline mb-3"><i class="bi-plus-lg"></i> Schedule new Recording</a>
   </div>
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th>Duration</th>
-        <th>User</th>
-        <th>Resolution</th>
-        <th class="col-sm-2"></th>
+        <th class="col">Duration</th>
+        <th class="col">User</th>
+        <th class="col">Resolution</th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
@@ -31,14 +25,8 @@
         <td>{{ recording.start?.format("DD.MM.YYYY, HH:mm") }} - {{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ userService.getFullName(recording.user!) }}</td>
         <td>{{ recording.resolution }}</td>
-        <td class="col-sm-2">
-          <button
-            (click)="openRecordingDeletionDialog(recording.id)"
-            type="button"
-            class="btn btn-danger"
-          >
-            <i class="bi bi-trash-fill"></i>
-          </button>
+        <td class="buttons">
+          <a (click)="openRecordingDeletionDialog(recording.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i> </a>
         </td>
       </tr>
     </tbody>
@@ -54,11 +42,11 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th>Start</th>
-        <th>End</th>
-        <th>Resolution</th>
-        <th>Size</th>
-        <th class="col-sm-2"></th>
+        <th class="col">Start</th>
+        <th class="col">End</th>
+        <th class="col">Resolution</th>
+        <th class="col">Size</th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
@@ -67,21 +55,9 @@
         <td>{{ recording.end?.format("DD.MM.YYYY, HH:mm") }}</td>
         <td>{{ recording.resolution }}</td>
         <td>{{ livecamService.readableBytes(recording.size!) }}</td>
-        <td class="col-sm-2">
-          <button
-            (click)="downloadRecording(recording.id)"
-            type="button"
-            class="btn btn-primary"
-          >
-            <i class="bi bi-download"></i>
-          </button>
-          <button
-            (click)="openRecordingDeletionDialog(recording.id)"
-            type="button"
-            class="btn btn-danger"
-          >
-            <i class="bi bi-trash-fill"></i>
-          </button>
+        <td class="buttons">
+          <a (click)="downloadRecording(recording.id)" type="button" class="btn btn-primary"><i class="bi bi-download"></i></a>
+          <a (click)="openRecordingDeletionDialog(recording.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
         </td>
       </tr>
     </tbody>

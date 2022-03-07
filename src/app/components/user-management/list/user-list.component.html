@@ -7,22 +7,20 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-4">Name</th>
-      <th class="col-sm-4">E-Mail</th>
-      <th class="col-sm-2"></th>
-      <th class="col-sm-2"></th>
+      <th class="col">Name</th>
+      <th class="col">E-Mail</th>
+      <th class="col-2"></th>
+      <th class="col-1"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let pendingUser of pendingUsers.data | paginate: { id: 'pending', itemsPerPage: pendingUsers.pageSize, currentPage: pendingUsers.page, totalItems: pendingUsers.total }">
-      <td class="col-sm-4">{{ userService.getFullName(pendingUser) }}</td>
-      <td class="col-sm-4">{{ pendingUser.email }}</td>
-      <td class="col-sm-2"></td>
-      <td class="col-sm-2">
-        <a (click)="openUserAcceptDialog(pendingUser.id)" type="button" class="btn btn-success mx-1"><i
-          class="bi bi-check"></i></a>
-        <a (click)="openUserDeclineUser(pendingUser.id)" type="button" class="btn btn-danger mx-1"><i
-          class="bi bi-x"></i></a>
+      <td>{{ userService.getFullName(pendingUser) }}</td>
+      <td>{{ pendingUser.email }}</td>
+      <td></td>
+      <td class="buttons">
+        <a (click)="openUserAcceptDialog(pendingUser.id)" type="button" class="btn btn-success"><i class="bi bi-check"></i></a>
+        <a (click)="openUserDeclineUser(pendingUser.id)" type="button" class="btn btn-danger"><i class="bi bi-x"></i></a>
       </td>
     </tr>
     </tbody>
@@ -37,29 +35,22 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-4">Name</th>
-      <th class="col-sm-4">E-Mail</th>
-      <th class="col-sm-2">Role</th>
-      <th class="col-sm-2"></th>
+      <th class="col">Name</th>
+      <th class="col">E-Mail</th>
+      <th class="col-2">Role</th>
+      <th class="col-1"></th>
     </tr>
     </thead>
 
     <tbody>
     <tr *ngFor="let acceptedUser of acceptedUsers.data | paginate: { id: 'accepted', itemsPerPage: acceptedUsers.pageSize, currentPage: acceptedUsers.page, totalItems: acceptedUsers.total }">
-      <td class="col-sm-4">{{ userService.getFullName(acceptedUser) }}</td>
-      <td class="col-sm-4">{{ acceptedUser.email }}</td>
-      <td class="col-sm-2">{{ ['', 'Pending User', 'Visitor', 'Admin'][acceptedUser.role] }}</td>
-      <td class="col-sm-2">
-        <a (click)="openUserView(acceptedUser.id)">
-          <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
-        </a>
-        <a (click)="openUserEditForm(acceptedUser.id)">
-          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-        </a>
-        <a (click)="openUserDeletionDialog(acceptedUser.id)" *ngIf="acceptedUser.id !== authService.getUserId()">
-          <button type="button" class="btn btn-danger"><i
-            class="bi bi-trash-fill"></i></button>
-        </a>
+      <td>{{ userService.getFullName(acceptedUser) }}</td>
+      <td>{{ acceptedUser.email }}</td>
+      <td>{{ ['', 'Pending User', 'Visitor', 'Admin'][acceptedUser.role] }}</td>
+      <td class="buttons">
+        <a (click)="openUserView(acceptedUser.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
+        <a (click)="openUserEditForm(acceptedUser.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+        <a (click)="openUserDeletionDialog(acceptedUser.id)" *ngIf="acceptedUser.id !== authService.getUserId()" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
       </td>
     </tr>
     </tbody>

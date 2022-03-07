@@ -86,14 +86,14 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-10">Name</th>
-      <th class="col-sm-2"></th>
+      <th class="col">Name</th>
+      <th class="col-1"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let whitelistRetailer of whitelistRetailers.data | paginate: { id: 'server', itemsPerPage: whitelistRetailers.pageSize, currentPage: whitelistRetailers.page, totalItems: whitelistRetailers.total }">
-      <td class="col-sm-10">{{ whitelistRetailer.name }}</td>
-      <td class="col-sm-2">
+      <td>{{ whitelistRetailer.name }}</td>
+      <td class="buttons">
         <a (click)="openWhitelistRetailerView(whitelistRetailer.id)">
           <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
         </a>

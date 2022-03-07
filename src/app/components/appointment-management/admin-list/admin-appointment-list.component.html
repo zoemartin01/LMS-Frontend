@@ -19,32 +19,33 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-2">Room</th>
-      <th class="col-sm-2">Date</th>
-      <th class="col-sm-2">Time</th>
+      <th class="col">Room</th>
+      <th class="col">Date</th>
+      <th class="col">Time</th>
       <th class="col">Recurrence</th>
       <th class="col">Last Date</th>
-      <th class="col-sm-2">User</th>
+      <th class="col">User</th>
+      <th class="col-1"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let pendingAppointment of pendingAppointments.data | paginate: { id: 'pending', itemsPerPage: pendingAppointments.pageSize, currentPage: pendingAppointments.page, totalItems: pendingAppointments.total }">
-      <td class="col-sm-2">{{ pendingAppointment.room.name }}</td>
-      <td class="col-sm-2">{{ pendingAppointment.start?.format("DD.MM.YYYY") }}</td>
-      <td class="col-sm-2">
+      <td>{{ pendingAppointment.room.name }}</td>
+      <td>{{ pendingAppointment.start?.format("DD.MM.YYYY") }}</td>
+      <td>
         {{ pendingAppointment.start?.format("HH:mm") }} - {{ pendingAppointment.end?.format("HH:mm") }}
       </td>
-      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][pendingAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ pendingAppointment.maxStart ? pendingAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
-      <td class="col-sm-2">{{ userService.getFullName(pendingAppointment.user) }}</td>
-      <td class="d-flex justify-content-end">
-        <a (click)="openAppointmentAcceptDialog(pendingAppointment.id)" type="button" class="btn btn-success mx-1">
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][pendingAppointment.timeSlotRecurrence]}}</td>
+      <td>{{ pendingAppointment.maxStart ? pendingAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+      <td>{{ userService.getFullName(pendingAppointment.user) }}</td>
+      <td class="buttons">
+        <a (click)="openAppointmentAcceptDialog(pendingAppointment.id)" type="button" class="btn btn-success">
           <i class="bi bi-check"></i>
         </a>
-        <a (click)="openAppointmentDeclineDialog(pendingAppointment.id)" type="button" class="btn btn-danger mx-1">
+        <a (click)="openAppointmentDeclineDialog(pendingAppointment.id)" type="button" class="btn btn-danger">
           <i class="bi bi-x"></i>
         </a>
-        <a [routerLink]="['/room-overview', { id: pendingAppointment.room.id, date: pendingAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+        <a [routerLink]="['/room-overview', { id: pendingAppointment.room.id, date: pendingAppointment.start?.toISOString() }]" type="button" class="btn btn-dark">
           <i class="bi bi-calendar2-week-fill"></i>
         </a>
       </td>
@@ -62,32 +63,33 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-2">Room</th>
-      <th class="col-sm-2">Date</th>
-      <th class="col-sm-2">Time</th>
+      <th class="col">Room</th>
+      <th class="col">Date</th>
+      <th class="col">Time</th>
       <th class="col">Recurrence</th>
       <th class="col">Last Date</th>
-      <th class="col-sm-2">User</th>
+      <th class="col">User</th>
+      <th class="col-1"></th>
     </tr>
     </thead>
     <tbody class="align-middle">
     <tr *ngFor="let acceptedAppointment of acceptedAppointments.data | paginate: { id: 'accepted', itemsPerPage: acceptedAppointments.pageSize, currentPage: acceptedAppointments.page, totalItems: acceptedAppointments.total }">
-      <td class="col-sm-2">{{ acceptedAppointment.room.name }}</td>
-      <td class="col-sm-2">{{ acceptedAppointment.start?.format("DD.MM.YYYY") }}</td>
-      <td class="col-sm-2">
+      <td>{{ acceptedAppointment.room.name }}</td>
+      <td>{{ acceptedAppointment.start?.format("DD.MM.YYYY") }}</td>
+      <td>
         {{ acceptedAppointment.start?.format("HH:mm") }} - {{ acceptedAppointment.end?.format("HH:mm") }}
       </td>
-      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][acceptedAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ acceptedAppointment.maxStart ? acceptedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
-      <td class="col-sm-2">{{ userService.getFullName(acceptedAppointment.user) }}</td>
-      <td class="d-flex justify-content-end">
-        <a [routerLink]="['/room-overview', { id: acceptedAppointment.room.id, date: acceptedAppointment.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][acceptedAppointment.timeSlotRecurrence]}}</td>
+      <td>{{ acceptedAppointment.maxStart ? acceptedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+      <td>{{ userService.getFullName(acceptedAppointment.user) }}</td>
+      <td class="buttons">
+        <a [routerLink]="['/room-overview', { id: acceptedAppointment.room.id, date: acceptedAppointment.start?.toISOString() }]" type="button" class="btn btn-dark">
           <i class="bi bi-calendar2-week-fill"></i>
         </a>
-        <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary mx-1">
+        <a (click)="openAppointmentView(acceptedAppointment.id)" type="button" class="btn btn-secondary">
           <i class="bi bi-eye-fill"></i>
         </a>
-        <a (click)="openAppointmentDeletionDialog(acceptedAppointment.id)" type="button" class="btn btn-danger mx-1">
+        <a (click)="openAppointmentDeletionDialog(acceptedAppointment.id)" type="button" class="btn btn-danger">
           <i class="bi bi-trash-fill"></i>
         </a>
       </td>
@@ -105,29 +107,30 @@
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-      <th class="col-sm-2">Room</th>
-      <th class="col-sm-2">Date</th>
-      <th class="col-sm-2">Time</th>
+      <th class="col">Room</th>
+      <th class="col">Date</th>
+      <th class="col">Time</th>
       <th class="col">Recurrence</th>
       <th class="col">Last Date</th>
-      <th class="col-sm-2">User</th>
+      <th class="col">User</th>
+      <th class="col-1"></th>
     </tr>
     </thead>
     <tbody class="align-middle">
     <tr *ngFor="let deniedAppointment of deniedAppointments.data | paginate: { id: 'denied', itemsPerPage: deniedAppointments.pageSize, currentPage: deniedAppointments.page, totalItems: deniedAppointments.total }">
-      <td class="col-sm-2">{{ deniedAppointment.room.name }}</td>
-      <td class="col-sm-2">{{ deniedAppointment.start?.format("DD.MM.YYYY") }}</td>
-      <td class="col-sm-2">
+      <td>{{ deniedAppointment.room.name }}</td>
+      <td>{{ deniedAppointment.start?.format("DD.MM.YYYY") }}</td>
+      <td>
         {{ deniedAppointment.start?.format("HH:mm") }} - {{ deniedAppointment.end?.format("HH:mm") }}
       </td>
-      <td class="col-sm-2">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][deniedAppointment.timeSlotRecurrence]}}</td>
-      <td class="col-sm-2">{{ deniedAppointment.maxStart ? deniedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
-      <td class="col-sm-2">{{ userService.getFullName(deniedAppointment.user) }}</td>
+      <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][deniedAppointment.timeSlotRecurrence]}}</td>
+      <td>{{ deniedAppointment.maxStart ? deniedAppointment.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+      <td>{{ userService.getFullName(deniedAppointment.user) }}</td>
         <td class="d-flex justify-content-end">
-        <a (click)="openAppointmentView(deniedAppointment.id)" type="button" class="btn btn-secondary mx-1">
+        <a (click)="openAppointmentView(deniedAppointment.id)" type="button" class="btn btn-secondary">
           <i class="bi bi-eye-fill"></i>
         </a>
-        <a (click)="openAppointmentDeletionDialog(deniedAppointment.id)" type="button" class="btn btn-danger mx-1">
+        <a (click)="openAppointmentDeletionDialog(deniedAppointment.id)" type="button" class="btn btn-danger">
           <i class="bi bi-trash-fill"></i>
         </a>
       </td>

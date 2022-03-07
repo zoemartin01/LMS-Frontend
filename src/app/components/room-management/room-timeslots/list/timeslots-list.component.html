@@ -34,29 +34,29 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th class="col-sm-2">Date</th>
-        <th class="col-sm-2">Time</th>
+        <th class="col">Date</th>
+        <th class="col">Time</th>
         <th class="col">Recurrence</th>
         <th class="col">Last Date</th>
-        <th class="col"></th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let availableTimeslot of availableTimeslots.data | paginate: { id: 'available', itemsPerPage: availableTimeslots.pageSize, currentPage: availableTimeslots.page, totalItems: availableTimeslots.total }">
-        <td class="col-sm-2">{{ availableTimeslot.start?.format("DD.MM.YYYY") }}</td>
-        <td class="col-sm-2">
+        <td>{{ availableTimeslot.start?.format("DD.MM.YYYY") }}</td>
+        <td>
           {{ availableTimeslot.start?.format("HH:mm") }} - {{ availableTimeslot.end?.format("HH:mm") }}
         </td>
-        <td class="col">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][availableTimeslot.timeSlotRecurrence]}}</td>
-        <td class="col">{{ availableTimeslot.maxStart ? availableTimeslot.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
-        <td class="d-flex justify-content-end">
-          <a [routerLink]="['./calendar', { id: availableTimeslot.room.id, date: availableTimeslot.start?.toISOString() }]" type="button" class="btn btn-dark mx-1">
+        <td>{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][availableTimeslot.timeSlotRecurrence]}}</td>
+        <td>{{ availableTimeslot.maxStart ? availableTimeslot.maxStart.format("DD.MM.YYYY HH:mm") : '' }}</td>
+        <td class="buttons">
+          <a [routerLink]="['./calendar', { id: availableTimeslot.room.id, date: availableTimeslot.start?.toISOString() }]" type="button" class="btn btn-dark">
             <i class="bi bi-calendar2-week-fill"></i>
           </a>
-          <a (click)="openTimeslotView(availableTimeslot.id)" type="button" class="btn btn-secondary mx-1">
+          <a (click)="openTimeslotView(availableTimeslot.id)" type="button" class="btn btn-secondary">
             <i class="bi bi-eye-fill"></i>
           </a>
-          <a (click)="openTimeslotDeletionDialog(availableTimeslot.id)" type="button" class="btn btn-danger mx-1">
+          <a (click)="openTimeslotDeletionDialog(availableTimeslot.id)" type="button" class="btn btn-danger">
             <i class="bi bi-trash-fill"></i>
           </a>
         </td>
@@ -73,8 +73,8 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th class="col-sm-2">Date</th>
-        <th class="col-sm-2">Time</th>
+        <th class="col">Date</th>
+        <th class="col">Time</th>
         <th class="col">Recurrence</th>
         <th class="col">Last Date</th>
         <th class="col"></th>
@@ -82,8 +82,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let unavailableTimeslot of unavailableTimeslots.data | paginate: { id: 'unavailable', itemsPerPage: unavailableTimeslots.pageSize, currentPage: unavailableTimeslots.page, totalItems: unavailableTimeslots.total }">
-        <td class="col-sm-2">{{ unavailableTimeslot.start?.format("DD.MM.YYYY") }}</td>
-        <td class="col-sm-2">
+        <td>{{ unavailableTimeslot.start?.format("DD.MM.YYYY") }}</td>
+        <td>
           {{ unavailableTimeslot.start?.format("HH:mm") }} - {{ unavailableTimeslot.end?.format("HH:mm") }}
         </td>
         <td class="col">{{ ['','single', 'daily', 'weekly', 'monthly', 'yearly'][unavailableTimeslot.timeSlotRecurrence]}}</td>

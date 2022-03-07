@@ -20,20 +20,15 @@
         <thead class="thead-dark">
         <tr>
           <th class="col">Domains</th>
+          <th class="col-1"></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let whitelistRetailerDomain of domains">
-          <td class="col-sm-8 ">{{ whitelistRetailerDomain }}</td>
-          <td class="col-sm-2 ">
-            <a class="col-sm-2" (click)="openWhitelistRetailerDomainEditForm(whitelistRetailerDomain)">
-              <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-            </a>
-          </td>
-          <td class="col-sm-2 ">
-            <a class="col-sm-2" (click)="openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain)">
-              <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-            </a>
+          <td>{{ whitelistRetailerDomain }}</td>
+          <td class="buttons">
+            <a (click)="openWhitelistRetailerDomainEditForm(whitelistRetailerDomain)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+            <a (click)="openWhitelistRetailerDomainDeletionDialog(whitelistRetailerDomain)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
           </td>
         </tr>
         </tbody>

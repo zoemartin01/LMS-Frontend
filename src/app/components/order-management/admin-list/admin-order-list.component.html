@@ -22,24 +22,24 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th class="col-sm-2">Item</th>
-        <th class="col-sm-2">Quantity</th>
-        <th class="col-sm-2">Purchase Url</th>
-        <th class="col-sm-2">User</th>
-        <th class="col-sm-2"></th>
-        <th class="col-sm-2"></th>
+        <th class="col">Item</th>
+        <th class="col">Quantity</th>
+        <th class="col">Purchase Url</th>
+        <th class="col">User</th>
+        <th class="col"></th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pendingOrder of pendingOrders.data | paginate: { id: 'pending', itemsPerPage: pendingOrders.pageSize, currentPage: pendingOrders.page, totalItems: pendingOrders.total }">
-        <td class="col-sm-2">{{ getItemName(pendingOrder) }}</td>
-        <td class="col-sm-2">{{ pendingOrder.quantity}}</td>
-        <td class="col-sm-2">{{ pendingOrder.url}}</td>
-        <td class="col-sm-2">{{ userService.getFullName(pendingOrder.user)}}</td>
-        <td class="col-sm-2"></td>
-        <td class="col-sm-2">
-          <a (click)="openOrderAcceptDialog(pendingOrder.id)" type="button" class="btn btn-success mx-1"><i class="bi bi-check"></i></a>
-          <a (click)="openOrderDeclineDialog(pendingOrder.id)" type="button" class="btn btn-danger mx-1"><i class="bi bi-x"></i></a>
+        <td>{{ getItemName(pendingOrder) }}</td>
+        <td>{{ pendingOrder.quantity}}</td>
+        <td>{{ pendingOrder.url}}</td>
+        <td>{{ userService.getFullName(pendingOrder.user)}}</td>
+        <td></td>
+        <td class="buttons">
+          <a (click)="openOrderAcceptDialog(pendingOrder.id)" type="button" class="btn btn-success"><i class="bi bi-check"></i></a>
+          <a (click)="openOrderDeclineDialog(pendingOrder.id)" type="button" class="btn btn-danger"><i class="bi bi-x"></i></a>
         </td>
       </tr>
     </tbody>
@@ -54,26 +54,26 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th class="col-sm-2">Item</th>
-        <th class="col-sm-2">Quantity</th>
-        <th class="col-sm-2">Purchase Url</th>
-        <th class="col-sm-2">User Name</th>
-        <th class="col-sm-1">Order Status</th>
-        <th class="col-sm-2"></th>
+        <th class="col">Item</th>
+        <th class="col">Quantity</th>
+        <th class="col">Purchase Url</th>
+        <th class="col">User</th>
+        <th class="col-1">Order Status</th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let acceptedOrder of acceptedOrders.data | paginate: { id: 'accepted', itemsPerPage: acceptedOrders.pageSize, currentPage: acceptedOrders.page, totalItems: acceptedOrders.total }">
-        <td class="col-sm-2">{{ getItemName(acceptedOrder) }}</td>
-        <td class="col-sm-2">{{ acceptedOrder.quantity}}</td>
-        <td class="col-sm-2">{{ acceptedOrder.url}}</td>
-        <td class="col-sm-2">{{ userService.getFullName(acceptedOrder.user)}}</td>
-        <td class="col-sm-1">{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
-        <td class="col-sm-2">
-          <a (click)="openOrderView(acceptedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
-          <a *ngIf="acceptedOrder.status !== 4 && acceptedOrder.status !== 5"(click)="openOrderEditForm(acceptedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
-          <a (click)="openOrderDeletionDialog(acceptedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
-          <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)"><button type="button" class="btn btn-warning"><i class="bi bi-clipboard-check"></i></button></a>
+        <td>{{ getItemName(acceptedOrder) }}</td>
+        <td>{{ acceptedOrder.quantity}}</td>
+        <td>{{ acceptedOrder.url}}</td>
+        <td>{{ userService.getFullName(acceptedOrder.user)}}</td>
+        <td>{{ ['', 'pending', 'declined', 'ordered', 'inventoried', 'sent back'] [acceptedOrder.status] }}</td>
+        <td class="buttons">
+          <a (click)="openOrderView(acceptedOrder.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
+          <a *ngIf="acceptedOrder.status !== 4 && acceptedOrder.status !== 5"(click)="openOrderEditForm(acceptedOrder.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+          <a (click)="openOrderDeletionDialog(acceptedOrder.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+          <a *ngIf="acceptedOrder.status === 3" (click)="openInventoryOrderForm(acceptedOrder.id)" type="button" class="btn btn-warning"><i class="bi bi-clipboard-check"></i></a>
         </td>
       </tr>
     </tbody>
@@ -88,25 +88,25 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th class="col-sm-2">Item</th>
-        <th class="col-sm-2">Quantity</th>
-        <th class="col-sm-2">Purchase Url</th>
-        <th class="col-sm-2">User Name</th>
-        <th class="col-sm-2"></th>
-        <th class="col-sm-2"></th>
+        <th class="col">Item</th>
+        <th class="col">Quantity</th>
+        <th class="col">Purchase Url</th>
+        <th class="col">User</th>
+        <th class="col"></th>
+        <th class="col-1"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let declinedOrder of declinedOrders.data | paginate: { id: 'declined', itemsPerPage: declinedOrders.pageSize, currentPage: declinedOrders.page, totalItems: declinedOrders.total }">
-        <td class="col-sm-2">{{ getItemName(declinedOrder) }}</td>
-        <td class="col-sm-2">{{ declinedOrder.quantity}}</td>
-        <td class="col-sm-2">{{ declinedOrder.url}}</td>
-        <td class="col-sm-2">{{ userService.getFullName(declinedOrder.user)}}</td>
-        <td class="col-sm-2">
-        <td class="col-sm-2">
-          <a (click)="openOrderView(declinedOrder.id)"><button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button></a>
-          <a (click)="openOrderEditForm(declinedOrder.id)"><button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></a>
-          <a (click)="openOrderDeletionDialog(declinedOrder.id)"><button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></a>
+        <td>{{ getItemName(declinedOrder) }}</td>
+        <td>{{ declinedOrder.quantity}}</td>
+        <td>{{ declinedOrder.url}}</td>
+        <td>{{ userService.getFullName(declinedOrder.user)}}</td>
+        <td>
+        <td class="buttons">
+          <a (click)="openOrderView(declinedOrder.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
+          <a (click)="openOrderEditForm(declinedOrder.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+          <a (click)="openOrderDeletionDialog(declinedOrder.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
         </td>
       </tr>
     </tbody>

@@ -142,6 +142,16 @@ table.cal-table i {
   color: #fff;
 }
 
+td.buttons {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+td.buttons a, button {
+  margin-right: 0.25rem !important;
+  margin-left: 0.25rem !important;
+}
+
 input.danger {
   border-color: var(--danger);
   color: var(--danger);
