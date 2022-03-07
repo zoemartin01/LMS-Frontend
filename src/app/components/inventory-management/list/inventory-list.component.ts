@@ -13,6 +13,7 @@ import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 import { PagedList } from 'src/app/types/paged-list';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inventory-list',
@@ -31,11 +32,13 @@ export class InventoryListComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {Router} router router providing navigation
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public inventoryService: InventoryService,
     public authService: AuthService,
+    public router: Router,
     private modalService: NgbModal
   ) {
   }
@@ -91,7 +94,7 @@ export class InventoryListComponent implements OnInit {
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
-        this.openInventoryItemViewForm(inventoryItemId);
+        this.router.navigateByUrl(`/orders`);
       }
     });
   }
