@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { NgbModal  }  from "@ng-bootstrap/ng-bootstrap";
 
-import {InventoryOrderComponent} from "../inventory/inventory-order.component";
-import {OrderDeleteComponent} from "../delete/order-delete.component";
-import {OrderEditComponent} from "../edit/order-edit.component";
-import {OrderRequestComponent} from "../request/order-request.component";
-import {OrderViewComponent} from "../view/order-view.component";
+import { InventoryOrderComponent } from "../inventory/inventory-order.component";
+import { OrderDeleteComponent } from "../delete/order-delete.component";
+import { OrderEditComponent } from "../edit/order-edit.component";
+import { OrderRequestComponent } from "../request/order-request.component";
+import { OrderViewComponent } from "../view/order-view.component";
 
-import {AuthService} from "../../../services/auth.service";
-import {OrderService} from "../../../services/order.service";
-import {UserService} from "../../../services/user.service";
+import { AuthService } from "../../../services/auth.service";
+import { OrderService } from "../../../services/order.service";
+import { UserService } from "../../../services/user.service";
 
-import {Order} from "../../../types/order";
-import {OrderId} from "../../../types/aliases/order-id";
-import {OrderStatus} from "../../../types/enums/order-status";
-import {PagedList} from "../../../types/paged-list";
+import { Order } from "../../../types/order";
+import { OrderId } from "../../../types/aliases/order-id";
+import { OrderStatus } from "../../../types/enums/order-status";
+import { PagedList } from "../../../types/paged-list";
 
 @Component({
   selector: 'app-personal-order-list',

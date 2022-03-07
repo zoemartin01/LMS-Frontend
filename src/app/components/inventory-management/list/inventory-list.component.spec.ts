@@ -154,7 +154,7 @@ describe('InventoryListComponent', () => {
     component.openOrderCreationForm("Fantastic Concrete Pizza", "045fcd70-d323-4de2-894e-a10772b23457");
     tick();
 
-    expect(router).toHaveBeenCalledWith(`/orders`);
+    expect(router).toHaveBeenCalledWith('/orders');
 
     localStorage.removeItem('returnVal');
   }));

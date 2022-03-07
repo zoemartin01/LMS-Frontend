@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemCreateComponent } from "../item-create/inventory-item-create.component";
@@ -13,7 +14,6 @@ import { InventoryService } from "../../../services/inventory.service";
 import { InventoryItem } from "../../../types/inventory-item";
 import { InventoryItemId } from "../../../types/aliases/inventory-item-id";
 import { PagedList } from 'src/app/types/paged-list';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inventory-list',
@@ -94,7 +94,7 @@ export class InventoryListComponent implements OnInit {
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
-        this.router.navigateByUrl(`/orders`);
+        this.router.navigateByUrl('/orders');
       }
     });
   }
