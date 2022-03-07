@@ -39,7 +39,8 @@ export class LoginComponent {
     private authService: AuthService,
     public utilityService: UtilityService,
     private router: Router,
-    @Inject(WINDOW) private window: Window) {
+    @Inject(WINDOW) private window: Window
+  ) {
   }
 
   /**
