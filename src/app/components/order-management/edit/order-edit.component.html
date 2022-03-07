@@ -25,7 +25,7 @@
                (keyup)="checkUrlAgainstWhitelistedRetailers()">
       </div>
     </div>
-    <br>
+    <br *ngIf="!isWhitelisted">
     <div class="alert alert-warning" role="alert" *ngIf="!isWhitelisted">
       URL is not whitelisted
       <a class="alert-link" href="javascript:void(0)" (click)="openWhitelistRetailerList()">See whitelisted
