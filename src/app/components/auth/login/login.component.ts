@@ -19,10 +19,7 @@ import { UserRole } from "../../../types/enums/user-role";
  */
 export class LoginComponent {
   public loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl('', Validators.required),
     password: new FormControl('', [
       Validators.required,
     ]),

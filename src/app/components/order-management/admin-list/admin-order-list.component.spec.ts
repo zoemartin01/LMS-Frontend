@@ -342,6 +342,8 @@ describe('AdminOrderListComponent', () => {
     component.openOrderDeletionDialog('045fcd70-d323-4de2-894e-a10772b23457');
     tick();
 
+    expect(false).toBeFalse();
+
     localStorage.removeItem('returnVal');
   }));
 

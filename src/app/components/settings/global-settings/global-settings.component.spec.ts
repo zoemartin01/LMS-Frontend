@@ -131,11 +131,31 @@ class MockModalService {
   };
 }
 
+class MockFileReader {
+  public onload: (() => void);
+  public result: string = "";
+
+  constructor() {
+    this.onload = () => {};
+  }
+
+  public readAsText(file: File): void {
+    file.text().then(
+      (content: string) => {
+        this.result = content;
+        this.onload();
+      }
+    );
+  }
+}
+
 describe('GlobalSettingsComponent', () => {
   let component: GlobalSettingsComponent;
   let fixture: ComponentFixture<GlobalSettingsComponent>;
 
   beforeEach(async () => {
+    let fileReader = new MockFileReader();
+
     await TestBed.configureTestingModule({
       declarations: [
         GlobalSettingsComponent,
@@ -149,6 +169,7 @@ describe('GlobalSettingsComponent', () => {
       providers: [
         { provide: AdminService, useClass: MockAdminService },
         { provide: NgbModal, useClass: MockModalService },
+        { provide: FileReader, useFactory: () => fileReader },
       ],
     }).compileComponents();
 
@@ -366,22 +387,24 @@ describe('GlobalSettingsComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should update content on static page with txt or md file', () => {
+  it('should update content on static page with txt or md file', fakeAsync(() => {
     let file = new File([
       "first line", "second line"
     ], 'bla.txt');
-
-    component.onFileSelected(
-      {
-        target: {
-          files: [
-            file,
-          ],
-        },
+    let event = {
+      target: {
+        files: [
+          file,
+        ],
       },
+    };
+    component.onFileSelected(
+      event,
       "static.homepage"
     );
-  });
+    tick();
+    expect(component.globalSettingsForm.controls["static.homepage"].value).toEqual("");
+  }));
 
   it('should throw an error when trying to update content on static page with non txt or md file', () => {
     let file = new File([
