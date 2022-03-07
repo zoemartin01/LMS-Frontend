@@ -234,7 +234,7 @@ describe('RoomViewComponent', () => {
     tick();
 
     expect(activeModal).toHaveBeenCalledWith('aborted');
-    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots');
+    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots/calendar');
   }));
 
   it('should open timeslot page and close activeModal with dirty', fakeAsync(() => {
@@ -251,6 +251,6 @@ describe('RoomViewComponent', () => {
     tick();
 
     expect(activeModal).toHaveBeenCalledWith('dirty');
-    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots');
+    expect(router).toHaveBeenCalledWith('/room/c7231328-203e-43f5-9ac1-d374d90484ac/timeslots/calendar');
   }));
 });
