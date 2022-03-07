@@ -1,19 +1,20 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
-import { NgxPaginationModule } from "ngx-pagination";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
+import {NgxPaginationModule} from "ngx-pagination";
 
-import { GlobalSettingsComponent } from './global-settings.component';
+import {GlobalSettingsComponent} from './global-settings.component';
 
-import { AdminService } from "../../../services/admin.service";
+import {AdminService} from "../../../services/admin.service";
 
-import { GlobalSetting } from "../../../types/global-setting";
-import { WhitelistRetailer } from "../../../types/whitelist-retailer";
-import { PagedResponse } from "../../../types/paged-response";
-import { PagedList } from "../../../types/paged-list";
+import {GlobalSetting} from "../../../types/global-setting";
+import {WhitelistRetailer} from "../../../types/whitelist-retailer";
+import {PagedResponse} from "../../../types/paged-response";
+import {PagedList} from "../../../types/paged-list";
+import {WINDOW} from "../../../providers/window.providers";
 
 class MockAdminService {
   getGlobalSettings(): Observable<GlobalSetting[]> {
@@ -124,11 +125,29 @@ class MockModalService {
   open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        whitelistRetailer: { id: null },
+        whitelistRetailer: {id: null},
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
   };
+}
+
+class MockFileReader {
+  public onload: (() => void);
+  public result: string = "";
+
+  constructor() {
+    this.onload = () => {};
+  }
+
+  public readAsText(file: File): void {
+    file.text().then(
+      (content: string) => {
+        this.result = content;
+        this.onload();
+      }
+    );
+  }
 }
 
 describe('GlobalSettingsComponent', () => {
@@ -136,6 +155,8 @@ describe('GlobalSettingsComponent', () => {
   let fixture: ComponentFixture<GlobalSettingsComponent>;
 
   beforeEach(async () => {
+    let fileReader = new MockFileReader();
+
     await TestBed.configureTestingModule({
       declarations: [
         GlobalSettingsComponent,
@@ -149,6 +170,7 @@ describe('GlobalSettingsComponent', () => {
       providers: [
         { provide: AdminService, useClass: MockAdminService },
         { provide: NgbModal, useClass: MockModalService },
+        { provide: FileReader, useFactory: () => fileReader },
       ],
     }).compileComponents();
 
@@ -366,22 +388,24 @@ describe('GlobalSettingsComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
-  it('should update content on static page with txt or md file', () => {
+  it('should update content on static page with txt or md file', fakeAsync(() => {
     let file = new File([
       "first line", "second line"
     ], 'bla.txt');
-
-    component.onFileSelected(
-      {
-        target: {
-          files: [
-            file,
-          ],
-        },
+    let event = {
+      target: {
+        files: [
+          file,
+        ],
       },
+    };
+    component.onFileSelected(
+      event,
       "static.homepage"
     );
-  });
+    tick();
+    expect(component.globalSettingsForm.controls["static.homepage"].value).toEqual("");
+  }));
 
   it('should throw an error when trying to update content on static page with non txt or md file', () => {
     let file = new File([
