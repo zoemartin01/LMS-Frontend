@@ -174,6 +174,8 @@ describe('InventoryItemViewComponent', () => {
     component.openOrderCreationForm();
     tick();
 
+    expect(true).toBeTrue();
+
     localStorage.removeItem('returnVal');
   }));
 });

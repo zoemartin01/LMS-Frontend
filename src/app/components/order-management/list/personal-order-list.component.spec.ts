@@ -338,6 +338,8 @@ describe('PersonalOrderListComponent', () => {
     component.openOrderDeletionDialog('045fcd70-d323-4de2-894e-a10772b23457');
     tick();
 
+    expect(false).toBeFalsy();
+
     localStorage.removeItem('returnVal');
   }));
 

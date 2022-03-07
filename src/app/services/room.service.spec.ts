@@ -278,6 +278,161 @@ describe('RoomService', () => {
     });
   });
 
+  it('should get room calendar with date != null', () => {
+    service.getRoomCalendar("7d083749-e35a-4de5-a4f2-889a6cf9ca5a", 10 ).subscribe(
+      res => {
+        expect(res).toEqual({
+          calendar: [
+            [["unavailable"], ["available"], ["unavailable"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], ["available"], ["available"], [
+              {
+                id: "410cda0c-1027-4681-b578-61e3822534bc",
+                start: moment("2022-01-28T09:00:00.000Z"),
+                end: moment("2022-01-28T12:00:00.000Z"),
+                type: 1,
+                confirmationStatus: 2,
+                seriesId: null,
+                timeSlotRecurrence: 1,
+                maxStart: null,
+                amount: 1,
+                room: {
+                  id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
+                  name: "algorithms",
+                  description: "Quidem laudantium deleniti eum.",
+                  maxConcurrentBookings: 1,
+                  autoAcceptBookings: false
+                },
+                user: {
+                  id: "540618e7-98c8-4830-8917-0f52787360d6",
+                  email: "admin@test.com",
+                  firstName: "Admin",
+                  lastName: "Admin",
+                  role: 3,
+                  emailVerification: true,
+                  isActiveDirectory: false,
+                  notificationChannel: 3
+                }
+              }], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], [
+              {
+                id: "5da3a161-7433-422b-b5ee-8375832d1eff",
+                start: moment("2022-01-26T10:00:00.000Z"),
+                end: moment("2022-01-26T13:00:00.000Z"),
+                type: 1,
+                confirmationStatus: 1,
+                seriesId: null,
+                timeSlotRecurrence: 1,
+                maxStart: null,
+                amount: 1,
+                room: {
+                  id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
+                  name: "algorithms",
+                  description: "Quidem laudantium deleniti eum.",
+                  maxConcurrentBookings: 1,
+                  autoAcceptBookings: false
+                },
+                user: {
+                  id: "540618e7-98c8-4830-8917-0f52787360d6",
+                  email: "admin@test.com",
+                  firstName: "Admin",
+                  lastName: "Admin",
+                  role: 3,
+                  emailVerification: true,
+                  isActiveDirectory: false,
+                  notificationChannel: 3
+                }
+              }], ["available"], [null], ["unavailable"], ["unavailable"]],
+            [["unavailable"], ["available"], [null], ["available"], [null], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], [null], ["available"], [null], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], [null], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"], ["unavailable"]],
+            [["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"], ["unavailable"]],
+          ],
+          minTimeslot: 9
+        });
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.getRoomCalendar
+      .replace(':id', "7d083749-e35a-4de5-a4f2-889a6cf9ca5a")}?date=10`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush({
+      calendar: [
+        [["unavailable"], ["available"], ["unavailable"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], ["available"], ["available"], [
+          {
+            id: "410cda0c-1027-4681-b578-61e3822534bc",
+            start: moment("2022-01-28T09:00:00.000Z"),
+            end: moment("2022-01-28T12:00:00.000Z"),
+            type: 1,
+            confirmationStatus: 2,
+            seriesId: null,
+            timeSlotRecurrence: 1,
+            maxStart: null,
+            amount: 1,
+            room: {
+              id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
+              name: "algorithms",
+              description: "Quidem laudantium deleniti eum.",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: false
+            },
+            user: {
+              id: "540618e7-98c8-4830-8917-0f52787360d6",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], [
+          {
+            id: "5da3a161-7433-422b-b5ee-8375832d1eff",
+            start: moment("2022-01-26T10:00:00.000Z"),
+            end: moment("2022-01-26T13:00:00.000Z"),
+            type: 1,
+            confirmationStatus: 1,
+            seriesId: null,
+            timeSlotRecurrence: 1,
+            maxStart: null,
+            amount: 1,
+            room: {
+              id: "7d083749-e35a-4de5-a4f2-889a6cf9ca5a",
+              name: "algorithms",
+              description: "Quidem laudantium deleniti eum.",
+              maxConcurrentBookings: 1,
+              autoAcceptBookings: false
+            },
+            user: {
+              id: "540618e7-98c8-4830-8917-0f52787360d6",
+              email: "admin@test.com",
+              firstName: "Admin",
+              lastName: "Admin",
+              role: 3,
+              emailVerification: true,
+              isActiveDirectory: false,
+              notificationChannel: 3
+            }
+          }], ["available"], [null], ["unavailable"], ["unavailable"]],
+        [["unavailable"], ["available"], [null], ["available"], [null], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], [null], ["available"], [null], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], [null], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"], ["unavailable"]],
+        [["available"], ["available"], ["available"], ["available"], ["unavailable"], ["unavailable"], ["unavailable"]],
+      ],
+      minTimeslot: 9
+    });
+  });
+
   it('should throw exception when trying to get room calendar with roomId null', () => {
     expect(() => service.getRoomCalendar(null)).toThrow(ParseArgumentException);
   });
@@ -765,6 +920,265 @@ describe('RoomService', () => {
 
     const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
       .replace(':id', "2c7231328-203e-43f5-9ac1-d374d90484ac")}`);
+
+    expect(mockRequest.request.method).toBe('GET');
+
+    mockRequest.flush([
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        null,
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        null,
+        null,
+        null
+      ],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        "unavailable c1db4cc9-b48f-4d2a-93f3-8caeb10cb9a7",
+        "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+        "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        null,
+        "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        null,
+        "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+        "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+        "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+        null,
+        null
+      ],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+      [null, null, null, null, null, null, null]
+    ]);
+  });
+
+  it('should get availability calendar with date != null', () => {
+    service.getAvailabilityCalendar("2c7231328-203e-43f5-9ac1-d374d90484ac", 10).subscribe(
+      res => {
+        expect(res).toEqual(
+          [
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              null,
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              null,
+              null,
+              null
+            ],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              "unavailable c1db4cc9-b48f-4d2a-93f3-8caeb10cb9a7",
+              "unavailable 36e4beb7-8ae8-4f0c-91ef-ac77dd3fb99a",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              "available 9e0a67db-8595-4d0e-8606-8bc3f7972168",
+              "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              null,
+              "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              null,
+              "available 1e61e1f9-5a78-4f27-82b4-b1528170a20f",
+              "available 4fa3c7ef-b5cc-4535-a55f-1fd9f7e5a64d",
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "available 2957a506-b4d7-4184-86fa-25383e56edb6",
+              null,
+              null
+            ],
+            [
+              null,
+              null,
+              null,
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+              null,
+              null
+            ],
+            [
+              null,
+              null,
+              null,
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+              null,
+              null
+            ],
+            [
+              null,
+              null,
+              null,
+              "available 33134e85-0737-48d3-9e62-3b3123d2d5ff",
+              "unavailable 38b38803-a180-44e7-a90a-aae7433b29f7",
+              null,
+              null
+            ],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, "available 33134e85-0737-48d3-9e62-3b3123d2d5ff", null, null, null],
+            [null, null, null, null, null, null, null]
+          ]
+        );
+      }
+    );
+
+    const mockRequest = httpMock.expectOne(`${environment.baseUrl}${environment.apiRoutes.rooms.getAvailabilityCalendar
+      .replace(':id', "2c7231328-203e-43f5-9ac1-d374d90484ac")}?date=10`);
 
     expect(mockRequest.request.method).toBe('GET');
 

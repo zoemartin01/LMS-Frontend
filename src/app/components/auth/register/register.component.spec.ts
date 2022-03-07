@@ -92,6 +92,24 @@ describe('RegisterComponent', () => {
     });
   });
 
+  it('should throw error when password confirmation fails', (done: DoneFn) => {
+    component.registerForm.controls['firstname'].setValue('Alex');
+    component.registerForm.controls['name'].setValue('Mustermensch');
+    component.registerForm.controls['email'].setValue('alex@mustermensch.com');
+    component.registerForm.controls['password'].setValue('bestPasswordEver!');
+    component.registerForm.controls['password_confirmation'].setValue('bestPasswordEverTypo!');
+    component.registerForm.controls['safetyInstructions'].setValue(true);
+    component.registerForm.controls['hwlabRules'].setValue(true);
+
+    expect(component.registerForm.valid).toBeTrue();
+
+    component.register().then(() => {
+      expect(component.errorMessage).toBe('Password confirmation failed!');
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      done();
+    });
+  });
+
   it('should handle registration error', (done: DoneFn) => {
     component.registerForm.controls['firstname'].setValue('Known');
     component.registerForm.controls['name'].setValue('User');
@@ -145,7 +163,6 @@ describe('RegisterComponent', () => {
 
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
-
     component.checkPasswordConfirmation();
     tick();
 

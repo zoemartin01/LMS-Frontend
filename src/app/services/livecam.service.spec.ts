@@ -4,7 +4,7 @@ import { ParseArgumentException } from "@angular/cli/models/parser";
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
-import { WINDOW } from "../providers/window.providers";
+import { WINDOW, WINDOW_PROVIDERS } from "../providers/window.providers";
 
 import { LivecamService } from './livecam.service';
 
@@ -333,5 +333,27 @@ describe('LivecamService - websockets', () => {
     expect(service.getLiveStreamFeedPath())
       .toBe(`ws://localhost:3000/api/v1/livecam/stream?token=${localStorage
         .getItem(environment.storageKeys.accessToken)}`);
+  });
+});
+
+describe('window provider', () => {
+  let service: LivecamService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+      providers: [
+        LivecamService,
+        WINDOW_PROVIDERS,
+      ],
+    });
+
+    service = TestBed.inject(LivecamService);
+  });
+
+  it('should init window provider', () => {
+    expect(service).toBeTruthy();
   });
 });

@@ -94,9 +94,13 @@ export class MessagingService {
   public unreadMessagesWebSocketPath(): string {
     const isSSL = this.window.location.protocol === 'https:';
     const protocol = isSSL ? 'wss:' : 'ws:';
-    const host = environment.production
-      ? this.window.location.hostname + environment.baseUrl
-      : environment.baseUrl.replace(/http(s)?:\/\//g, '');
+
+    let host: string = this.window.location.hostname + environment.baseUrl;
+
+    if (!environment.production) {
+      host = environment.baseUrl.replace(/http(s)?:\/\//g, '');
+    }
+
     const token = localStorage.getItem(environment.storageKeys.accessToken);
     return `${protocol}//${host}${environment.apiRoutes.messages.registerMessageWebsocket}?token=${token}`;
   }

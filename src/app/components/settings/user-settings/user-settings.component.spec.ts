@@ -226,6 +226,57 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
     component.userSettingsForm.controls['password_confirmation'].markAsDirty();
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserSettings();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Internal Server Error.');
+
+    localStorage.removeItem('throwError');
+  }));
+
+  it('should edit users notification channel', fakeAsync(() => {
+    component.user.id = 'userXY';
+
+    component.userSettingsForm.controls['password'].setValue('');
+    component.userSettingsForm.controls['password_confirmation'].setValue('');
+    component.userSettingsForm.controls['notificationChannel'].setValue('3');
+    component.userSettingsForm.controls['notificationChannel'].markAsDirty();
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserSettings();
+    tick();
+
+    expect(modalClose).toHaveBeenCalledWith('edited');
+  }));
+
+  it('should throw an error when password confirmation fails', fakeAsync(() => {
+    component.user.id = 'userXY';
+
+    component.userSettingsForm.controls['password'].setValue('password');
+    component.userSettingsForm.controls['password_confirmation'].setValue('passwrd');
+    component.userSettingsForm.controls['notificationChannel'].setValue('3');
+
+    const modalClose = spyOn(component.activeModal, 'close');
+
+    component.editUserSettings();
+    tick();
+
+    expect(modalClose).not.toHaveBeenCalled();
+    expect(component.errorMessage).toBe('Password confirmation failed!');  }));
+
+  it('should throw an error on edit notification channel', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.user.id = 'userXY';
+
+    component.userSettingsForm.controls['password'].setValue('');
+    component.userSettingsForm.controls['password_confirmation'].setValue('');
+    component.userSettingsForm.controls['notificationChannel'].setValue('3');
     component.userSettingsForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
