@@ -149,12 +149,12 @@ describe('InventoryListComponent', () => {
   it('should open order creation form and then inventory item view', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created "045fcd70-d323-4de2-894e-a10772b23457"');
 
-    const openViewModal = spyOn(component, 'openInventoryItemViewForm');
+    const router = spyOn(component.router, 'navigateByUrl');
 
     component.openOrderCreationForm("Fantastic Concrete Pizza", "045fcd70-d323-4de2-894e-a10772b23457");
     tick();
 
-    expect(openViewModal).toHaveBeenCalledWith("045fcd70-d323-4de2-894e-a10772b23457");
+    expect(router).toHaveBeenCalledWith('/orders');
 
     localStorage.removeItem('returnVal');
   }));

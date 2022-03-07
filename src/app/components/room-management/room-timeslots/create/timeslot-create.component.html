@@ -28,8 +28,7 @@
         <div class="form-group">
           <label for="startTime" class="my-1">Start time</label>
           <div class="input-group">
-            <input class="form-control" type="number" id="startTime" formControlName="startHour" step="1" min="0"
-                   max="23">
+            <input class="form-control" type="number" id="startTime" formControlName="startHour" step="1">
             <span class="input-group-text">:</span>
             <input class="form-control" type="text" value="00" disabled>
           </div>
@@ -37,7 +36,7 @@
         <div class="form-group">
           <label for="endTime" class="my-1">End time</label>
           <div class="input-group">
-            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1" min="0" max="23">
+            <input class="form-control" type="number" id="endTime" formControlName="endHour" step="1">
             <span class="input-group-text">:</span>
             <input class="form-control" type="text" value="00" disabled>
           </div>
@@ -71,7 +70,7 @@
         <div class="form-group">
           <label for="endTime" class="my-1">Recurrence Amount</label>
           <div class="input-group">
-            <input class="form-control" type="number" id="amount" formControlName="amount" step="1" min="1" max="2048">
+            <input class="form-control" type="number" id="amount" formControlName="amount" step="1">
           </div>
         </div>
       </form>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal  }  from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryOrderComponent } from "../inventory/inventory-order.component";
 import { OrderDeleteComponent } from "../delete/order-delete.component";
@@ -136,7 +136,7 @@ export class PersonalOrderListComponent implements OnInit {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
-        this.openOrderView(result.split(' ')[1]);
+        this.updatePage();
       }
     });
   }

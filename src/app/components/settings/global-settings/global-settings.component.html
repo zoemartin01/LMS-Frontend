@@ -60,9 +60,9 @@
                    formControlName="static.faq_admin" (change)="onFileSelected($event, 'static.faq_admin')">
           </div>
         </div>
-        <br>
         <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
         <div class="alert alert-success" role="alert" *ngIf="editedGlobalSettings">Application Settings were updated!</div>
+        <br>
         <div class="row">
           <div class="col text-center">
             <button type="button" class="btn btn-primary" (click)="editGlobalSettings()">Submit</button>
