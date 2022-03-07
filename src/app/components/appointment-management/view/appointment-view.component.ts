@@ -101,13 +101,16 @@ export class AppointmentViewComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointmentViewForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
-        this.appointmentViewForm.controls['room'].setValue(res.room.name);
-        this.appointmentViewForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.appointmentViewForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
-        this.appointmentViewForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
-        this.appointmentViewForm.controls['confirmationStatus'].setValue(res.confirmationStatus);
-        this.appointmentViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+        this.appointment.start = moment(this.appointment.start);
+        this.appointment.end = moment(this.appointment.end);
+
+        this.appointmentViewForm.controls['user'].setValue(this.appointment.user.firstName + ' ' + this.appointment.user.lastName);
+        this.appointmentViewForm.controls['room'].setValue(this.appointment.room.name);
+        this.appointmentViewForm.controls['date'].setValue(this.appointment.start.format('DD.MM.YYYY'));
+        this.appointmentViewForm.controls['startHour'].setValue(this.appointment.start.format('HH:mm'));
+        this.appointmentViewForm.controls['endHour'].setValue(this.appointment.end.format('HH:mm'));
+        this.appointmentViewForm.controls['confirmationStatus'].setValue(this.appointment.confirmationStatus);
+        this.appointmentViewForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
 
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);

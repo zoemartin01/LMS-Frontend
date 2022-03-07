@@ -127,16 +127,16 @@ export class AppointmentDeleteComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointmentDeleteForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
-        this.appointmentDeleteForm.controls['room'].setValue(res.room.name);
-        this.appointmentDeleteForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.appointmentDeleteForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
-        this.appointmentDeleteForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
-        this.appointmentDeleteForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
-        this.appointmentDeleteForm.controls['amount'].setValue(res.amount);
-
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
+
+        this.appointmentDeleteForm.controls['user'].setValue(this.appointment.user.firstName + ' ' + this.appointment.user.lastName);
+        this.appointmentDeleteForm.controls['room'].setValue(this.appointment.room.name);
+        this.appointmentDeleteForm.controls['date'].setValue(this.appointment.start.format('DD.MM.YYYY'));
+        this.appointmentDeleteForm.controls['startHour'].setValue(this.appointment.start.format('HH:mm'));
+        this.appointmentDeleteForm.controls['endHour'].setValue(this.appointment.end.format('HH:mm'));
+        this.appointmentDeleteForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
+        this.appointmentDeleteForm.controls['amount'].setValue(this.appointment.amount);
 
         if (this.appointment.maxStart !== null) {
           this.appointment.maxStart = moment(this.appointment.maxStart);

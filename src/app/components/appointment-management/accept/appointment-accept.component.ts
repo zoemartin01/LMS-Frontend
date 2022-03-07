@@ -95,16 +95,16 @@ export class AppointmentAcceptComponent implements OnInit {
       next: res => {
         this.appointment = res;
 
-        this.appointmentAcceptForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
-        this.appointmentAcceptForm.controls['room'].setValue(res.room.name);
-        this.appointmentAcceptForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.appointmentAcceptForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
-        this.appointmentAcceptForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
-        this.appointmentAcceptForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
-        this.appointmentAcceptForm.controls['amount'].setValue(res.amount);
-
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
+
+        this.appointmentAcceptForm.controls['user'].setValue(this.appointment.user.firstName + ' ' + this.appointment.user.lastName);
+        this.appointmentAcceptForm.controls['room'].setValue(this.appointment.room.name);
+        this.appointmentAcceptForm.controls['date'].setValue(this.appointment.start.format('DD.MM.YYYY'));
+        this.appointmentAcceptForm.controls['startHour'].setValue(this.appointment.start.format('HH:mm'));
+        this.appointmentAcceptForm.controls['endHour'].setValue(this.appointment.end.format('HH:mm'));
+        this.appointmentAcceptForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
+        this.appointmentAcceptForm.controls['amount'].setValue(this.appointment.amount);
 
         if (this.appointment.maxStart !== null) {
           this.appointment.maxStart = moment(this.appointment.maxStart);
