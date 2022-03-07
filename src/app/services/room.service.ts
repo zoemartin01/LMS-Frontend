@@ -66,7 +66,7 @@ export class RoomService {
    * Get data of room to easily display room calendar
    *
    * @param {RoomId} roomId id of room for which the calendar should be shown
-   * @param {string|null} date date contained in week the calendar should be shown
+   * @param {number|null} date date contained in week the calendar should be shown
    */
   public getRoomCalendar(roomId: RoomId, date: number|null = null)
     : Observable<{ calendar: (Appointment|string|null)[][][], minTimeslot: number }> {
