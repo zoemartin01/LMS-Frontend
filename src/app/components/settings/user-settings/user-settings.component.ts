@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { WINDOW } from '../../../providers/window.providers';
 
 import { UserDeleteComponent } from "../../user-management/delete/user-delete.component";
 
@@ -46,12 +47,14 @@ export class UserSettingsComponent implements OnInit {
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {UtilityService} utilityService service providing utility functionalities
    * @param {NgbModal} modalService service providing modal functionalities
+   * @param {Window} window window provider
    */
   constructor(
     public userService: UserService,
     public activeModal: NgbActiveModal,
     public utilityService: UtilityService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    @Inject(WINDOW) private window: Window
   ) {
   }
 
@@ -110,6 +113,8 @@ export class UserSettingsComponent implements OnInit {
       next: () => {
         this.activeModal.close('edited');
         this.editedUserSettings = true;
+
+        this.window.location.reload();
       },
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
