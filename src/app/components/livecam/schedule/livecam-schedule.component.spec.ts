@@ -1,19 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from 'rxjs';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
-import {LivecamScheduleComponent} from './livecam-schedule.component';
+import { LivecamScheduleComponent } from './livecam-schedule.component';
 
-import {LivecamService} from 'src/app/services/livecam.service';
+import { LivecamService } from 'src/app/services/livecam.service';
 
-import {Recording} from 'src/app/types/recording';
-import {VideoResolution} from 'src/app/types/enums/video-resolution';
-import {User} from 'src/app/types/user';
-import {UserRole} from 'src/app/types/enums/user-role';
+import { Recording } from 'src/app/types/recording';
+import { User } from 'src/app/types/user';
+import { UserRole } from 'src/app/types/enums/user-role';
+import { VideoResolution } from 'src/app/types/enums/video-resolution';
 
 class MockLivecamService {
   public scheduleRecording(
@@ -23,18 +23,6 @@ class MockLivecamService {
     bitrate: number
   ): Observable<Recording> {
     return new Observable((observer) => {
-      /*if (
-        start.toISOString() != '2019-01-01T00:00:00.000Z' ||
-        end.toISOString() != '2019-01-02T00:00:00.000Z' ||
-        resolution != VideoResolution.V1080 ||
-        bitrate != 100
-      ) {
-        observer.error({
-          error: {
-            message: 'Invalid input parameters.',
-          },
-        });
-      }*/
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
@@ -76,7 +64,7 @@ describe('LivecamScheduleComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: LivecamService, useClass: MockLivecamService},
+        { provide: LivecamService, useClass: MockLivecamService },
         NgbActiveModal,
       ],
     }).compileComponents();

@@ -102,8 +102,10 @@ export class AppointmentAcceptComponent implements OnInit {
         this.appointmentAcceptForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentAcceptForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentAcceptForm.controls['amount'].setValue(res.amount);
+
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
+
         if (this.appointment.maxStart !== null) {
           this.appointment.maxStart = moment(this.appointment.maxStart);
           this.appointmentAcceptForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));

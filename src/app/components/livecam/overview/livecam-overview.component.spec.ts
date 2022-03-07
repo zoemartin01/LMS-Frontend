@@ -1,21 +1,23 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgxPaginationModule} from "ngx-pagination";
-
-import {LivecamOverviewComponent} from './livecam-overview.component';
-import {Observable} from "rxjs";
-import {PagedResponse} from "../../../types/paged-response";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {PagedList} from "../../../types/paged-list";
-import {Recording} from "../../../types/recording";
-import {VideoResolution} from "../../../types/enums/video-resolution";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal , NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {LivecamService} from "../../../services/livecam.service";
-import {RecordingId} from "../../../types/aliases/recording-id";
+
+import { LivecamOverviewComponent } from './livecam-overview.component';
+
+import { LivecamService } from "../../../services/livecam.service";
+
+import { Recording } from "../../../types/recording";
+import { RecordingId } from "../../../types/aliases/recording-id";
+import { VideoResolution } from "../../../types/enums/video-resolution";
+import { PagedResponse } from "../../../types/paged-response";
+import { PagedList } from "../../../types/paged-list";
 
 class MockLivecamService {
-  public getFinishedRecordings(): Observable<PagedResponse<Recording>> {
+  getFinishedRecordings(): Observable<PagedResponse<Recording>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -38,7 +40,7 @@ class MockLivecamService {
               role: 3,
               emailVerification: true,
               isActiveDirectory: false,
-              notificationChannel: 3
+              notificationChannel: 3,
             },
             start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
             end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -56,7 +58,7 @@ class MockLivecamService {
               role: 3,
               emailVerification: true,
               isActiveDirectory: false,
-              notificationChannel: 3
+              notificationChannel: 3,
             },
             start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
             end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -71,7 +73,7 @@ class MockLivecamService {
     });
   }
 
-  public getAllScheduledRecordings(): Observable<PagedResponse<Recording>> {
+  getAllScheduledRecordings(): Observable<PagedResponse<Recording>> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -112,7 +114,7 @@ class MockLivecamService {
               role: 3,
               emailVerification: true,
               isActiveDirectory: false,
-              notificationChannel: 3
+              notificationChannel: 3,
             },
             start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
             end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -147,7 +149,7 @@ class MockLivecamService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -175,6 +177,10 @@ class MockLivecamService {
         observer.next(recordingData);
       });
   }
+
+  getLiveStreamFeedPath(): string {
+    return "ws://PATH";
+  }
 }
 
 class MockModalService {
@@ -191,7 +197,7 @@ class MockModalService {
             role: 0,
             emailVerification: true,
             isActiveDirectory: false,
-            notificationChannel: 0
+            notificationChannel: 0,
           },
           start: null,
           end: null,
@@ -225,8 +231,8 @@ describe('Livecam overview method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: LivecamService, useClass: MockLivecamService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: LivecamService, useClass: MockLivecamService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -236,6 +242,7 @@ describe('Livecam overview method calls', () => {
 
     consoleError = spyOn(console, 'error');
     consoleError.calls.reset();
+
     getFinishedRecordingsMethod = spyOn(component, 'getFinishedRecordings');
     getFinishedRecordingsMethod.calls.reset();
     getScheduledRecordingsMethod = spyOn(component, 'getScheduledRecordings');
@@ -252,6 +259,11 @@ describe('Livecam overview method calls', () => {
 
     expect(getFinishedRecordingsMethod).toHaveBeenCalled();
     expect(getScheduledRecordingsMethod).toHaveBeenCalled();
+  }));
+
+  it('should get all livecam recordings', fakeAsync(() => {
+    component.ngAfterViewInit();
+    tick();
   }));
 
   it('should update recordings when recording is deleted', fakeAsync(() => {
@@ -320,8 +332,8 @@ describe('LivecamOverviewComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: LivecamService, useClass: MockLivecamService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: LivecamService, useClass: MockLivecamService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -353,7 +365,7 @@ describe('LivecamOverviewComponent method calls', () => {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -371,7 +383,7 @@ describe('LivecamOverviewComponent method calls', () => {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -404,7 +416,7 @@ describe('LivecamOverviewComponent method calls', () => {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -422,7 +434,7 @@ describe('LivecamOverviewComponent method calls', () => {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -458,11 +470,33 @@ describe('LivecamOverviewComponent method calls', () => {
   }));
 
   it('should download recording', fakeAsync(() => {
+    const link = <HTMLAnchorElement><unknown>{
+      href: '',
+      download: '',
+      dispatchEvent: () => {},
+      remove: () => {},
+    };
+    spyOn(document, 'createElement').and.returnValue(link);
 
     component.downloadRecording('id');
     tick(100);
 
-    //expect(component.scheduledRecordings).toEqual(pagedListRecordings);
+    expect(link.download).toBe('Recording-2018-08-01_00-00.mp4');
+  }));
+
+  it('should download recording', fakeAsync(() => {
+    localStorage.setItem('throwError', 'true');
+
+    component.downloadRecording('id');
+    tick();
+
+    expect(consoleError).toHaveBeenCalledWith('There was an error!', {
+      error: {
+        message: 'Unknown Error.',
+      },
+    });
+
+    localStorage.setItem('throwError', 'false');
   }));
 
   it('should show error message on get finished recordings error', fakeAsync(() => {

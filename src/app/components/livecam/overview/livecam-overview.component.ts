@@ -125,7 +125,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
   public async downloadRecording(recordingId: RecordingId): Promise<void> {
     this.livecamService.getRecordingData(recordingId).subscribe({
       next: (recording: Recording) => {
-        recording.start = moment(recording.start);
+        const recordingStartFormatted = moment(recording.start).format('YYYY-MM-DD_HH-mm');
 
         this.livecamService
           .downloadRecording(recording.id)
@@ -136,9 +136,7 @@ export class LivecamOverviewComponent implements OnInit, AfterViewInit {
 
             const link = document.createElement('a');
             link.href = data;
-            link.download = `Recording-${recording.start?.format(
-              'YYYY-MM-DD_HH-mm'
-            )}.mp4`;
+            link.download = `Recording-${recordingStartFormatted}.mp4`;
 
             link.dispatchEvent(
               new MouseEvent('click', {

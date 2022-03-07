@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 
-import {AppointmentService} from "../../../services/appointment.service";
-import {UtilityService} from "../../../services/utility.service";
+import { AppointmentService } from "../../../services/appointment.service";
+import { UtilityService } from "../../../services/utility.service";
 
-import {Appointment} from "../../../types/appointment";
-import {UserRole} from "../../../types/enums/user-role";
-import {NotificationChannel} from "../../../types/enums/notification-channel";
-import {RoomTimespanType} from "../../../types/enums/timespan-type";
-import {ConfirmationStatus} from "../../../types/enums/confirmation-status";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
+import { Appointment } from "../../../types/appointment";
+import { UserRole } from "../../../types/enums/user-role";
+import { NotificationChannel } from "../../../types/enums/notification-channel";
+import { RoomTimespanType } from "../../../types/enums/timespan-type";
+import { ConfirmationStatus } from "../../../types/enums/confirmation-status";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
 
 @Component({
   selector: 'app-decline',
@@ -95,6 +95,7 @@ export class AppointmentDeclineComponent implements OnInit {
     this.appointmentService.getAppointmentData(this.appointment.id).subscribe({
       next: res => {
         this.appointment = res;
+
         this.appointmentDeclineForm.controls['user'].setValue(res.user.firstName + ' ' + res.user.lastName);
         this.appointmentDeclineForm.controls['room'].setValue(res.room.name);
         this.appointmentDeclineForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
@@ -102,8 +103,10 @@ export class AppointmentDeclineComponent implements OnInit {
         this.appointmentDeclineForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentDeclineForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
         this.appointmentDeclineForm.controls['amount'].setValue(res.amount);
+
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
+
         if (this.appointment.maxStart !== null) {
           this.appointment.maxStart = moment(this.appointment.maxStart);
           this.appointmentDeclineForm.controls['lastDate'].setValue(this.appointment.maxStart.format('DD.MM.YYYY'));
@@ -111,7 +114,7 @@ export class AppointmentDeclineComponent implements OnInit {
       },
       error: error => {
         console.error('There was an error!', error);
-      }
+      },
     })
   }
 

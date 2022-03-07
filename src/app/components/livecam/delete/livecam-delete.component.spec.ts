@@ -1,14 +1,17 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
-import {RecordingId} from "../../../types/aliases/recording-id";
-import {Recording} from "../../../types/recording";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
-import {VideoResolution} from "../../../types/enums/video-resolution";
-import {LivecamDeleteComponent} from "./livecam-delete.component";
-import {LivecamService} from "../../../services/livecam.service";
+
+import { LivecamDeleteComponent } from "./livecam-delete.component";
+
+import { LivecamService } from "../../../services/livecam.service";
+
+import { Recording } from "../../../types/recording";
+import { RecordingId } from "../../../types/aliases/recording-id";
+import { VideoResolution } from "../../../types/enums/video-resolution";
 
 class MockLivecamService {
   getRecordingData(recordingId: RecordingId): Observable<Recording> {
@@ -31,7 +34,7 @@ class MockLivecamService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -49,9 +52,7 @@ class MockLivecamService {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
           error: {
-            error: {
-              message: 'Unknown Error.',
-            },
+            message: 'Unknown Error.',
           },
         });
       }
@@ -66,7 +67,7 @@ class MockLivecamService {
           role: 3,
           emailVerification: true,
           isActiveDirectory: false,
-          notificationChannel: 3
+          notificationChannel: 3,
         },
         start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
         end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -105,7 +106,7 @@ describe('LivecamDeleteComponent method calls', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: LivecamService, useClass: MockLivecamService},
+        { provide: LivecamService, useClass: MockLivecamService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -134,7 +135,7 @@ describe('LivecamDeleteComponent method calls', () => {
         role: 3,
         emailVerification: true,
         isActiveDirectory: false,
-        notificationChannel: 3
+        notificationChannel: 3,
       },
       start: moment('2018-08-01T00:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
       end: moment('2018-08-01T01:00:00.000Z', 'YYYY-MM-DDTHH:mm'),
@@ -144,11 +145,12 @@ describe('LivecamDeleteComponent method calls', () => {
     };
 
     expect(component.recording).toEqual(recording);
-    expect(component.recordingDeleteForm.controls['user_name'].value).toEqual(`${recording.user.firstName} ${recording.user.lastName}`);
-    // @ts-ignore
-    expect(component.recordingDeleteForm.controls['start'].value).toEqual(recording.start.format('YYYY-MM-DDTHH:mm'));
-    // @ts-ignore
-    expect(component.recordingDeleteForm.controls['end'].value).toEqual(recording.end.format('YYYY-MM-DDTHH:mm'));
+    expect(component.recordingDeleteForm.controls['user_name'].value)
+      .toEqual(`${recording.user.firstName} ${recording.user.lastName}`);
+    expect(component.recordingDeleteForm.controls['start'].value)
+      .toEqual(recording.start?.format('YYYY-MM-DDTHH:mm'));
+    expect(component.recordingDeleteForm.controls['end'].value)
+      .toEqual(recording.end?.format('YYYY-MM-DDTHH:mm'));
     expect(component.recordingDeleteForm.controls['resolution'].value).toEqual(recording.resolution);
     expect(component.recordingDeleteForm.controls['bitrate'].value).toEqual(recording.bitrate + ' Bytes');
   }));
@@ -184,7 +186,7 @@ describe('LivecamDeleteComponent method calls', () => {
     component.deleteRecording();
     tick();
 
-    expect(component.errorMessage).toEqual('There has been an error!');
+    expect(component.errorMessage).toEqual('Unknown Error.');
 
     localStorage.setItem('throwError', 'false');
   }));

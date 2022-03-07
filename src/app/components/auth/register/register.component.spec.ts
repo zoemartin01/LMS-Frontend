@@ -147,27 +147,25 @@ describe('RegisterComponent', () => {
   });
 
   it('should confirm password', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPassword!');
 
-    expect(component.checkPasswordConfirmation()).toBeTrue();
-  }));
-
-  it('should not show password confirmation failure because password confirmation field is empty', fakeAsync(() => {
-    component.registerForm.controls['password'].setValue('superPassword!');
-    component.registerForm.controls['password_confirmation'].setValue('');
-
+    component.checkPasswordConfirmation();
     tick();
 
-    expect(component.checkPasswordConfirmation()).toBeFalse();
+    expect(component.errorMessage).toBe('');
   }));
 
   it('should show password confirmation failure because password and password conformation fields don\'t match', fakeAsync(() => {
+    expect(component.errorMessage).toBe('');
+
     component.registerForm.controls['password'].setValue('superPassword!');
     component.registerForm.controls['password_confirmation'].setValue('superPasswrod!');
 
     tick();
 
-    expect(component.checkPasswordConfirmation()).toBeFalse();
+    expect(component.errorMessage).toBe('Password confirmation failed!');
   }));
 });

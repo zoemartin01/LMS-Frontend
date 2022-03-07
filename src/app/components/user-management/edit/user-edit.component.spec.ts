@@ -279,10 +279,13 @@ describe('UserEditComponent', () => {
   }));
 
   it('should update PasswordConfirmationFails boolean', () => {
+    expect(component.errorMessage).toBe('');
 
     component.userEditForm.controls['password'].setValue('russianwarshipgofuckyourself');
     component.userEditForm.controls['password_confirmation'].setValue('duckPutin');
 
-    expect(component.checkPasswordConfirmation()).toBeFalse();
+    component.checkPasswordConfirmation();
+
+    expect(component.errorMessage).toBe('Password confirmation failed!');
   });
 });

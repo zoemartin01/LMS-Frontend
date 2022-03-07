@@ -43,10 +43,11 @@ class MockRoomService {
             description: "room to test",
             maxConcurrentBookings: 1,
             autoAcceptBookings: false,
-          }
+          },
         });
         return;
       }
+
       const timeslot: RoomTimespan = {
         id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
         start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -297,12 +298,13 @@ describe('TimeslotDeleteComponent', () => {
     tick();
 
     expect(component.timeslot).toEqual(testTimeslot);
-    expect(component.timeslot.start).toEqual(testTimeslot.start);
-    expect(component.timeslot.end).toEqual(testTimeslot.end);
+
     expect(component.timeslotDeleteForm.controls['type'].value).toEqual(testTimeslot.type);
     expect(component.timeslotDeleteForm.controls['room'].value).toEqual(testTimeslot.room.name);
-    expect(component.timeslotDeleteForm.controls['date'].value).toEqual(testTimeslot.start?.format('DD.MM.YYYY'));
-    expect(component.timeslotDeleteForm.controls['startHour'].value).toEqual(testTimeslot.start?.format('HH:mm'));
+    expect(component.timeslotDeleteForm.controls['date'].value)
+      .toEqual(testTimeslot.start?.format('DD.MM.YYYY'));
+    expect(component.timeslotDeleteForm.controls['startHour'].value)
+      .toEqual(testTimeslot.start?.format('HH:mm'));
     expect(component.timeslotDeleteForm.controls['endHour'].value).toEqual(testTimeslot.end?.format('HH:mm'));
     expect(component.timeslotDeleteForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.timeslotDeleteForm.controls['amount'].value).toEqual(testTimeslot.amount);

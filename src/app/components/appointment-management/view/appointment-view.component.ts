@@ -108,6 +108,7 @@ export class AppointmentViewComponent implements OnInit {
         this.appointmentViewForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
         this.appointmentViewForm.controls['confirmationStatus'].setValue(res.confirmationStatus);
         this.appointmentViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
       },
