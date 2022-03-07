@@ -25,10 +25,7 @@ export class RoomViewComponent implements OnInit {
       Validators.required
     ]),
     description: new FormControl(''),
-    maxConcurrentBookings: new FormControl(1, [
-      Validators.required,
-      Validators.min(1),
-    ]),
+    maxConcurrentBookings: new FormControl(1, Validators.required),
     autoAcceptBookings: new FormControl(false, Validators.required),
   });
   public room: Room = {

@@ -25,9 +25,7 @@ export class UserViewComponent implements OnInit {
   public userViewForm: FormGroup = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    email: new FormControl('', [
-      Validators.email,
-    ]),
+    email: new FormControl(''),
     password: new FormControl(''),
     password_confirmation: new FormControl(''),
     role: new FormControl(''),

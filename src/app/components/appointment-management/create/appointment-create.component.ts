@@ -35,7 +35,7 @@ export class AppointmentCreateComponent implements OnInit {
   });
   public recurringAppointmentCreateForm: FormGroup = new FormGroup({
     timeSlotRecurrence: new FormControl('', Validators.required),
-    amount: new FormControl(1, [Validators.required, Validators.min(2)]),
+    amount: new FormControl(1, Validators.required),
   });
   public date: moment.Moment = moment();
   public dateText: string = '';
