@@ -32,11 +32,12 @@
             <input class="form-control" type="text" value="00" disabled>
           </div>
         </div>
-        <br>
         <div class="alert alert-danger" role="alert"
-             *ngIf="appointmentEditForm.controls['startHour'].value >= appointmentEditForm.controls['endHour'].value">
+             *ngIf="appointmentEditForm.controls['startHour'].value >= appointmentEditForm.controls['endHour'].value
+             && appointmentEditForm.controls['endHour'].value != 24">
           End of appointment needs to be be after start!
         </div>
+        <br>
         <div class="row">
           <div class="col text-center">
             <div class="form-check form-check-inline">
