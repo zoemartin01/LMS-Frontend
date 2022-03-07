@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from "rxjs";
+import { WINDOW } from "../../../providers/window.providers";
 
 import { UserSettingsComponent } from './user-settings.component';
 
@@ -79,6 +80,11 @@ class MockModalService {
 describe('UserSettingsComponent', () => {
   let component: UserSettingsComponent;
   let fixture: ComponentFixture<UserSettingsComponent>;
+  let windowMock: Window = <any>{
+    location: {
+      reload: () => {},
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -94,6 +100,7 @@ describe('UserSettingsComponent', () => {
       providers: [
         { provide: UserService, useClass: MockUserService },
         { provide: NgbModal, useClass: MockModalService },
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
         NgbActiveModal,
       ],
     }).compileComponents();
