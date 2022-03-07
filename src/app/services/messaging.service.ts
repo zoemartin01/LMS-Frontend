@@ -97,7 +97,7 @@ export class MessagingService {
     const host = environment.production
       ? this.window.location.hostname + environment.baseUrl
       : environment.baseUrl.replace(/http(s)?:\/\//g, '');
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(environment.storageKeys.accessToken);
     return `${protocol}//${host}${environment.apiRoutes.messages.registerMessageWebsocket}?token=${token}`;
   }
 }

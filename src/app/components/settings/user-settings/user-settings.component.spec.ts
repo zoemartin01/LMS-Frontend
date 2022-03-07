@@ -202,8 +202,11 @@ describe('UserSettingsComponent', () => {
     component.user.id = 'userXY';
 
     component.userSettingsForm.controls['password'].setValue('russianwarshipgofuckyourself');
+    component.userSettingsForm.controls['password'].markAsDirty();
     component.userSettingsForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
+    component.userSettingsForm.controls['password_confirmation'].markAsDirty();
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
+    component.userSettingsForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
 
@@ -219,7 +222,9 @@ describe('UserSettingsComponent', () => {
     component.user.id = 'userXY';
 
     component.userSettingsForm.controls['password'].setValue('russianwarshipgofuckyourself');
+    component.userSettingsForm.controls['password'].markAsDirty();
     component.userSettingsForm.controls['password_confirmation'].setValue('russianwarshipgofuckyourself');
+    component.userSettingsForm.controls['password_confirmation'].markAsDirty();
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
 
     const modalClose = spyOn(component.activeModal, 'close');
@@ -272,6 +277,7 @@ describe('UserSettingsComponent', () => {
     component.userSettingsForm.controls['password'].setValue('');
     component.userSettingsForm.controls['password_confirmation'].setValue('');
     component.userSettingsForm.controls['notificationChannel'].setValue('3');
+    component.userSettingsForm.controls['notificationChannel'].markAsDirty();
 
     const modalClose = spyOn(component.activeModal, 'close');
 

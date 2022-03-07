@@ -11,8 +11,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
-import { WINDOW_PROVIDERS } from './providers/window.providers';
-
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UnauthorizedInterceptor } from "./interceptors/unauthorized.interceptor";
 
@@ -175,7 +173,6 @@ import { WhitelistRetailerUserListComponent } from './components/order-managemen
       multi: true
     },
     NgbActiveModal,
-    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })

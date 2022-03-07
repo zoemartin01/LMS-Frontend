@@ -2,13 +2,19 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { environment } from "../../environments/environment";
 
-import { WINDOW_PROVIDERS } from "../providers/window.providers";
+import { WINDOW } from "../providers/window.providers";
 
 import { MessagingService } from './messaging.service';
 
 describe('MessagingService', () => {
   let service: MessagingService;
   let httpMock: HttpTestingController;
+  let windowMock: Window = <any>{
+    location: {
+      protocol: 'https:',
+      hostname: 'HOST',
+    }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,7 +23,7 @@ describe('MessagingService', () => {
       ],
       providers:  [
         MessagingService,
-        WINDOW_PROVIDERS,
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
       ],
     });
 
@@ -212,5 +218,46 @@ describe('MessagingService', () => {
       "correspondingUrlText": "Animi doloribus consequuntur quae sed quis vel et.",
       "readStatus": false,
     });
+  });
+
+  it('should get livestream feed path', () => {
+    expect(service.unreadMessagesWebSocketPath())
+      .toBe(`wss://localhost:3000/api/v1/user/messages/websocket?token=${localStorage
+        .getItem(environment.storageKeys.accessToken)}`);
+  });
+});
+describe('MessagingService - websockets', () => {
+  let service: MessagingService;
+  let httpMock: HttpTestingController;
+  let windowMock: Window = <any>{
+    location: {
+      protocol: 'http:',
+      hostname: 'HOST',
+    }
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+      providers: [
+        MessagingService,
+        { provide: WINDOW, useFactory: (() => { return windowMock; }) },
+      ],
+    });
+
+    service = TestBed.inject(MessagingService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  it('should create livecam service', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should get livestream feed path', () => {
+    expect(service.unreadMessagesWebSocketPath())
+      .toBe(`ws://localhost:3000/api/v1/user/messages/websocket?token=${localStorage
+        .getItem(environment.storageKeys.accessToken)}`);
   });
 });
