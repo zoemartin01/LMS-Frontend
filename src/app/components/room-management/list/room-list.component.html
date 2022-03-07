@@ -22,7 +22,7 @@
       <td>{{ room.name }}</td>
       <td>{{ room.description }}</td>
       <td class="buttons">
-        <button type="button" class="btn btn-primary" routerLink="/room/{{ this.room.id }}/timeslots">Edit Available Timeslots</button>
+        <button type="button" class="btn btn-primary" routerLink="/room/{{ this.room.id }}/timeslots/calendar">Edit Available Timeslots</button>
         <a (click)="openRoomView(room.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
         <a (click)="openRoomEditForm(room.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
         <a (click)="openRoomDeletionDialog(room.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
