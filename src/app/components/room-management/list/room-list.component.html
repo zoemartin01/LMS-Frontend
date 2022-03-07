@@ -19,7 +19,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let room of rooms.data | paginate: { id: 'rooms', itemsPerPage: rooms.pageSize, currentPage: rooms.page, totalItems: rooms.total }">
-<<<<<<< HEAD
       <td>{{ room.name }}</td>
       <td>{{ room.description }}</td>
       <td class="buttons">
@@ -27,21 +26,6 @@
         <a (click)="openRoomView(room.id)" type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></a>
         <a (click)="openRoomEditForm(room.id)" type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
         <a (click)="openRoomDeletionDialog(room.id)" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
-=======
-      <td class="col-sm-1">{{ room.name }}</td>
-      <td class="col-sm-4">{{ room.description }}</td>
-      <td class="col-sm-2">
-        <button type="button" class="btn btn-primary" routerLink="/room/{{ this.room.id }}/timeslots/calendar">Edit Available Timeslots</button>
-        <a (click)="openRoomView(room.id)">
-          <button type="button" class="btn btn-secondary"><i class="bi bi-eye-fill"></i></button>
-        </a>
-        <a (click)="openRoomEditForm(room.id)">
-          <button type="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-        </a>
-        <a (click)="openRoomDeletionDialog(room.id)">
-          <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-        </a>
->>>>>>> master
       </td>
     </tr>
     </tbody>
