@@ -41,9 +41,9 @@
       <label for="notificationChannel" class="my-1">Notification Channel</label>
       <select class="form-control" id="notificationChannel" formControlName="notificationChannel">
         <option value="1">None</option>
-          <option value="2">E-Mail only</option>
-          <option value="3">Message Box only</option>
-          <option value="4">E-Mail and Message Box</option>
+        <option value="2">E-Mail only</option>
+        <option value="3">Message Box only</option>
+        <option value="4">E-Mail and Message Box</option>
       </select>
     </div>
   </form>
@@ -55,8 +55,7 @@
   <a (click)="openUserDeletionDialog()">
     <button type="button" class="btn btn-danger" *ngIf="user.id !== authService.getUserId()"><i class="bi bi-trash-fill"></i></button>
   </a>
-  <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')"
-          >
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close(dirty ? 'dirty' : 'aborted')">
     Close
   </button>
 </div>
