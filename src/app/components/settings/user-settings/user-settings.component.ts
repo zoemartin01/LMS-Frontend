@@ -96,6 +96,7 @@ export class UserSettingsComponent implements OnInit {
    */
   public async editUserSettings(): Promise<void> {
     this.errorMessage = '';
+    this.editedUserSettings = false;
 
     if (!this.checkPasswordConfirmation()) return;
 

@@ -26,9 +26,9 @@
           <input class="form-control" type="password" placeholder="Password Confirmation" id="password_confirmation"
                  formControlName="password_confirmation" autocomplete="password">
         </div>
-        <br>
         <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''" [innerHTML]="errorMessage"></div>
         <div class="alert alert-success" role="alert" *ngIf="editedUserSettings">User Settings were updated!</div>
+        <br>
         <div class="row">
           <div class="col text-left">
             <a (click)="openUserDeletionDialog()"
