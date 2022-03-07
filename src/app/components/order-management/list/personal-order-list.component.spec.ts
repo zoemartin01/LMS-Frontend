@@ -332,6 +332,19 @@ describe('PersonalOrderListComponent', () => {
     localStorage.removeItem('returnVal');
   }));
 
+  it('should update after dirty order view', fakeAsync(() => {
+    localStorage.setItem('returnVal', 'edited');
+
+    const updatePageMethod = spyOn(component, 'updatePage');
+
+    component.openOrderView('045fcd70-d323-4de2-894e-a10772b23457');
+    tick();
+
+    expect(updatePageMethod).toHaveBeenCalledWith();
+
+    localStorage.removeItem('returnVal');
+  }));
+
   it('should open order deletion form', fakeAsync(() => {
     localStorage.setItem('returnVal', 'deleted');
 

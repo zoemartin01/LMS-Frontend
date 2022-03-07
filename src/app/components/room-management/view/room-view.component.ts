@@ -86,7 +86,7 @@ export class RoomViewComponent implements OnInit {
    */
   public openTimeslotPage() {
     this.activeModal.close(this.dirty ? 'dirty' : 'aborted');
-    this.router.navigateByUrl(`/room/${this.room.id}/timeslots`);
+    this.router.navigateByUrl(`/room/${this.room.id}/timeslots/calendar`);
   }
 
   /**

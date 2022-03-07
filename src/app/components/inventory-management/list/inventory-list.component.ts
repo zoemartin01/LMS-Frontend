@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemCreateComponent } from "../item-create/inventory-item-create.component";
@@ -31,11 +32,13 @@ export class InventoryListComponent implements OnInit {
    * @constructor
    * @param {InventoryService} inventoryService service providing inventory functionalities
    * @param {AuthService} authService service providing authentication functionalities
+   * @param {Router} router router providing navigation
    * @param {NgbModal} modalService service providing modal functionalities
    */
   constructor(
     public inventoryService: InventoryService,
     public authService: AuthService,
+    public router: Router,
     private modalService: NgbModal
   ) {
   }
@@ -91,7 +94,7 @@ export class InventoryListComponent implements OnInit {
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
-        this.openInventoryItemViewForm(inventoryItemId);
+        this.router.navigateByUrl('/orders');
       }
     });
   }
