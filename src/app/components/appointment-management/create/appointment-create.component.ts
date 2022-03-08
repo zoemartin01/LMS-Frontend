@@ -69,9 +69,10 @@ export class AppointmentCreateComponent implements OnInit {
   ngOnInit(): void {
     this.setDate(this.start ?? moment());
 
+    const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+
     this.appointmentCreateForm.controls['startHour'].setValue(this.date.format('HH'));
-    this.appointmentCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours')
-      .format('HH'));
+    this.appointmentCreateForm.controls['endHour'].setValue(endHour === 0 ? 24 : endHour);
   }
 
   /**

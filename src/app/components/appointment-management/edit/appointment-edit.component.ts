@@ -111,8 +111,10 @@ export class AppointmentEditComponent implements OnInit {
         this.setDate(this.appointment.start);
         this.dirtyDate = false;
 
+        const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+
         this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
-        this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
+        this.appointmentEditForm.controls['endHour'].setValue(endHour === 0 ? 24 : endHour);
         this.recurringAppointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
         this.recurringAppointmentEditForm.controls['amount'].setValue(this.appointment.amount);
 
