@@ -96,9 +96,11 @@ export class TimeslotEditComponent implements OnInit {
 
         this.setDate(this.timeslot.start);
 
+        const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+
         this.timeslotEditForm.controls['type'].setValue(this.timeslot.type);
         this.timeslotEditForm.controls['startHour'].setValue(this.timeslot.start.format('HH'));
-        this.timeslotEditForm.controls['endHour'].setValue(this.timeslot.end.format('HH'));
+        this.timeslotEditForm.controls['endHour'].setValue(endHour === 0 ? 24 : endHour);
         this.recurringTimeslotEditForm.controls['timeSlotRecurrence'].setValue(this.timeslot.timeSlotRecurrence);
         this.recurringTimeslotEditForm.controls['amount'].setValue(this.timeslot.amount);
 

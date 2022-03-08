@@ -73,8 +73,6 @@ export class AppointmentEditComponent implements OnInit {
   public isRecurring: boolean = false;
   public seriesConflict = false;
   public force = false;
-  public timeslotConflict = false;
-  public timeslotConflictMessage = '';
   public errorMessage = '';
 
   /**
@@ -111,8 +109,10 @@ export class AppointmentEditComponent implements OnInit {
         this.setDate(this.appointment.start);
         this.dirtyDate = false;
 
+        const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+
         this.appointmentEditForm.controls['startHour'].setValue(this.appointment.start.format('HH'));
-        this.appointmentEditForm.controls['endHour'].setValue(this.appointment.end.format('HH'));
+        this.appointmentEditForm.controls['endHour'].setValue(endHour === 0 ? 24 : endHour);
         this.recurringAppointmentEditForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
         this.recurringAppointmentEditForm.controls['amount'].setValue(this.appointment.amount);
 
@@ -176,13 +176,8 @@ export class AppointmentEditComponent implements OnInit {
         this.closeForm.emit(true);
       },
       error: error => {
-        if (error.status === 409) {
-          this.timeslotConflict = true;
-          this.timeslotConflictMessage = error.error.message;
-        } else {
-          this.errorMessage = this.utilityService.formatErrorMessage(error);
-        }
-      }
+        this.errorMessage = this.utilityService.formatErrorMessage(error);
+      },
     });
   }
 
@@ -191,6 +186,7 @@ export class AppointmentEditComponent implements OnInit {
    */
   public async editAppointmentSeries(): Promise<void> {
     this.errorMessage = '';
+    this.seriesConflict = false;
     let changedData: { [key: string]: any} =  this.utilityService.getDirtyValues(this.recurringAppointmentEditForm);
 
     if (!this.appointmentEditForm.valid || !this.recurringAppointmentEditForm.valid) {
