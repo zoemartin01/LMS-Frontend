@@ -67,7 +67,8 @@ export class RoomListComponent implements OnInit {
   public openRoomCreationForm(): void {
     const modal = this.modalService.open(RoomCreateComponent);
     modal.result.then((result) => {
-      if (result !== 'aborted') {
+      if (result.split(' ')[0] === 'created') {
+        this.openRoomView(result.split(' ')[1]);
         this.getRooms();
       }
     });

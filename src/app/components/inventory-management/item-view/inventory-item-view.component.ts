@@ -10,6 +10,7 @@ import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inventory-item-view',
@@ -41,12 +42,14 @@ export class InventoryItemViewComponent implements OnInit {
    * @param {AuthService} authService service authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
+   * @param {Router} router router providing navigation
    */
   constructor(
     public inventoryService: InventoryService,
     public authService: AuthService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public router: Router
   ) {
     this.inventoryItemViewForm.disable();
   }
@@ -111,5 +114,10 @@ export class InventoryItemViewComponent implements OnInit {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.router.navigateByUrl('/orders');
+      }
+    });
   }
 }

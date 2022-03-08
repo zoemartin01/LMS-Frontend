@@ -73,7 +73,8 @@ export class PersonalAppointmentListComponent implements OnInit {
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
     modal.result.then((result) => {
-      if (result !== 'aborted') {
+      if (result.split(' ')[0] === 'inventoried') {
+        this.openAppointmentView(result.split(' ')[1]);
         this.getAllAppointmentsForCurrentUser();
       }
     });
