@@ -65,8 +65,11 @@ export class TimeslotCreateComponent implements OnInit {
    */
   ngOnInit(): void {
     this.setDate(this.start ?? moment());
+
+    const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+
     this.timeslotCreateForm.controls['startHour'].setValue(this.date.format('HH'));
-    this.timeslotCreateForm.controls['endHour'].setValue(moment(this.date).add(1, 'hours').format('HH'));
+    this.timeslotCreateForm.controls['endHour'].setValue(endHour === 0 ? 24 : endHour);
   }
 
   /**
