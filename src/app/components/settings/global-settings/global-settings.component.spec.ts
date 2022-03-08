@@ -124,7 +124,7 @@ class MockModalService {
   open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        whitelistRetailer: {id: null},
+        whitelistRetailer: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -136,8 +136,7 @@ class MockFileReader {
   public result: string = "";
 
   constructor() {
-    this.onload = () => {
-    };
+    this.onload = () => {};
   }
 
   public readAsText(file: File): void {
@@ -168,9 +167,9 @@ describe('GlobalSettingsComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
-        {provide: FileReader, useFactory: () => fileReader},
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
+        { provide: FileReader, useFactory: () => fileReader },
       ],
     }).compileComponents();
 
