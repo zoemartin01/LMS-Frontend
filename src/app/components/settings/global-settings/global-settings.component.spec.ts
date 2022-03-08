@@ -249,8 +249,7 @@ describe('GlobalSettingsComponent', () => {
       }];
 
     expect(component.globalSettingsForm.controls['user.max_recordings'].value).toEqual(+globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
-    expect(component.globalSettingsForm.controls['recording.auto_delete'].value).toEqual((+globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value / 86400000)
-    );
+    expect(component.globalSettingsForm.controls['recording.auto_delete'].value).toEqual((+globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value / 86400000));
     expect(component.globalSettingsForm.controls['static.homepage'].value).toEqual('');
     expect(component.globalSettingsForm.controls['static.lab_rules'].value).toEqual('');
     expect(component.globalSettingsForm.controls['static.faq'].value).toEqual('');
@@ -335,15 +334,15 @@ describe('GlobalSettingsComponent', () => {
     expect(component.errorMessage).toBe('You need to fill in all required fields!')
   }));
 
-  it('should open whitelist retailer create component and then whitelist retailer view', fakeAsync(() => {
+  it('should reload after retailer create', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created exampleWhitelistRetailerId');
 
-    const openViewModal = spyOn(component, 'openWhitelistRetailerView');
+    const getWhitelistRetailerMethod = spyOn(component, 'getWhitelistRetailers');
 
     component.openWhitelistRetailerCreationForm();
     tick();
 
-    expect(openViewModal).toHaveBeenCalledWith("exampleWhitelistRetailerId");
+    expect(getWhitelistRetailerMethod).toHaveBeenCalled();
 
     localStorage.removeItem('returnVal');
   }));
@@ -403,6 +402,7 @@ describe('GlobalSettingsComponent', () => {
       "static.homepage"
     );
     tick();
+
     expect(component.globalSettingsForm.controls["static.homepage"].value).toEqual("");
   }));
 

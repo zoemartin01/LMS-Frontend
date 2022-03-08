@@ -83,16 +83,16 @@ export class TimeslotViewComponent implements OnInit {
       next: res => {
         this.timeslot = res;
 
-        this.timeslotViewForm.controls['type'].setValue(res.type);
-        this.timeslotViewForm.controls['room'].setValue(res.room.name);
-        this.timeslotViewForm.controls['date'].setValue(res.start?.format('DD.MM.YYYY'));
-        this.timeslotViewForm.controls['startHour'].setValue(res.start?.format('HH:mm'));
-        this.timeslotViewForm.controls['endHour'].setValue(res.end?.format('HH:mm'));
-        this.timeslotViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
-        this.timeslotViewForm.controls['amount'].setValue(res.amount);
-
         this.timeslot.start = moment(this.timeslot.start);
         this.timeslot.end = moment(this.timeslot.end);
+
+        this.timeslotViewForm.controls['type'].setValue(res.type);
+        this.timeslotViewForm.controls['room'].setValue(res.room.name);
+        this.timeslotViewForm.controls['date'].setValue(this.timeslot.start.format('DD.MM.YYYY'));
+        this.timeslotViewForm.controls['startHour'].setValue(this.timeslot.start.format('HH:mm'));
+        this.timeslotViewForm.controls['endHour'].setValue(this.timeslot.end.format('HH:mm'));
+        this.timeslotViewForm.controls['timeSlotRecurrence'].setValue(res.timeSlotRecurrence);
+        this.timeslotViewForm.controls['amount'].setValue(res.amount);
       },
       error: error => {
         console.error('There was an error!', error);
