@@ -136,6 +136,7 @@ export class PersonalOrderListComponent implements OnInit {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
+        this.openOrderView(result.split(' ')[1]);
         this.updatePage();
       }
     });
@@ -195,7 +196,8 @@ export class PersonalOrderListComponent implements OnInit {
     const modal = this.modalService.open(InventoryOrderComponent);
     modal.componentInstance.order.id = orderId;
     modal.result.then((result) => {
-      if (result !== 'aborted') {
+      if (result.split(' ')[0] === 'inventoried') {
+        this.openOrderView(result.split(' ')[1]);
         this.getAcceptedOrders(this.acceptedOrders.page);
       }
     });

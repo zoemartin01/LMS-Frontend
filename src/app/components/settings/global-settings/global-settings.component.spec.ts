@@ -1,19 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
-import {NgxPaginationModule} from "ngx-pagination";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
+import { NgxPaginationModule } from "ngx-pagination";
 
-import {GlobalSettingsComponent} from './global-settings.component';
+import { GlobalSettingsComponent } from './global-settings.component';
 
-import {AdminService} from "../../../services/admin.service";
+import { AdminService } from "../../../services/admin.service";
 
-import {GlobalSetting} from "../../../types/global-setting";
-import {WhitelistRetailer} from "../../../types/whitelist-retailer";
-import {PagedResponse} from "../../../types/paged-response";
-import {PagedList} from "../../../types/paged-list";
+import { GlobalSetting } from "../../../types/global-setting";
+import { WhitelistRetailer } from "../../../types/whitelist-retailer";
+import { PagedResponse } from "../../../types/paged-response";
+import { PagedList } from "../../../types/paged-list";
 
 class MockAdminService {
   getGlobalSettings(): Observable<GlobalSetting[]> {
@@ -124,7 +124,7 @@ class MockModalService {
   open(): { componentInstance: { whitelistRetailer: { id: string | null } }, result: Promise<string> } {
     return {
       componentInstance: {
-        whitelistRetailer: {id: null},
+        whitelistRetailer: { id: null },
       },
       result: new Promise<string>(resolve => resolve(localStorage.getItem('returnVal') ?? 'aborted')),
     };
@@ -136,8 +136,7 @@ class MockFileReader {
   public result: string = "";
 
   constructor() {
-    this.onload = () => {
-    };
+    this.onload = () => {};
   }
 
   public readAsText(file: File): void {
@@ -168,9 +167,9 @@ describe('GlobalSettingsComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        {provide: AdminService, useClass: MockAdminService},
-        {provide: NgbModal, useClass: MockModalService},
-        {provide: FileReader, useFactory: () => fileReader},
+        { provide: AdminService, useClass: MockAdminService },
+        { provide: NgbModal, useClass: MockModalService },
+        { provide: FileReader, useFactory: () => fileReader },
       ],
     }).compileComponents();
 
@@ -250,8 +249,7 @@ describe('GlobalSettingsComponent', () => {
       }];
 
     expect(component.globalSettingsForm.controls['user.max_recordings'].value).toEqual(+globalSettings.filter((setting: GlobalSetting) => setting.key === 'user.max_recordings')[0].value);
-    expect(component.globalSettingsForm.controls['recording.auto_delete'].value).toEqual((+globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value / 86400000)
-    );
+    expect(component.globalSettingsForm.controls['recording.auto_delete'].value).toEqual((+globalSettings.filter((setting: GlobalSetting) => setting.key === 'recording.auto_delete')[0].value / 86400000));
     expect(component.globalSettingsForm.controls['static.homepage'].value).toEqual('');
     expect(component.globalSettingsForm.controls['static.lab_rules'].value).toEqual('');
     expect(component.globalSettingsForm.controls['static.faq'].value).toEqual('');
@@ -338,14 +336,13 @@ describe('GlobalSettingsComponent', () => {
 
   it('should reload after retailer create', fakeAsync(() => {
     localStorage.setItem('returnVal', 'created exampleWhitelistRetailerId');
+
     const getWhitelistRetailerMethod = spyOn(component, 'getWhitelistRetailers');
+
     component.openWhitelistRetailerCreationForm();
     tick();
 
     expect(getWhitelistRetailerMethod).toHaveBeenCalled();
-
-
-    expect()
 
     localStorage.removeItem('returnVal');
   }));
@@ -405,6 +402,7 @@ describe('GlobalSettingsComponent', () => {
       "static.homepage"
     );
     tick();
+
     expect(component.globalSettingsForm.controls["static.homepage"].value).toEqual("");
   }));
 

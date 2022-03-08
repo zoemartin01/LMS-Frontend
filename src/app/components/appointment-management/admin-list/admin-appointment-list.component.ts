@@ -131,7 +131,8 @@ export class AdminAppointmentListComponent implements OnInit {
   public openAppointmentCreationForm(): void {
     const modal = this.modalService.open(AppointmentCreateComponent);
     modal.result.then((result) => {
-      if (result !== 'aborted') {
+      if (result.split(' ')[0] === 'created') {
+        this.openAppointmentView(result.split(' ')[1]);
         this.getAppointments();
       }
     });

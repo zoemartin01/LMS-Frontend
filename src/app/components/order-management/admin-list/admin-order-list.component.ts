@@ -130,6 +130,7 @@ export class AdminOrderListComponent implements OnInit {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.result.then((result) => {
       if (result.split(' ')[0] === 'created') {
+        this.openOrderView(result.split(' ')[1]);
         this.updatePage();
       }
     });

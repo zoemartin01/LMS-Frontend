@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
@@ -41,12 +42,14 @@ export class InventoryItemViewComponent implements OnInit {
    * @param {AuthService} authService service authentication functionalities
    * @param {NgbActiveModal} activeModal modal containing this component
    * @param {NgbModal} modalService service providing modal functionalities
+   * @param {Router} router router providing navigation
    */
   constructor(
     public inventoryService: InventoryService,
     public authService: AuthService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public router: Router
   ) {
     this.inventoryItemViewForm.disable();
   }
@@ -111,5 +114,10 @@ export class InventoryItemViewComponent implements OnInit {
     const modal = this.modalService.open(OrderRequestComponent);
     modal.componentInstance.requestOrderForm.controls['itemName'].setValue(this.inventoryItem.name);
     modal.componentInstance.requestOrderForm.controls['itemName'].disable();
+    modal.result.then((result) => {
+      if (result.split(' ')[0] === 'created') {
+        this.router.navigateByUrl('/orders');
+      }
+    });
   }
 }

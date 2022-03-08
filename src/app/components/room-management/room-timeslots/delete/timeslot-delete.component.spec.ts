@@ -310,7 +310,6 @@ describe('TimeslotDeleteComponent', () => {
     expect(component.timeslotDeleteForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));
 
-
   it('should delete timeslot', fakeAsync(() => {
     let closeForm = spyOn(component.activeModal, 'close');
 
