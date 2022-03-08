@@ -96,7 +96,7 @@ export class TimeslotEditComponent implements OnInit {
 
         this.setDate(this.timeslot.start);
 
-        const endHour: number = +moment(this.date).add(1, 'hours').format('HH');
+        const endHour: number = +moment(this.timeslot.end).format('HH');
 
         this.timeslotEditForm.controls['type'].setValue(this.timeslot.type);
         this.timeslotEditForm.controls['startHour'].setValue(this.timeslot.start.format('HH'));
