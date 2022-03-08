@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { InventoryItemDeleteComponent } from "../item-delete/inventory-item-delete.component";
@@ -10,7 +11,6 @@ import { AuthService } from "../../../services/auth.service";
 import { InventoryService } from "../../../services/inventory.service";
 
 import { InventoryItem } from "../../../types/inventory-item";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inventory-item-view',
