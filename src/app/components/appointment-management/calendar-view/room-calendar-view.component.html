@@ -144,3 +144,7 @@
                             [start]="appointmentCreationStart" [room]="room"></app-appointment-create>
   </div>
 </div>
+
+<div class="row" *ngIf="room.id === null">
+  <h1 class="display-6 text-center">No Room Selected</h1>
+</div>
