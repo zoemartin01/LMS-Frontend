@@ -223,7 +223,7 @@ describe('AppointmentAcceptComponent', () => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
 
     component.getAppointmentData();
-    tick();
+    tick(50);
 
     let closeModal = spyOn(component.activeModal, 'close');
 
@@ -237,7 +237,7 @@ describe('AppointmentAcceptComponent', () => {
     component.appointment.id = "c3a70a44-374c-46a9-be05-a3f6ef4e39a5";
 
     component.getAppointmentData();
-    tick();
+    tick(50);
 
     let closeModal = spyOn(component.activeModal, 'close');
 

@@ -733,8 +733,7 @@ describe('AppointmentEditComponent', () => {
     tick();
 
     expect(closeForm).not.toHaveBeenCalled();
-    expect(component.timeslotConflict).toEqual(true);
-    expect(component.timeslotConflictMessage).toEqual('Your booking conflicts with to many other bookings.');
+    expect(component.errorMessage).toEqual('Your booking conflicts with to many other bookings.');
 
     localStorage.setItem('throwTimeSlotConflictError', 'false');
   }));
