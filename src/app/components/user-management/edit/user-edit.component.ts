@@ -92,7 +92,10 @@ export class UserEditComponent implements OnInit {
       this.errorMessage = 'You need to fill in all required fields!';
       return;
     }
+
     if (!this.checkPasswordConfirmation()) return;
+
+    this.userEditForm.controls['password_confirmation'].markAsPristine();
 
     let changedData = this.utilityService.getDirtyValues(this.userEditForm);
 

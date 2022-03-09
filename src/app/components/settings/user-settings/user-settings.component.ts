@@ -103,6 +103,8 @@ export class UserSettingsComponent implements OnInit {
 
     if (!this.checkPasswordConfirmation()) return;
 
+    this.userSettingsForm.controls['password_confirmation'].markAsPristine();
+
     let changedData = this.utilityService.getDirtyValues(this.userSettingsForm);
 
     if (this.userSettingsForm.controls['notificationChannel'].dirty) {
