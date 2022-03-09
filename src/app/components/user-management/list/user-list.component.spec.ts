@@ -236,7 +236,7 @@ describe('UserListComponent', () => {
     component.pendingUsers.page = 1;
 
     component.getPendingUsers();
-    tick();
+    tick(50);
 
     pendingUsers.total = 2;
     pendingUsers.data = [
@@ -273,7 +273,7 @@ describe('UserListComponent', () => {
     component.acceptedUsers.page = 1;
 
     component.getAcceptedUsers();
-    tick();
+    tick(50);
 
     acceptedUsers.total = 2;
     acceptedUsers.data = [

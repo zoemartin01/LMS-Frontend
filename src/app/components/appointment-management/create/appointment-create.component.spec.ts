@@ -109,6 +109,21 @@ describe('AppointmentCreateComponent method calls', () => {
     expect(+component.appointmentCreateForm.controls['endHour'].value).toEqual(14);
   }));
 
+  it('should init page with date and picked day time with endhour 0', fakeAsync(() => {
+    component.date = moment("2022-02-14T23:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+    component.start = moment("2022-02-14T23:00:00.000Z", 'YYYY-MM-DDTHH:mm');
+
+    let setDateMethod = spyOn(component, 'setDate');
+
+    component.ngOnInit();
+
+    tick();
+
+    expect(setDateMethod).toHaveBeenCalledWith(moment("2022-02-14T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'));
+    expect(+component.appointmentCreateForm.controls['startHour'].value).toEqual(23);
+    expect(+component.appointmentCreateForm.controls['endHour'].value).toEqual(24);
+  }));
+
   it('should call setDateMethod with current date', fakeAsync(() => {
     let setDateMethod = spyOn(component, 'setDate');
 
@@ -293,8 +308,7 @@ describe('AppointmentCreateComponent', () => {
     tick();
 
     expect(closeForm).not.toHaveBeenCalled();
-    expect(component.timeslotConflict).toEqual(true);
-    expect(component.timeslotConflictMessage).toEqual('Your booking conflicts with to many other bookings.');
+    expect(component.errorMessage).toEqual('Your booking conflicts with to many other bookings.');
 
     localStorage.setItem('throwTimeSlotConflictError', 'false');
   }));
