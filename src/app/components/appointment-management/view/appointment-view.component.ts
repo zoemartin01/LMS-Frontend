@@ -62,6 +62,7 @@ export class AppointmentViewComponent implements OnInit {
     endHour: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     confirmationStatus: new FormControl('', Validators.required),
+    amount: new FormControl(1, Validators.required),
     timeSlotRecurrence: new FormControl('', Validators.required),
   });
   public dirty: boolean = true;
@@ -111,6 +112,7 @@ export class AppointmentViewComponent implements OnInit {
         this.appointmentViewForm.controls['endHour'].setValue(this.appointment.end.format('HH:mm'));
         this.appointmentViewForm.controls['confirmationStatus'].setValue(this.appointment.confirmationStatus);
         this.appointmentViewForm.controls['timeSlotRecurrence'].setValue(this.appointment.timeSlotRecurrence);
+        this.appointmentViewForm.controls['amount'].setValue(this.appointment.amount);
 
         this.appointment.start = moment(this.appointment.start);
         this.appointment.end = moment(this.appointment.end);
