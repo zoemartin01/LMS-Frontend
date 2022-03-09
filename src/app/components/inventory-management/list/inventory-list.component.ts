@@ -86,7 +86,7 @@ export class InventoryListComponent implements OnInit {
    * Opens form to create order
    *
    * @param {string} inventoryItemName name of item to order
-   * @param {InventoryItemId} inventoryItemId name of item to order
+   * @param {InventoryItemId} inventoryItemId id of item to order
    */
   public openOrderCreationForm(inventoryItemName: string, inventoryItemId: InventoryItemId): void {
     const modal = this.modalService.open(OrderRequestComponent);
