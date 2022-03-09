@@ -1,21 +1,21 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterTestingModule} from "@angular/router/testing";
-import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
 
-import {TimeslotEditComponent} from './timeslot-edit.component';
+import { TimeslotEditComponent } from './timeslot-edit.component';
 
-import {RoomService} from "../../../../services/room.service";
+import { RoomService } from "../../../../services/room.service";
 
-import {RoomTimespan} from "../../../../types/room-timespan";
-import {TimespanId} from "../../../../types/aliases/timespan-id";
-import {RoomTimespanType} from "../../../../types/enums/timespan-type";
-import {Room} from "../../../../types/room";
-import {RoomId} from "../../../../types/aliases/room-id";
-import {TimeSlotRecurrence} from "../../../../types/enums/timeslot-recurrence";
+import { RoomTimespan } from "../../../../types/room-timespan";
+import { TimespanId } from "../../../../types/aliases/timespan-id";
+import { RoomTimespanType } from "../../../../types/enums/timespan-type";
+import { Room } from "../../../../types/room";
+import { RoomId } from "../../../../types/aliases/room-id";
+import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
 
 class MockRoomService {
   getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
@@ -29,6 +29,7 @@ class MockRoomService {
 
         return;
       }
+
       if (timeslotId === 'IdWithEnd0') {
         const timeslot: RoomTimespan = {
           id: "IdWithEnd0",
@@ -51,6 +52,7 @@ class MockRoomService {
         observer.next(timeslot);
         return;
       }
+      
       const timeslot: RoomTimespan = {
         id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
         start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -192,8 +194,8 @@ describe('TimeslotEditComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: RoomService, useClass: MockRoomService},
-        {provide: NgbModal, useClass: MockModalService},
+        { provide: RoomService, useClass: MockRoomService },
+        { provide: NgbModal, useClass: MockModalService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -247,7 +249,7 @@ describe('TimeslotEditComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        {provide: RoomService, useClass: MockRoomService},
+        { provide: RoomService, useClass: MockRoomService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -301,7 +303,8 @@ describe('TimeslotEditComponent', () => {
     expect(component.timeslotEditForm.controls['type'].value).toEqual(testTimeslot.type);
     expect(+component.timeslotEditForm.controls['startHour'].value).toEqual(23);
     expect(+component.timeslotEditForm.controls['endHour'].value).toEqual(22);
-    expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
+    expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.recurringTimeslotEditForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));
 
@@ -336,7 +339,8 @@ describe('TimeslotEditComponent', () => {
     expect(component.timeslotEditForm.controls['type'].value).toEqual(testTimeslot.type);
     expect(+component.timeslotEditForm.controls['startHour'].value).toEqual(23);
     expect(+component.timeslotEditForm.controls['endHour'].value).toEqual(24);
-    expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
+    expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value)
+      .toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.recurringTimeslotEditForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));
 

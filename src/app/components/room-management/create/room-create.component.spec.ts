@@ -76,7 +76,7 @@ describe('RoomCreateComponent', () => {
     component.createRoom();
     tick();
 
-    expect(closeModal).toHaveBeenCalledWith('created');
+    expect(closeModal).toHaveBeenCalledWith('created c7231328-203e-43f5-9ac1-d374d90484ac');
   }));
 
   it('should handle invalid form entries on create Room', fakeAsync(() => {

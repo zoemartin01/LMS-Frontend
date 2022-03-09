@@ -1,19 +1,19 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HttpClientModule} from "@angular/common/http";
-import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { NgbActiveModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
 import * as moment from "moment";
 
-import {AppointmentEditComponent} from './appointment-edit.component';
+import { AppointmentEditComponent } from './appointment-edit.component';
 
-import {AppointmentService} from "../../../services/appointment.service";
+import { AppointmentService } from "../../../services/appointment.service";
 
-import {Appointment} from "../../../types/appointment";
-import {TimespanId} from "../../../types/aliases/timespan-id";
-import {SeriesId} from "../../../types/aliases/series-id";
-import {TimeSlotRecurrence} from "../../../types/enums/timeslot-recurrence";
-import {Room} from "../../../types/room";
-import {PagedResponse} from "../../../types/paged-response";
+import { Appointment } from "../../../types/appointment";
+import { TimespanId } from "../../../types/aliases/timespan-id";
+import { SeriesId } from "../../../types/aliases/series-id";
+import { TimeSlotRecurrence } from "../../../types/enums/timeslot-recurrence";
+import { Room } from "../../../types/room";
+import { PagedResponse } from "../../../types/paged-response";
 
 class MockAppointmentService {
   getAppointmentData(appointmentId: TimespanId): Observable<Appointment> {
@@ -25,6 +25,7 @@ class MockAppointmentService {
           }
         });
       }
+
       if (appointmentId === 'appointmentWithEndHour0') {
         const testAppointment: Appointment = {
           id: "appointmentWithEndHour0",
@@ -57,6 +58,7 @@ class MockAppointmentService {
         observer.next(testAppointment);
         return;
       }
+
       const appointmentSeries: Appointment = {
         id: "c3a70a44-374c-46a9-be05-a3f6ef4e39a5",
         start: moment("2022-02-14T13:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -526,7 +528,7 @@ describe('AppointmentEditComponent method calls', () => {
         NgbModule,
       ],
       providers: [
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -671,7 +673,7 @@ describe('AppointmentEditComponent', () => {
         NgbModule,
       ],
       providers: [
-        {provide: AppointmentService, useClass: MockAppointmentService},
+        { provide: AppointmentService, useClass: MockAppointmentService },
         NgbActiveModal,
       ],
     }).compileComponents();
