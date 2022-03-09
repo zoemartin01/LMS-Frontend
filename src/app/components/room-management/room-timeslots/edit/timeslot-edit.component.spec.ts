@@ -1,24 +1,24 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgbActiveModal, NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {NgbActiveModal, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 import * as moment from "moment";
 
-import { TimeslotEditComponent } from './timeslot-edit.component';
+import {TimeslotEditComponent} from './timeslot-edit.component';
 
-import { RoomService } from "../../../../services/room.service";
+import {RoomService} from "../../../../services/room.service";
 
-import { RoomTimespan } from "../../../../types/room-timespan";
-import { TimespanId } from "../../../../types/aliases/timespan-id";
-import { RoomTimespanType } from "../../../../types/enums/timespan-type";
-import { Room } from "../../../../types/room";
-import { RoomId } from "../../../../types/aliases/room-id";
-import { TimeSlotRecurrence } from "../../../../types/enums/timeslot-recurrence";
+import {RoomTimespan} from "../../../../types/room-timespan";
+import {TimespanId} from "../../../../types/aliases/timespan-id";
+import {RoomTimespanType} from "../../../../types/enums/timespan-type";
+import {Room} from "../../../../types/room";
+import {RoomId} from "../../../../types/aliases/room-id";
+import {TimeSlotRecurrence} from "../../../../types/enums/timeslot-recurrence";
 
 class MockRoomService {
-  getTimeslot(timeslotId: TimespanId): Observable<RoomTimespan> {
+  getTimeslot(roomId: RoomId, timeslotId: TimespanId): Observable<RoomTimespan> {
     return new Observable((observer) => {
       if (localStorage.getItem('throwError') === 'true') {
         observer.error({
@@ -29,7 +29,28 @@ class MockRoomService {
 
         return;
       }
+      if (timeslotId === 'IdWithEnd0') {
+        const timeslot: RoomTimespan = {
+          id: "IdWithEnd0",
+          start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+          end: moment("2022-02-14T00:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+          type: 2,
+          seriesId: "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+          amount: 3,
+          timeSlotRecurrence: 2,
+          maxStart: moment("2022-02-15T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+          room: {
+            id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+            name: "Test room",
+            description: "room to test",
+            maxConcurrentBookings: 1,
+            autoAcceptBookings: false,
+          },
+        };
 
+        observer.next(timeslot);
+        return;
+      }
       const timeslot: RoomTimespan = {
         id: "8e762183-dcb3-4018-b02d-fb5c3c46a9f8",
         start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
@@ -171,8 +192,8 @@ describe('TimeslotEditComponent method calls', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: RoomService, useClass: MockRoomService },
-        { provide: NgbModal, useClass: MockModalService },
+        {provide: RoomService, useClass: MockRoomService},
+        {provide: NgbModal, useClass: MockModalService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -226,7 +247,7 @@ describe('TimeslotEditComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: RoomService, useClass: MockRoomService },
+        {provide: RoomService, useClass: MockRoomService},
         NgbActiveModal,
       ],
     }).compileComponents();
@@ -280,6 +301,41 @@ describe('TimeslotEditComponent', () => {
     expect(component.timeslotEditForm.controls['type'].value).toEqual(testTimeslot.type);
     expect(+component.timeslotEditForm.controls['startHour'].value).toEqual(23);
     expect(+component.timeslotEditForm.controls['endHour'].value).toEqual(22);
+    expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
+    expect(component.recurringTimeslotEditForm.controls['amount'].value).toEqual(testTimeslot.amount);
+  }));
+
+  it('should set attributes to correct values after ngOnInit with endhour 0', fakeAsync(() => {
+    component.timeslotId = 'IdWithEnd0';
+    component.roomId = "c7231328-203e-43f5-9ac1-d374d90484ac";
+
+    const testTimeslot: RoomTimespan = {
+      id: "IdWithEnd0",
+      start: moment("2022-02-13T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      end: moment("2022-02-14T00:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      type: 2,
+      seriesId: "5bbb467a-4539-4d4a-9b19-7fe0341be0ef",
+      amount: 3,
+      timeSlotRecurrence: 2,
+      maxStart: moment("2022-02-15T23:00:00.000Z", 'YYYY-MM-DDTHH:mm'),
+      room: {
+        id: "c7231328-203e-43f5-9ac1-d374d90484ac",
+        name: "Test room",
+        description: "room to test",
+        maxConcurrentBookings: 1,
+        autoAcceptBookings: false,
+      },
+    };
+
+    component.ngOnInit();
+    tick();
+
+    expect(component.timeslot).toEqual(testTimeslot);
+    expect(component.timeslot.start).toEqual(testTimeslot.start);
+    expect(component.timeslot.end).toEqual(testTimeslot.end);
+    expect(component.timeslotEditForm.controls['type'].value).toEqual(testTimeslot.type);
+    expect(+component.timeslotEditForm.controls['startHour'].value).toEqual(23);
+    expect(+component.timeslotEditForm.controls['endHour'].value).toEqual(24);
     expect(component.recurringTimeslotEditForm.controls['timeSlotRecurrence'].value).toEqual(testTimeslot.timeSlotRecurrence);
     expect(component.recurringTimeslotEditForm.controls['amount'].value).toEqual(testTimeslot.amount);
   }));

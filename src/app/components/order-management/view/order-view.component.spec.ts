@@ -138,11 +138,10 @@ describe('OrderViewComponent', () => {
       },
       status: OrderStatus.unknown,
     });
-
     component.order.id = "045fcd70-d323-4de2-894e-a10772b23457";
 
     component.ngOnInit();
-    tick();
+    tick(50);
 
     expect(component.order).toEqual({
       id: "045fcd70-d323-4de2-894e-a10772b23457",
