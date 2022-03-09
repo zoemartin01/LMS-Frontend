@@ -4,8 +4,8 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { RoomService } from "../../../services/room.service";
 import { UtilityService } from "../../../services/utility.service";
-import {InventoryItem} from "../../../types/inventory-item";
-import {Room} from "../../../types/room";
+
+import { Room } from "../../../types/room";
 
 @Component({
   selector: 'app-room-create',
