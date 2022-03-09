@@ -5,6 +5,8 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { RoomService } from "../../../services/room.service";
 import { UtilityService } from "../../../services/utility.service";
 
+import { Room } from "../../../types/room";
+
 @Component({
   selector: 'app-room-create',
   templateUrl: './room-create.component.html',
@@ -53,8 +55,10 @@ export class RoomCreateComponent {
     const maxConcurrentBookings = this.roomCreateForm.value.maxConcurrentBookings;
     const autoAcceptBookings = this.roomCreateForm.value.autoAcceptBookings;
     this.roomService.createRoom(name, description, maxConcurrentBookings, autoAcceptBookings).subscribe({
-      next: () => {
-        this.activeModal.close('created');
+      next: (room: Room) => {
+        if (room.id !== null) {
+          this.activeModal.close(`created ${room.id}`);
+        }
       },
       error: error => {
         this.errorMessage = this.utilityService.formatErrorMessage(error);
