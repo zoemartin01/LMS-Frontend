@@ -1,27 +1,20 @@
-# Frontend
+# Laboratory Management System
+This is a simple laboratory management system created as a group project for the course [Praxis der Softwareentwicklung](https://pp.ipd.kit.edu/lehre/WS202122/pse/) at the Karlsruher Institut für Technologie (KIT) and the Institute for Technology of Persuasive Computing (TECO).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
+## System Overview
+The system is a web application that allows the management of laboratory equipment. It is based on a RESTful API that is used to communicate with the different microservices.
 
-## Development server
+### System Architecture
+The system is based on a microservice architecture. The microservices are:
+- [`Frontend`](https://github.com/zoemartin01/LMS-Frontend): The frontend of the application built with Angular.
+- [`Backend`](https://github.com/zoemartin01/LMS-Backend): The main backend of the application built with Node.js and Express.
+- [`Camera`](https://github.com/zoemartin01/LMS-Camera): A small service that handles recording and live streaming for a webcam.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Features
+- User management and authentication
+- Room management and booking
+- Inventory management and lending
+- Camera streaming and recording for 3D-printing
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Development
+This project was developed by Adrian Keller, Mario Lehnerer, Zoe Martin, Sarah Raab und Lena Richau.
